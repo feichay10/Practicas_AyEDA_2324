@@ -18,16 +18,22 @@
 
 #include "../include/cell.h"
 
-Cell::Cell(const Position& position, const State& state) {
-  state_ = state;
-  position_ = position;
+Cell::Cell() : position_(0), state_(0), nextState_(0) {}
+
+Cell::Cell(const Position& position_, const State& state_) : position_(position_), state_(state_), nextState_(0) {}
+
+State Cell::getState() const { return state_; }
+
+void Cell::setState(State newState) { state_ = newState; }
+
+int Cell::nextState(const Lattice& lattice) {
+    int left = position_ - 1 < 0 ? 0 : lattice.getCell(position_ - 1).getState();
+    int right = position_ + 1 >= lattice.getSize() ? 0 : lattice.getCell(position_ + 1).getState();
+    nextState_ = left ^ (state_ | right); // Rule 30
+    return nextState_;
 }
 
-State Cell::getState() const {
-  return state_;
+std::ostream& operator<<(std::ostream& os, const Cell& cell) {
+  os << (cell.state_ ? 'X' : ' ');
+  return os;
 }
-
-State Cell::setState(State state) {
-  state_ = state;
-}
-

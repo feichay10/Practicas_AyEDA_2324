@@ -22,22 +22,30 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 #include <vector>
 
 #include "cell.h"
 
+class Cell;
+
 class Lattice {
  public:
-  Lattice(const int&, const int&);
+  Lattice(int size_, std::string border_);
   ~Lattice();
-  const Cell& getCell(const Position&) const;
+  
+  Cell& getCell(const Position& position) const;
+
+  int getSize() const;
+  void setSize(int size);
+
   void nextGeneration();
-  friend std::ostream& operator<<(std::ostream&, const Lattice&);
+  friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
 
  private:
-  std::vector<Cell*> lattice_;
-  int width_;
-  int height_;
+  Cell* cells_;
+  int size_;
+  std::string border_;
 };
 
 #endif  // LATTICE_H_
