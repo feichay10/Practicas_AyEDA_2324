@@ -1,0 +1,5 @@
+*.o
+*.gdoc
+.vscode
+*.tgz
+desktop.ini
