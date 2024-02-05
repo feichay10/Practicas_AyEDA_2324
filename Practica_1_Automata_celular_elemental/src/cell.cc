@@ -18,22 +18,39 @@
 
 #include "../include/cell.h"
 
-Cell::Cell() : position_(0), state_(0), nextState_(0) {}
+Cell::Cell(const Position& position, const State& state) {
+  position_ = position;
+  state_ = state;
+  nextState_ = 0;
+}
 
-Cell::Cell(const Position& position_, const State& state_) : position_(position_), state_(state_), nextState_(0) {}
+State Cell::getState() const {
+  return state_;
+}
 
-State Cell::getState() const { return state_; }
-
-void Cell::setState(State newState) { state_ = newState; }
+State Cell::setState(State newState) {
+  state_ = newState;
+  return state_;
+}
 
 int Cell::nextState(const Lattice& lattice) {
-    int left = position_ - 1 < 0 ? 0 : lattice.getCell(position_ - 1).getState();
-    int right = position_ + 1 >= lattice.getSize() ? 0 : lattice.getCell(position_ + 1).getState();
-    nextState_ = left ^ (state_ | right); // Rule 30
-    return nextState_;
+  int left = position_ - 1;
+  int right = position_ + 1;
+  if (left < 0) {
+    left = lattice.getSize() - 1;
+  }
+  if (right == lattice.getSize()) {
+    right = 0;
+  }
+  nextState_ = (lattice.getCell(left).getState() + lattice.getCell(right).getState()) % 2;
+  return nextState_;
+}
+
+void Cell::updateState() {
+  state_ = nextState_;
 }
 
 std::ostream& operator<<(std::ostream& os, const Cell& cell) {
-  os << (cell.state_ ? 'X' : ' ');
+  os << cell.getState();
   return os;
 }

@@ -27,21 +27,28 @@
 
 #include "lattice.h"
 
-typedef int State;
+// typedef int State;
+enum State { kDead = 0, kAlive = 1 };
 typedef int Position;
 
 // class Lattice;
 
 class Cell {
  public:
-  Cell() : position_(0), state_(0), nextState_(0) {}  // Default constructor
-  Cell(const Position& position_, const State& state_)
-      : position_(position_), state_(state_), nextState_(0) {}
+  // Constructor
+  Cell() = default;
+  Cell(const Position&, const State&);
+
+  // Getters y Setters
   State getState() const;
-  void setState(State newState) { state_ = newState; }
-  int nextState(const Lattice& lattice);
-  void updateState() { state_ = nextState_; }
-  friend std::ostream& operator<<(std::ostream& os, const Cell& cell);
+  State setState(State);
+  
+  // Métodos de la clase
+  int nextState(const Lattice&);
+  void updateState();
+
+  // Sobrecarga de operadores
+  friend std::ostream& operator<<(std::ostream&, const Cell&);
 
  private:
   Position position_;

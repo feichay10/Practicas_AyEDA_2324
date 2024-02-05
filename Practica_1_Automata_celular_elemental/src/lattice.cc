@@ -18,10 +18,10 @@
 
 #include "../include/lattice.h"
 
-Lattice::Lattice(int size_, std::string border_) : size_(size_), border_(border_) {
-  cells_ = new Cell[size_];
-  for (int i = 0; i < size_; i++) {
-    cells_[i] = Cell(i, 0);
+Lattice::Lattice(int size) : size_(size) {
+  cells_ = new Cell[size];
+  for (int i = 0; i < size; i++) {
+    cells_[i] = Cell(i, kDead);
   }
 }
 
@@ -32,6 +32,11 @@ Cell& Lattice::getCell(const Position& position) const { return cells_[position]
 int Lattice::getSize() const { return size_; }
 
 void Lattice::setSize(int size) { size_ = size; }
+
+// TODO: Implementar este metodo
+void Lattice::loadInitialConfiguration(std::string file) {
+  
+}
 
 void Lattice::nextGeneration() {
   for (int i = 0; i < size_; i++) {

@@ -16,144 +16,64 @@
  *
  */
 
-// #include <iostream>
-// #include <vector>
-
-// #include "cell.h"
-// #include "lattice.h"
-// #include "position.h"
-// #include "state.h"
-
-// int main(int argc, char* argv[]) {
-  
-// }
-
-#include <iostream>
-#include <vector>
 #include <fstream>
+#include <iostream>
 #include <string>
+#include <vector>
 
 #include "../include/cell.h"
 #include "../include/lattice.h"
 
-// typedef int State;
-// typedef int Position;
+const std::string kBold = "\033[1m";
+const std::string kReset = "\033[0m";
 
-// class Lattice;
-
-// class Cell {
-// public:
-//     Cell() : position_(0), state_(0), nextState_(0) {} // Default constructor
-//     Cell(const Position& position_, const State& state_) : position_(position_), state_(state_), nextState_(0) {}
-//     State getState() const { return state_; }
-//     void setState(State newState) { state_ = newState; }
-//     int nextState(const Lattice& lattice);
-//     void updateState() { state_ = nextState_; }
-//     friend std::ostream& operator<<(std::ostream& os, const Cell& cell);
-// private:
-//     Position position_;
-//     State state_;
-//     State nextState_;
-// };
-
-// class Lattice {
-// public:
-//   Lattice(int size_, std::string border_) : size_(size_), border_(border_) {
-//       cells_ = new Cell[size_];
-//       for (int i = 0; i < size_; i++) {
-//           cells_[i] = Cell(i, 0);
-//       }
-//   }
-//   ~Lattice() { delete[] cells_; }
-//   Cell& getCell(const Position& position) const { return cells_[position]; }
-//   void nextGeneration();
-//   friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
-
-//   // Getter for size_
-//   int getSize() const { return size_; }
-
-//   // Setter for size_
-//   void setSize(int size) { size_ = size; }
-
-// private:
-//     Cell* cells_;
-//     int size_;
-//     std::string border_;
-// };
-
-// int Cell::nextState(const Lattice& lattice) {
-//     int left = position_ - 1 < 0 ? 0 : lattice.getCell(position_ - 1).getState();
-//     int right = position_ + 1 >= lattice.getSize() ? 0 : lattice.getCell(position_ + 1).getState();
-//     nextState_ = left ^ (state_ | right); // Rule 30
-//     return nextState_;
-// }
-
-// void Lattice::nextGeneration() {
-//     for (int i = 0; i < size_; i++) {
-//         cells_[i].nextState(*this);
-//     }
-//     for (int i = 0; i < size_; i++) {
-//         cells_[i].updateState();
-//     }
-// }
-
-// std::ostream& operator<<(std::ostream& os, const Cell& cell) {
-//     os << (cell.state_ ? 'X' : ' ');
-//     return os;
-// }
-
-// std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
-//     for (int i = 0; i < lattice.getSize(); i++) {
-//         os << lattice.cells_[i];
-//     }
-//     return os;
-// }
+std::string kUsage =
+    kBold + "SYNOPSIS:\n\t" + kReset +
+    "./main  -size <n> -border <b [v]> [-init <file>] \n\n" + kBold +
+    "DESCRIPTION:" + kReset + kBold + "\n\t-size <n>" + kReset +
+    "\n\t\tn es el tamaño del retículo. Número de células \n\n" + kBold +
+    "\t-border <b [v]>, b=open, v=[0|1]" + kBold + "\n\t\t\t b=periodic" +
+    kReset + "\n\t\tFrontera abierta, fría o caliente.\n\n" + kBold +
+    "\t-init <file>" + kReset +
+    "\n\t\tfile es un nombre del fichero que contiene un array de estados con "
+    "la configuración"
+    "\n\t\tinicial del autómata celular. Si no se especifica se utilizará la "
+    "configuración inicial"
+    "\n\t\tpor defecto, esto es, un «1» en la célula central del retículo.";
 
 int main(int argc, char* argv[]) {
-    // Check that the correct number of arguments have been provided
-    if (argc < 5) {
-        std::cerr << "Usage: " << argv[0] << " size border" << std::endl;
-        return 1;
+  std::string border;
+  std::string file;
+  int size;
+  for (int i = 1; i < argc; i++) {
+    if (std::string(argv[i]) == "-size") {
+      size = std::stoi(argv[i + 1]);
     }
-
-    // Parse command line arguments
-    try {
-        int size = std::stoi(argv[2]);
-        std::string border = argv[4];
-        std::string initFile = argc > 5 ? argv[6] : "";
-
-        // Create Lattice instance
-        Lattice lattice(size, border);
-
-        // If initial configuration file is provided, load configuration
-        if (!initFile.empty()) {
-            std::ifstream file(initFile);
-            std::string line;
-            if (file.is_open()) {
-                getline(file, line);
-                for (int i = 0; i < size && i < line.length(); i++) {
-                    lattice.getCell(i).setState(line[i] == '1' ? 1 : 0);
-                }
-                file.close();
-            }
-        } else {
-            // Default configuration: a "1" in the middle
-            lattice.getCell(size / 2).setState(1);
-        }
-
-        // Display initial state
-        std::cout << lattice << std::endl;
-
-        // In a loop, update state and display new state
-        for (int i = 0; i < 10; i++) {
-            lattice.nextGeneration();
-            std::cout << lattice << std::endl;
-        }
-
-    } catch (const std::invalid_argument& ia) {
-        std::cerr << "Invalid argument: " << ia.what() << '\n';
-        return 1;
+    if (std::string(argv[i]) == "-border") {
+      border = argv[i + 1];
     }
+    if (std::string(argv[i]) == "-init") {
+      file = argv[i + 1];
+    }
+  }
+  std::cout << "Size: " << size << std::endl;
+  std::cout << "Border: " << border << std::endl;
+  std::cout << "File: " << file << std::endl;
 
-    return 0;
+  Lattice lattice(size, border);
+
+  if (file != "") {
+    lattice.loadInitialConfiguration(file);
+  }
+
+  std::cout << lattice << std::endl;
+
+  // Generar infinitas generaciones hasta pulsar una tecla para parar la generacion
+  while (true) {
+    lattice.nextGeneration();
+    std::cout << lattice << std::endl;
+    std::cin.get();
+  }
+
+  return 0;
 }

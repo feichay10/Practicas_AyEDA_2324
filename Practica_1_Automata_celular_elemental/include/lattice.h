@@ -21,31 +21,38 @@
 
 #pragma once
 
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
 
 #include "cell.h"
 
+typedef int Position;
+
 class Cell;
 
 class Lattice {
  public:
-  Lattice(int size_, std::string border_);
+  // Constructor y destructor
+  Lattice(int size);
   ~Lattice();
-  
-  Cell& getCell(const Position& position) const;
 
+  // Getters y Setters
+  Cell& getCell(const Position& position) const;
   int getSize() const;
   void setSize(int size);
 
+  // Métodos de la clase
+  void loadInitialConfiguration(std::string file);
   void nextGeneration();
+
+  // Sobrecarga de operadores
   friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
 
  private:
   Cell* cells_;
   int size_;
-  std::string border_;
 };
 
 #endif  // LATTICE_H_
