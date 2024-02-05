@@ -18,38 +18,38 @@
 
 #include "../include/lattice.h"
 
-Lattice::Lattice(int size) : size_(size) {
-  cells_ = new Cell[size];
-  for (int i = 0; i < size; i++) {
-    cells_[i] = Cell(i, kDead);
+Lattice::Lattice(int size, borderType border, openBorderType openBorderType) {
+  size_ = size;
+  if (border == kOpen) {
+  } else {
+    cells_ = new Cell[size + 2];
   }
 }
 
-Lattice::~Lattice() { delete[] cells_; }
+Lattice::~Lattice() {
 
-Cell& Lattice::getCell(const Position& position) const { return cells_[position]; }
+}
 
-int Lattice::getSize() const { return size_; }
+Cell& Lattice::getCell(const Position& position) const {
 
-void Lattice::setSize(int size) { size_ = size; }
+}
 
-// TODO: Implementar este metodo
+int Lattice::getSize() const { 
+
+}
+
+void Lattice::setSize(int size) { 
+
+}
+
 void Lattice::loadInitialConfiguration(std::string file) {
   
 }
 
 void Lattice::nextGeneration() {
-  for (int i = 0; i < size_; i++) {
-    cells_[i].nextState(*this);
-  }
-  for (int i = 0; i < size_; i++) {
-    cells_[i].updateState();
-  }
+
 }
 
 std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
-  for (int i = 0; i < lattice.size_; i++) {
-    os << lattice.cells_[i];
-  }
-  return os;
+
 }

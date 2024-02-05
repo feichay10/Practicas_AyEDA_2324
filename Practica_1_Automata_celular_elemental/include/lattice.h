@@ -29,13 +29,15 @@
 #include "cell.h"
 
 typedef int Position;
+enum borderType { kOpen = 0, kPeriodic = 1 };
+enum openBorderType { kCold = 0, kHot = 1 };
 
 class Cell;
 
 class Lattice {
  public:
   // Constructor y destructor
-  Lattice(int size);
+  Lattice(int size, borderType border, openBorderType openBorderType);
   ~Lattice();
 
   // Getters y Setters
@@ -53,6 +55,7 @@ class Lattice {
  private:
   Cell* cells_;
   int size_;
+  borderType border_;
 };
 
 #endif  // LATTICE_H_

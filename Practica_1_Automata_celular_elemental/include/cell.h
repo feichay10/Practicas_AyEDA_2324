@@ -27,11 +27,10 @@
 
 #include "lattice.h"
 
-// typedef int State;
-enum State { kDead = 0, kAlive = 1 };
 typedef int Position;
+enum State { kDead = 0, kAlive = 1 };
 
-// class Lattice;
+class Lattice;
 
 class Cell {
  public:

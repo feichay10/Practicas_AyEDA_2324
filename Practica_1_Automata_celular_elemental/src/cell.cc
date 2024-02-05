@@ -20,8 +20,8 @@
 
 Cell::Cell(const Position& position, const State& state) {
   position_ = position;
-  state_ = state;
-  nextState_ = 0;
+  state_ = kDead;
+  nextState_ = kDead;
 }
 
 State Cell::getState() const {
@@ -30,20 +30,13 @@ State Cell::getState() const {
 
 State Cell::setState(State newState) {
   state_ = newState;
-  return state_;
 }
 
 int Cell::nextState(const Lattice& lattice) {
-  int left = position_ - 1;
-  int right = position_ + 1;
-  if (left < 0) {
-    left = lattice.getSize() - 1;
-  }
-  if (right == lattice.getSize()) {
-    right = 0;
-  }
-  nextState_ = (lattice.getCell(left).getState() + lattice.getCell(right).getState()) % 2;
-  return nextState_;
+  // Funcion de transicion de estado: (C+R+C*R+L*C*R)%2
+  int left = lattice.getCell(position_ - 1).getState();
+  int right = lattice.getCell(position_ + 1).getState();
+  
 }
 
 void Cell::updateState() {
@@ -51,6 +44,5 @@ void Cell::updateState() {
 }
 
 std::ostream& operator<<(std::ostream& os, const Cell& cell) {
-  os << cell.getState();
-  return os;
+  
 }
