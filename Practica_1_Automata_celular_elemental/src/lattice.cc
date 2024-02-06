@@ -18,38 +18,33 @@
 
 #include "../include/lattice.h"
 
-Lattice::Lattice(int size, borderType border, openBorderType openBorderType) {
-  size_ = size;
-  if (border == kOpen) {
+Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType)
+    : size_{size}, borderType_{borderType} {
+  cells_ = new Cell[size + 2]; // Inicializamos el array de celdas n + 2 para los bordes	
+  if (borderType == kOpen) {
+    if (openBorderType == kCold) {
+      cells_[0].setState(kDead);
+      cells_[size + 1].setState(kDead);
+    } else {
+      cells_[0].setState(kAlive);
+      cells_[size + 1].setState(kAlive);
+    }
   } else {
-    cells_ = new Cell[size + 2];
+    cells_[0].setState(kDead);
+    cells_[size + 1].setState(kDead);
   }
 }
 
-Lattice::~Lattice() {
+Lattice::~Lattice() {}
 
-}
+Cell& Lattice::getCell(const Position& position) const {}
 
-Cell& Lattice::getCell(const Position& position) const {
+int Lattice::getSize() const {}
 
-}
+void Lattice::setSize(int size) {}
 
-int Lattice::getSize() const { 
+void Lattice::loadInitialConfiguration(std::string file) {}
 
-}
+void Lattice::nextGeneration() {}
 
-void Lattice::setSize(int size) { 
-
-}
-
-void Lattice::loadInitialConfiguration(std::string file) {
-  
-}
-
-void Lattice::nextGeneration() {
-
-}
-
-std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
-
-}
+std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {}
