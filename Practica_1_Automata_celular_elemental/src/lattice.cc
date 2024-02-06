@@ -18,6 +18,11 @@
 
 #include "../include/lattice.h"
 
+/**
+ * TODO: Poner el loadInitialConfiguration() en el constructor y comprobar si 
+ * el fichero existe o no
+*/
+
 Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType)
     : size_{size}, borderType_{borderType} {
   cells_ = new Cell[size + 2]; // Inicializamos el array de celdas n + 2 para los bordes	
@@ -43,7 +48,9 @@ int Lattice::getSize() const {}
 
 void Lattice::setSize(int size) {}
 
-void Lattice::loadInitialConfiguration(std::string file) {}
+void Lattice::loadInitialConfiguration(std::string file) {
+  
+}
 
 void Lattice::nextGeneration() {}
 

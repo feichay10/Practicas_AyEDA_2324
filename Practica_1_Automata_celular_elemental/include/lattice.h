@@ -55,7 +55,7 @@ class Lattice {
  private:
   Cell* cells_;
   int size_;
-  borderType borderType_;
+  borderType border_;
 };
 
 #endif  // LATTICE_H_

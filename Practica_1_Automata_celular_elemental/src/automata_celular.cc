@@ -47,7 +47,20 @@ std::string kUsage =
     "\n\t\tpor defecto, esto es, un «1» en la célula central del retículo.";
 
 int main(int argc, char* argv[]) {
-  std::cout << kUsage << std::endl;
+  // std::cout << kUsage << std::endl;
+  try {
+    if (argc == 2 && std::string(argv[1]) == "--help") {
+      std::cout << kUsage << std::endl;
+      exit(EXIT_FAILURE);
+    } else if (argc != 5 && argc != 7) {
+      std::cerr << "Número de argumentos incorrecto. Use --help para más información" << std::endl;
+      exit(EXIT_FAILURE);
+    } else {
+      if (std::string(argv[]))
+    }
+  } catch (const std::exception& e) {
+    std::cerr << e.what() << std::endl;
+  }
 
   // return 0;
 }
