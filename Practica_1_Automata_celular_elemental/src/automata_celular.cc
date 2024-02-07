@@ -56,7 +56,16 @@ int main(int argc, char* argv[]) {
       std::cerr << "Número de argumentos incorrecto. Use --help para más información" << std::endl;
       exit(EXIT_FAILURE);
     } else {
-      if (std::string(argv[]))
+      // Si se pasa por parametros -init <file> se carga el fichero 
+      // Si no se pasa por parametros -init <file> se carga la configuración por defecto
+      // Recorrer sobre los argumentos pasados hasta encontrar -init <file>
+      std::string file;
+      for (int i = 1; i < argc; i++) {
+        if (std::string(argv[i]) == "-init") {
+          file = argv[i + 1];
+        }
+      }
+      if 
     }
   } catch (const std::exception& e) {
     std::cerr << e.what() << std::endl;

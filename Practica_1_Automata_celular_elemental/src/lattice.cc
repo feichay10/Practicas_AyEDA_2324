@@ -22,7 +22,6 @@
  * TODO: Poner el loadInitialConfiguration() en el constructor y comprobar si 
  * el fichero existe o no
 */
-
 Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType)
     : size_{size}, borderType_{borderType} {
   cells_ = new Cell[size + 2]; // Inicializamos el array de celdas n + 2 para los bordes	
@@ -38,6 +37,12 @@ Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType)
     cells_[0].setState(kDead);
     cells_[size + 1].setState(kDead);
   }
+}
+
+Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType, std::string file) {
+  int size = 0;
+
+  loadInitialConfiguration(file);
 }
 
 Lattice::~Lattice() {}

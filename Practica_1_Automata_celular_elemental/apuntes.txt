@@ -1,0 +1,1 @@
+./automata_celular -size n -border b 

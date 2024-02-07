@@ -38,6 +38,7 @@ class Lattice {
  public:
   // Constructor y destructor
   Lattice(int size, borderType border, openBorderType openBorderType);
+  Lattice(int size, borderType border, openBorderType openBorderType, std::string file);
   ~Lattice();
 
   // Getters y Setters
