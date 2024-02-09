@@ -14,6 +14,7 @@
  *
  * @copyright Copyright (c) 2023
  *
+ * ./a.out -size 80 -border open -init init.txt
  */
 
 #include <iostream>
@@ -130,7 +131,7 @@ int main(int argc, char* argv[]) {
     std::cout << lattice << std::endl;
 
     // In a loop, update state and display new state
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 15; i++) {
       lattice.nextGeneration();
       std::cout << lattice << std::endl;
     }
