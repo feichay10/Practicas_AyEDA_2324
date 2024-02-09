@@ -10,9 +10,9 @@
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
- * @date 2023-02-17
+ * @date
  *
- * @copyright Copyright (c) 2023
+ * @copyright Copyright (c) 2024
  *
  */
 
@@ -40,36 +40,40 @@ std::string kUsage =
     "del retículo tiene un valor fijo.\n \t\tSe dice una frontera es fría si "
     "las células fuera de la frontera tiene estado «0», y caliente\n \t\tsi"
     " tiene estado «1».\n \n\t\tFrontera periódica. Se considera que los "
-    "extremos del retículo son adyacentes.\n\n" + kBold + "\t-init <file>" +
-    kReset + "\n\t\tfile es un nombre del fichero que contiene un array de "
+    "extremos del retículo son adyacentes.\n\n" +
+    kBold + "\t-init <file>" + kReset +
+    "\n\t\tfile es un nombre del fichero que contiene un array de "
     "estados con la configuración \n\t\tinicial del autómata celular. "
     "Si no se especifica se utilizará la configuración inicial"
     "\n\t\tpor defecto, esto es, un «1» en la célula central del retículo.";
 
 int main(int argc, char* argv[]) {
-  // std::cout << kUsage << std::endl;
   try {
-    if (argc == 2 && std::string(argv[1]) == "--help") {
+    if (argc == 2 && std::string(argv[1]) == "--help" || argc == 1) {
       std::cout << kUsage << std::endl;
       exit(EXIT_FAILURE);
     } else if (argc != 5 && argc != 7) {
-      std::cerr << "Número de argumentos incorrecto. Use --help para más información" << std::endl;
+      std::cerr << "Número de argumentos incorrecto. Use --help para más información" << std::endl; 
       exit(EXIT_FAILURE);
     } else {
-      // Si se pasa por parametros -init <file> se carga el fichero 
-      // Si no se pasa por parametros -init <file> se carga la configuración por defecto
-      // Recorrer sobre los argumentos pasados hasta encontrar -init <file>
-      std::string file;
+      int size = std::stoi(argv[2]);
+      borderType borderType;
+      openBorderType openBorderType;
+      std::string file = "";
       for (int i = 1; i < argc; i++) {
         if (std::string(argv[i]) == "-init") {
           file = argv[i + 1];
         }
       }
-      if 
+      Lattice lattice(size, borderType, openBorderType, file);
+      for (int i = 0; i < 10; i++) {
+        lattice.nextGeneration();
+        std::cout << lattice << std::endl;
+      }
     }
   } catch (const std::exception& e) {
     std::cerr << e.what() << std::endl;
   }
 
-  // return 0;
+  return 0;
 }

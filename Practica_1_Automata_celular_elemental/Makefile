@@ -1,7 +1,7 @@
 CC=g++
 CXXFLAGS=-g -std=c++14
 
-OBJS = src/automata_celular.o
+OBJS = src/automata_celular.o src/cell.o src/lattice.o
 
 all: ${OBJS}
 	$(CC) $(CXXFLAGS) -o automata_celular ${OBJS}

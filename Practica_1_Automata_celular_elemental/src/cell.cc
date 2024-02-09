@@ -10,9 +10,9 @@
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
- * @date 2023-02-17
+ * @date 
  *
- * @copyright Copyright (c) 2023
+ * @copyright Copyright (c) 2024
  *
  */
 
@@ -28,15 +28,21 @@ State Cell::getState() const {
   return state_;
 }
 
-State Cell::setState(State newState) {
-  state_ = newState;
+State Cell::setState(State state) {
+  state_ = State(state);
 }
 
+/**
+ * * Funcion de transicion de estado: (C + R + C * R + L * C * R) % 2
+ */
 int Cell::nextState(const Lattice& lattice) {
-  // Funcion de transicion de estado: (C+R+C*R+L*C*R)%2
-  int left = lattice.getCell(position_ - 1).getState();
-  int right = lattice.getCell(position_ + 1).getState();
+  State left = lattice.getCell(position_ - 1).getState();
+  State right = lattice.getCell(position_ + 1).getState();
+  State current = lattice.getCell(position_).getState();
+
+  nextState_ = static_cast<State>((current + right + current * right + left * current * right) % 2);
   
+  return nextState_;
 }
 
 void Cell::updateState() {
@@ -44,5 +50,10 @@ void Cell::updateState() {
 }
 
 std::ostream& operator<<(std::ostream& os, const Cell& cell) {
-  
+  if (cell.getState() == kAlive) {
+    os << "X";
+  } else {
+    os << "0";
+  }
+  return os;
 }

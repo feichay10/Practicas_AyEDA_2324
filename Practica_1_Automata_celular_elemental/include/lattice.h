@@ -10,16 +10,14 @@
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
- * @date 2023-02-17
+ * @date 
  *
- * @copyright Copyright (c) 2023
+ * @copyright Copyright (c) 2024
  *
  */
 
 #ifndef LATTICE_H_
 #define LATTICE_H_
-
-#pragma once
 
 #include <fstream>
 #include <iostream>
@@ -37,7 +35,6 @@ class Cell;
 class Lattice {
  public:
   // Constructor y destructor
-  Lattice(int size, borderType border, openBorderType openBorderType);
   Lattice(int size, borderType border, openBorderType openBorderType, std::string file);
   ~Lattice();
 
@@ -56,7 +53,7 @@ class Lattice {
  private:
   Cell* cells_;
   int size_;
-  borderType border_;
+  borderType borderType_;
 };
 
 #endif  // LATTICE_H_
