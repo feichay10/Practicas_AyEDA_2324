@@ -18,13 +18,25 @@
 
 #include "../include/lattice.h"
 
-Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType, std::string file) {
-  std::cout << "-----------------------------------" << std::endl;
-  std::cout << "Size: " << size << std::endl;
-  std::cout << "Border type: " << (borderType == kOpen ? "Open" : "Periodic") << std::endl;
-  std::cout << "Open border type: " << (openBorderType == kCold ? "Cold" : "Hot") << std::endl;
-  std::cout << "File: " << (file.empty() ? "No file" : file) << std::endl;
-  std::cout << "-----------------------------------" << std::endl << std::endl;
+Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType,
+                 std::string file) {
+  std::cout << "+---------------------------------+" << std::endl;
+  std::cout << "|           Lattice Info          |" << std::endl;
+  std::cout << "+---------------------------------+" << std::endl;
+  std::cout << "| Size: " << size
+            << std::setw(27 - std::to_string(size).length()) << "|"
+            << std::endl;
+  std::cout << "| Border type: " << (borderType == kOpen ? "Open" : "Periodic")
+            << std::setw(20 - (borderType == kOpen ? 4 : 8)) << "|"
+            << std::endl;
+  std::cout << "| Open border type: "
+            << (openBorderType == kCold ? "Cold" : "Hot")
+            << std::setw(15 - (openBorderType == kCold ? 4 : 3)) << "|"
+            << std::endl;
+  std::cout << "| File: " << (file.empty() ? "No file" : file)
+            << std::setw(27 - (file.empty() ? 7 : file.length())) << "|"
+            << std::endl;
+  std::cout << "+---------------------------------+" << std::endl << std::endl;
 
   size_ = size + 2;
   borderType_ = borderType;
@@ -44,7 +56,7 @@ Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType,
       cells_[0].setState(kAlive);
       cells_[size_ - 1].setState(kAlive);
     }
-  } else { 
+  } else {
     cells_[0].setState(cells_[size_ - 1].getState());
     cells_[size_ - 1].setState(cells_[0].getState());
   }
@@ -52,9 +64,7 @@ Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType,
   loadInitialConfiguration(file);
 }
 
-Lattice::~Lattice() {
-  delete[] cells_; 
-}
+Lattice::~Lattice() { delete[] cells_; }
 
 void Lattice::loadInitialConfiguration(std::string file) {
   if (file.empty() || file == "") {
@@ -62,7 +72,7 @@ void Lattice::loadInitialConfiguration(std::string file) {
       cells_[i].setState(kDead);
     }
     cells_[size_ / 2].setState(kAlive);
-  } else { // Si se especifica un archivo de configuracion inicial
+  } else {  // Si se especifica un archivo de configuracion inicial
     std::ifstream file_config(file);
     if (file_config.is_open()) {
       std::string line;
@@ -85,21 +95,13 @@ Cell& Lattice::getCell(const Position& position) const {
   return cells_[position];
 }
 
-int Lattice::getSize() const {
-  return size_; 
-}
+int Lattice::getSize() const { return size_; }
 
-void Lattice::setSize(int size) {
-  size_ = size; 
-}
+void Lattice::setSize(int size) { size_ = size; }
 
-borderType Lattice::getBorderType() {
-  return borderType_;
-}
+borderType Lattice::getBorderType() { return borderType_; }
 
-void Lattice::setBorderType(borderType borderType) {
-  borderType_ = borderType;
-}
+void Lattice::setBorderType(borderType borderType) { borderType_ = borderType; }
 
 void Lattice::nextGeneration() {
   if (borderType_ == kOpen) {

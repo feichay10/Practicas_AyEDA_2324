@@ -30,7 +30,7 @@ State Cell::getState() const {
 }
 
 State Cell::setState(State state) {
-  state_ = State(state);
+  state_ = state;
   return state_;
 }
 
@@ -49,9 +49,8 @@ int Cell::nextState(const Lattice& lattice) {
 
   State right = lattice.getCell(position_ + 1).getState();
   State left = lattice.getCell(position_ - 1).getState();
-
   nextState_ = static_cast<State>((state_ + right + state_ * right + left * state_ * right) % 2);
-
+  
   return 0;
 }
 
@@ -60,12 +59,6 @@ void Cell::updateState() {
 }
 
 std::ostream& operator<<(std::ostream& os, const Cell& cell) {
-  if (cell.getState() == kAlive) {
-    os << "X";
-  } else {
-    os << " ";
-  }
-
-  // os << (cell.getState() == kAlive) ? "X" : " ";
+  os << ((cell.getState() == kAlive) ? "X" : " ");
   return os;
 }

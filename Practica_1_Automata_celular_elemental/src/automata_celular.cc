@@ -35,10 +35,9 @@ int main(int argc, char* argv[]) {
     programParameters(argc, argv);
     checkSize(size, file);
     Lattice lattice(size, borderTypeVar, openBorderTypeVar, file);
-    std::cout << "Usa 'q' para terminar la evolución de la celula" << std::endl << std::endl;
     cellEvolution(lattice);
-  } catch (const std::exception& e) {
-    std::cerr << e.what() << std::endl;
+  } catch (const std::string message) { 
+    std::cerr << message << std::endl;
   }
 
   return 0;
@@ -46,10 +45,10 @@ int main(int argc, char* argv[]) {
 
 void programParameters(int argc, char* argv[]) {
   if (argc == 2 && std::string(argv[1]) == "--help") {
-    std::cout << kUsage << std::endl;
+    throw kUsage;
     exit(EXIT_FAILURE);
   } else if (argc == 2 && std::string(argv[1]) != "--help") {
-    std::cout << "Opción no válida. Use " << argv[0] << " --help" << std::endl;
+    throw std::string("Opción no válida. Use ") + argv[0] + " --help para más información.";
     exit(EXIT_FAILURE);
   }
 
@@ -63,6 +62,9 @@ void programParameters(int argc, char* argv[]) {
       }
     } else if (std::string(argv[i]) == "-init") {
       file = argv[i + 1];
-    }
+    } /*else if (std::string(argv[i]) != "-size" || "-border") {
+      std::cout << "Use " << argv[0] << " --help" << std::endl;
+      exit(EXIT_FAILURE);
+    }*/
   }
 }
