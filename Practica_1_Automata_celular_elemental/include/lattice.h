@@ -43,6 +43,9 @@ class Lattice {
   int getSize() const;
   void setSize(int size);
 
+  borderType getBorderType();
+  void setBorderType(borderType borderType);
+
   // Métodos de la clase
   void loadInitialConfiguration(std::string file);
   void nextGeneration();
@@ -54,6 +57,7 @@ class Lattice {
   Cell* cells_;
   int size_;
   borderType borderType_;
+  openBorderType openBorderType_;
 };
 
 #endif  // LATTICE_H_

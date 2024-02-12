@@ -34,7 +34,7 @@ class Lattice;
 class Cell {
  public:
   // Constructor
-  Cell() = default;
+  Cell();
   Cell(const Position&, const State&);
 
   // Getters y Setters
@@ -49,9 +49,9 @@ class Cell {
   friend std::ostream& operator<<(std::ostream&, const Cell&);
 
  private:
-  Position position_;
-  State state_;
-  State nextState_;
+  Position position_ = 0;
+  State state_ = kDead;
+  State nextState_ = kDead;
 };
 
 #endif  // CELL_H_

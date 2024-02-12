@@ -18,10 +18,11 @@
 
 #include "../include/cell.h"
 
+Cell::Cell() {}
+
 Cell::Cell(const Position& position, const State& state) {
   position_ = position;
-  state_ = kDead;
-  nextState_ = kDead;
+  state_ = state;
 }
 
 State Cell::getState() const {
@@ -30,19 +31,28 @@ State Cell::getState() const {
 
 State Cell::setState(State state) {
   state_ = State(state);
+  return state_;
 }
 
 /**
  * * Funcion de transicion de estado: (C + R + C * R + L * C * R) % 2
+ * C = current, R = right, L = left
  */
 int Cell::nextState(const Lattice& lattice) {
-  State left = lattice.getCell(position_ - 1).getState();
-  State right = lattice.getCell(position_ + 1).getState();
-  State current = lattice.getCell(position_).getState();
+  // State left = lattice.getCell(position_ - 1).getState();
+  // State right = lattice.getCell(position_ + 1).getState();
+  // State current = lattice.getCell(position_).getState();
 
-  nextState_ = static_cast<State>((current + right + current * right + left * current * right) % 2);
+  // nextState_ = static_cast<State>((current + right + current * right + left * current * right) % 2);
   
-  return nextState_;
+  // return nextState_;
+
+  State right = lattice.getCell(position_ + 1).getState();
+  State left = lattice.getCell(position_ - 1).getState();
+
+  nextState_ = static_cast<State>((state_ + right + state_ * right + left * state_ * right) % 2);
+
+  return 0;
 }
 
 void Cell::updateState() {

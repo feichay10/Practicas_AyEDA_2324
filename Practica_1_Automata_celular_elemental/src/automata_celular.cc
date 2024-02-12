@@ -47,25 +47,31 @@ std::string kUsage =
     "Si no se especifica se utilizará la configuración inicial"
     "\n\t\tpor defecto, esto es, un «1» en la célula central del retículo.";
 
+void check_size(int size, std::string file);
+
 int main(int argc, char* argv[]) {
   try {
     if (argc == 2 && std::string(argv[1]) == "--help" || argc == 1) {
       std::cout << kUsage << std::endl;
       exit(EXIT_FAILURE);
-    } else if (argc != 5 && argc != 7) {
+    /*} else if (argc != 5 && argc != 7) {
       std::cerr << "Número de argumentos incorrecto. Use --help para más información" << std::endl; 
-      exit(EXIT_FAILURE);
+      exit(EXIT_FAILURE);*/
     } else {
       int size = std::stoi(argv[2]);
-      borderType borderType;
-      openBorderType openBorderType;
+      borderType borderType = (std::string(argv[4]) == "open") ? kOpen : kPeriodic;
+      openBorderType openBorderType = (std::string(argv[5]) == "0") ? kCold : kHot;
       std::string file = "";
       for (int i = 1; i < argc; i++) {
         if (std::string(argv[i]) == "-init") {
           file = argv[i + 1];
         }
       }
+
+      check_size(size, file);
+
       Lattice lattice(size, borderType, openBorderType, file);
+      std::cout << lattice << std::endl;
       for (int i = 0; i < 10; i++) {
         lattice.nextGeneration();
         std::cout << lattice << std::endl;
@@ -76,4 +82,31 @@ int main(int argc, char* argv[]) {
   }
 
   return 0;
+}
+
+void check_size(int size, std::string file) {
+  if (size <= 0) {
+    std::cerr << "El tamaño del retículo debe ser un número mayor a cero." << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  if (file.empty()) {
+    return;
+  }
+
+  int count = 0;
+  if (!file.empty()) {
+    std::ifstream file_config(file);
+    if (file_config.is_open()) {
+      std::string line;
+      while (std::getline(file_config, line)) {
+        count += line.size();
+      }
+    }
+  }
+
+  if (count != size) {
+    std::cerr << "El tamaño del retículo no coincide con el tamaño del fichero." << std::endl;
+    exit(EXIT_FAILURE);
+  }
 }
