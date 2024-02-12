@@ -16,10 +16,8 @@
  *
  */
 
-#include <fstream>
 #include <iostream>
 #include <string>
-#include <vector>
 
 #include "../include/cell.h"
 #include "../include/lattice.h"
@@ -34,16 +32,11 @@ std::string file = "";
 
 int main(int argc, char* argv[]) {
   try {
-    if (argc == 2 && std::string(argv[1]) == "--help" || argc == 1) {
-      std::cout << kUsage << std::endl;
-      exit(EXIT_FAILURE);
-    } else {
-      programParameters(argc, argv);
-      checkSize(size, file);
-      Lattice lattice(size, borderTypeVar, openBorderTypeVar, file);
-      std::cout << "Usa 'q' para terminar la evolución de la celula" << std::endl << std::endl;
-      cellEvolution(lattice);
-    }
+    programParameters(argc, argv);
+    checkSize(size, file);
+    Lattice lattice(size, borderTypeVar, openBorderTypeVar, file);
+    std::cout << "Usa 'q' para terminar la evolución de la celula" << std::endl << std::endl;
+    cellEvolution(lattice);
   } catch (const std::exception& e) {
     std::cerr << e.what() << std::endl;
   }
@@ -52,6 +45,14 @@ int main(int argc, char* argv[]) {
 }
 
 void programParameters(int argc, char* argv[]) {
+  if (argc == 2 && std::string(argv[1]) == "--help") {
+    std::cout << kUsage << std::endl;
+    exit(EXIT_FAILURE);
+  } else if (argc == 2 && std::string(argv[1]) != "--help") {
+    std::cout << "Opción no válida. Use " << argv[0] << " --help" << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-size") {
       size = std::stoi(argv[i + 1]);

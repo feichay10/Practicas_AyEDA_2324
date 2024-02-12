@@ -18,9 +18,6 @@
 
 #include "../include/lattice.h"
 
-/**
- * TODO: Constructor del retículo crea las células en memoria dinámica
- */
 Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType, std::string file) {
   std::cout << "-----------------------------------" << std::endl;
   std::cout << "Size: " << size << std::endl;

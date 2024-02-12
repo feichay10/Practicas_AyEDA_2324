@@ -7,4 +7,4 @@ all: ${OBJS}
 	$(CC) $(CXXFLAGS) -o automata_celular ${OBJS}
 
 clean: 
-	rm -rf src/*.o main
+	rm -rf src/*.o automata_celular

@@ -16,10 +16,11 @@
  *
  */
 
-#include <fstream>
+#ifndef FUNCTIONS_H_
+#define FUNCTIONS_H_
+
 #include <iostream>
 #include <string>
-#include <vector>
 
 #include "lattice.h"
 
@@ -30,7 +31,7 @@ const std::string kUsage =
     kBold + "NOMBRE\n\t" + kReset +
     "automata_celular - Programa que simula un autómata celular elemental\n\n" +
     kBold + "SINÓPSIS\n\t" + kReset +
-    "./main -size <n> -border <b [v]> [-init <file>] \n\n" + kBold +
+    "./main [OPTION]... [FILE]... \n\n" + kBold +
     "DESCRIPCIÓN" + kReset + kBold + "\n\t-size <n>" + kReset +
     "\n\t\tn es el tamaño del retículo. Número de células \n\n" + kBold +
     "\t-border <b [v]>, b=open, v=[0|1]" + kBold + "\n\t\t\t b=periodic" +
@@ -48,3 +49,5 @@ const std::string kUsage =
 
 void checkSize(int size, std::string file);
 void cellEvolution(Lattice &lattice);
+
+#endif  // FUNCTIONS_H_
