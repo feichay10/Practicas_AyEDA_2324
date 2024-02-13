@@ -23,25 +23,10 @@
 #include "../include/lattice.h"
 #include "../include/functions.h"
 
-void programParameters(int argc, char* argv[]);
-
 int size; 
 borderType borderTypeVar;
 openBorderType openBorderTypeVar;
 std::string file = "";
-
-int main(int argc, char* argv[]) {
-  try {
-    programParameters(argc, argv);
-    checkSize(size, file);
-    Lattice lattice(size, borderTypeVar, openBorderTypeVar, file);
-    cellEvolution(lattice);
-  } catch (const std::string message) { 
-    std::cerr << message << std::endl;
-  }
-
-  return 0;
-}
 
 void programParameters(int argc, char* argv[]) {
   if (argc == 2 && std::string(argv[1]) == "--help") {
@@ -67,4 +52,17 @@ void programParameters(int argc, char* argv[]) {
       exit(EXIT_FAILURE);
     }*/
   }
+}
+
+int main(int argc, char* argv[]) {
+  try {
+    programParameters(argc, argv);
+    checkSize(size, file);
+    Lattice lattice(size, borderTypeVar, openBorderTypeVar, file);
+    cellEvolution(lattice);
+  } catch (const std::string message) { 
+    std::cerr << message << std::endl;
+  }
+
+  return 0;
 }

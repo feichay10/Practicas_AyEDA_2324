@@ -38,7 +38,7 @@ Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType,
             << std::endl;
   std::cout << "+---------------------------------+" << std::endl << std::endl;
 
-  size_ = size + 2;
+  size_ = size + 2; // Se añaden dos celdas para las fronteras
   borderType_ = borderType;
   openBorderType_ = openBorderType;
   cells_ = new Cell[size_];
@@ -48,19 +48,7 @@ Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType,
   }
 
   // Tipo de frontera:
-  if (borderType_ == kOpen) {
-    if (openBorderType_ == kCold) {
-      cells_[0].setState(kDead);
-      cells_[size_ - 1].setState(kDead);
-    } else {
-      cells_[0].setState(kAlive);
-      cells_[size_ - 1].setState(kAlive);
-    }
-  } else {
-    cells_[0].setState(cells_[size_ - 1].getState());
-    cells_[size_ - 1].setState(cells_[0].getState());
-  }
-
+  setFrontier(borderType);
   loadInitialConfiguration(file);
 }
 
@@ -102,6 +90,21 @@ void Lattice::setSize(int size) { size_ = size; }
 borderType Lattice::getBorderType() { return borderType_; }
 
 void Lattice::setBorderType(borderType borderType) { borderType_ = borderType; }
+
+void Lattice::setFrontier(borderType borderType) {
+  if (borderType_ == kOpen) {
+    if (openBorderType_ == kCold) {
+      cells_[0].setState(kDead);
+      cells_[size_ - 1].setState(kDead);
+    } else {
+      cells_[0].setState(kAlive);
+      cells_[size_ - 1].setState(kAlive);
+    }
+  } else {
+    cells_[0].setState(cells_[size_ - 1].getState());
+    cells_[size_ - 1].setState(cells_[0].getState());
+  }
+}
 
 void Lattice::nextGeneration() {
   if (borderType_ == kOpen) {

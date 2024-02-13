@@ -35,23 +35,46 @@ State Cell::setState(State state) {
 }
 
 /**
- * * Funcion de transicion de estado: (C + R + C * R + L * C * R) % 2
- * C = current, R = right, L = left
+ * Reglas del autómata celular:
+ * 111 -> 0
+ * 110 -> 1
+ * 101 -> 1
+ * 100 -> 0
+ * 011 -> 1
+ * 010 -> 0
+ * 001 -> 1
+ * 000 -> 1
  */
 int Cell::nextState(const Lattice& lattice) {
-  // State left = lattice.getCell(position_ - 1).getState();
+  int left = lattice.getCell(position_ - 1).getState();
+  int right = lattice.getCell(position_ + 1).getState();
+  int center = lattice.getCell(position_).getState();
+
   // State right = lattice.getCell(position_ + 1).getState();
-  // State current = lattice.getCell(position_).getState();
-
-  // nextState_ = static_cast<State>((current + right + current * right + left * current * right) % 2);
+  // State left = lattice.getCell(position_ - 1).getState();
+  // nextState_ = static_cast<State>((state_ + right + state_ * right + left * state_ * right) % 2);
   
-  // return nextState_;
+  // return 0;
 
-  State right = lattice.getCell(position_ + 1).getState();
-  State left = lattice.getCell(position_ - 1).getState();
-  nextState_ = static_cast<State>((state_ + right + state_ * right + left * state_ * right) % 2);
-  
-  return 0;
+  if (left == kAlive && center == kAlive && right == kAlive) {       // 111
+    nextState_ = kDead;
+  } else if (left == kAlive && center == kAlive && right == kDead) { // 110
+    nextState_ = kAlive;
+  } else if (left == kAlive && center == kDead && right == kAlive) { // 101
+    nextState_ = kAlive;
+  } else if (left == kAlive && center == kDead && right == kDead) {  // 100
+    nextState_ = kDead;
+  } else if (left == kDead && center == kAlive && right == kAlive) { // 011
+    nextState_ = kAlive;
+  } else if (left == kDead && center == kAlive && right == kDead) {  // 010
+    nextState_ = kDead;
+  } else if (left == kDead && center == kDead && right == kAlive) {  // 001
+    nextState_ = kAlive;
+  } else if (left == kDead && center == kDead && right == kDead) {   // 000
+    nextState_ = kAlive;
+  }
+
+  return nextState_;
 }
 
 void Cell::updateState() {

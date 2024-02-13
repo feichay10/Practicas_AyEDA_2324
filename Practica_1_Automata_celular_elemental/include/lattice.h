@@ -46,6 +46,8 @@ class Lattice {
   borderType getBorderType();
   void setBorderType(borderType borderType);
 
+  void setFrontier(borderType borderType);
+
   // Métodos de la clase
   void loadInitialConfiguration(std::string file);
   void nextGeneration();
