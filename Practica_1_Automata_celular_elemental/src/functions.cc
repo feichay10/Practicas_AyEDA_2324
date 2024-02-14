@@ -13,7 +13,7 @@
 
 void checkSize(int size, std::string file) {
   if (size <= 0) {
-    throw "El tamaño del retículo debe ser un número mayor a cero.";
+    throw "The lattice size must be a number greater than zero.";
     exit(EXIT_FAILURE);
   }
 
@@ -31,13 +31,13 @@ void checkSize(int size, std::string file) {
   }
 
   if (count != size) {
-    throw "El tamaño del retículo no coincide con el tamaño del fichero.";
+    throw "The lattice size does not match the file size.";
     exit(EXIT_FAILURE);
   }
 }
 
 void cellEvolution(Lattice &lattice) {
-  std::cout << "\nUsa 'q' para terminar la evolución de la celula" << std::endl << std::endl;
+  std::cout << "\nUse 'q' to end the cell evolution" << std::endl << std::endl;
   std::cout << lattice << std::endl;
   while (true) {
     lattice.nextGeneration();

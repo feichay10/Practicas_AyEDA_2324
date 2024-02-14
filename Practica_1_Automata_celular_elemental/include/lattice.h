@@ -61,6 +61,7 @@ class Lattice {
   int size_;
   borderType borderType_;
   openBorderType openBorderType_ = kCold;
+  std::string initialConfiguration_;
 };
 
 #endif  // LATTICE_H_

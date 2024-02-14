@@ -24,14 +24,13 @@ Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType,
   openBorderType_ = openBorderType;
   cells_ = new Cell[size_];
 
-  printLatticeInformation(file);
-
   for (int i = 0; i < size_; i++) {
     cells_[i] = Cell(i, kDead);
   }
 
   setFrontier();
   loadInitialConfiguration(file);
+  printLatticeInformation(file);
 }
 
 Lattice::~Lattice() { delete[] cells_; }
@@ -94,17 +93,19 @@ void Lattice::printLatticeInformation(std::string file) {
   std::cout << "| File: " << (file.empty() ? "No file" : file)
             << std::setw(27 - (file.empty() ? 7 : file.length())) << "|"
             << std::endl;
-  // std::cout << "| Initial configuration: ";
+  std::cout << "+---------------------------------+" << std::endl;
 
-  std::cout << "+---------------------------------+" << std::endl << std::endl;
+  std::cout << "Initial configuration: " << initialConfiguration_ << std::endl;
 }
 
 void Lattice::loadInitialConfiguration(std::string file) {
-  std::cout << "Initial configuration: ";
+  std::string initialConfiguration = "";
+  // std::cout << "Initial configuration: ";
   if (file.empty() || file == "") { // Si no se especifica un archivo
     cells_[size_ / 2].setState(kAlive);
     for (int i = 1; i < size_ - 1; i++) {
-      std::cout << cells_[i].getState();
+      // std::cout << cells_[i].getState();
+      initialConfiguration_ += std::to_string(cells_[i].getState());
     }
   } else {  
     std::ifstream file_config(file);
@@ -114,7 +115,8 @@ void Lattice::loadInitialConfiguration(std::string file) {
       while (std::getline(file_config, line)) {
         for (int j = 0; j < line.size(); j++) {
           cells_[i + 1].setState(line[j] == '1' ? kAlive : kDead);
-          std::cout << cells_[i + 1].getState();
+          // std::cout << cells_[i + 1].getState();
+          initialConfiguration_ += std::to_string(cells_[i + 1].getState());
           i++;
         }
       }
