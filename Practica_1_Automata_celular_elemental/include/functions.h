@@ -21,13 +21,14 @@
 
 #include <iostream>
 #include <string>
+#include <fstream>
 
 #include "lattice.h"
 
-const std::string kBold = "\033[1m";
-const std::string kReset = "\033[0m";
+const char* kBold = "\033[1m";
+const char* kReset = "\033[0m";
 
-const std::string kUsage =
+const char* kUsage =
     kBold + "NOMBRE\n\t" + kReset +
     "automata_celular - Programa que simula un autómata celular elemental\n\n" +
     kBold + "SINÓPSIS\n\t" + kReset +
@@ -48,6 +49,7 @@ const std::string kUsage =
     "\n\t\tpor defecto, esto es, un «1» en la célula central del retículo.";
 
 void checkSize(int size, std::string file);
+void checkFile(std::string file);
 void cellEvolution(Lattice &lattice);
 
 #endif  // FUNCTIONS_H_

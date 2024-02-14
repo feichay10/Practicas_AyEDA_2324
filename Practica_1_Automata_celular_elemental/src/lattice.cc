@@ -28,8 +28,8 @@ Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType,
     cells_[i] = Cell(i, kDead);
   }
 
-  setFrontier();
   loadInitialConfiguration(file);
+  setFrontier();
   printLatticeInformation(file);
 }
 
@@ -62,6 +62,10 @@ void Lattice::nextGeneration() {
     for (int i = 0; i < size_; i++) {
       cells_[i].updateState();
     }
+
+    // Actualizar las fronteras para el caso periódico
+    cells_[0].setState(cells_[size_ - 2].getState());
+    cells_[size_ - 1].setState(cells_[1].getState());
   }
 }
 
@@ -102,7 +106,6 @@ void Lattice::loadInitialConfiguration(std::string file) {
   if (file.empty() || file == "") { // Si no se especifica un archivo
     cells_[size_ / 2].setState(kAlive);
     for (int i = 1; i < size_ - 1; i++) {
-      // std::cout << cells_[i].getState();
       initialConfiguration_ += std::to_string(cells_[i].getState());
     }
   } else {  
@@ -113,7 +116,6 @@ void Lattice::loadInitialConfiguration(std::string file) {
       while (std::getline(file_config, line)) {
         for (int j = 0; j < line.size(); j++) {
           cells_[i + 1].setState(line[j] == '1' ? kAlive : kDead);
-          // std::cout << cells_[i + 1].getState();
           initialConfiguration_ += std::to_string(cells_[i + 1].getState());
           i++;
         }
@@ -132,7 +134,9 @@ void Lattice::setFrontier() {
       cells_[size_ - 1].setState(kAlive);
     }
   } else {
-    cells_[0].setState(cells_[size_ - 1].getState());
-    cells_[size_ - 1].setState(cells_[0].getState());
+    cells_[0].setState(cells_[size_ - 2].getState());
+    std::cout << cells_[0].getState() << std::endl;
+    cells_[size_ - 1].setState(cells_[1].getState());
+    std::cout << cells_[size_ - 1].getState() << std::endl;
   }
 }

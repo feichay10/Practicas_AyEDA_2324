@@ -36,6 +36,24 @@ void checkSize(int size, std::string file) {
   }
 }
 
+void checkFile(std::string file) {
+  std::ifstream file_config(file);
+  if (!file_config.is_open()) {
+    throw "The file does not exist.";
+    exit(EXIT_FAILURE);
+  } else {
+    std::string line;
+    while (std::getline(file_config, line)) {
+      for (int i = 0; i < line.size(); i++) {
+        if (line[i] != '0' && line[i] != '1') {
+          throw "The file must contain only 0s and 1s.";
+          exit(EXIT_FAILURE);
+        }
+      }
+    }
+  }
+}
+
 void cellEvolution(Lattice &lattice) {
   std::cout << "\nUse 'q' to end the cell evolution" << std::endl << std::endl;
   std::cout << lattice << std::endl;

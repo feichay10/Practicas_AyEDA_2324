@@ -34,17 +34,6 @@ State Cell::setState(State state) {
   return state_;
 }
 
-/**
- * Reglas del autómata celular:
- * 111 -> 0
- * 110 -> 1
- * 101 -> 1
- * 100 -> 0
- * 011 -> 1
- * 010 -> 0
- * 001 -> 1
- * 000 -> 1
- */
 int Cell::nextState(const Lattice& lattice) {
   int left = lattice.getCell(position_ - 1).getState();
   int right = lattice.getCell(position_ + 1).getState();
