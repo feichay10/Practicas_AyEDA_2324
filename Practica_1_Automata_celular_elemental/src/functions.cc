@@ -37,7 +37,7 @@ void checkSize(int size, std::string file) {
 }
 
 void cellEvolution(Lattice &lattice) {
-  std::cout << "Usa 'q' para terminar la evolución de la celula" << std::endl << std::endl;
+  std::cout << "\nUsa 'q' para terminar la evolución de la celula" << std::endl << std::endl;
   std::cout << lattice << std::endl;
   while (true) {
     lattice.nextGeneration();

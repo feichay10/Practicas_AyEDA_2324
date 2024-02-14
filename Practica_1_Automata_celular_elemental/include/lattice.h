@@ -46,16 +46,16 @@ class Lattice {
   borderType getBorderType();
   void setBorderType(borderType borderType);
 
-  void setFrontier(borderType borderType);
-
   // Métodos de la clase
-  void loadInitialConfiguration(std::string file);
   void nextGeneration();
 
   // Sobrecarga de operadores
   friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
 
  private:
+  void loadInitialConfiguration(std::string file);
+  void setFrontier();
+
   Cell* cells_;
   int size_;
   borderType borderType_;
