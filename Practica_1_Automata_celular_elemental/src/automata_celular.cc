@@ -28,6 +28,13 @@ borderType borderTypeVar;
 openBorderType openBorderTypeVar;
 std::string file = "";
 
+/**
+ * TODO: Comprobar que el fichero que se introduce es correcto y se pueda abrir
+ * TODO: Comprobar que si introduce la opcion open -> tipo open
+ * TODO: Ejecucion basica y obligatoria del size
+ * TODO: Generar una opcion por defecto si se introduce por tamaño
+ */
+
 void programParameters(int argc, char* argv[]) {
   if (argc == 2 && std::string(argv[1]) == "--help") {
     throw kUsage;

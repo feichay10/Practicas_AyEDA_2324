@@ -85,13 +85,17 @@ void Lattice::printLatticeInformation(std::string file) {
   std::cout << "| Border type: " << (borderType_ == kOpen ? "Open" : "Periodic")
             << std::setw(20 - (borderType_ == kOpen ? 4 : 8)) << "|"
             << std::endl;
-  std::cout << "| Open border type: "
-            << (openBorderType_ == kCold ? "Cold" : "Hot")
-            << std::setw(15 - (openBorderType_ == kCold ? 4 : 3)) << "|"
-            << std::endl;
+  if (borderType_ == kOpen) {
+    std::cout << "| Open border type: "
+              << (openBorderType_ == kCold ? "Cold" : "Hot")
+              << std::setw(15 - (openBorderType_ == kCold ? 4 : 3)) << "|"
+              << std::endl;
+  }
   std::cout << "| File: " << (file.empty() ? "No file" : file)
             << std::setw(27 - (file.empty() ? 7 : file.length())) << "|"
             << std::endl;
+  // std::cout << "| Initial configuration: ";
+
   std::cout << "+---------------------------------+" << std::endl << std::endl;
 }
 
@@ -110,11 +114,6 @@ void Lattice::loadInitialConfiguration(std::string file) {
       while (std::getline(file_config, line)) {
         for (int j = 0; j < line.size(); j++) {
           cells_[i + 1].setState(line[j] == '1' ? kAlive : kDead);
-          // if (line[j] == '1') {
-          //   cells_[i + 1].setState(kAlive);
-          // } else {
-          //   cells_[i + 1].setState(kDead);
-          // }
           std::cout << cells_[i + 1].getState();
           i++;
         }

@@ -60,7 +60,7 @@ class Lattice {
   Cell* cells_;
   int size_;
   borderType borderType_;
-  openBorderType openBorderType_;
+  openBorderType openBorderType_ = kCold;
 };
 
 #endif  // LATTICE_H_

@@ -80,6 +80,6 @@ void Cell::updateState() {
 }
 
 std::ostream& operator<<(std::ostream& os, const Cell& cell) {
-  os << ((cell.getState() == kAlive) ? "1" : "0");
+  os << ((cell.getState() == kAlive) ? "X" : " ");
   return os;
 }
