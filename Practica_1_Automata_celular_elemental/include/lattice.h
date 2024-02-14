@@ -57,7 +57,7 @@ class Lattice {
   void loadInitialConfiguration(std::string file);
   void setFrontier();
 
-  Cell* cells_;
+  Cell* cells_; // TODO: cell**
   int size_;
   borderType borderType_;
   openBorderType openBorderType_ = kCold;

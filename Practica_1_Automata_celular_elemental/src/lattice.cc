@@ -99,8 +99,6 @@ void Lattice::printLatticeInformation(std::string file) {
 }
 
 void Lattice::loadInitialConfiguration(std::string file) {
-  std::string initialConfiguration = "";
-  // std::cout << "Initial configuration: ";
   if (file.empty() || file == "") { // Si no se especifica un archivo
     cells_[size_ / 2].setState(kAlive);
     for (int i = 1; i < size_ - 1; i++) {

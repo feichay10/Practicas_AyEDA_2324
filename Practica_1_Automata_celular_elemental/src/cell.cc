@@ -50,27 +50,7 @@ int Cell::nextState(const Lattice& lattice) {
   int right = lattice.getCell(position_ + 1).getState();
   int center = lattice.getCell(position_).getState();
 
-  // nextState_ = static_cast<State>((center + right + center * right + left * center * right) % 2);
-  
-  // return 0;
-
-  if (left == kAlive && center == kAlive && right == kAlive) {       // 111
-    nextState_ = kDead;
-  } else if (left == kAlive && center == kAlive && right == kDead) { // 110
-    nextState_ = kAlive;
-  } else if (left == kAlive && center == kDead && right == kAlive) { // 101
-    nextState_ = kAlive;
-  } else if (left == kAlive && center == kDead && right == kDead) {  // 100
-    nextState_ = kDead;
-  } else if (left == kDead && center == kAlive && right == kAlive) { // 011
-    nextState_ = kAlive;
-  } else if (left == kDead && center == kAlive && right == kDead) {  // 010
-    nextState_ = kDead;
-  } else if (left == kDead && center == kDead && right == kAlive) {  // 001
-    nextState_ = kAlive;
-  } else if (left == kDead && center == kDead && right == kDead) {   // 000
-    nextState_ = kAlive;
-  }
+  nextState_ = static_cast<State>((center + right + center * right + left * center * right) % 2);
 
   return nextState_;
 }
