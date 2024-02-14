@@ -42,7 +42,6 @@ class Lattice {
   Cell& getCell(const Position& position) const;
   int getSize() const;
   void setSize(int size);
-
   borderType getBorderType();
   void setBorderType(borderType borderType);
 
@@ -53,6 +52,8 @@ class Lattice {
   friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
 
  private:
+  // Métodos de la clase privados
+  void printLatticeInformation(std::string file);
   void loadInitialConfiguration(std::string file);
   void setFrontier();
 

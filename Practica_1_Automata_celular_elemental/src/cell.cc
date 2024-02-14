@@ -50,9 +50,7 @@ int Cell::nextState(const Lattice& lattice) {
   int right = lattice.getCell(position_ + 1).getState();
   int center = lattice.getCell(position_).getState();
 
-  // State right = lattice.getCell(position_ + 1).getState();
-  // State left = lattice.getCell(position_ - 1).getState();
-  // nextState_ = static_cast<State>((state_ + right + state_ * right + left * state_ * right) % 2);
+  // nextState_ = static_cast<State>((center + right + center * right + left * center * right) % 2);
   
   // return 0;
 
