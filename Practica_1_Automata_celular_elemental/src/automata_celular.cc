@@ -41,12 +41,10 @@ void checkProgramParameters(int argc, char* argv[]) {
     throw kUsage;
     exit(EXIT_FAILURE);
   } else if (argc == 2 && std::string(argv[1]) != "-help") {
-    throw std::string("Opción no válida. Use ") + argv[0] +
-        " -help para más información.";
+    throw std::string("Opción no válida. Use ") + argv[0] + " -help para más información.";
     exit(EXIT_FAILURE);
   } else if (argc == 1) {
-    throw std::string("No se han introducido argumentos. Use ") + argv[0] +
-        " -help para más información.";
+    throw std::string("No se han introducido argumentos. Use ") + argv[0] + " -help para más información.";
     exit(EXIT_FAILURE);
   }
 
