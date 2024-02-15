@@ -36,19 +36,21 @@ openBorderType openBorderTypeVar;
 std::string file = "";
 
 void checkProgramParameters(int argc, char* argv[]) {
-  if (argc == 2 && std::string(argv[1]) == "--help") {
+  if (argc == 2 && std::string(argv[1]) == "-help") {
     throw kUsage;
     exit(EXIT_FAILURE);
-  } else if (argc == 2 && std::string(argv[1]) != "--help") {
-    throw std::string("Opción no válida. Use ") + argv[0] +
-        " --help para más información.";
+  } else if (argc == 2 && std::string(argv[1]) != "-help") {
+    throw std::string("Opción no válida. Use ") + argv[0] + " -help para más información.";
+    exit(EXIT_FAILURE);
+  } else if (argc == 1) {
+    throw std::string("No se han introducido argumentos. Use ") + argv[0] + " -help para más información.";
     exit(EXIT_FAILURE);
   }
 
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-size") {
       size = std::stoi(argv[i + 1]);
-    } else if (std::string(argv[i]) == "-border") {  // aseguramos que hay dos argumentos más
+    } else if (std::string(argv[i]) == "-border") {
       borderTypeVar = (std::string(argv[i + 1]) == "open") ? kOpen : kPeriodic;
       
       if (borderTypeVar == kOpen) {
@@ -75,6 +77,8 @@ int main(int argc, char* argv[]) {
     Lattice lattice(size, borderTypeVar, openBorderTypeVar, file);
     cellEvolution(lattice);
   } catch (const char* message) {
+    std::cerr << message << std::endl;
+  } catch (std::string message) {
     std::cerr << message << std::endl;
   }
 

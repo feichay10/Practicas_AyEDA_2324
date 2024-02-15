@@ -25,10 +25,10 @@
 
 #include "lattice.h"
 
-const char* kBold = "\033[1m";
-const char* kReset = "\033[0m";
+const std::string kBold = "\033[1m";
+const std::string kReset = "\033[0m";
 
-const char* kUsage =
+const std::string kUsage = 
     kBold + "NOMBRE\n\t" + kReset +
     "automata_celular - Programa que simula un autómata celular elemental\n\n" +
     kBold + "SINÓPSIS\n\t" + kReset +
@@ -42,11 +42,12 @@ const char* kUsage =
     "las células fuera de la frontera tiene estado «0», y caliente\n \t\tsi"
     " tiene estado «1».\n \n\t\tFrontera periódica. Se considera que los "
     "extremos del retículo son adyacentes.\n\n" +
-    kBold + "\t-init <file>" + kReset +
+    kBold + "\t-init <file> -> opcion opcional" + kReset +
     "\n\t\tfile es un nombre del fichero que contiene un array de "
     "estados con la configuración \n\t\tinicial del autómata celular. "
     "Si no se especifica se utilizará la configuración inicial"
-    "\n\t\tpor defecto, esto es, un «1» en la célula central del retículo.";
+    "\n\t\tpor defecto, esto es, un «1» en la célula central del retículo." + 
+    kBold + "\n\n\t-help" + kReset + "\n\t\tMuestra esta ayuda y finaliza.\n\n";
 
 void checkSize(int size, std::string file);
 void checkFile(std::string file);

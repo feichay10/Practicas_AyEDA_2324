@@ -52,12 +52,11 @@ class Lattice {
   friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
 
  private:
-  // Métodos de la clase privados
   void printLatticeInformation(std::string file);
   void loadInitialConfiguration(std::string file);
   void setFrontier();
 
-  Cell* cells_; // TODO: cell**
+  Cell* cells_;
   int size_;
   borderType borderType_;
   openBorderType openBorderType_ = kCold;
