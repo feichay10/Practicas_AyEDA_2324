@@ -17,14 +17,15 @@
  */
 
 /**
- * TODO: Comprobar que si introduce la opcion open -> tipo open
  * TODO: Ejecucion basica y obligatoria del size
  * TODO: Generar una opcion por defecto si se introduce por tamaño
  */
 
+#include <cstdlib>
+#include <cstring>
+#include <fstream>
 #include <iostream>
 #include <string>
-#include <fstream>
 
 #include "../include/cell.h"
 #include "../include/functions.h"
@@ -32,7 +33,7 @@
 
 int size;
 borderType borderTypeVar;
-openBorderType openBorderTypeVar;
+openBorderType openBorderTypeVar = kCold;
 std::string file = "";
 
 void checkProgramParameters(int argc, char* argv[]) {
@@ -40,29 +41,32 @@ void checkProgramParameters(int argc, char* argv[]) {
     throw kUsage;
     exit(EXIT_FAILURE);
   } else if (argc == 2 && std::string(argv[1]) != "-help") {
-    throw std::string("Opción no válida. Use ") + argv[0] + " -help para más información.";
+    throw std::string("Opción no válida. Use ") + argv[0] +
+        " -help para más información.";
     exit(EXIT_FAILURE);
   } else if (argc == 1) {
-    throw std::string("No se han introducido argumentos. Use ") + argv[0] + " -help para más información.";
+    throw std::string("No se han introducido argumentos. Use ") + argv[0] +
+        " -help para más información.";
     exit(EXIT_FAILURE);
   }
 
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-size") {
       size = std::stoi(argv[i + 1]);
-    } else if (std::string(argv[i]) == "-border") {
-      borderTypeVar = (std::string(argv[i + 1]) == "open") ? kOpen : kPeriodic;
-      
-      if (borderTypeVar == kOpen) {
-        if (std::string(argv[i + 2]) == "0") {
-          openBorderTypeVar = kCold;
-        } else if (std::string(argv[i + 2]) == "1") {
-          openBorderTypeVar = kHot;
-        } else if (std::string(argv[i + 2]) != "0" && std::string(argv[i + 2]) != "1") {
+    } else if (strcmp(argv[i], "-border") == 0 && i + 2 < argc) {
+      if (strcmp(argv[i + 1], "open") == 0) {
+        borderTypeVar = kOpen;
+        openBorderTypeVar = static_cast<openBorderType>(atoi(argv[i + 2]));
+        if (openBorderTypeVar != kCold && openBorderTypeVar != kHot) {
           throw std::string("Opción de frontera abiera no válida. Use ") + argv[0] + " --help para más información.";
-        } 
+        }
+        i += 2;  // saltamos los próximos dos argumentos
+      } else if (strcmp(argv[i + 1], "periodic") == 0) {
+        borderTypeVar = kPeriodic;
+        i += 1;  // saltamos el próximo argumento
+      } else if (std::string(argv[i + 2]) != "0" && std::string(argv[i + 2]) != "1") {
+        throw std::string("Opción de frontera no válida. Use ") + argv[0] + " --help para más información.";
       }
-      
     } else if (std::string(argv[i]) == "-init") {
       file = argv[i + 1];
       checkFile(file);

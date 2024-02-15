@@ -10,7 +10,7 @@
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
- * @date 
+ * @date
  *
  * @copyright Copyright (c) 2024
  *
@@ -20,11 +20,16 @@
 #define LATTICE_H_
 
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include <string>
-#include <iomanip>
 
 #include "cell.h"
+
+const std::string kRedBold = "\033[31m\033[1m";
+const std::string kGreenBold = "\033[32m\033[1m";
+const std::string kPurpleBold = "\033[35m\033[1m";
+const std::string kResetText = "\033[0m";
 
 typedef int Position;
 enum borderType { kOpen = 0, kPeriodic = 1 };
@@ -56,7 +61,7 @@ class Lattice {
   void loadInitialConfiguration(std::string file);
   void setFrontier();
 
-  Cell* cells_;
+  Cell** cells_;
   int size_;
   borderType borderType_;
   openBorderType openBorderType_ = kCold;
