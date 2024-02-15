@@ -67,8 +67,16 @@ void cellEvolution(Lattice &lattice) {
   while (true) {
     lattice.nextGeneration();
     std::cout << lattice;
+    setCellEvolutionFile(lattice, "");
     if (std::cin.get() == 'q') {
       break;
     }
+  }
+}
+
+void setCellEvolutionFile(Lattice &lattice, std::string file) {
+  std::ofstream file_output(file);
+  if (file_output.is_open()) {
+    file_output << lattice;
   }
 }

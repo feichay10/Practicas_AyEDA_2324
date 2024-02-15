@@ -21,8 +21,6 @@
  * TODO: Generar una opcion por defecto si se introduce por tamaño
  */
 
-#include <cstdlib>
-#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -50,24 +48,50 @@ void checkProgramParameters(int argc, char* argv[]) {
 
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-size") {
-      size = std::stoi(argv[i + 1]);
-    } else if (strcmp(argv[i], "-border") == 0 && i + 2 < argc) {
-      if (strcmp(argv[i + 1], "open") == 0) {
-        borderTypeVar = kOpen;
-        openBorderTypeVar = static_cast<openBorderType>(atoi(argv[i + 2]));
-        if (openBorderTypeVar != kCold && openBorderTypeVar != kHot) {
-          throw std::string("Opción de frontera abiera no válida. Use ") + argv[0] + " --help para más información.";
+      if (i + 1 < argc) {
+        size = std::stoi(argv[i + 1]);
+        if (size < 0) {
+          throw std::string("El tamaño del retículo no puede ser negativo.");
+          exit(EXIT_FAILURE);
         }
-        i += 2;  // saltamos los próximos dos argumentos
-      } else if (strcmp(argv[i + 1], "periodic") == 0) {
-        borderTypeVar = kPeriodic;
-        i += 1;  // saltamos el próximo argumento
-      } else if (std::string(argv[i + 2]) != "0" && std::string(argv[i + 2]) != "1") {
-        throw std::string("Opción de frontera no válida. Use ") + argv[0] + " --help para más información.";
+      } else {
+        throw std::string("Falta el tamaño del retículo.");
+        exit(EXIT_FAILURE);
+      }
+    } else if (std::string(argv[i]) == "-border") {
+      if (i + 1 < argc) {
+        if (std::string(argv[i + 1]) == "open") {
+          borderTypeVar = kOpen;
+          if (i + 2 < argc) {
+            if (std::string(argv[i + 2]) == "0") {
+              openBorderTypeVar = kCold;
+            } else if (std::string(argv[i + 2]) == "1") {
+              openBorderTypeVar = kHot;
+            } else {
+              throw std::string("El valor de la frontera abierta no es válido.");
+              exit(EXIT_FAILURE);
+            }
+          } else {
+            throw std::string("Falta el valor de la frontera abierta.");
+            exit(EXIT_FAILURE);
+          }
+        } else if (std::string(argv[i + 1]) == "periodic") {
+          borderTypeVar = kPeriodic;
+        } else {
+          throw std::string("El tipo de frontera no es válido.");
+          exit(EXIT_FAILURE);
+        }
+      } else {
+        throw std::string("Falta el tipo de frontera.");
+        exit(EXIT_FAILURE);
       }
     } else if (std::string(argv[i]) == "-init") {
-      file = argv[i + 1];
-      checkFile(file);
+      if (i + 1 < argc) {
+        file = argv[i + 1];
+      } else {
+        throw std::string("Falta el nombre del fichero.");
+        exit(EXIT_FAILURE);
+      }
     }
   }
 }
