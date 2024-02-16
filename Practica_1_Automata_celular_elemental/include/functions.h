@@ -51,6 +51,7 @@ const std::string kUsage =
 
 void checkSize(int size, std::string file);
 void checkFile(std::string file);
-void cellEvolution(Lattice &lattice);
+// void setCellEvolutionOnFile(Lattice &lattice, std::string file);
+void cellEvolution(Lattice &lattice, std::string file);
 
 #endif  // FUNCTIONS_H_

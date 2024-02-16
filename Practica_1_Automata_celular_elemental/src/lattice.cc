@@ -75,11 +75,12 @@ void Lattice::nextGeneration() {
 }
 
 std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
-  os << kPurpleBold << lattice.getCell(0) << kResetText << kGreenBold << "|" << kResetText;
+  // os << kPurpleBold << lattice.getCell(0) << kResetText << kGreenBold << "|" << kResetText;
   for (int i = 1; i < lattice.getSize() - 1; ++i) {
-    os << kRedBold << lattice.getCell(i);
+    // os << kRedBold << lattice.getCell(i);
+    os << lattice.getCell(i);
   }
-  os << kGreenBold << "|" << kResetText << kPurpleBold << lattice.getCell(lattice.getSize() - 1) << kResetText;
+  // os << kGreenBold << "|" << kResetText << kPurpleBold << lattice.getCell(lattice.getSize() - 1) << kResetText;
   return os;
 }
 

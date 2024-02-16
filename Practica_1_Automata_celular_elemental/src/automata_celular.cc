@@ -6,7 +6,7 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 1: Autómata celular elemental
- * @file main.cc
+ * @fileIn main.cc
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
@@ -32,7 +32,8 @@
 int size;
 borderType borderTypeVar;
 openBorderType openBorderTypeVar = kCold;
-std::string file = "";
+std::string fileIn = "";
+std::string fileOut = "";
 
 void checkProgramParameters(int argc, char* argv[]) {
   if (argc == 2 && std::string(argv[1]) == "-help") {
@@ -87,8 +88,15 @@ void checkProgramParameters(int argc, char* argv[]) {
       }
     } else if (std::string(argv[i]) == "-init") {
       if (i + 1 < argc) {
-        file = argv[i + 1];
-        checkFile(file);
+        fileIn = argv[i + 1];
+        checkFile(fileIn);
+      } else {
+        throw std::string("Falta el nombre del fichero.");
+        exit(EXIT_FAILURE);
+      }
+    } else if (std::string(argv[i]) == "-output") {
+      if (i + 1 < argc) {
+        fileOut = argv[i + 1];
       } else {
         throw std::string("Falta el nombre del fichero.");
         exit(EXIT_FAILURE);
@@ -96,14 +104,14 @@ void checkProgramParameters(int argc, char* argv[]) {
     }
   }
 
-  checkSize(size, file);
+  checkSize(size, fileIn);
 }
 
 int main(int argc, char* argv[]) {
   try {
     checkProgramParameters(argc, argv);
-    Lattice lattice(size, borderTypeVar, openBorderTypeVar, file);
-    cellEvolution(lattice);
+    Lattice lattice(size, borderTypeVar, openBorderTypeVar, fileIn);
+    cellEvolution(lattice, fileOut);
   } catch (const char* message) {
     std::cerr << message << std::endl;
   } catch (std::string message) {
