@@ -32,7 +32,7 @@ const std::string kPurpleBold = "\033[35m\033[1m";
 const std::string kResetText = "\033[0m";
 
 typedef int Position;
-enum borderType { kOpen = 0, kPeriodic = 1 };
+enum borderType { kOpen = 0, kPeriodic = 1, kReflector = 2};
 enum openBorderType { kCold = 0, kHot = 1 };
 
 class Cell;

@@ -16,11 +16,6 @@
  *
  */
 
-/**
- * TODO: Ejecucion basica y obligatoria del size
- * TODO: Generar una opcion por defecto si se introduce por tamaño
- */
-
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -78,6 +73,8 @@ void checkProgramParameters(int argc, char* argv[]) {
           }
         } else if (std::string(argv[i + 1]) == "periodic") {
           borderTypeVar = kPeriodic;
+        } else if (std::string(argv[i + 1]) == "reflector") {
+          borderTypeVar = kReflector;
         } else {
           throw std::string("El tipo de frontera no es válido.");
           exit(EXIT_FAILURE);
@@ -111,7 +108,11 @@ int main(int argc, char* argv[]) {
   try {
     checkProgramParameters(argc, argv);
     Lattice lattice(size, borderTypeVar, openBorderTypeVar, fileIn);
-    cellEvolution(lattice, fileOut);
+    if (!fileOut.empty()) {
+      cellEvolutionOnFile(lattice, fileOut);
+    } else {
+      cellEvolution(lattice);
+    }
   } catch (const char* message) {
     std::cerr << message << std::endl;
   } catch (std::string message) {

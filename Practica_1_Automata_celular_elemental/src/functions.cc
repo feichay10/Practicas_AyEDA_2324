@@ -61,6 +61,26 @@ void checkFile(std::string file) {
   }
 }
 
+void cellEvolution(Lattice &lattice) {
+  std::cout << "\nUse 'q' to end the cell evolution" << std::endl << std::endl;
+  std::cout << lattice << std::endl;
+  while (true) {
+    lattice.nextGeneration();
+    std::cout << lattice;
+    if (std::cin.get() == 'q') {
+      break;
+    }
+  }
+}
+
+void truncateFile(std::string file) {
+  std::ofstream output;
+  output.open(file, std::ios::trunc);
+  if (output.is_open()) {
+    output << "";
+  }
+}
+
 void setCellEvolutionOnFile(Lattice &lattice, std::string file) {
   if (!file.empty()) {
     std::ofstream output;
@@ -72,17 +92,7 @@ void setCellEvolutionOnFile(Lattice &lattice, std::string file) {
   }
 }
 
-void truncateFile(std::string file) {
-  std::ofstream output;
-  output.open(file, std::ios::trunc);
-  if (output.is_open()) {
-    output << "";
-  }
-
-  // output.close();
-}
-
-void cellEvolution(Lattice &lattice, std::string file) {
+void cellEvolutionOnFile(Lattice &lattice, std::string file) {
   std::cout << "\nUse 'q' to end the cell evolution" << std::endl << std::endl;
   std::cout << lattice << std::endl;
   truncateFile(file);

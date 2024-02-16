@@ -1,0 +1,6 @@
+ |     X    | 
+ |    XX    | 
+ |   XXX    | 
+ |  XX X    | 
+ | XXXXX    | 
+ |XX   X    | 

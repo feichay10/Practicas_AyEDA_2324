@@ -60,7 +60,7 @@ void Lattice::nextGeneration() {
     for (int i = 1; i < size_ - 1; i++) {
       cells_[i]->updateState();
     }
-  } else {
+  } else if (borderType_ == kPeriodic){
     for (int i = 1; i < size_ - 1; i++) {
       cells_[i]->nextState(*this);
     }
@@ -71,16 +71,33 @@ void Lattice::nextGeneration() {
     // Actualizar las fronteras para el caso periódico
     cells_[0]->setState(cells_[size_ - 2]->getState());
     cells_[size_ - 1]->setState(cells_[1]->getState());
+  } else {
+    for (int i = 1; i < size_ - 1; i++) {
+      cells_[i]->nextState(*this);
+    }
+    for (int i = 1; i < size_ - 1; i++) {
+      cells_[i]->updateState();
+    }
+
+    // Actualizar las fronteras para el caso reflector
+    cells_[0]->setState(cells_[1]->getState());
+    cells_[size_ - 1]->setState(cells_[size_ - 2]->getState());
   }
 }
 
 std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
-  // os << kPurpleBold << lattice.getCell(0) << kResetText << kGreenBold << "|" << kResetText;
+  // os << lattice.getCell(0) << "|";
+  // for (int i = 1; i < lattice.getSize() - 1; ++i) {
+  //   os << lattice.getCell(i);
+  // }
+  // os << "|" << lattice.getCell(lattice.getSize() - 1);
+
+  os << kPurpleBold << lattice.getCell(0) << kResetText << kGreenBold << "|" << kResetText;
   for (int i = 1; i < lattice.getSize() - 1; ++i) {
-    // os << kRedBold << lattice.getCell(i);
-    os << lattice.getCell(i);
+    os << kRedBold << lattice.getCell(i);
   }
-  // os << kGreenBold << "|" << kResetText << kPurpleBold << lattice.getCell(lattice.getSize() - 1) << kResetText;
+  os << kGreenBold << "|" << kResetText << kPurpleBold << lattice.getCell(lattice.getSize() - 1) << kResetText;
+  
   return os;
 }
 
@@ -138,8 +155,11 @@ void Lattice::setFrontier() {
       cells_[0]->setState(kAlive);
       cells_[size_ - 1]->setState(kAlive);
     }
-  } else {
+  } else if (borderType_ == kPeriodic){
     cells_[0]->setState(cells_[size_ - 2]->getState());
     cells_[size_ - 1]->setState(cells_[1]->getState());
+  } else {
+    cells_[0]->setState(cells_[1]->getState());
+    cells_[size_ - 1]->setState(cells_[size_ - 2]->getState());
   }
 }
