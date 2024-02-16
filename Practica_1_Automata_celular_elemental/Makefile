@@ -1,10 +1,10 @@
 CC=g++
 CXXFLAGS=-g -std=c++14
 
-OBJS = src/automata_celular.o src/cell.o src/lattice.o src/functions.o
+OBJS = src/cellular_automaton.o src/cell.o src/lattice.o src/functions.o
 
 all: ${OBJS}
-	$(CC) $(CXXFLAGS) -o automata_celular ${OBJS}
+	$(CC) $(CXXFLAGS) -o cellular_automaton ${OBJS}
 
 clean: 
-	rm -rf src/*.o automata_celular
+	rm -rf src/*.o cellular_automaton

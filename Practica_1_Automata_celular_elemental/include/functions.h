@@ -30,9 +30,9 @@ const std::string kReset = "\033[0m";
 
 const std::string kUsage =
     kBold + "\n\nNOMBRE\n\t" + kReset +
-    "automata_celular - Programa que simula un autómata celular elemental\n\n" +
+    "cellular_automaton - Programa que simula un autómata celular elemental\n\n" +
     kBold + "SINÓPSIS\n\t" + kReset +
-    "./automata_celular [OPCIONES]... [FICHERO]... \n\n" + kBold + "DESCRIPCIÓN" +
+    "./cellular_automaton [OPCIONES]... [FICHERO]... \n\n" + kBold + "DESCRIPCIÓN" +
     kReset + kBold + "\n\t-size <n>" + kReset +
     "\n\t\tn es el tamaño del retículo. Número de células \n\n" + kBold +
     "\t-border <b [v]>, b=open, v=[0|1]" + kBold + "\n\t\t\t b=periodic" +
