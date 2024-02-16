@@ -88,18 +88,20 @@ void checkProgramParameters(int argc, char* argv[]) {
     } else if (std::string(argv[i]) == "-init") {
       if (i + 1 < argc) {
         file = argv[i + 1];
+        checkFile(file);
       } else {
         throw std::string("Falta el nombre del fichero.");
         exit(EXIT_FAILURE);
       }
     }
   }
+
+  checkSize(size, file);
 }
 
 int main(int argc, char* argv[]) {
   try {
     checkProgramParameters(argc, argv);
-    checkSize(size, file);
     Lattice lattice(size, borderTypeVar, openBorderTypeVar, file);
     cellEvolution(lattice);
   } catch (const char* message) {
