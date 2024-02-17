@@ -18,22 +18,24 @@
 
 #include "../include/lattice.h"
 
-Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType, std::string file) {
-  size_ = size + 2; // Se añaden dos celdas para las fronteras
+Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType,
+                 std::string fileIn, std::string fileOut) {
+  size_ = size + 2;  // Se añaden dos celdas para las fronteras
   borderType_ = borderType;
   openBorderType_ = openBorderType;
   cells_ = new Cell*[size_];
+  fileOut_ = fileOut;
 
   for (int i = 0; i < size_; i++) {
     cells_[i] = new Cell(i, kDead);
   }
 
-  loadInitialConfiguration(file);
+  loadInitialConfiguration(fileIn);
   setFrontier();
-  printLatticeInformation(file);
+  printLatticeInformation(fileIn);
 }
 
-Lattice::~Lattice() { 
+Lattice::~Lattice() {
   for (int i = 0; i < size_; i++) {
     delete cells_[i];
   }
@@ -46,12 +48,6 @@ Cell& Lattice::getCell(const Position& position) const {
 
 int Lattice::getSize() const { return size_; }
 
-void Lattice::setSize(int size) { size_ = size; }
-
-borderType Lattice::getBorderType() { return borderType_; }
-
-void Lattice::setBorderType(borderType borderType) { borderType_ = borderType; }
-
 void Lattice::nextGeneration() {
   if (borderType_ == kOpen) {
     for (int i = 1; i < size_ - 1; i++) {
@@ -60,7 +56,7 @@ void Lattice::nextGeneration() {
     for (int i = 1; i < size_ - 1; i++) {
       cells_[i]->updateState();
     }
-  } else if (borderType_ == kPeriodic){
+  } else if (borderType_ == kPeriodic) {
     for (int i = 1; i < size_ - 1; i++) {
       cells_[i]->nextState(*this);
     }
@@ -86,18 +82,21 @@ void Lattice::nextGeneration() {
 }
 
 std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
-  // os << lattice.getCell(0) << "|";
-  // for (int i = 1; i < lattice.getSize() - 1; ++i) {
-  //   os << lattice.getCell(i);
-  // }
-  // os << "|" << lattice.getCell(lattice.getSize() - 1);
-
-  os << kPurpleBold << lattice.getCell(0) << kResetText << kGreenBold << "|" << kResetText;
-  for (int i = 1; i < lattice.getSize() - 1; ++i) {
-    os << kRedBold << lattice.getCell(i);
+  if (lattice.fileOut_.empty()) {
+    os << kPurpleBold << lattice.getCell(0) << kResetText << kGreenBold << "|"
+       << kResetText;
+    for (int i = 1; i < lattice.getSize() - 1; ++i) {
+      os << kRedBold << lattice.getCell(i);
+    }
+    os << kGreenBold << "|" << kResetText << kPurpleBold
+       << lattice.getCell(lattice.getSize() - 1) << kResetText;
+  } else {
+    os << lattice.getCell(0) << "|";
+    for (int i = 1; i < lattice.getSize() - 1; ++i) {
+      os << lattice.getCell(i);
+    }
+    os << "|" << lattice.getCell(lattice.getSize() - 1);
   }
-  os << kGreenBold << "|" << kResetText << kPurpleBold << lattice.getCell(lattice.getSize() - 1) << kResetText;
-  
   return os;
 }
 
@@ -125,12 +124,12 @@ void Lattice::printLatticeInformation(std::string file) {
 }
 
 void Lattice::loadInitialConfiguration(std::string file) {
-  if (file.empty() || file == "") { // Si no se especifica un archivo
+  if (file.empty() || file == "") {  // Si no se especifica un archivo
     cells_[size_ / 2]->setState(kAlive);
     for (int i = 1; i < size_ - 1; i++) {
       initialConfiguration_ += std::to_string(cells_[i]->getState());
     }
-  } else {  
+  } else {
     std::ifstream file_config(file);
     if (file_config.is_open()) {
       std::string line;
@@ -155,7 +154,7 @@ void Lattice::setFrontier() {
       cells_[0]->setState(kAlive);
       cells_[size_ - 1]->setState(kAlive);
     }
-  } else if (borderType_ == kPeriodic){
+  } else if (borderType_ == kPeriodic) {
     cells_[0]->setState(cells_[size_ - 2]->getState());
     cells_[size_ - 1]->setState(cells_[1]->getState());
   } else {

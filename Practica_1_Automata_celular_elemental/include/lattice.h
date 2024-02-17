@@ -32,7 +32,7 @@ const std::string kPurpleBold = "\033[35m\033[1m";
 const std::string kResetText = "\033[0m";
 
 typedef int Position;
-enum borderType { kOpen = 0, kPeriodic = 1, kReflector = 2};
+enum borderType { kOpen = 0, kPeriodic = 1, kReflector = 2 };
 enum openBorderType { kCold = 0, kHot = 1 };
 
 class Cell;
@@ -40,16 +40,14 @@ class Cell;
 class Lattice {
  public:
   // Constructor y destructor
-  Lattice(int size, borderType border, openBorderType openBorderType, std::string file);
+  Lattice(int size, borderType border, openBorderType openBorderType,
+          std::string fileIn, std::string fileOut);
   ~Lattice();
 
   // Getters y Setters
   Cell& getCell(const Position& position) const;
   int getSize() const;
-  void setSize(int size);
-  borderType getBorderType();
-  void setBorderType(borderType borderType);
-
+  
   // Métodos de la clase
   void nextGeneration();
 
@@ -66,6 +64,7 @@ class Lattice {
   borderType borderType_;
   openBorderType openBorderType_ = kCold;
   std::string initialConfiguration_;
+  std::string fileOut_;
 };
 
 #endif  // LATTICE_H_
