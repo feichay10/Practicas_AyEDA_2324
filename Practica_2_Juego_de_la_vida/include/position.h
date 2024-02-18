@@ -8,8 +8,7 @@
  * Práctica 2: El Juego de la Vida
  * @file position.h
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
- * @brief Espacio diminsional de dos coordenadas del reticulo, se representa
- * con esta clase Position para representar las filas y columnas del reticulo
+ * @brief 
  * @version 0.1
  * @date
  *
@@ -22,14 +21,7 @@
 
 class Position {
  public:
-  Position(int row, int column);
-  ~Position();
-
-  int getRow() const;
-  int getColumn() const;
-
-  void setRow(int row);
-  void setColumn(int column);
+  Position(int row = 0, int column = 0) : row_(row), column_(column) {}
 
  private:
   int row_;
