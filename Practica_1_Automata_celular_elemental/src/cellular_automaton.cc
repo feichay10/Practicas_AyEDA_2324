@@ -69,7 +69,7 @@ void checkProgramParameters(int argc, char* argv[]) {
         } else if (std::string(argv[i + 1]) == "reflector") {
           borderTypeVar = kReflector;
         } else {
-            throw std::string("The border type is not valid.");
+          throw std::string("The border type is not valid.");
           exit(EXIT_FAILURE);
         }
       } else {

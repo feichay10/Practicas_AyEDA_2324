@@ -48,37 +48,6 @@ Cell& Lattice::getCell(const Position& position) const {
 int Lattice::getSize() const { return size_; }
 
 void Lattice::nextGeneration() {
-  // if (borderType_ == kOpen) {
-  //   for (int i = 1; i < size_ - 1; i++) {
-  //     cells_[i]->nextState(*this);
-  //   }
-  //   for (int i = 1; i < size_ - 1; i++) {
-  //     cells_[i]->updateState();
-  //   }
-  // } else if (borderType_ == kPeriodic) {
-  //   for (int i = 1; i < size_ - 1; i++) {
-  //     cells_[i]->nextState(*this);
-  //   }
-  //   for (int i = 1; i < size_ - 1; i++) {
-  //     cells_[i]->updateState();
-  //   }
-
-  //   // Actualizar las fronteras para el caso periódico
-  //   cells_[0]->setState(cells_[size_ - 2]->getState());
-  //   cells_[size_ - 1]->setState(cells_[1]->getState());
-  // } else {
-  //   for (int i = 1; i < size_ - 1; i++) {
-  //     cells_[i]->nextState(*this);
-  //   }
-  //   for (int i = 1; i < size_ - 1; i++) {
-  //     cells_[i]->updateState();
-  //   }
-
-  //   // Actualizar las fronteras para el caso reflector
-  //   cells_[0]->setState(cells_[1]->getState());
-  //   cells_[size_ - 1]->setState(cells_[size_ - 2]->getState());
-  // }
-
   for (int i = 1; i < size_ - 1; i++) {
     cells_[i]->nextState(*this);
   }
