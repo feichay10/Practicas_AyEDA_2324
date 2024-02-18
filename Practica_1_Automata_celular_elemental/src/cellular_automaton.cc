@@ -34,11 +34,8 @@ void checkProgramParameters(int argc, char* argv[]) {
   if (argc == 2 && std::string(argv[1]) == "-help") {
     throw kUsage;
     exit(EXIT_FAILURE);
-  } else if (argc == 2 && std::string(argv[1]) != "-help") {
-    throw std::string("Opción no válida. Use ") + argv[0] + " -help para más información.";
-    exit(EXIT_FAILURE);
   } else if (argc == 1) {
-    throw std::string("No se han introducido argumentos. Use ") + argv[0] + " -help para más información.";
+    throw std::string("No arguments provided. Use ") + argv[0] + " -help for more information.";
     exit(EXIT_FAILURE);
   }
 
@@ -46,12 +43,8 @@ void checkProgramParameters(int argc, char* argv[]) {
     if (std::string(argv[i]) == "-size") {
       if (i + 1 < argc) {
         size = std::stoi(argv[i + 1]);
-        if (size < 0) {
-          throw std::string("El tamaño del retículo no puede ser negativo.");
-          exit(EXIT_FAILURE);
-        }
       } else {
-        throw std::string("Falta el tamaño del retículo.");
+        throw std::string("Missing lattice size.");
         exit(EXIT_FAILURE);
       }
     } else if (std::string(argv[i]) == "-border") {
@@ -64,11 +57,11 @@ void checkProgramParameters(int argc, char* argv[]) {
             } else if (std::string(argv[i + 2]) == "1") {
               openBorderTypeVar = kHot;
             } else {
-              throw std::string("El valor de la frontera abierta no es válido.");
+                throw std::string("The value of the open border is not valid.");
               exit(EXIT_FAILURE);
             }
           } else {
-            throw std::string("Falta el valor de la frontera abierta.");
+            throw std::string("Missing value for open border.");
             exit(EXIT_FAILURE);
           }
         } else if (std::string(argv[i + 1]) == "periodic") {
@@ -76,11 +69,11 @@ void checkProgramParameters(int argc, char* argv[]) {
         } else if (std::string(argv[i + 1]) == "reflector") {
           borderTypeVar = kReflector;
         } else {
-          throw std::string("El tipo de frontera no es válido.");
+            throw std::string("The border type is not valid.");
           exit(EXIT_FAILURE);
         }
       } else {
-        throw std::string("Falta el tipo de frontera.");
+        throw std::string("Missing border type.");
         exit(EXIT_FAILURE);
       }
     } else if (std::string(argv[i]) == "-init") {
@@ -88,14 +81,14 @@ void checkProgramParameters(int argc, char* argv[]) {
         fileIn = argv[i + 1];
         checkFile(fileIn);
       } else {
-        throw std::string("Falta el nombre del fichero.");
+        throw std::string("Missing file name.");
         exit(EXIT_FAILURE);
       }
     } else if (std::string(argv[i]) == "-output") {
       if (i + 1 < argc) {
         fileOut = argv[i + 1];
       } else {
-        throw std::string("Falta el nombre del fichero.");
+        throw std::string("Missing file name.");
         exit(EXIT_FAILURE);
       }
     }

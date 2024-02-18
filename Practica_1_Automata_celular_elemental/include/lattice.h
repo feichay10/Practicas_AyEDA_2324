@@ -39,8 +39,7 @@ class Cell;
 class Lattice {
  public:
   // Constructor y destructor
-  Lattice(int size, borderType border, openBorderType openBorderType,
-          std::string fileIn, std::string fileOut);
+  Lattice(int size, borderType border, openBorderType openBorderType, std::string fileIn, std::string fileOut);
   ~Lattice();
 
   // Getters y Setters
