@@ -62,8 +62,8 @@ void checkFile(std::string file) {
 }
 
 void cellEvolution(Lattice &lattice) {
-  std::cout << "\nUse 'q' to end the cell evolution" << std::endl;
-  std::cout << "Use 'Enter' to continue the generation" << std::endl << std::endl;
+  std::cout << "\nUse 'Enter' to continue the generation" << std::endl;
+  std::cout << "Use 'q' to end the cell evolution" << std::endl << std::endl;
   std::cout << lattice << std::endl;
   while (true) {
     lattice.nextGeneration();
@@ -94,8 +94,8 @@ void setCellEvolutionOnFile(Lattice &lattice, std::string file) {
 }
 
 void cellEvolutionOnFile(Lattice &lattice, std::string file) {
-  std::cout << "\nUse 'q' to end the cell evolution" << std::endl;
-  std::cout << "Use 'Enter' to continue the generation" << std::endl << std::endl;
+  std::cout << "\nUse 'Enter' to continue the generation" << std::endl;
+  std::cout << "Use 'q' to end the cell evolution" << std::endl << std::endl;
   std::cout << lattice << std::endl;
   truncateFile(file);
   setCellEvolutionOnFile(lattice, file);

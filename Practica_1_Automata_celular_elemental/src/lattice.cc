@@ -101,26 +101,40 @@ std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
 }
 
 void Lattice::printLatticeInformation(std::string file) {
+  // std::cout << "+---------------------------------+" << std::endl;
+  // std::cout << "|           Lattice Info          |" << std::endl;
+  // std::cout << "+---------------------------------+" << std::endl;
+  // std::cout << "| Size: " << size_ - 2
+  //           << std::setw(27 - std::to_string(size_).length()) << "|"
+  //           << std::endl;
+  // std::cout << "| Border type: " << (borderType_ == kOpen ? "Open" : "Periodic")
+  //           << std::setw(20 - (borderType_ == kOpen ? 4 : 8)) << "|"
+  //           << std::endl;
+  // if (borderType_ == kOpen) {
+  //   std::cout << "| Open border type: "
+  //             << (openBorderType_ == kCold ? "Cold" : "Hot")
+  //             << std::setw(15 - (openBorderType_ == kCold ? 4 : 3)) << "|"
+  //             << std::endl;
+  // }
+  // std::cout << "| File: " << (file.empty() ? "No file" : file)
+  //           << std::setw(27 - (file.empty() ? 7 : file.length())) << "|"
+  //           << std::endl;
+  // std::cout << "+---------------------------------+" << std::endl;
+  // std::cout << "Initial configuration: " << initialConfiguration_ << std::endl;
   std::cout << "+---------------------------------+" << std::endl;
   std::cout << "|           Lattice Info          |" << std::endl;
   std::cout << "+---------------------------------+" << std::endl;
-  std::cout << "| Size: " << size_ - 2
-            << std::setw(27 - std::to_string(size_).length()) << "|"
-            << std::endl;
-  std::cout << "| Border type: " << (borderType_ == kOpen ? "Open" : "Periodic")
-            << std::setw(20 - (borderType_ == kOpen ? 4 : 8)) << "|"
+  std::cout << "- Size: " << size_ - 2 << std::endl;
+  std::cout << "- Border type: " << (borderType_ == kOpen ? "Open" : "Periodic")
             << std::endl;
   if (borderType_ == kOpen) {
-    std::cout << "| Open border type: "
-              << (openBorderType_ == kCold ? "Cold" : "Hot")
-              << std::setw(15 - (openBorderType_ == kCold ? 4 : 3)) << "|"
-              << std::endl;
+    std::cout << "- Open border type: "
+              << (openBorderType_ == kCold ? "Cold" : "Hot") << std::endl;
   }
-  std::cout << "| File: " << (file.empty() ? "No file" : file)
-            << std::setw(27 - (file.empty() ? 7 : file.length())) << "|"
+  std::cout << "- Input file: " << (file.empty() ? "No file" : file) << std::endl;
+  std::cout << "- Output file: " << (fileOut_.empty() ? "No file" : fileOut_)
             << std::endl;
-  std::cout << "+---------------------------------+" << std::endl;
-  std::cout << "Initial configuration: " << initialConfiguration_ << std::endl;
+  std::cout << "- Initial configuration: " << initialConfiguration_ << std::endl;
 }
 
 void Lattice::loadInitialConfiguration(std::string file) {
