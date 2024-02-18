@@ -18,8 +18,7 @@
 
 #include "../include/lattice.h"
 
-Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType,
-                 std::string fileIn, std::string fileOut) {
+Lattice::Lattice(int size, borderType borderType, openBorderType openBorderType, std::string fileIn, std::string fileOut) {
   size_ = size + 2;  // Se añaden dos celdas para las fronteras
   borderType_ = borderType;
   openBorderType_ = openBorderType;
@@ -83,13 +82,11 @@ void Lattice::nextGeneration() {
 
 std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
   if (lattice.fileOut_.empty()) {
-    os << kPurpleBold << lattice.getCell(0) << kResetText << kGreenBold << "|"
-       << kResetText;
+    os << kPurpleBold << lattice.getCell(0) << kResetText << kGreenBold << "|" << kResetText;
     for (int i = 1; i < lattice.getSize() - 1; ++i) {
       os << kRedBold << lattice.getCell(i);
     }
-    os << kGreenBold << "|" << kResetText << kPurpleBold
-       << lattice.getCell(lattice.getSize() - 1) << kResetText;
+    os << kGreenBold << "|" << kResetText << kPurpleBold << lattice.getCell(lattice.getSize() - 1) << kResetText;
   } else {
     os << lattice.getCell(0) << "|";
     for (int i = 1; i < lattice.getSize() - 1; ++i) {
@@ -101,39 +98,16 @@ std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
 }
 
 void Lattice::printLatticeInformation(std::string file) {
-  // std::cout << "+---------------------------------+" << std::endl;
-  // std::cout << "|           Lattice Info          |" << std::endl;
-  // std::cout << "+---------------------------------+" << std::endl;
-  // std::cout << "| Size: " << size_ - 2
-  //           << std::setw(27 - std::to_string(size_).length()) << "|"
-  //           << std::endl;
-  // std::cout << "| Border type: " << (borderType_ == kOpen ? "Open" : "Periodic")
-  //           << std::setw(20 - (borderType_ == kOpen ? 4 : 8)) << "|"
-  //           << std::endl;
-  // if (borderType_ == kOpen) {
-  //   std::cout << "| Open border type: "
-  //             << (openBorderType_ == kCold ? "Cold" : "Hot")
-  //             << std::setw(15 - (openBorderType_ == kCold ? 4 : 3)) << "|"
-  //             << std::endl;
-  // }
-  // std::cout << "| File: " << (file.empty() ? "No file" : file)
-  //           << std::setw(27 - (file.empty() ? 7 : file.length())) << "|"
-  //           << std::endl;
-  // std::cout << "+---------------------------------+" << std::endl;
-  // std::cout << "Initial configuration: " << initialConfiguration_ << std::endl;
   std::cout << "+---------------------------------+" << std::endl;
   std::cout << "|           Lattice Info          |" << std::endl;
   std::cout << "+---------------------------------+" << std::endl;
   std::cout << "- Size: " << size_ - 2 << std::endl;
-  std::cout << "- Border type: " << (borderType_ == kOpen ? "Open" : "Periodic")
-            << std::endl;
+  std::cout << "- Border type: " << (borderType_ == kOpen ? "Open" : "Periodic") << std::endl;
   if (borderType_ == kOpen) {
-    std::cout << "- Open border type: "
-              << (openBorderType_ == kCold ? "Cold" : "Hot") << std::endl;
+    std::cout << "- Open border type: " << (openBorderType_ == kCold ? "Cold" : "Hot") << std::endl;
   }
   std::cout << "- Input file: " << (file.empty() ? "No file" : file) << std::endl;
-  std::cout << "- Output file: " << (fileOut_.empty() ? "No file" : fileOut_)
-            << std::endl;
+  std::cout << "- Output file: " << (fileOut_.empty() ? "No file" : fileOut_) << std::endl;
   std::cout << "- Initial configuration: " << initialConfiguration_ << std::endl;
 }
 

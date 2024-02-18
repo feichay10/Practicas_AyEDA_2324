@@ -20,7 +20,6 @@
 #define LATTICE_H_
 
 #include <fstream>
-#include <iomanip>
 #include <iostream>
 #include <string>
 
