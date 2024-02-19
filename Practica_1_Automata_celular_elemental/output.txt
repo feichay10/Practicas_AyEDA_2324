@@ -1,2 +1,14 @@
- |X XX   X  | 
- |XXXX  XX  | 
+ |            X            | 
+ |           XX            | 
+ |          XXX            | 
+ |         XX X            | 
+ |        XXXXX            | 
+ |       XX   X            | 
+ |      XXX  XX            | 
+ |     XX X XXX            | 
+ |    XXXXXXX X            | 
+ |   XX     XXX            | 
+ |  XXX    XX X            | 
+ | XX X   XXXXX            | 
+ |XXXXX  XX   X            |X
+X|X   X XXX  XX           X|X

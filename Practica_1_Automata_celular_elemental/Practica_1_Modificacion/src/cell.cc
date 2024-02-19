@@ -40,7 +40,8 @@ int Cell::nextState(const Lattice& lattice) {
   int right = lattice.getCell(position_ + 1).getState();
   int center = lattice.getCell(position_).getState();
 
-  nextState_ = static_cast<State>((center + right + center * right + left * center * right) % 2);
+  // nextState_ = static_cast<State>((center + right + center * right + left * center * right) % 2); // Original regla 110
+  nextState_ = static_cast<State>((left + center + right + center * right) % 2);
 
   return nextState_;
 }
