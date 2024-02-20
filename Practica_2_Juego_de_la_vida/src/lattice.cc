@@ -40,7 +40,7 @@ Lattice::Lattice(int N, int M) {
 // Constructor que recibe como parámetro un nombre de un fichero. La primera
 // fila del fichero contiene el numero de filas (M) y columnas (N) del reticulo.
 // A continuación contiene las M cadenas de N caracteres, donde ' ' indica una
-// celula <muerda> y 'X' indica una celula <viva>.
+// celula <muerta> y 'X' indica una celula <viva>.
 Lattice::Lattice(const char* file) {
   std::ifstream input(file);
   if (!input.is_open()) {
@@ -65,35 +65,93 @@ Lattice::Lattice(const char* file) {
   input.close();
 }
 
-Lattice::~Lattice() {}
-
-// Metodo que solicita por teclado donde estarán las celulas vivas en el tablero
-void Lattice::loadInitialConfiguration(int N, int M) {
-  std::cout << "Introduce las posiciones de las celulas vivas (i j): " << std::endl;
-  int i, j;
-  while (std::cin >> i >> j) {
-    if (i < 0 || i >= N || j < 0 || j >= M) {
-      std::cerr << "Error: Posicion fuera de rango." << std::endl;
-      continue;
+Lattice::~Lattice() {
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      delete lattice_[i][j];
     }
-    lattice_[i][j]->setState(kAlive);
   }
+  lattice_.clear();
 }
 
 int Lattice::getRows() const { return rows_; }
 
 int Lattice::getColumns() const { return columns_; }
 
-Cell& Lattice::getCell(const Position& position) const {}
+Cell& Lattice::getCell(const Position& position) const {
+  return *lattice_[position.getRow()][position.getColumn()];
+}
 
-std::size_t Lattice::Population() const { int count = 0; }
+void Lattice::nextGeneration() {
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      lattice_[i][j]->nextState(*this);
+    }
+  }
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      lattice_[i][j]->updateState();
+    }
+  }
+}
 
+std::size_t Lattice::Population() const { 
+  size_t count = 0;
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      if (lattice_[i][j]->getState() == kAlive) {
+        count++;
+      }
+    }
+  }
+  return count;
+}
+
+// Añade bordes al tablero para ver los limites del tablero
 std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
+  os << "+-";
+  for (int i = 0; i < lattice.columns_ ; i++) {
+    os << "--";
+  }
+  os << "+" << std::endl;
   for (int i = 0; i < lattice.rows_; i++) {
+    os << "| ";
     for (int j = 0; j < lattice.columns_; j++) {
       os << lattice.lattice_[i][j]->getState() << " ";
     }
-    os << std::endl;
+    os << "|" << std::endl;
   }
+  os << "+-";
+  for (int i = 0; i < lattice.columns_ ; i++) {
+    os << "--";
+  }
+  os << "+" << std::endl;
+
   return os;
+}
+
+
+// Metodo que solicita por teclado donde estarán las celulas vivas en el tablero
+void Lattice::loadInitialConfiguration(int N, int M) {
+  std::cout << "Introduce las posiciones de las celulas vivas (i j): " << std::endl;
+  std::cout << "Para terminar, pulsa 'q'" << std::endl;
+  int i, j;
+
+  std::cout << "\nCelula " << population_ + 1 << std::endl;
+  while (std::cin >> i >> j) {
+    if (i >= N || j >= M) {
+      std::cerr << "Error: Posicion fuera del tablero." << std::endl;
+      continue;
+    } else if (i < 0 || j < 0) {
+      std::cerr << "Error: Posicion fuera del tablero." << std::endl;
+      continue;
+    } else if (std::cin.get() == 'q') {
+      break;
+    } else {
+      lattice_[i][j]->setState(kAlive);
+      population_++;
+    }
+    std::cout << "\nCelula " << population_ + 1 << std::endl;
+  }
+  system("clear");
 }

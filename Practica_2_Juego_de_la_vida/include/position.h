@@ -23,6 +23,9 @@ class Position {
  public:
   Position(int row = 0, int column = 0) : row_(row), column_(column) {}
 
+  int getRow() const { return row_; }
+  int getColumn() const { return column_; }
+
  private:
   int row_;
   int column_;

@@ -44,9 +44,9 @@ class Cell {
   State setState(State);
 
   // Métodos de la clase
+  int neighbours(const Lattice&);
   int nextState(const Lattice&);
   void updateState();
-  int neighbours(const Lattice&);
 
   // Sobrecarga de operadores
   friend std::ostream& operator<<(std::ostream&, const Cell&);

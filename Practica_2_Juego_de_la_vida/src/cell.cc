@@ -32,35 +32,56 @@ State Cell::setState(State state) {
   return state_;
 }
 
-/**
- * @brief Funcion de transicion local:
- *  - Una celula en estado viva con 2 o 3 vecinas en estado viva continua en
- * estado viva en la siguiente generacion. En caso contrario, muere.
- *  - Una celula en estado muerta con exactamente 3 vecinas en estado viva pasa
- * al estado viva en la siguiente generacion. En caso contrario, permanece en
- * estado muerta.
- *
- * @param lattice
- * @return int
- */
-int Cell::nextState(const Lattice& lattice) {
-  // int alive_neighbours = neighbours(lattice);
-  // if (state_ == kAlive) {
-  //   if (alive_neighbours == 2 || alive_neighbours == 3) {
-  //     nextState_ = kAlive;
-  //   } else {
-  //     nextState_ = kDead;
-  //   }
-  // } else {
-  //   if (alive_neighbours == 3) {
-  //     nextState_ = kAlive;
-  //   } else {
-  //     nextState_ = kDead;
-  //   }
-  // }
-  // return nextState_;
+// Devuelve el numero de vecinos en estado viva
+// La vecindad es la siguiente:
+// (i-1,j-1)|(i-1,j)|(i-1,j+1)
+// ---------------------------
+// (i,j-1)| (i,j)| (i,j+1)
+// ---------------------------
+// (i+1,j-1)|(i+1,j)|(i+1,j+1)
+int Cell::neighbours(const Lattice& lattice) {
+  int alive_neighbours = 0;
+  for (int i = position_.getRow() - 1; i <= position_.getRow() + 1; i++) {
+    for (int j = position_.getColumn() - 1; j <= position_.getColumn() + 1; j++) {
+      if (i >= 0 && i < lattice.getRows() && j >= 0 && j < lattice.getColumns() && (i != position_.getRow() || j != position_.getColumn())) {
+        if (lattice.getCell(Position(i, j)).getState() == kAlive) {
+          alive_neighbours++;
+        }
+      }
+    }
+  }
+  return alive_neighbours;
 }
 
-void Cell::updateState() {}
+// Funcion de transicion local:
+//  - Una celula en estado viva con 2 o 3 vecinas en estado viva continua en
+//  estado viva en la siguiente generacion. En caso contrario, muere.
+//  - Una celula en estado muerta con exactamente 3 vecinas en estado viva pasa
+//  al estado viva en la siguiente generacion. En caso contrario, permanece en
+//  estado muerta.
+int Cell::nextState(const Lattice& lattice) {
+  int alive_neighbours = neighbours(lattice);
+  if (state_ == kAlive) {
+    if (alive_neighbours == 2 || alive_neighbours == 3) {
+      nextState_ = kAlive;
+    } else {
+      nextState_ = kDead;
+    }
+  } else {
+    if (alive_neighbours == 3) {
+      nextState_ = kAlive;
+    } else {
+      nextState_ = kDead;
+    }
+  }
+  return nextState_;
+}
 
-std::ostream& operator<<(std::ostream& os, const Cell& cell) {}
+void Cell::updateState() {
+  state_ = nextState_;
+}
+
+std::ostream& operator<<(std::ostream& os, const Cell& cell) {
+  os << ((cell.getState() == kAlive) ? "X" : " ");
+  return os;
+}

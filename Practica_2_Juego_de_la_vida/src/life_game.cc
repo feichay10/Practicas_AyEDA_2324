@@ -48,6 +48,7 @@ void checkProgramParameters(int argc, char* argv[]) {
         Lattice lattice(rows, columns);
         std::cout << "Initial lattice: " << std::endl;
         std::cout << lattice << std::endl;
+        std::cout << "Poblacion actual: " << lattice.Population() << std::endl;
       } else {
         throw std::string("Missing lattice size.");
         exit(EXIT_FAILURE);

@@ -5,7 +5,7 @@
  * Grado en Ingeniería Informática
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
- * Práctica 2: El Juego de la Vid
+ * Práctica 2: El Juego de la Vida
  * @file functions.h
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
@@ -50,5 +50,7 @@ const std::string kUsage =
     "estados con la configuración \n\t\tinicial del autómata celular. "
     "Si no se especifica se utilizará la configuración inicial"
     "\n\t\tpor defecto, esto es, un «1» en la célula central del retículo.";
+
+void cellEvolution(Lattice &lattice);
 
 #endif  // FUNCTIONS_H_
