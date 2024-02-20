@@ -52,8 +52,9 @@ class Cell {
   friend std::ostream& operator<<(std::ostream&, const Cell&);
 
  private:
-  State alive_;
   Position position_;
+  State state_;
+  State nextState_;
   std::vector<Position> neighbours_;
 };
 

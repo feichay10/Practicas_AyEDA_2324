@@ -18,15 +18,10 @@
 
 #include "../include/lattice.h"
 
-/**
- * @brief Constructor que crea las celulas en memoria dinamica, con valor
- * inicial de muerte. Este contructor se apoya de un metodo auxiliar para
- * solicitar por teclado las posiciones de las celulas que deben estar vivas en
- * la configuracion inicial.
- *
- * @param N
- * @param M
- */
+// Constructor que crea las celulas en memoria dinamica, con valor inicial de
+// muerte. Este contructor se apoya de un metodo auxiliar para solicitar por
+// teclado las posiciones de las celulas que deben estar vivas en la
+// configuracion inicial.
 Lattice::Lattice(int N, int M) {
   rows_ = N;
   columns_ = M;
@@ -39,17 +34,13 @@ Lattice::Lattice(int N, int M) {
     }
   }
   loadInitialConfiguration(N, M);
-  setFrontier();
+  // setFrontier();
 }
 
-/**
- * @brief Constructor que recibe como parámetro un nombre de un fichero. La
- * primera fila del fichero contiene el numero de filas (M) y columnas (N) del
- * reticulo. A continuación contiene las M cadenas de N caracteres, donde ' '
- * indica una celula <muerda> y 'X' indica una celula <viva>.
- *
- * @param file
- */
+// Constructor que recibe como parámetro un nombre de un fichero. La primera
+// fila del fichero contiene el numero de filas (M) y columnas (N) del reticulo.
+// A continuación contiene las M cadenas de N caracteres, donde ' ' indica una
+// celula <muerda> y 'X' indica una celula <viva>.
 Lattice::Lattice(const char* file) {
   std::ifstream input(file);
   if (!input.is_open()) {
@@ -70,31 +61,39 @@ Lattice::Lattice(const char* file) {
       }
     }
   }
-  setFrontier();
+  // setFrontier();
   input.close();
 }
 
-
 Lattice::~Lattice() {}
 
-int Lattice::getRows() const {
-  return rows_;
+// Metodo que solicita por teclado donde estarán las celulas vivas en el tablero
+void Lattice::loadInitialConfiguration(int N, int M) {
+  std::cout << "Introduce las posiciones de las celulas vivas (i j): " << std::endl;
+  int i, j;
+  while (std::cin >> i >> j) {
+    if (i < 0 || i >= N || j < 0 || j >= M) {
+      std::cerr << "Error: Posicion fuera de rango." << std::endl;
+      continue;
+    }
+    lattice_[i][j]->setState(kAlive);
+  }
 }
 
-int Lattice::getColumns() const {
-  return columns_;
-}
+int Lattice::getRows() const { return rows_; }
 
-Cell& Lattice::getCell(const Position& position) const {
-  
-}
+int Lattice::getColumns() const { return columns_; }
 
-/**
- * @brief Tiene la responsabilidad de conocer la población, esto es el numero de
- * celulas vivas en la generación actual.
- *
- * @return std::size_t
- */
-std::size_t Lattice::Population() const {
+Cell& Lattice::getCell(const Position& position) const {}
 
+std::size_t Lattice::Population() const { int count = 0; }
+
+std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
+  for (int i = 0; i < lattice.rows_; i++) {
+    for (int j = 0; j < lattice.columns_; j++) {
+      os << lattice.lattice_[i][j]->getState() << " ";
+    }
+    os << std::endl;
+  }
+  return os;
 }

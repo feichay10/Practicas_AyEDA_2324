@@ -28,6 +28,8 @@
 #include "cell.h"
 #include "position.h"
 
+enum borderType { kReflective = 0, kNoBorder = 1 };
+
 class Cell;
 
 class Lattice {
@@ -58,9 +60,6 @@ class Lattice {
   int columns_;
   size_t population_ = 0;
   std::vector<std::vector<Cell*>> lattice_;
-  // Position neighbors_[8] = {Position(-1, -1), Position(-1, 0), Position(-1, 1),
-  //                           Position(0, -1),  Position(0, 1),  Position(1, -1),
-  //                           Position(1, 0),   Position(1, 1)};
 };
 
 #endif  // LATTICE_H_
