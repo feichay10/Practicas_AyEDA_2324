@@ -23,6 +23,7 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "cell.h"
 #include "position.h"
@@ -37,8 +38,10 @@ class Lattice {
   ~Lattice();
 
   // Getters y Setters
+  int getRows() const;
+  int getColumns() const;
   Cell& getCell(const Position& position) const;
-  
+
   // Métodos de la clase
   void nextGeneration();
   std::size_t Population() const;
@@ -53,8 +56,11 @@ class Lattice {
 
   int rows_;
   int columns_;
-  Cell** lattice_;
-  Cell** nextLattice_;
+  size_t population_ = 0;
+  std::vector<std::vector<Cell*>> lattice_;
+  // Position neighbors_[8] = {Position(-1, -1), Position(-1, 0), Position(-1, 1),
+  //                           Position(0, -1),  Position(0, 1),  Position(1, -1),
+  //                           Position(1, 0),   Position(1, 1)};
 };
 
 #endif  // LATTICE_H_

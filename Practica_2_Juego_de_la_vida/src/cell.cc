@@ -21,6 +21,8 @@
 Cell::Cell() {}
 
 Cell::Cell(const Position& position, const State& state) {
+  position_ = position;
+  alive_ = state;
 }
 
 State Cell::getState() const {
