@@ -53,6 +53,6 @@ const std::string kUsage =
     "\n\t\tpor defecto, esto es, un «1» en la célula central del retículo.";
 
 void cellEvolution(Lattice &lattice);
-void menu();
+void menu(Lattice &lattice);
 
 #endif  // FUNCTIONS_H_

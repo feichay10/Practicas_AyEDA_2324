@@ -34,8 +34,7 @@ void checkProgramParameters(int argc, char* argv[]) {
     throw kUsage;
     exit(EXIT_FAILURE);
   } else if (argc == 1) {
-    throw std::string("No arguments provided. Use ") + argv[0] +
-        " -help for more information.";
+    throw std::string("No arguments provided. Use ") + argv[0] + " -help for more information.";
     exit(EXIT_FAILURE);
   }
 
@@ -49,8 +48,8 @@ void checkProgramParameters(int argc, char* argv[]) {
         std::cout << "Initial lattice: " << std::endl;
         std::cout << lattice;
         std::cout << "Poblacion actual: " << lattice.Population() << std::endl;
-        menu();
-        cellEvolution(lattice);
+        menu(lattice);
+        // cellEvolution(lattice);
       } else {
         throw std::string("Missing lattice size.");
         exit(EXIT_FAILURE);

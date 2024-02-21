@@ -153,5 +153,6 @@ void Lattice::loadInitialConfiguration(int N, int M) {
     }
     std::cout << "\nCelula " << population_ + 1 << std::endl;
   }
+  std::cin.clear();
   system("clear");
 }
