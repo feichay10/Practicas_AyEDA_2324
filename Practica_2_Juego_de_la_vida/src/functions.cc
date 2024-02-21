@@ -16,41 +16,52 @@
  *
  */
 
+#include <cstdlib>
+#include <limits> // Include the necessary header file
 #include "../include/functions.h"
 
-
 void menu(Lattice &lattice) {
-  std::cout << kBold << "\nComandos disponibles: " << kReset << std::endl;
-  std::cout << kRedBold << "\t[x]" << kReset << " Salir del programa." << std::endl;
-  std::cout << kRedBold << "\t[n]" << kReset << " Muestra la siguiente generacion." << std::endl;
-  std::cout << kRedBold << "\t[L]" << kReset << " Muestra las siguientes 5 generaciones." << std::endl;
-  std::cout << kRedBold << "\t[c]" << kReset << " Mostrar solo la población." << std::endl;
-  std::cout << kRedBold << "\t[s]" << kReset << " Guardar la configuración actual en un fichero." << std::endl << std::endl;
-  std::cout << kBold << "Introduzca un comando: " << kReset;
-  std::string command;
+  std::string fileOut;
+  char command;
 
-  while (std::cin >> command) {
-    if (command == "x") {
-      std::cout << "Saliendo del programa..." << std::endl;
-      exit(EXIT_SUCCESS);
-    } else if (command == "n") {
-      std::cout << "Mostrando la siguiente generación..." << std::endl;
-      lattice.nextGeneration();
-      std::cout << lattice;
-      break;
-    } else if (command == "L") {
-      std::cout << "Mostrando las siguientes 5 generaciones..." << std::endl;
-      break;
-    } else if (command == "c") {
-      std::cout << "Mostrando solo la población..." << std::endl;
-      break;
-    } else if (command == "s") {
-      std::cout << "Guardando la configuración actual en un fichero..." << std::endl;
-      break;
-    } else {
-      std::cout << "Comando no reconocido. Inténtelo de nuevo." << std::endl;
+  // Limpiar el búfer de entrada para descartar el carácter de nueva línea
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+  do {
+    std::cout << kBold << "\nComandos disponibles: " << kReset << std::endl;
+    std::cout << kRedBold << "\t[x]" << kReset << " Salir del programa." << std::endl;
+    std::cout << kRedBold << "\t[n]" << kReset << " Muestra la siguiente generacion." << std::endl;
+    std::cout << kRedBold << "\t[L]" << kReset << " Muestra las siguientes 5 generaciones." << std::endl;
+    std::cout << kRedBold << "\t[c]" << kReset << " Mostrar solo la población." << std::endl;
+    std::cout << kRedBold << "\t[s]" << kReset << " Guardar la configuración actual en un fichero." << std::endl << std::endl;
+    std::cout << "Introduzca un comando: ";
+    std::cin >> command;
+
+    switch (command) {
+      case 'x':
+        exit(EXIT_SUCCESS);
+        break;
+      case 'n':
+        std::cout << std::endl;
+        lattice.nextGeneration();
+        std::cout << lattice;
+        break;
+      case 'L':
+        cellEvolution(lattice);
+        break;
+      case 'c':
+        std::cout << "Poblacion actual: " << lattice.Population() << std::endl;
+        break;
+      case 's':
+        std::cout << "Introduzca el nombre del fichero: ";
+        std::cin >> fileOut;
+        lattice.saveToFile(fileOut);
+        break;
+      default:
+        std::cout << "Comando no valido." << std::endl;
+        break;
     }
-  }
+  } while (true);
 }
 
 void cellEvolution(Lattice &lattice) {
@@ -58,6 +69,5 @@ void cellEvolution(Lattice &lattice) {
   for (int i = 0; i < 5; i++) {
     lattice.nextGeneration();
     std::cout << lattice;
-    std::cout << "Poblacion actual: " << lattice.Population() << std::endl << std::endl;
   }
 }

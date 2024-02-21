@@ -47,6 +47,7 @@ class Lattice {
   // Métodos de la clase
   void nextGeneration();
   std::size_t Population() const;
+  void saveToFile(const std::string& fileOut) const;
 
   // Sobrecarga de operadores
   Cell& operator[](const Position&);

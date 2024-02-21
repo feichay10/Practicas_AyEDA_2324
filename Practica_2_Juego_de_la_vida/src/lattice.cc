@@ -107,6 +107,22 @@ std::size_t Lattice::Population() const {
   return count;
 }
 
+void Lattice::saveToFile(const std::string& fileOut) const {
+  std::ofstream output(fileOut);
+  if (!output.is_open()) {
+    std::cerr << "Error: No se pudo abrir el archivo " << fileOut << std::endl;
+    exit(EXIT_FAILURE);
+  }
+  output << rows_ << " " << columns_ << std::endl;
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      output << lattice_[i][j]->getState();
+    }
+    output << std::endl;
+  }
+  output.close();
+}
+
 // Añade bordes al tablero para ver los limites del tablero
 std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
   os << "+-";
