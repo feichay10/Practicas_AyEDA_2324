@@ -19,5 +19,10 @@
 #include "../include/functions.h"
 
 void cellEvolution(Lattice &lattice) {
-  
+  std::cout << std::endl;
+  for (int i = 0; i < 5; i++) {
+    lattice.nextGeneration();
+    std::cout << lattice;
+    std::cout << "Poblacion actual: " << lattice.Population() << std::endl << std::endl;
+  }
 }

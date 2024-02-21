@@ -47,8 +47,9 @@ void checkProgramParameters(int argc, char* argv[]) {
         i += 2;
         Lattice lattice(rows, columns);
         std::cout << "Initial lattice: " << std::endl;
-        std::cout << lattice << std::endl;
+        std::cout << lattice;
         std::cout << "Poblacion actual: " << lattice.Population() << std::endl;
+        cellEvolution(lattice);
       } else {
         throw std::string("Missing lattice size.");
         exit(EXIT_FAILURE);
@@ -62,10 +63,10 @@ int main(int argc, char* argv[]) {
     checkProgramParameters(argc, argv);
   } catch (std::string& e) {
     std::cerr << e << std::endl;
-    return 1;
+    exit(EXIT_FAILURE);
   } catch (int e) {
     std::cerr << kUsage << std::endl;
-    return 1;
+    exit(EXIT_FAILURE);
   }
 
   return 0;
