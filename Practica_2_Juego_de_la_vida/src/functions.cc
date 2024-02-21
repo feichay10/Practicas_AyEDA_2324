@@ -18,6 +18,16 @@
 
 #include "../include/functions.h"
 
+
+void menu() {
+  std::cout << kBold << "\nComandos disponibles: " << kReset << std::endl;
+  std::cout << kRedBold << "\t[x]" << kReset << " Salir del programa." << std::endl;
+  std::cout << kRedBold << "\t[n]" << kReset << " Muestra la siguiente generacion." << std::endl;
+  std::cout << kRedBold << "\t[L]" << kReset << " Muestra las siguientes 5 generaciones." << std::endl;
+  std::cout << kRedBold << "\t[c]" << kReset << " Mostrar solo la población." << std::endl;
+  std::cout << kRedBold << "\t[s]" << kReset << " Guardar la configuración actual en un fichero." << std::endl << std::endl;
+}
+
 void cellEvolution(Lattice &lattice) {
   std::cout << std::endl;
   for (int i = 0; i < 5; i++) {

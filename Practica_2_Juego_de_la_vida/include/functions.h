@@ -25,6 +25,7 @@
 
 #include "lattice.h"
 
+const std::string kRedBold = "\033[1;31m";
 const std::string kBold = "\033[1m";
 const std::string kReset = "\033[0m";
 
@@ -52,5 +53,6 @@ const std::string kUsage =
     "\n\t\tpor defecto, esto es, un «1» en la célula central del retículo.";
 
 void cellEvolution(Lattice &lattice);
+void menu();
 
 #endif  // FUNCTIONS_H_
