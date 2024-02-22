@@ -61,7 +61,7 @@ Lattice::Lattice(const char* file) {
       }
     }
   }
-  // setFrontier();
+  setFrontier();
   input.close();
 }
 
@@ -93,6 +93,8 @@ void Lattice::nextGeneration() {
       lattice_[i][j]->updateState();
     }
   }
+
+  expandLattice();
 }
 
 std::size_t Lattice::Population() const { 
@@ -146,8 +148,12 @@ std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
   return os;
 }
 
-
-// Metodo que solicita por teclado donde estarán las celulas vivas en el tablero
+/**
+ * @brief Metodo auxiliar que solicita por teclado las posiciones de las celulas
+ * 
+ * @param N: Numero de filas
+ * @param M: Numero de columnas
+ */
 void Lattice::loadInitialConfiguration(int N, int M) {
   std::cout << "Introduce las posiciones de las celulas vivas (i j): " << std::endl;
   std::cout << "Para terminar, pulsa 'q'" << std::endl;
@@ -171,4 +177,53 @@ void Lattice::loadInitialConfiguration(int N, int M) {
   }
   std::cin.clear();
   system("clear");
+}
+
+void Lattice::setFrontier() {
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      if (i == 0 || i == rows_ - 1 || j == 0 || j == columns_ - 1) {
+        lattice_[i][j]->setState(kDead);
+      }
+    }
+  }
+}
+
+// Si se encuentra una celula viva en el borde, se expande el tablero una fila o
+// columna más
+void Lattice::expandLattice() {
+  bool expand = false;
+  for (int i = 0; i < rows_; i++) {
+    if (lattice_[i][0]->getState() == kAlive) {
+      expand = true;
+      break;
+    }
+    if (lattice_[i][columns_ - 1]->getState() == kAlive) {
+      expand = true;
+      break;
+    }
+  }
+  for (int j = 0; j < columns_; j++) {
+    if (lattice_[0][j]->getState() == kAlive) {
+      expand = true;
+      break;
+    }
+    if (lattice_[rows_ - 1][j]->getState() == kAlive) {
+      expand = true;
+      break;
+    }
+  }
+  if (expand) {
+    std::cout << "Expanding lattice..." << std::endl;
+    rows_ += 2;
+    columns_ += 2;
+    for (int i = 0; i < rows_; i++) {
+      lattice_[i].resize(columns_);
+      for (int j = 0; j < columns_; j++) {
+        if (i == 0 || i == rows_ - 1 || j == 0 || j == columns_ - 1) {
+          lattice_[i][j] = new Cell(Position(i, j), kDead);
+        }
+      }
+    }
+  }
 }

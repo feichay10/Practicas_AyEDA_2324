@@ -39,6 +39,7 @@ State Cell::setState(State state) {
 // (i,j-1)| (i,j)| (i,j+1)
 // ---------------------------
 // (i+1,j-1)|(i+1,j)|(i+1,j+1)
+// TODO: Corregir el calculo de vecinos
 int Cell::neighbours(const Lattice& lattice) {
   int alive_neighbours = 0;
   for (int i = position_.getRow() - 1; i <= position_.getRow() + 1; i++) {
