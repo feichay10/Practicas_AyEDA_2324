@@ -82,6 +82,9 @@ Cell& Lattice::getCell(const Position& position) const {
   return *lattice_[position.getRow()][position.getColumn()];
 }
 
+// Metodo que calcula el estado de la celula en la siguiente generacion
+// siguiendo las reglas del juego de la vida (23/3). Si hay alguna celula viva
+// por los bordes, se expande el tablero.
 void Lattice::nextGeneration() {
   for (int i = 0; i < rows_; i++) {
     for (int j = 0; j < columns_; j++) {
@@ -192,38 +195,49 @@ void Lattice::setFrontier() {
 // Si se encuentra una celula viva en el borde, se expande el tablero una fila o
 // columna más
 void Lattice::expandLattice() {
+  std::cout << "Entra" << std::endl;
   bool expand = false;
+  int value = 0;
   for (int i = 0; i < rows_; i++) {
     if (lattice_[i][0]->getState() == kAlive) {
       expand = true;
+      value = -1;
       break;
     }
     if (lattice_[i][columns_ - 1]->getState() == kAlive) {
       expand = true;
+      value = 1;
       break;
     }
   }
   for (int j = 0; j < columns_; j++) {
     if (lattice_[0][j]->getState() == kAlive) {
       expand = true;
+      value = -1;
       break;
     }
     if (lattice_[rows_ - 1][j]->getState() == kAlive) {
       expand = true;
+      value = 1;
       break;
     }
   }
   if (expand) {
-    std::cout << "Expanding lattice..." << std::endl;
-    rows_ += 2;
-    columns_ += 2;
-    for (int i = 0; i < rows_; i++) {
-      lattice_[i].resize(columns_);
-      for (int j = 0; j < columns_; j++) {
-        if (i == 0 || i == rows_ - 1 || j == 0 || j == columns_ - 1) {
-          lattice_[i][j] = new Cell(Position(i, j), kDead);
-        }
+    std::cout << "Se expande el tablero..." << std::endl;
+    if (value == -1) {
+      for (int i = 0; i < rows_; i++) {
+        lattice_[i].insert(lattice_[i].begin(), new Cell(Position(i, 0), kDead));
+        lattice_[i].pop_back();
       }
+      columns_++;
+    } else {
+      for (int i = 0; i < rows_; i++) {
+        lattice_[i].push_back(new Cell(Position(i, columns_), kDead));
+        lattice_[i].erase(lattice_[i].begin());
+      }
+      columns_++;
     }
+    // Imprimir el tablero expandido
+    std::cout << *this;
   }
 }

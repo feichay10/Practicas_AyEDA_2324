@@ -32,6 +32,16 @@ State Cell::setState(State state) {
   return state_;
 }
 
+Position Cell::getPosition() const { return position_; }
+
+void Cell::setPosition(const Position& position) { position_ = position; }
+
+std::vector<Position> Cell::getNeighbours() const { return neighbours_; }
+
+void Cell::setNeighbours(const std::vector<Position>& neighbours) {
+  neighbours_ = neighbours;
+}
+
 // Devuelve el numero de vecinos en estado viva
 // La vecindad es la siguiente:
 // (i-1,j-1)|(i-1,j)|(i-1,j+1)
