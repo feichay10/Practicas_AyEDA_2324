@@ -86,16 +86,16 @@ Cell& Lattice::getCell(const Position& position) const {
 // siguiendo las reglas del juego de la vida (23/3). Si hay alguna celula viva
 // por los bordes, se expande el tablero.
 void Lattice::nextGeneration() {
-  // for (int i = 0; i < rows_; i++) {
-  //   for (int j = 0; j < columns_; j++) {
-  //     lattice_[i][j]->nextState(*this);
-  //   }
-  // }
-  // for (int i = 0; i < rows_; i++) {
-  //   for (int j = 0; j < columns_; j++) {
-  //     lattice_[i][j]->updateState();
-  //   }
-  // }
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      lattice_[i][j]->nextState(*this);
+    }
+  }
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      lattice_[i][j]->updateState();
+    }
+  }
 
   expandLattice();
 }
@@ -145,6 +145,7 @@ std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
     os << "| ";
     for (int j = 0; j < lattice.columns_; j++) {
       os << lattice.lattice_[i][j]->getState() << " ";
+      // os << *lattice.lattice_[i][j] << " ";
     }
     os << "|" << std::endl;
   }
