@@ -86,16 +86,16 @@ Cell& Lattice::getCell(const Position& position) const {
 // siguiendo las reglas del juego de la vida (23/3). Si hay alguna celula viva
 // por los bordes, se expande el tablero.
 void Lattice::nextGeneration() {
-  for (int i = 0; i < rows_; i++) {
-    for (int j = 0; j < columns_; j++) {
-      lattice_[i][j]->nextState(*this);
-    }
-  }
-  for (int i = 0; i < rows_; i++) {
-    for (int j = 0; j < columns_; j++) {
-      lattice_[i][j]->updateState();
-    }
-  }
+  // for (int i = 0; i < rows_; i++) {
+  //   for (int j = 0; j < columns_; j++) {
+  //     lattice_[i][j]->nextState(*this);
+  //   }
+  // }
+  // for (int i = 0; i < rows_; i++) {
+  //   for (int j = 0; j < columns_; j++) {
+  //     lattice_[i][j]->updateState();
+  //   }
+  // }
 
   expandLattice();
 }
@@ -121,11 +121,17 @@ void Lattice::saveToFile(const std::string& fileOut) const {
   output << rows_ << " " << columns_ << std::endl;
   for (int i = 0; i < rows_; i++) {
     for (int j = 0; j < columns_; j++) {
-      output << lattice_[i][j]->getState();
+      if (lattice_[i][j]->getState() == kAlive) {
+        output << i << " " << j;
+        output << std::endl;
+      }
     }
-    output << std::endl;
   }
   output.close();
+}
+
+Cell& Lattice::operator[](const Position& position) {
+  return *lattice_[position.getRow()][position.getColumn()];
 }
 
 // Añade bordes al tablero para ver los limites del tablero
@@ -196,48 +202,60 @@ void Lattice::setFrontier() {
 // columna más
 void Lattice::expandLattice() {
   std::cout << "Entra" << std::endl;
-  bool expand = false;
-  int value = 0;
+  
   for (int i = 0; i < rows_; i++) {
-    if (lattice_[i][0]->getState() == kAlive) {
-      expand = true;
-      value = -1;
+    if (lattice_[i][0]->getState() == kAlive) { // Si hay una celula sobre el borde izquierdo
+      std::cout << "Borde izquierdo" << std::endl;
+      columns_++;
+      for (int i = 0; i < rows_; i++) {
+        lattice_[i].resize(columns_);
+        for (int j = columns_ - 1; j > 0; j--) {
+          lattice_[i][j] = lattice_[i][j - 1];
+        }
+        lattice_[i][0] = new Cell(Position(i, 0), kDead);
+      }
       break;
     }
-    if (lattice_[i][columns_ - 1]->getState() == kAlive) {
-      expand = true;
-      value = 1;
+    if (lattice_[i][columns_ - 1]->getState() == kAlive) { // Si hay una celula sobre el borde derecho
+      std::cout << "Borde derecho" << std::endl;
+      columns_++;
+      for (int i = 0; i < rows_; i++) {
+        lattice_[i].resize(columns_);
+      }
+      for (int i = 0; i < rows_; i++) {
+        lattice_[i][columns_ - 1] = new Cell(Position(i, columns_ - 1), kDead);
+      }
       break;
     }
   }
+  
   for (int j = 0; j < columns_; j++) {
-    if (lattice_[0][j]->getState() == kAlive) {
-      expand = true;
-      value = -1;
+    if (lattice_[0][j]->getState() == kAlive) { // Si hay una celula sobre el borde superior
+      std::cout << "Borde superior" << std::endl;
+      rows_++;
+      lattice_.resize(rows_);
+      for (int i = rows_ - 1; i > 0; i--) {
+        lattice_[i].resize(columns_);
+        for (int j = 0; j < columns_; j++) {
+          lattice_[i][j] = lattice_[i - 1][j];
+        }
+      }
+      for (int j = 0; j < columns_; j++) {
+        lattice_[0][j] = new Cell(Position(0, j), kDead);
+      }
       break;
     }
-    if (lattice_[rows_ - 1][j]->getState() == kAlive) {
-      expand = true;
-      value = 1;
+    if (lattice_[rows_ - 1][j]->getState() == kAlive) { // Si hay una celula sobre el borde inferior
+      std::cout << "Borde inferior" << std::endl;
+      rows_++;
+      lattice_.resize(rows_);
+      for (int i = 0; i < rows_ - 1; i++) {
+        lattice_[i].resize(columns_);
+      }
+      for (int j = 0; j < columns_; j++) {
+        lattice_[rows_ - 1][j] = new Cell(Position(rows_ - 1, j), kDead);
+      }
       break;
     }
-  }
-  if (expand) {
-    std::cout << "Se expande el tablero..." << std::endl;
-    if (value == -1) {
-      for (int i = 0; i < rows_; i++) {
-        lattice_[i].insert(lattice_[i].begin(), new Cell(Position(i, 0), kDead));
-        lattice_[i].pop_back();
-      }
-      columns_++;
-    } else {
-      for (int i = 0; i < rows_; i++) {
-        lattice_[i].push_back(new Cell(Position(i, columns_), kDead));
-        lattice_[i].erase(lattice_[i].begin());
-      }
-      columns_++;
-    }
-    // Imprimir el tablero expandido
-    std::cout << *this;
   }
 }
