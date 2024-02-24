@@ -19,6 +19,20 @@
 #include <limits> 
 #include "../include/functions.h"
 
+void setBorder(Lattice &lattice, borderType borderType) {
+  lattice.setBorderType(borderType);
+}
+
+void initialMenu(Lattice &lattice) {
+  std::cout << "Initial lattice: " << std::endl;
+  std::cout << lattice << std::endl;
+  std::cout << "Poblacion actual: " << lattice.Population() << std::endl;
+  std::cout << "Tipo de frontera: " << (lattice.getBorderType() == kReflective ? "Reflective" : "No Border") << std::endl;
+  while (true) {
+    menu(lattice);
+  }
+}
+
 void textMenu() {
   std::cout << kBold << "\nComandos disponibles: " << kReset << std::endl;
   std::cout << kRedBold << "\t[x]" << kReset << " Salir del programa." << std::endl;

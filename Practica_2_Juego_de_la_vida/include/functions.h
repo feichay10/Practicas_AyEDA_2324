@@ -41,6 +41,8 @@ const std::string kUsage =
     "\n\t\tpara el estado de las células del tablero.\n" +
     kBold + "\n\t-border <b [v]>, b=reflective" + kBold + "\n\t\t\t b=noborder";
 
+void setBorder(Lattice &lattice, borderType borderTypeVar);
+void initialMenu(Lattice &lattice);
 void textMenu();
 void menu(Lattice &lattice);
 void cellEvolution(Lattice &lattice);

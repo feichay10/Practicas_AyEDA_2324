@@ -33,7 +33,7 @@ Lattice::Lattice(int N, int M) {
     }
   }
   loadInitialConfiguration(N, M);
-  // setFrontier();
+  setFrontier();
 }
 
 Lattice::Lattice(const char* file) {
@@ -71,7 +71,7 @@ Lattice::Lattice(const char* file) {
   }
 
   input.close();
-  // setFrontier();
+  setFrontier();
 }
 
 Lattice::~Lattice() {
@@ -133,14 +133,17 @@ void Lattice::saveToFile(const std::string& fileOut) const {
     exit(EXIT_FAILURE);
   }
   output << rows_ << " " << columns_ << std::endl;
-  for (int i = 0; i < rows_; i++) {
-    for (int j = 0; j < columns_; j++) {
-      if (lattice_[i][j]->getState() == kAlive) {
-        output << i << " " << j;
-        output << std::endl;
-      }
-    }
-  }
+
+  // for (int i = 0; i < rows_; i++) {
+  //   for (int j = 0; j < columns_; j++) {
+  //     if (lattice_[i][j]->getState() == kAlive) {
+  //       output << i << " " << j;
+  //       output << std::endl;
+  //     }
+  //   }
+  // }
+  
+  output << *this;
   output.close();
 }
 
@@ -204,12 +207,16 @@ void Lattice::loadInitialConfiguration(int N, int M) {
 }
 
 void Lattice::setFrontier() {
-  for (int i = 0; i < rows_; i++) {
-    for (int j = 0; j < columns_; j++) {
-      if (i == 0 || i == rows_ - 1 || j == 0 || j == columns_ - 1) {
-        lattice_[i][j]->setState(kDead);
+  if (borderType_ == kReflective) {
+    for (int i = 0; i < rows_; i++) {
+      for (int j = 0; j < columns_; j++) {
+        if (i == 0 || i == rows_ - 1 || j == 0 || j == columns_ - 1) {
+          lattice_[i][j]->setState(kDead);
+        }
       }
     }
+  } else {
+    expandLattice();
   }
 }
 
