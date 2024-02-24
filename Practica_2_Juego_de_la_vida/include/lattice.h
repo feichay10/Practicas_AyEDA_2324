@@ -35,6 +35,7 @@ class Cell;
 class Lattice {
  public:
   // Constructor y destructor
+  Lattice();
   Lattice(int N, int M);
   Lattice(const char*);
   ~Lattice();
@@ -43,6 +44,8 @@ class Lattice {
   int getRows() const;
   int getColumns() const;
   Cell& getCell(const Position& position) const;
+  void setBorderType(borderType borderType);
+  borderType getBorderType() const;
 
   // Métodos de la clase
   void nextGeneration();
@@ -62,6 +65,7 @@ class Lattice {
   int columns_;
   size_t population_ = 0;
   std::vector<std::vector<Cell*>> lattice_;
+  borderType borderType_;
 };
 
 #endif  // LATTICE_H_

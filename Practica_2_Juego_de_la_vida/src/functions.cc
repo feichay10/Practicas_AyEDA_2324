@@ -16,6 +16,7 @@
  *
  */
 
+#include <limits> 
 #include "../include/functions.h"
 
 void textMenu() {
@@ -30,6 +31,9 @@ void textMenu() {
 void menu(Lattice &lattice) {
   std::string fileOut;
   char command;
+
+  // Limpiar el búfer de entrada para descartar el carácter de nueva línea
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
   textMenu();
   

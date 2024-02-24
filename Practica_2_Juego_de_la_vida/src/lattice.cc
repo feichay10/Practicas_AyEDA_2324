@@ -19,6 +19,8 @@
 #include "../include/lattice.h"
 #include "../include/functions.h"
 
+Lattice::Lattice() {}
+
 Lattice::Lattice(int N, int M) {
   rows_ = N;
   columns_ = M;
@@ -89,6 +91,14 @@ Cell& Lattice::getCell(const Position& position) const {
   return *lattice_[position.getRow()][position.getColumn()];
 }
 
+void Lattice::setBorderType(borderType borderType) {
+  borderType_ = borderType;
+}
+
+borderType Lattice::getBorderType() const {
+  return borderType_;
+}
+
 void Lattice::nextGeneration() {
   for (int i = 0; i < rows_; i++) {
     for (int j = 0; j < columns_; j++) {
@@ -148,8 +158,8 @@ std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
   for (int i = 0; i < lattice.rows_; i++) {
     os << "| " << kReset;
     for (int j = 0; j < lattice.columns_; j++) {
-      // os << lattice.lattice_[i][j]->getState() << " ";
-      os << kRedBold << *lattice.lattice_[i][j] << " " << kReset;
+      os << lattice.lattice_[i][j]->getState() << " ";
+      // os << kRedBold << *lattice.lattice_[i][j] << " " << kReset;
     }
     os << kGreenBold << "|" << std::endl;
   }
