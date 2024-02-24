@@ -47,6 +47,7 @@ void menu(Lattice &lattice) {
         std::cout << lattice;
         break;
       case 'L':
+        std::cout << lattice;
         cellEvolution(lattice);
         break;
       case 'c':
@@ -72,5 +73,6 @@ void cellEvolution(Lattice &lattice) {
   for (int i = 0; i < 5; i++) {
     lattice.nextGeneration();
     std::cout << lattice;
+    std::cout << std::endl;
   }
 }

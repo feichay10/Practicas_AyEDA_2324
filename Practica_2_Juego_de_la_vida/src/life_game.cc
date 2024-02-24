@@ -39,7 +39,6 @@ void checkProgramParameters(int argc, char* argv[]) {
 
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-size") {
-      std::cout << "size" << std::endl;
       if (i + 2 < argc) {
         rows = std::stoi(argv[i + 1]);
         columns = std::stoi(argv[i + 2]);
@@ -62,7 +61,6 @@ void checkProgramParameters(int argc, char* argv[]) {
         std::cout << "Initial lattice: " << std::endl;
         std::cout << lattice;
         std::cout << "Poblacion actual: " << lattice.Population() << std::endl;
-        std::cout << "Pulse una tecla para continuar..." << std::endl;
         while (true) {
           menu(lattice);
         }
