@@ -39,34 +39,28 @@ State Cell::setState(State state) {
 // (i,j-1)| (i,j)| (i,j+1)
 // ---------------------------
 // (i+1,j-1)|(i+1,j)|(i+1,j+1)
-// TODO: Corregir el calculo de vecinos
 int Cell::neighbours(const Lattice& lattice) {
-  int alive_neighbours = 0;
+  int count = 0;
   for (int i = position_.getRow() - 1; i <= position_.getRow() + 1; i++) {
     for (int j = position_.getColumn() - 1; j <= position_.getColumn() + 1; j++) {
       if (i >= 0 && i < lattice.getRows() && j >= 0 && j < lattice.getColumns() && (i != position_.getRow() || j != position_.getColumn())) {
         if (lattice.getCell(Position(i, j)).getState() == kAlive) {
-          alive_neighbours++;
+          count++;
         }
       }
     }
   }
-  return alive_neighbours;
+  return count;
 }
 
-// Funcion de transicion local:
-//  - Una celula en estado viva con 2 o 3 vecinas en estado viva continua en
-//  estado viva en la siguiente generacion. En caso contrario, muere.
-//  - Una celula en estado muerta con exactamente 3 vecinas en estado viva pasa
-//  al estado viva en la siguiente generacion. En caso contrario, permanece en
-//  estado muerta.
 int Cell::nextState(const Lattice& lattice) {
   int alive_neighbours = neighbours(lattice);
+  
   if (state_ == kAlive) {
-    if (alive_neighbours == 2 || alive_neighbours == 3) {
-      nextState_ = kAlive;
-    } else {
+    if (alive_neighbours < 2 || alive_neighbours > 3) {
       nextState_ = kDead;
+    } else {
+      nextState_ = kAlive;
     }
   } else {
     if (alive_neighbours == 3) {
@@ -75,6 +69,7 @@ int Cell::nextState(const Lattice& lattice) {
       nextState_ = kDead;
     }
   }
+
   return nextState_;
 }
 

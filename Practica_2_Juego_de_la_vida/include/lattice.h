@@ -46,6 +46,7 @@ class Lattice {
   Cell& getCell(const Position& position) const;
   void setBorderType(borderType borderType);
   borderType getBorderType() const;
+  std::vector<std::vector<Cell*>> getLattice() const;
 
   // Métodos de la clase
   void nextGeneration();

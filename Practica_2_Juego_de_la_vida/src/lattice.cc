@@ -22,16 +22,18 @@
 Lattice::Lattice() {}
 
 Lattice::Lattice(int N, int M) {
-  rows_ = N;
-  columns_ = M;
+  rows_ = M;
+  columns_ = N;
   population_ = 0;
-  lattice_.resize(N);
-  for (int i = 0; i < N; i++) {
-    lattice_[i].resize(M);
-    for (int j = 0; j < M; j++) {
+
+  lattice_.resize(M);
+  for (int i = 0; i < rows_; i++) {
+    lattice_[i].resize(N);
+    for (int j = 0; j < columns_; j++) {
       lattice_[i][j] = new Cell(Position(i, j), kDead);
     }
   }
+
   loadInitialConfiguration(N, M);
   setFrontier();
 }
@@ -43,18 +45,7 @@ Lattice::Lattice(const char* file) {
     exit(EXIT_FAILURE);
   }
 
-  // Guardar el contenido del fichero sin comentarios que estaran seguidas por //
-  std::string line;
-  std::vector<std::string> fileContent;
-  while (std::getline(input, line)) {
-    if (line.substr(0, 2) != "//") {
-      fileContent.push_back(line);
-    }
-  }
-
-  rows_ = std::stoi(fileContent[0].substr(0, fileContent[0].find(' ')));
-  columns_ = std::stoi(fileContent[0].substr(fileContent[0].find(' ') + 1, fileContent[0].size()));
-
+  input >> rows_ >> columns_;
   lattice_.resize(rows_);
   for (int i = 0; i < rows_; i++) {
     lattice_[i].resize(columns_);
@@ -63,11 +54,15 @@ Lattice::Lattice(const char* file) {
     }
   }
 
-  int i, j;
-  for (int k = 1; k < fileContent.size(); k++) {
-    i = std::stoi(fileContent[k].substr(0, fileContent[k].find(' ')));
-    j = std::stoi(fileContent[k].substr(fileContent[k].find(' ') + 1, fileContent[k].size()));
-    lattice_[i][j]->setState(kAlive);
+  char state;
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      input >> state;
+      if (state == '1') {
+        lattice_[i][j]->setState(kAlive);
+        population_++;
+      }
+    }
   }
 
   input.close();
@@ -99,6 +94,10 @@ borderType Lattice::getBorderType() const {
   return borderType_;
 }
 
+std::vector<std::vector<Cell*>> Lattice::getLattice() const {
+  return lattice_;
+}
+
 void Lattice::nextGeneration() {
   for (int i = 0; i < rows_; i++) {
     for (int j = 0; j < columns_; j++) {
@@ -111,6 +110,7 @@ void Lattice::nextGeneration() {
     }
   }
 
+  // setFrontier();
   expandLattice();
 }
 
@@ -134,24 +134,20 @@ void Lattice::saveToFile(const std::string& fileOut) const {
   }
   output << rows_ << " " << columns_ << std::endl;
 
-  // for (int i = 0; i < rows_; i++) {
-  //   for (int j = 0; j < columns_; j++) {
-  //     if (lattice_[i][j]->getState() == kAlive) {
-  //       output << i << " " << j;
-  //       output << std::endl;
-  //     }
-  //   }
-  // }
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      output << lattice_[i][j]->getState();
+    }
+    output << std::endl;
+  }
   
-  output << *this;
   output.close();
 }
 
 Cell& Lattice::operator[](const Position& position) {
-  return getCell(position);
+  return *lattice_[position.getRow()][position.getColumn()];
 }
 
-// Añade bordes al tablero para ver los limites del tablero
 std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
   os << kGreenBold << "+-";
   for (int i = 0; i < lattice.columns_ ; i++) {
@@ -161,8 +157,8 @@ std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
   for (int i = 0; i < lattice.rows_; i++) {
     os << "| " << kReset;
     for (int j = 0; j < lattice.columns_; j++) {
-      os << lattice.lattice_[i][j]->getState() << " ";
-      // os << kRedBold << *lattice.lattice_[i][j] << " " << kReset;
+      // os << lattice.lattice_[i][j]->getState() << " ";
+      os << kRedBold << *lattice.lattice_[i][j] << " " << kReset;
     }
     os << kGreenBold << "|" << std::endl;
   }
@@ -175,12 +171,6 @@ std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
   return os;
 }
 
-/**
- * @brief Metodo auxiliar que solicita por teclado las posiciones de las celulas
- * 
- * @param N: Numero de filas
- * @param M: Numero de columnas
- */
 void Lattice::loadInitialConfiguration(int N, int M) {
   std::cout << "Introduce las posiciones de las celulas vivas (i j): " << std::endl;
   std::cout << "Para terminar, pulsa 'q'" << std::endl;
@@ -220,8 +210,6 @@ void Lattice::setFrontier() {
   }
 }
 
-// Si se encuentra una celula viva en el borde, se expande el tablero una fila o
-// columna más
 void Lattice::expandLattice() {
   bool left = false;
   bool right = false;

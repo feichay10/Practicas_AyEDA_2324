@@ -66,7 +66,11 @@ void menu(Lattice &lattice) {
         break;
       case 'L':
         std::cout << lattice;
-        cellEvolution(lattice);
+        // cellEvolution(lattice);
+        for (int i = 0; i < 5; i++) {
+          lattice.nextGeneration();
+          std::cout << lattice;
+        }
         break;
       case 'c':
         std::cout << "Poblacion actual: " << lattice.Population() << std::endl;

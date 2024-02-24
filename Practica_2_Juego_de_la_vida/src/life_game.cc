@@ -25,7 +25,7 @@
 #include "../include/position.h"
 
 int rows = 0, columns = 0;
-borderType borderTypeVar = kReflective;
+borderType borderTypeVar = kNoBorder;
 std::string fileIn = "";
 
 void checkProgramParameters(int argc, char* argv[]) {
@@ -44,7 +44,8 @@ void checkProgramParameters(int argc, char* argv[]) {
         columns = std::stoi(argv[i + 2]);
         i += 3;
         Lattice lattice(rows, columns);
-        setBorder(lattice, (std::string(argv[i + 1]) == "reflective" ? kReflective : kNoBorder));
+        borderTypeVar = (std::string(argv[i + 1]) == "reflective" ? kReflective : kNoBorder);
+        setBorder(lattice, borderTypeVar);
         initialMenu(lattice);
       } else {
         throw std::string("Missing lattice size.");
@@ -55,6 +56,7 @@ void checkProgramParameters(int argc, char* argv[]) {
         fileIn = argv[i + 1];
         i += 2;
         Lattice lattice(fileIn.c_str());
+        borderTypeVar = (std::string(argv[i + 1]) == "reflective" ? kReflective : kNoBorder);
         setBorder(lattice, borderTypeVar);
         initialMenu(lattice);
       } else {
