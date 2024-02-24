@@ -27,7 +27,6 @@
 int rows, columns;
 borderType borderTypeVar;
 std::string fileIn = "";
-std::string fileOut = "";
 
 void checkProgramParameters(int argc, char* argv[]) {
   if (argc == 2 && std::string(argv[1]) == "-help") {
@@ -40,6 +39,7 @@ void checkProgramParameters(int argc, char* argv[]) {
 
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-size") {
+      std::cout << "size" << std::endl;
       if (i + 2 < argc) {
         rows = std::stoi(argv[i + 1]);
         columns = std::stoi(argv[i + 2]);
@@ -55,6 +55,24 @@ void checkProgramParameters(int argc, char* argv[]) {
         throw std::string("Missing lattice size.");
         exit(EXIT_FAILURE);
       }
+    } else if (std::string(argv[i]) == "-file") {
+      if (i + 1 < argc) {
+        fileIn = argv[i + 1];
+        Lattice lattice(fileIn.c_str());
+        std::cout << "Initial lattice: " << std::endl;
+        std::cout << lattice;
+        std::cout << "Poblacion actual: " << lattice.Population() << std::endl;
+        std::cout << "Pulse una tecla para continuar..." << std::endl;
+        while (true) {
+          menu(lattice);
+        }
+      } else {
+        throw std::string("Missing file name.");
+        exit(EXIT_FAILURE);
+      }
+    } else {
+      throw std::string("Invalid argument: ") + argv[i];
+      exit(EXIT_FAILURE);
     }
   }
 }

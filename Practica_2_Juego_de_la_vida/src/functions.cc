@@ -16,27 +16,27 @@
  *
  */
 
-#include <cstdlib>
-#include <limits> // Include the necessary header file
 #include "../include/functions.h"
+
+void textMenu() {
+  std::cout << kBold << "\nComandos disponibles: " << kReset << std::endl;
+  std::cout << kRedBold << "\t[x]" << kReset << " Salir del programa." << std::endl;
+  std::cout << kRedBold << "\t[n]" << kReset << " Muestra la siguiente generacion." << std::endl;
+  std::cout << kRedBold << "\t[L]" << kReset << " Muestra las siguientes 5 generaciones." << std::endl;
+  std::cout << kRedBold << "\t[c]" << kReset << " Mostrar solo la población." << std::endl;
+  std::cout << kRedBold << "\t[s]" << kReset << " Guardar la configuración actual en un fichero." << std::endl << std::endl;
+}
 
 void menu(Lattice &lattice) {
   std::string fileOut;
   char command;
 
-  // Limpiar el búfer de entrada para descartar el carácter de nueva línea
-  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
+  textMenu();
+  
   do {
-    std::cout << kBold << "\nComandos disponibles: " << kReset << std::endl;
-    std::cout << kRedBold << "\t[x]" << kReset << " Salir del programa." << std::endl;
-    std::cout << kRedBold << "\t[n]" << kReset << " Muestra la siguiente generacion." << std::endl;
-    std::cout << kRedBold << "\t[L]" << kReset << " Muestra las siguientes 5 generaciones." << std::endl;
-    std::cout << kRedBold << "\t[c]" << kReset << " Mostrar solo la población." << std::endl;
-    std::cout << kRedBold << "\t[s]" << kReset << " Guardar la configuración actual en un fichero." << std::endl << std::endl;
     std::cout << "Introduzca un comando: ";
     std::cin >> command;
-
+    system("clear");
     switch (command) {
       case 'x':
         exit(EXIT_SUCCESS);
@@ -61,6 +61,9 @@ void menu(Lattice &lattice) {
         std::cout << "Comando no valido." << std::endl;
         break;
     }
+    
+    textMenu();
+
   } while (true);
 }
 

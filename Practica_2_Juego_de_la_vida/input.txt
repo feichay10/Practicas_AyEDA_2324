@@ -1,5 +1,6 @@
+// Dimensiones del reticulo
 5 5
-0 0
-0 4
+// Posiciones de las celulas vivas
+3 0
 4 0
-4 4
+4 1

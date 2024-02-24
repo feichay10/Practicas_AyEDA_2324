@@ -42,10 +42,6 @@ class Cell {
   // Getters y Setters
   State getState() const;
   State setState(State);
-  Position getPosition() const;
-  void setPosition(const Position&);
-  std::vector<Position> getNeighbours() const;
-  void setNeighbours(const std::vector<Position>&);
 
   // Métodos de la clase
   int neighbours(const Lattice&);
@@ -59,7 +55,6 @@ class Cell {
   Position position_;
   State state_;
   State nextState_;
-  std::vector<Position> neighbours_;
 };
 
 #endif  // CELL_H_
