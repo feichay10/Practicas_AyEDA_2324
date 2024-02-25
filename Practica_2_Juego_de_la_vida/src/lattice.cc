@@ -216,28 +216,55 @@ void Lattice::setFrontier() {
 
 void Lattice::expandLattice() {
   std::vector<std::vector<Cell*>> newLattice;
-  
-  newLattice.resize(rows_ + 2);
-  for (int i = 0; i < rows_ + 2; i++) {
-    newLattice[i].resize(columns_ + 2);
-    for (int j = 0; j < columns_ + 2; j++) {
-      newLattice[i][j] = new Cell(Position(i, j), kDead);
-    }
-  }
-
-  for (int i = 1; i < rows_ + 1; i++) {
-    for (int j = 1; j < columns_ + 1; j++) {
-      newLattice[i][j]->setState(lattice_[i - 1][j - 1]->getState());
-    }
-  }
+  bool expanded = false;
 
   for (int i = 0; i < rows_; i++) {
-    for (int j = 0; j < columns_; j++) {
-      delete lattice_[i][j];
+    if (lattice_[i][0]->getState() == kAlive) {
+      expanded = true;
+      break;
+    }
+
+    if (lattice_[i][columns_ - 1]->getState() == kAlive) {
+      expanded = true;
+      break;
     }
   }
-  lattice_.clear();
-  lattice_ = newLattice;
-  rows_ += 2;
-  columns_ += 2;
+
+  for (int i = 0; i < columns_; i++) {
+    if (lattice_[0][i]->getState() == kAlive) {
+      expanded = true;
+      break;
+    }
+
+    if (lattice_[rows_ - 1][i]->getState() == kAlive) {
+      expanded = true;
+      break;
+    }
+  }
+
+  if (expanded) {
+    newLattice.resize(rows_ + 2);
+    for (int i = 0; i < rows_ + 2; i++) {
+      newLattice[i].resize(columns_ + 2);
+      for (int j = 0; j < columns_ + 2; j++) {
+        newLattice[i][j] = new Cell(Position(i, j), kDead);
+      }
+    }
+
+    for (int i = 1; i < rows_ + 1; i++) {
+      for (int j = 1; j < columns_ + 1; j++) {
+        newLattice[i][j]->setState(lattice_[i - 1][j - 1]->getState());
+      }
+    }
+
+    for (int i = 0; i < rows_; i++) {
+      for (int j = 0; j < columns_; j++) {
+        delete lattice_[i][j];
+      }
+    }
+    lattice_.clear();
+    lattice_ = newLattice;
+    rows_ += 2;
+    columns_ += 2;
+  }
 }
