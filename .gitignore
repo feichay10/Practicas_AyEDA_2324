@@ -1,4 +1,3 @@
-*.o
 *.gdoc
 .vscode
 *.tgz
