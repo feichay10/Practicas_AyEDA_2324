@@ -16,7 +16,9 @@
  *
  */
 
-#include <limits> 
+#include <limits>
+#include <thread>
+#include <chrono>
 #include "../include/functions.h"
 
 void setBorder(Lattice &lattice, borderType borderType) {
@@ -39,7 +41,8 @@ void textMenu() {
   std::cout << kRedBold << "\t[n]" << kReset << " Muestra la siguiente generacion." << std::endl;
   std::cout << kRedBold << "\t[L]" << kReset << " Muestra las siguientes 5 generaciones." << std::endl;
   std::cout << kRedBold << "\t[c]" << kReset << " Mostrar solo la población." << std::endl;
-  std::cout << kRedBold << "\t[s]" << kReset << " Guardar la configuración actual en un fichero." << std::endl << std::endl;
+  std::cout << kRedBold << "\t[s]" << kReset << " Guardar la configuración actual en un fichero." << std::endl;
+  std::cout << kRedBold << "\t[a]" << kReset << " Generación automática" << std::endl << std::endl;
 }
 
 void menu(Lattice &lattice) {
@@ -80,6 +83,9 @@ void menu(Lattice &lattice) {
         std::cin >> fileOut;
         lattice.saveToFile(fileOut);
         break;
+      case 'a':
+        cellEvolution(lattice);
+        break;
       default:
         std::cout << "Comando no valido." << std::endl;
         break;
@@ -91,10 +97,13 @@ void menu(Lattice &lattice) {
 }
 
 void cellEvolution(Lattice &lattice) {
-  std::cout << std::endl;
-  for (int i = 0; i < 5; i++) {
+  std::cout << "Use ctrl + z para salir." << std::endl;
+  std::this_thread::sleep_for(std::chrono::milliseconds(800));
+
+  while (true) {
     lattice.nextGeneration();
     std::cout << lattice;
-    std::cout << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    system("clear");
   }
 }

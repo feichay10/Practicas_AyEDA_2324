@@ -97,9 +97,13 @@ std::vector<std::vector<Cell*>> Lattice::getLattice() const {
 }
 
 void Lattice::nextGeneration() {
-  if (borderType_ == kNoBorder) {
-    expandLattice();
-  }
+  // if (borderType_ == kNoBorder) {
+  //   expandLattice();
+  // } else if (borderType_ == kReflective) {
+  //   setFrontier();
+  // }
+
+  setFrontier();
 
   for (int i = 0; i < rows_; i++) {
     for (int j = 0; j < columns_; j++) {
@@ -202,10 +206,14 @@ void Lattice::loadInitialConfiguration(int N, int M) {
 }
 
 void Lattice::setFrontier() {
-  for (int i = 0; i < rows_; i++) {
-    for (int j = 0; j < columns_; j++) {
-      if (i == 0 || i == rows_ - 1 || j == 0 || j == columns_ - 1) {
-        lattice_[i][j]->setState(kAlive);
+  if (borderType_ == kNoBorder) {
+    expandLattice();
+  } else if (borderType_ == kReflective) {
+    for (int i = 0; i < rows_; i++) {
+      for (int j = 0; j < columns_; j++) {
+        if (i == 0 || i == rows_ - 1 || j == 0 || j == columns_ - 1) {
+          lattice_[i][j]->setState(kAlive);
+        }
       }
     }
   }
