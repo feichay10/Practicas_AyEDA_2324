@@ -36,6 +36,8 @@ Lattice::Lattice(int N, int M) {
 
   loadInitialConfiguration(N, M);
   // setFrontier();
+
+
 }
 
 Lattice::Lattice(const char* file) {
@@ -66,7 +68,6 @@ Lattice::Lattice(const char* file) {
   }
 
   input.close();
-  // setFrontier();
 }
 
 Lattice::~Lattice() {
@@ -99,6 +100,8 @@ std::vector<std::vector<Cell*>> Lattice::getLattice() const {
 }
 
 void Lattice::nextGeneration() {
+  expandLattice();
+
   for (int i = 0; i < rows_; i++) {
     for (int j = 0; j < columns_; j++) {
       lattice_[i][j]->nextState(*this);
@@ -110,7 +113,7 @@ void Lattice::nextGeneration() {
     }
   }
 
-  expandLattice();
+  // expandLattice();
 }
 
 std::size_t Lattice::Population() const { 
@@ -213,6 +216,7 @@ void Lattice::setFrontier() {
 
 void Lattice::expandLattice() {
   std::vector<std::vector<Cell*>> newLattice;
+  
   newLattice.resize(rows_ + 2);
   for (int i = 0; i < rows_ + 2; i++) {
     newLattice[i].resize(columns_ + 2);

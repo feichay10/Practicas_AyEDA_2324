@@ -42,6 +42,7 @@ class Cell {
   // Getters y Setters
   State getState() const;
   State setState(State);
+  void setPosition(const Position& position) { position_ = position; }
 
   // Métodos de la clase
   int neighbours(const Lattice&);
