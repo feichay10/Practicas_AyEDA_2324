@@ -40,17 +40,19 @@ State Cell::setState(State state) {
 // ---------------------------
 // (i+1,j-1)|(i+1,j)|(i+1,j+1)
 int Cell::neighbours(const Lattice& lattice) {
-  int count = 0;
+  int alive_neighbours = 0;
   for (int i = position_.getRow() - 1; i <= position_.getRow() + 1; i++) {
     for (int j = position_.getColumn() - 1; j <= position_.getColumn() + 1; j++) {
       if (i >= 0 && i < lattice.getRows() && j >= 0 && j < lattice.getColumns() && (i != position_.getRow() || j != position_.getColumn())) {
         if (lattice.getCell(Position(i, j)).getState() == kAlive) {
-          count++;
+          alive_neighbours++;
         }
       }
     }
   }
-  return count;
+
+  // std::cout << "Cell " << position_ << " has " << alive_neighbours << " alive neighbours." << std::endl;
+  return alive_neighbours;
 }
 
 int Cell::nextState(const Lattice& lattice) {

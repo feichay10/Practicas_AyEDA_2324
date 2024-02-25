@@ -26,6 +26,11 @@ class Position {
   int getRow() const { return row_; }
   int getColumn() const { return column_; }
 
+  friend std::ostream& operator<<(std::ostream& os, const Position& position) {
+    os << "(" << position.row_ << ", " << position.column_ << ")";
+    return os;
+  }
+
  private:
   int row_;
   int column_;

@@ -25,7 +25,7 @@ void setBorder(Lattice &lattice, borderType borderType) {
 
 void initialMenu(Lattice &lattice) {
   std::cout << "Initial lattice: " << std::endl;
-  std::cout << lattice << std::endl;
+  std::cout << lattice;
   std::cout << "Poblacion actual: " << lattice.Population() << std::endl;
   std::cout << "Tipo de frontera: " << (lattice.getBorderType() == kReflective ? "Reflective" : "No Border") << std::endl;
   while (true) {
