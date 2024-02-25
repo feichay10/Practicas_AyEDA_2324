@@ -51,7 +51,7 @@ void checkProgramParameters(int argc, char* argv[]) {
         throw std::string("Missing lattice size.");
         exit(EXIT_FAILURE);
       }
-    } else if (std::string(argv[i]) == "-file") {
+    } else if (std::string(argv[i]) == "-init") {
       if (i + 1 < argc) {
         fileIn = argv[i + 1];
         i += 2;
