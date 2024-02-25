@@ -37,14 +37,38 @@ void checkProgramParameters(int argc, char* argv[]) {
     exit(EXIT_FAILURE);
   }
 
+  int sizeFlag = 0, initFlag = 0;
+
+  // Si se inicializa los parametros -size e -init a la vez da error
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-size") {
+      sizeFlag++;
+    } else if (std::string(argv[i]) == "-init") {
+      initFlag++;
+    }
+  }
+
+  if (sizeFlag == 1 && initFlag == 1) {
+    throw std::string("Error: Cannot initialize both -size and -init at the same time.");
+    exit(EXIT_FAILURE);
+  }
+
+  for (int i = 1; i < argc; i++) {
+    if (std::string(argv[i]) == "-size") {
+      sizeFlag++;
       if (i + 2 < argc) {
         rows = std::stoi(argv[i + 1]);
         columns = std::stoi(argv[i + 2]);
         i += 3;
         Lattice lattice(rows, columns);
-        borderTypeVar = (std::string(argv[i + 1]) == "reflective" ? kReflective : kNoBorder);
+        if (std::string(argv[i + 1]) == "reflective") {
+          borderTypeVar = kReflective;
+        } else if (std::string(argv[i + 1]) == "noborder") {
+          borderTypeVar = kNoBorder;
+        } else {
+          throw std::string("Invalid border type.");
+          exit(EXIT_FAILURE);
+        }
         setBorder(lattice, borderTypeVar);
         initialMenu(lattice);
       } else {
@@ -52,11 +76,19 @@ void checkProgramParameters(int argc, char* argv[]) {
         exit(EXIT_FAILURE);
       }
     } else if (std::string(argv[i]) == "-init") {
+      initFlag++;
       if (i + 1 < argc) {
         fileIn = argv[i + 1];
         i += 2;
         Lattice lattice(fileIn.c_str());
-        borderTypeVar = (std::string(argv[i + 1]) == "reflective" ? kReflective : kNoBorder);
+        if (std::string(argv[i + 1]) == "reflective") {
+          borderTypeVar = kReflective;
+        } else if (std::string(argv[i + 1]) == "noborder") {
+          borderTypeVar = kNoBorder;
+        } else {
+          throw std::string("Invalid border type.");
+          exit(EXIT_FAILURE);
+        }
         setBorder(lattice, borderTypeVar);
         initialMenu(lattice);
       } else {

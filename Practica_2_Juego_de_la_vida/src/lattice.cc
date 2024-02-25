@@ -26,9 +26,9 @@ Lattice::Lattice(int N, int M) {
   columns_ = N;
   population_ = 0;
 
-  lattice_.resize(M);
+  lattice_.resize(rows_);
   for (int i = 0; i < rows_; i++) {
-    lattice_[i].resize(N);
+    lattice_[i].resize(columns_);
     for (int j = 0; j < columns_; j++) {
       lattice_[i][j] = new Cell(Position(i, j), kDead);
     }
@@ -97,12 +97,6 @@ std::vector<std::vector<Cell*>> Lattice::getLattice() const {
 }
 
 void Lattice::nextGeneration() {
-  // if (borderType_ == kNoBorder) {
-  //   expandLattice();
-  // } else if (borderType_ == kReflective) {
-  //   setFrontier();
-  // }
-
   setFrontier();
 
   for (int i = 0; i < rows_; i++) {
@@ -205,20 +199,6 @@ void Lattice::loadInitialConfiguration(int N, int M) {
   system("clear");
 }
 
-void Lattice::setFrontier() {
-  if (borderType_ == kNoBorder) {
-    expandLattice();
-  } else if (borderType_ == kReflective) {
-    for (int i = 0; i < rows_; i++) {
-      for (int j = 0; j < columns_; j++) {
-        if (i == 0 || i == rows_ - 1 || j == 0 || j == columns_ - 1) {
-          lattice_[i][j]->setState(kAlive);
-        }
-      }
-    }
-  }
-}
-
 void Lattice::expandLattice() {
   std::vector<std::vector<Cell*>> newLattice;
   bool expanded = false;
@@ -271,5 +251,62 @@ void Lattice::expandLattice() {
     lattice_ = newLattice;
     rows_ += 2;
     columns_ += 2;
+  }
+}
+
+void Lattice::reflectLattice() {
+  std::vector<std::vector<Cell*>> newLattice;
+
+  // Crear una nueva matriz con las dimensiones aumentadas
+  newLattice.resize(rows_ + 2);
+  for (int i = 0; i < rows_ + 2; i++) {
+    newLattice[i].resize(columns_ + 2);
+    for (int j = 0; j < columns_ + 2; j++) {
+      newLattice[i][j] = new Cell(Position(i, j), kDead);
+    }
+  }
+
+  // Copiar la matriz original en la nueva matriz
+  for (int i = 1; i < rows_ + 1; i++) {
+    for (int j = 1; j < columns_ + 1; j++) {
+      newLattice[i][j]->setState(lattice_[i - 1][j - 1]->getState());
+    }
+  }
+
+  // Reflejar los bordes izquierdo y derecho
+  for (int i = 1; i < rows_ + 1; i++) {
+    newLattice[i][0]->setState(lattice_[i - 1][0]->getState());
+    newLattice[i][columns_ + 1]->setState(lattice_[i - 1][columns_ - 1]->getState());
+  }
+
+  // Reflejar los bordes superior e inferior
+  for (int i = 1; i < columns_ + 1; i++) {
+    newLattice[0][i]->setState(lattice_[0][i - 1]->getState());
+    newLattice[rows_ + 1][i]->setState(lattice_[rows_ - 1][i - 1]->getState());
+  }
+
+  // Reflejar las esquinas de la matriz
+  newLattice[0][0]->setState(lattice_[0][0]->getState());
+  newLattice[0][columns_ + 1]->setState(lattice_[0][columns_ - 1]->getState());
+  newLattice[rows_ + 1][0]->setState(lattice_[rows_ - 1][0]->getState());
+  newLattice[rows_ + 1][columns_ + 1]->setState(lattice_[rows_ - 1][columns_ - 1]->getState());
+
+  // Eliminar la matriz original y asignar la nueva matriz
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      delete lattice_[i][j];
+    }
+  }
+  lattice_.clear();
+  lattice_ = newLattice;
+  rows_ += 2;
+  columns_ += 2;
+}
+
+void Lattice::setFrontier() {
+  if (borderType_ == kNoBorder) {
+    expandLattice();
+  } else if (borderType_ == kReflective) {
+    reflectLattice();
   }
 }

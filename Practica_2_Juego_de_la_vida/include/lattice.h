@@ -59,8 +59,9 @@ class Lattice {
 
  private:
   void loadInitialConfiguration(int N, int M);
-  void setFrontier();
   void expandLattice();
+  void reflectLattice();
+  void setFrontier();
 
   int rows_;
   int columns_;
