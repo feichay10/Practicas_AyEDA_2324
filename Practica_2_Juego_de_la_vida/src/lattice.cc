@@ -21,7 +21,7 @@
 
 Lattice::Lattice() {}
 
-Lattice::Lattice(int N, int M) {
+Lattice::Lattice(int M, int N) {
   rows_ = M;
   columns_ = N;
   population_ = 0;
@@ -40,7 +40,7 @@ Lattice::Lattice(int N, int M) {
 Lattice::Lattice(const char* file) {
   std::ifstream input(file);
   if (!input.is_open()) {
-    std::cerr << "Error: No se pudo abrir el archivo " << file << std::endl;
+    std::cerr << "Error: File could not be opened." << file << std::endl;
     exit(EXIT_FAILURE);
   }
 
@@ -49,26 +49,11 @@ Lattice::Lattice(const char* file) {
   for (int i = 0; i < rows_; i++) {
     lattice_[i].resize(columns_);
     for (int j = 0; j < columns_; j++) {
-      lattice_[i][j] = new Cell(Position(i, j), kDead);
-    }
-  }
-
-  char state;
-  for (int i = 0; i < rows_; i++) {
-    for (int j = 0; j < columns_; j++) {
+      char state;
       input >> state;
-      if (state == '1') {
-        lattice_[i][j]->setState(kAlive);
-        population_++;
-      }
+      lattice_[i][j] = new Cell(Position(i, j), state == '1' ? kAlive : kDead);
     }
   }
-
-  // Comprobar si la matriz es del tamaño de las dimensiones dadas
-  // if (input.peek() != EOF) {
-  //   std::cerr << "Error: La matriz no es del tamaño de las dimensiones dadas." << std::endl;
-  //   exit(EXIT_FAILURE);
-  // }
 
   input.close();
 }
@@ -87,29 +72,26 @@ int Lattice::getRows() const { return rows_; }
 int Lattice::getColumns() const { return columns_; }
 
 Cell& Lattice::getCell(const Position& position) const {
-  static Cell cell;
   int i, j;
 
   if (position.getRow() < 0 || position.getRow() >= rows_ || position.getColumn() < 0 || position.getColumn() >= columns_) {
     if (borderType_ == kNoBorder) {
-      std::cout << "Sin frontera" << std::endl;
       Cell* cell = new Cell(Position(0), kDead);
       return *cell;
     } else if (borderType_ == kReflective) {
+      i = position.getRow();
+      j = position.getColumn();
       if (position.getRow() < 0) {
-        i = 0;
-      } else if (position.getRow() >= rows_) {
-        i = rows_ - 1;
-      } else {
-        i = position.getRow();
+        i = 1;
       }
-
       if (position.getColumn() < 0) {
-        j = 0;
-      } else if (position.getColumn() >= columns_) {
-        j = columns_ - 1;
-      } else {
-        j = position.getColumn();
+        j = 1;
+      }
+      if (position.getRow() >= rows_) {
+        i = rows_ - 2;
+      }
+      if (position.getColumn() >= columns_) {
+        j = columns_ - 2;
       }
       return *lattice_[i][j];
     }
@@ -126,20 +108,8 @@ borderType Lattice::getBorderType() const {
   return borderType_;
 }
 
-std::vector<std::vector<Cell*>> Lattice::getLattice() const {
-  return lattice_;
-}
-
-std::vector<Cell*> Lattice::getNeighbours(const Position& position) const {
-  std::vector<Cell*> neighbours;
-  for (int i = position.getRow() - 1; i <= position.getRow() + 1; i++) {
-    for (int j = position.getColumn() - 1; j <= position.getColumn() + 1; j++) {
-      if (i >= 0 && i < rows_ && j >= 0 && j < columns_ && (i != position.getRow() || j != position.getColumn())) {
-        neighbours.push_back(lattice_[i][j]);
-      }
-    }
-  }
-  return neighbours;
+int Lattice::getGeneration() const {
+  return generation_;
 }
 
 void Lattice::nextGeneration() {
@@ -157,6 +127,8 @@ void Lattice::nextGeneration() {
       lattice_[i][j]->updateState();
     }
   }
+
+  generation_++;
 }
 
 std::size_t Lattice::Population() const { 
@@ -174,7 +146,7 @@ std::size_t Lattice::Population() const {
 void Lattice::saveToFile(const std::string& fileOut) const {
   std::ofstream output(fileOut);
   if (!output.is_open()) {
-    std::cerr << "Error: No se pudo abrir el archivo " << fileOut << std::endl;
+    std::cerr << "Error: File could not be opened." << fileOut << std::endl;
     exit(EXIT_FAILURE);
   }
   output << rows_ << " " << columns_ << std::endl;
@@ -189,37 +161,8 @@ void Lattice::saveToFile(const std::string& fileOut) const {
   output.close();
 }
 
-// Para dar acceso a las celulas por la posicion que ocupa en el reticulo
-// programar el operador [] dependiendo del tipo de frontera
 Cell& Lattice::operator[](const Position& position) const {
-  Cell cell;
-  int i, j;
-
-  if (position.getRow() < 0 || position.getRow() >= rows_ || position.getColumn() < 0 || position.getColumn() >= columns_) {
-    if (borderType_ == kNoBorder) {
-      Cell* cell = new Cell(Position(0), kDead);
-      return *cell;
-    } else if (borderType_ == kReflective) {
-      if (position.getRow() < 0) {
-        i = 0;
-      } else if (position.getRow() >= rows_) {
-        i = rows_ - 1;
-      } else {
-        i = position.getRow();
-      }
-
-      if (position.getColumn() < 0) {
-        j = 0;
-      } else if (position.getColumn() >= columns_) {
-        j = columns_ - 1;
-      } else {
-        j = position.getColumn();
-      }
-      return *lattice_[i][j];
-    }
-  }
-
-  return *lattice_[position.getRow()][position.getColumn()];
+  return getCell(position);
 }
 
 std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
@@ -246,32 +189,37 @@ std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
 }
 
 void Lattice::loadInitialConfiguration(int N, int M) {
-  std::cout << "Introduce las posiciones de las celulas vivas (i j): " << std::endl;
-  std::cout << "Para terminar, pulsa 'q'" << std::endl;
+  std::cout << "Enter the positions of the live cells (i j): " << std::endl;
+  std::cout << "To finish, press 'q'." << std::endl;
   std::string i, j;
 
-  std::cout << "\nCelula " << population_ + 1 << std::endl;
+  std::cout << "\nCell " << population_ + 1 << std::endl;
   while (true) {
     std::cout << "i: ";
     std::cin >> i;
     if (i == "q" || i == "Q") {
       break;
     } else if (stoi(i) >= N || stoi(i) < 0) {
-      std::cerr << "Error: Posicion fuera del tablero." << std::endl;
+      std::cerr << "Error: Position out of the board." << std::endl;
       continue;
     }
+
     std::cout << "j: ";
     std::cin >> j;
     if (j == "q" || j == "Q") {
       break;
     } else if (stoi(j) >= M || stoi(j) < 0) {
-      std::cerr << "Error: Posicion fuera del tablero." << std::endl;
+      std::cerr << "Error: Position out of the board." << std::endl;
       continue;
     }
+
     lattice_[stoi(i)][stoi(j)]->setState(kAlive);
     population_++;
-    std::cout << "\nCelula " << population_ + 1 << std::endl;
+    std::cout << "\nCell " << population_ + 1 << std::endl;
   }
+
+  // Limpiar el búfer de entrada para descartar el carácter de nueva línea
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
   system("clear");
 }

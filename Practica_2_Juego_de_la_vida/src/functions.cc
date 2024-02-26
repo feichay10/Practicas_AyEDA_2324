@@ -18,45 +18,90 @@
 
 #include "../include/functions.h"
 
-void setBorder(Lattice &lattice, borderType borderType) {
-  lattice.setBorderType(borderType);
+void checkFile(std::string fileIn) {
+  std::ifstream input(fileIn);
+  if (!input.is_open()) {
+    std::cerr << "Error: File could not be opened." << fileIn << std::endl;
+    exit(EXIT_FAILURE);
+  }
+
+  int rows, columns;
+  std::string line;
+  int count = -1;
+  input >> rows >> columns;
+  
+  // Comprobar que el tamaño de la matriz es correcto (N x M)
+  if (rows <= 0 || columns <= 0) {
+    throw std::string("Error: The size of the matrix is not valid, it must be greater than 0.");
+    exit(EXIT_FAILURE);
+  }
+
+  // Contar el número de filas del fichero
+  while (std::getline(input, line)) {
+    count++;
+  }
+
+  if (count != rows) {
+    throw std::string("Error: The number of rows in the file does not match the size of the matrix.");
+    exit(EXIT_FAILURE);
+  }
+
+  // Contar el número de columnas del fichero, contando el número de caracteres por línea
+  input.clear();
+  input.seekg(0, std::ios::beg);
+  int countColumns = 0;
+  while (std::getline(input, line)) {
+    countColumns = line.length();
+  }
+
+  if (countColumns != columns) {
+    throw std::string("Error: The number of columns in the file does not match the size of the matrix.");
+    exit(EXIT_FAILURE);
+  }
+
+  input.close();
 }
 
-void initialMenu(Lattice &lattice) {
-  std::cout << "Initial lattice: " << std::endl;
-  std::cout << lattice;
-  std::cout << "Poblacion actual: " << lattice.Population() << std::endl;
-  std::cout << "Tipo de frontera: " << (lattice.getBorderType() == kReflective ? "Reflective" : "No Border") << std::endl;
-  while (true) {
-    menu(lattice);
+void setBorder(const std::string& arg, borderType& borderTypeVar, Lattice &lattice) {
+  if (arg == "reflective") {
+    borderTypeVar = kReflective;
+  } else if (arg == "noborder") {
+    borderTypeVar = kNoBorder;
+  } else {
+    throw std::string("Invalid border type.");
+    exit(EXIT_FAILURE);
   }
+
+  lattice.setBorderType(borderTypeVar);
 }
 
 void textMenu() {
-  std::cout << kBold << "\nComandos disponibles: " << kReset << std::endl;
-  std::cout << kRedBold << "\t[x]" << kReset << " Salir del programa." << std::endl;
-  std::cout << kRedBold << "\t[n]" << kReset << " Muestra la siguiente generacion." << std::endl;
-  std::cout << kRedBold << "\t[L]" << kReset << " Muestra las siguientes 5 generaciones." << std::endl;
-  std::cout << kRedBold << "\t[c]" << kReset << " Mostrar solo la población." << std::endl;
-  std::cout << kRedBold << "\t[s]" << kReset << " Guardar la configuración actual en un fichero." << std::endl;
-  std::cout << kRedBold << "\t[a]" << kReset << " Generación automática" << std::endl << std::endl;
+  std::cout << kBold << "\nAvailable commands: " << kReset << std::endl;
+  std::cout << kRedBold << "  [x]" << kReset << " Exit the program." << std::endl;
+  std::cout << kRedBold << "  [n]" << kReset << " Show the next generation." << std::endl;
+  std::cout << kRedBold << "  [L]" << kReset << " Show the next 5 generations." << std::endl;
+  std::cout << kRedBold << "  [c]" << kReset << " Show only the population." << std::endl;
+  std::cout << kRedBold << "  [s]" << kReset << " Save the current configuration to a file." << std::endl;
+  std::cout << kRedBold << "  [a]" << kReset << " Automatic generation." << std::endl << std::endl;
 }
 
 void menu(Lattice &lattice) {
   std::string fileOut;
   char command;
 
-  // Limpiar el búfer de entrada para descartar el carácter de nueva línea
-  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-
+  std::cout << "Initial lattice: " << std::endl;
+  std::cout << lattice;
+  std::cout << "- Current population: " << lattice.Population() << std::endl;
+  std::cout << "- Border type: " << (lattice.getBorderType() == kReflective ? "Reflective" : "No Border") << std::endl;
   textMenu();
   
   do {
-    std::cout << "Introduzca un comando: ";
+    std::cout << "Enter a command: ";
     std::cin >> command;
-    // system("clear");
+    system("clear");
     switch (command) {
       case 'x':
+        std::cout << "Exiting the program..." << std::endl;
         exit(EXIT_SUCCESS);
         break;
       case 'n':
@@ -65,17 +110,21 @@ void menu(Lattice &lattice) {
         std::cout << lattice;
         break;
       case 'L':
+        std::cout << "Initial lattice: " << std::endl;
         std::cout << lattice;
+        std::cout << "Current population: " << lattice.Population() << std::endl << std::endl;
+        std::cout << "Next 5 generations: " << std::endl;
         for (int i = 0; i < 5; i++) {
           lattice.nextGeneration();
           std::cout << lattice;
+          std::cout << "Generation: " << lattice.getGeneration() << std::endl << std::endl;
         }
         break;
       case 'c':
-        std::cout << "Poblacion actual: " << lattice.Population() << std::endl;
+        std::cout << "Current population: " << lattice.Population() << std::endl;
         break;
       case 's':
-        std::cout << "Introduzca el nombre del fichero: ";
+        std::cout << "Enter the file name: ";
         std::cin >> fileOut;
         lattice.saveToFile(fileOut);
         break;
@@ -83,22 +132,22 @@ void menu(Lattice &lattice) {
         cellEvolution(lattice);
         break;
       default:
-        std::cout << "Comando no valido." << std::endl;
+        std::cout << "Invalid command." << std::endl;
         break;
     }
-    
     textMenu();
-
   } while (true);
 }
 
 void cellEvolution(Lattice &lattice) {
-  std::cout << "Use ctrl + z para salir." << std::endl;
+  std::cout << "Use ctrl + z to exit." << std::endl;
   std::this_thread::sleep_for(std::chrono::milliseconds(800));
 
   while (true) {
     lattice.nextGeneration();
     std::cout << lattice;
+    std::cout << "Generation: " << lattice.getGeneration() << std::endl;
+    std::cout << "Current Population: " << lattice.Population() << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     system("clear");
   }

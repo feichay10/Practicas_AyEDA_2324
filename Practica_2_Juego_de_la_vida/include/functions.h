@@ -19,11 +19,12 @@
 #ifndef FUNCTIONS_H_
 #define FUNCTIONS_H_
 
-#include <iostream>
-#include <string>
-#include <limits>
-#include <thread>
 #include <chrono>
+#include <fstream>
+#include <iostream>
+#include <limits>
+#include <string>
+#include <thread>
 
 #include "lattice.h"
 
@@ -33,7 +34,7 @@ const std::string kBold = "\033[1m";
 const std::string kReset = "\033[0m";
 
 const std::string kUsage =
-    kBold + "\n\nNOMBRE\n\t" + kReset +
+    kBold + "NOMBRE\n\t" + kReset +
     "life_game - Programa que simula el juego de la vida\n\n" + kBold +
     "SINÓPSIS\n\t" + kReset + "./life_game [OPCIONES]... [FICHERO]... \n\n" +
     kBold + "DESCRIPCIÓN" + kReset + kBold + "\n\t-size <M> <N>" + kReset +
@@ -41,11 +42,16 @@ const std::string kUsage =
     "tablero\n\n" +
     kBold + "\t-init <fichero>" + kReset +
     "\n\t\tfichero es un nombre del fichero que contiene los valores iniciales "
-    "\n\t\tpara el estado de las células del tablero.\n" +
-    kBold + "\n\t-border <b [v]>, b=reflective" + kBold + "\n\t\t\t b=noborder";
+    "\n\t\tpara el estado de las células del tablero." +
+    "\n\n\t\tEl formato del fichero es el siguiente:" + "\n\t\tM N" +
+    "\n\t\tc11 c12 c13 ... c1N" + "\n\t\tc21 c22 c23 ... c2N" +
+    "\n\t\tc31 c32 c33 ... c3N" + "\n\t\t..." +
+    "\n\t\tformado por M filas y N columnas, donde cada cij es un 0 o un "
+    "1.\n\n" +
+    kBold + "\n\t-border <b>, b=reflective" + kBold + "\n\t\t     b=noborder";
 
-void setBorder(Lattice &lattice, borderType borderTypeVar);
-void initialMenu(Lattice &lattice);
+void checkFile(std::string fileIn);
+void setBorder(const std::string& arg, borderType& borderTypeVar, Lattice &lattice);
 void textMenu();
 void menu(Lattice &lattice);
 void cellEvolution(Lattice &lattice);

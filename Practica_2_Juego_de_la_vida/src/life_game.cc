@@ -55,42 +55,29 @@ void checkProgramParameters(int argc, char* argv[]) {
 
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-size") {
-      sizeFlag++;
       if (i + 2 < argc) {
+        if (std::stoi(argv[i + 1]) <= 0 || std::stoi(argv[i + 2]) <= 0) {
+          throw std::string("Error: The lattice size must be greater than 0.");
+          exit(EXIT_FAILURE);
+        }
         rows = std::stoi(argv[i + 1]);
         columns = std::stoi(argv[i + 2]);
         i += 3;
         Lattice lattice(rows, columns);
-        if (std::string(argv[i + 1]) == "reflective") {
-          borderTypeVar = kReflective;
-        } else if (std::string(argv[i + 1]) == "noborder") {
-          borderTypeVar = kNoBorder;
-        } else {
-          throw std::string("Invalid border type.");
-          exit(EXIT_FAILURE);
-        }
-        setBorder(lattice, borderTypeVar);
-        initialMenu(lattice);
+        setBorder(argv[i + 1], borderTypeVar, lattice);
+        menu(lattice);
       } else {
         throw std::string("Missing lattice size.");
         exit(EXIT_FAILURE);
       }
     } else if (std::string(argv[i]) == "-init") {
-      initFlag++;
       if (i + 1 < argc) {
         fileIn = argv[i + 1];
         i += 2;
+        checkFile(fileIn);        
         Lattice lattice(fileIn.c_str());
-        if (std::string(argv[i + 1]) == "reflective") {
-          borderTypeVar = kReflective;
-        } else if (std::string(argv[i + 1]) == "noborder") {
-          borderTypeVar = kNoBorder;
-        } else {
-          throw std::string("Invalid border type.");
-          exit(EXIT_FAILURE);
-        }
-        setBorder(lattice, borderTypeVar);
-        initialMenu(lattice);
+        setBorder(argv[i + 1], borderTypeVar, lattice);
+        menu(lattice);
       } else {
         throw std::string("Missing file name.");
         exit(EXIT_FAILURE);

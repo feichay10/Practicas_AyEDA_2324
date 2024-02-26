@@ -41,6 +41,7 @@ State Cell::setState(State state) {
 // (i+1,j-1)|(i+1,j)|(i+1,j+1)
 // Devuelve el siguiente estado de la célula usar operador[] de Lattice
 int Cell::nextState(const Lattice& lattice) {
+  int aliveNeighbours = 0;
   std::vector<Cell> neighbours = {
     lattice[Position(position_.getRow() - 1 , position_.getColumn() - 1)],
     lattice[Position(position_.getRow() - 1, position_.getColumn())],
@@ -52,27 +53,16 @@ int Cell::nextState(const Lattice& lattice) {
     lattice[Position(position_.getRow() + 1, position_.getColumn() + 1)],
   };
 
-  // std::vector<Cell*> neighbours = lattice.getNeighbours(position_);
-  int aliveNeighbours = 0;
-
-  for (int i = 0; i < neighbours.size(); i++) {
-    if (neighbours[i].getState() == kAlive) {
+  for (const auto& neighbour : neighbours) {
+    if (neighbour.getState() == kAlive) {
       aliveNeighbours++;
     }
   }
 
   if (state_ == kAlive) {
-    if (aliveNeighbours < 2 || aliveNeighbours > 3) {
-      nextState_ = kDead;
-    } else {
-      nextState_ = kAlive;
-    }
+    nextState_ = (aliveNeighbours < 2 || aliveNeighbours > 3) ? kDead : kAlive;
   } else {
-    if (aliveNeighbours == 3) {
-      nextState_ = kAlive;
-    } else {
-      nextState_ = kDead;
-    }
+    nextState_ = (aliveNeighbours == 3) ? kAlive : kDead;
   }
 
   return nextState_;

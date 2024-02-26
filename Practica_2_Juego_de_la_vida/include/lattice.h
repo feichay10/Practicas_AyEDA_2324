@@ -46,8 +46,7 @@ class Lattice {
   Cell& getCell(const Position& position) const;
   void setBorderType(borderType borderType);
   borderType getBorderType() const;
-  std::vector<std::vector<Cell*>> getLattice() const;
-  std::vector<Cell*> getNeighbours(const Position& position) const;
+  int getGeneration() const;
 
   // Métodos de la clase
   void nextGeneration();
@@ -67,7 +66,7 @@ class Lattice {
   std::vector<std::vector<Cell*>> lattice_;
   size_t population_ = 0;
   borderType borderType_;
-  std::vector<Cell*> neighbours_;
+  int generation_ = 0;
 };
 
 #endif  // LATTICE_H_
