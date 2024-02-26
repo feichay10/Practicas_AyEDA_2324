@@ -47,6 +47,7 @@ class Lattice {
   void setBorderType(borderType borderType);
   borderType getBorderType() const;
   std::vector<std::vector<Cell*>> getLattice() const;
+  std::vector<Cell*> getNeighbours(const Position& position) const;
 
   // Métodos de la clase
   void nextGeneration();
@@ -54,20 +55,19 @@ class Lattice {
   void saveToFile(const std::string& fileOut) const;
 
   // Sobrecarga de operadores
-  Cell& operator[](const Position&);
+  Cell& operator[](const Position& position) const;
   friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
 
  private:
   void loadInitialConfiguration(int N, int M);
   void expandLattice();
-  void reflectLattice();
-  void setFrontier();
 
   int rows_;
   int columns_;
-  size_t population_ = 0;
   std::vector<std::vector<Cell*>> lattice_;
+  size_t population_ = 0;
   borderType borderType_;
+  std::vector<Cell*> neighbours_;
 };
 
 #endif  // LATTICE_H_

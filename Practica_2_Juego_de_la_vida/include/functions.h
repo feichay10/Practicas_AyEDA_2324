@@ -21,6 +21,9 @@
 
 #include <iostream>
 #include <string>
+#include <limits>
+#include <thread>
+#include <chrono>
 
 #include "lattice.h"
 

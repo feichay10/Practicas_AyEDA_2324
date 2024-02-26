@@ -45,7 +45,6 @@ class Cell {
   void setPosition(const Position& position) { position_ = position; }
 
   // Métodos de la clase
-  int neighbours(const Lattice&);
   int nextState(const Lattice&);
   void updateState();
 

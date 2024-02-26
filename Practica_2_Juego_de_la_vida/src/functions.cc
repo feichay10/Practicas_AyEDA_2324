@@ -16,9 +16,6 @@
  *
  */
 
-#include <limits>
-#include <thread>
-#include <chrono>
 #include "../include/functions.h"
 
 void setBorder(Lattice &lattice, borderType borderType) {
@@ -57,7 +54,7 @@ void menu(Lattice &lattice) {
   do {
     std::cout << "Introduzca un comando: ";
     std::cin >> command;
-    system("clear");
+    // system("clear");
     switch (command) {
       case 'x':
         exit(EXIT_SUCCESS);
@@ -69,7 +66,6 @@ void menu(Lattice &lattice) {
         break;
       case 'L':
         std::cout << lattice;
-        // cellEvolution(lattice);
         for (int i = 0; i < 5; i++) {
           lattice.nextGeneration();
           std::cout << lattice;
@@ -103,7 +99,7 @@ void cellEvolution(Lattice &lattice) {
   while (true) {
     lattice.nextGeneration();
     std::cout << lattice;
-    std::this_thread::sleep_for(std::chrono::milliseconds(80));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
     system("clear");
   }
 }

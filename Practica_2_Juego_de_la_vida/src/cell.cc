@@ -39,33 +39,36 @@ State Cell::setState(State state) {
 // (i,j-1)| (i,j)| (i,j+1)
 // ---------------------------
 // (i+1,j-1)|(i+1,j)|(i+1,j+1)
-int Cell::neighbours(const Lattice& lattice) {
-  int alive_neighbours = 0;
-  for (int i = position_.getRow() - 1; i <= position_.getRow() + 1; i++) {
-    for (int j = position_.getColumn() - 1; j <= position_.getColumn() + 1; j++) {
-      if (i >= 0 && i < lattice.getRows() && j >= 0 && j < lattice.getColumns() && (i != position_.getRow() || j != position_.getColumn())) {
-        if (lattice.getCell(Position(i, j)).getState() == kAlive) {
-          alive_neighbours++;
-        }
-      }
+// Devuelve el siguiente estado de la célula usar operador[] de Lattice
+int Cell::nextState(const Lattice& lattice) {
+  std::vector<Cell> neighbours = {
+    lattice[Position(position_.getRow() - 1 , position_.getColumn() - 1)],
+    lattice[Position(position_.getRow() - 1, position_.getColumn())],
+    lattice[Position(position_.getRow() - 1, position_.getColumn() + 1)],
+    lattice[Position(position_.getRow(), position_.getColumn() - 1)],
+    lattice[Position(position_.getRow(), position_.getColumn() + 1)],
+    lattice[Position(position_.getRow() + 1, position_.getColumn() - 1)],
+    lattice[Position(position_.getRow() + 1, position_.getColumn())],
+    lattice[Position(position_.getRow() + 1, position_.getColumn() + 1)],
+  };
+
+  // std::vector<Cell*> neighbours = lattice.getNeighbours(position_);
+  int aliveNeighbours = 0;
+
+  for (int i = 0; i < neighbours.size(); i++) {
+    if (neighbours[i].getState() == kAlive) {
+      aliveNeighbours++;
     }
   }
 
-  // std::cout << "Cell " << position_ << " has " << alive_neighbours << " alive neighbours." << std::endl;
-  return alive_neighbours;
-}
-
-int Cell::nextState(const Lattice& lattice) {
-  int alive_neighbours = neighbours(lattice);
-  
   if (state_ == kAlive) {
-    if (alive_neighbours < 2 || alive_neighbours > 3) {
+    if (aliveNeighbours < 2 || aliveNeighbours > 3) {
       nextState_ = kDead;
     } else {
       nextState_ = kAlive;
     }
   } else {
-    if (alive_neighbours == 3) {
+    if (aliveNeighbours == 3) {
       nextState_ = kAlive;
     } else {
       nextState_ = kDead;
