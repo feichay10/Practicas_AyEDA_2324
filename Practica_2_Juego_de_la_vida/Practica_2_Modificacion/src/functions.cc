@@ -98,7 +98,7 @@ void menu(Lattice &lattice) {
   do {
     std::cout << "Enter a command: ";
     std::cin >> command;
-    system("clear");
+    // system("clear");
     switch (command) {
       case 'x':
         std::cout << "Exiting the program..." << std::endl;

@@ -32,17 +32,25 @@ State Cell::setState(State state) {
   return state_;
 }
 
+// Modificacion: Las vecindades son una posicion mas en el tablero
+// por lo que se debe de cambiar la forma de acceder a ellas:
+//                   |(i-2,j)|
+//                   |(i-1,j)|
+// (i,j-2) | (i,j-1) | (i,j)  | (i,j+1) |(i,j+2)
+//                   |(i+1,j)|
+//                   |(i+2,j)|
+// Luego probar con frontera reflectora
 int Cell::nextState(const Lattice& lattice) {
   int aliveNeighbours = 0;
   std::vector<Cell> neighbours = {
-    lattice[Position(position_.getRow() - 1 , position_.getColumn() - 1)],
+    lattice[Position(position_.getRow() - 2, position_.getColumn())],
     lattice[Position(position_.getRow() - 1, position_.getColumn())],
-    lattice[Position(position_.getRow() - 1, position_.getColumn() + 1)],
+    lattice[Position(position_.getRow(), position_.getColumn() - 2)],
     lattice[Position(position_.getRow(), position_.getColumn() - 1)],
     lattice[Position(position_.getRow(), position_.getColumn() + 1)],
-    lattice[Position(position_.getRow() + 1, position_.getColumn() - 1)],
+    lattice[Position(position_.getRow(), position_.getColumn() + 2)],
     lattice[Position(position_.getRow() + 1, position_.getColumn())],
-    lattice[Position(position_.getRow() + 1, position_.getColumn() + 1)],
+    lattice[Position(position_.getRow() + 2, position_.getColumn())]
   };
 
   for (const auto& neighbour : neighbours) {

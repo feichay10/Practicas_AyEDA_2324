@@ -94,11 +94,13 @@ void menu(Lattice &lattice) {
   std::cout << "- Current population: " << lattice.Population() << std::endl;
   std::cout << "- Border type: " << (lattice.getBorderType() == kReflective ? "Reflective" : "No Border") << std::endl;
   textMenu();
+
+  bool commandFlag = false;
   
   do {
     std::cout << "Enter a command: ";
     std::cin >> command;
-    system("clear");
+    // system("clear");
     switch (command) {
       case 'x':
         std::cout << "Exiting the program..." << std::endl;
@@ -107,21 +109,34 @@ void menu(Lattice &lattice) {
       case 'n':
         std::cout << std::endl;
         lattice.nextGeneration();
-        std::cout << lattice;
+        if (!commandFlag) {
+          std::cout << lattice;
+        }
+        std::cout << "Current population: " << lattice.Population() << std::endl;
         break;
       case 'L':
         std::cout << "Initial lattice: " << std::endl;
-        std::cout << lattice;
+        if (!commandFlag) {
+          std::cout << lattice;
+        }
         std::cout << "Current population: " << lattice.Population() << std::endl << std::endl;
         std::cout << "Next 5 generations: " << std::endl;
         for (int i = 0; i < 5; i++) {
           lattice.nextGeneration();
-          std::cout << lattice;
+          if (!commandFlag) {
+            std::cout << lattice;
+          }
           std::cout << "Generation: " << lattice.getGeneration() << std::endl << std::endl;
+          std::cout << "Current population: " << lattice.Population() << std::endl;
         }
         break;
       case 'c':
-        std::cout << "Current population: " << lattice.Population() << std::endl;
+        // std::cout << "Current population: " << lattice.Population() << std::endl;
+        if (!commandFlag) {
+          commandFlag = true;
+        } else {
+          commandFlag = false;
+        }
         break;
       case 's':
         std::cout << "Enter the file name: ";
