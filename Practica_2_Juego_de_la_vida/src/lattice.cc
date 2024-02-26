@@ -19,8 +19,6 @@
 #include "../include/lattice.h"
 #include "../include/functions.h"
 
-Lattice::Lattice() {}
-
 Lattice::Lattice(int M, int N) {
   rows_ = M;
   columns_ = N;

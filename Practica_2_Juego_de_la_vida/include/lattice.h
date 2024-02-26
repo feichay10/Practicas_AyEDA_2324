@@ -35,7 +35,6 @@ class Cell;
 class Lattice {
  public:
   // Constructor y destructor
-  Lattice();
   Lattice(int N, int M);
   Lattice(const char*);
   ~Lattice();
