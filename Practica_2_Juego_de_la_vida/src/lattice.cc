@@ -24,7 +24,6 @@ Lattice::Lattice() {}
 Lattice::Lattice(int M, int N) {
   rows_ = M;
   columns_ = N;
-  population_ = 0;
 
   lattice_.resize(rows_);
   for (int i = 0; i < rows_; i++) {
@@ -132,15 +131,15 @@ void Lattice::nextGeneration() {
 }
 
 std::size_t Lattice::Population() const { 
-  size_t count = 0;
+  size_t population = 0;
   for (int i = 0; i < rows_; i++) {
     for (int j = 0; j < columns_; j++) {
       if (lattice_[i][j]->getState() == kAlive) {
-        count++;
+        population++;
       }
     }
   }
-  return count;
+  return population;
 }
 
 void Lattice::saveToFile(const std::string& fileOut) const {
@@ -174,7 +173,6 @@ std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
   for (int i = 0; i < lattice.rows_; i++) {
     os << "| " << kReset;
     for (int j = 0; j < lattice.columns_; j++) {
-      // os << lattice.lattice_[i][j]->getState() << " ";
       os << kRedBold << *lattice.lattice_[i][j] << " " << kReset;
     }
     os << kGreenBold << "|" << std::endl;
@@ -189,11 +187,12 @@ std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
 }
 
 void Lattice::loadInitialConfiguration(int N, int M) {
+  std::string i, j;
+  int population = 0;
+
   std::cout << "Enter the positions of the live cells (i j): " << std::endl;
   std::cout << "To finish, press 'q'." << std::endl;
-  std::string i, j;
-
-  std::cout << "\nCell " << population_ + 1 << std::endl;
+  std::cout << "\nCell " << population + 1 << std::endl;
   while (true) {
     std::cout << "i: ";
     std::cin >> i;
@@ -214,8 +213,8 @@ void Lattice::loadInitialConfiguration(int N, int M) {
     }
 
     lattice_[stoi(i)][stoi(j)]->setState(kAlive);
-    population_++;
-    std::cout << "\nCell " << population_ + 1 << std::endl;
+    population++;
+    std::cout << "\nCell " << population + 1 << std::endl;
   }
 
   // Limpiar el búfer de entrada para descartar el carácter de nueva línea

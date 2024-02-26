@@ -64,7 +64,6 @@ class Lattice {
   int rows_;
   int columns_;
   std::vector<std::vector<Cell*>> lattice_;
-  size_t population_ = 0;
   borderType borderType_;
   int generation_ = 0;
 };

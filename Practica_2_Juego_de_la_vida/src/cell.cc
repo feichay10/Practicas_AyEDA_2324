@@ -32,14 +32,6 @@ State Cell::setState(State state) {
   return state_;
 }
 
-// Devuelve el numero de vecinos en estado viva
-// La vecindad es la siguiente:
-// (i-1,j-1)|(i-1,j)|(i-1,j+1)
-// ---------------------------
-// (i,j-1)| (i,j)| (i,j+1)
-// ---------------------------
-// (i+1,j-1)|(i+1,j)|(i+1,j+1)
-// Devuelve el siguiente estado de la célula usar operador[] de Lattice
 int Cell::nextState(const Lattice& lattice) {
   int aliveNeighbours = 0;
   std::vector<Cell> neighbours = {
