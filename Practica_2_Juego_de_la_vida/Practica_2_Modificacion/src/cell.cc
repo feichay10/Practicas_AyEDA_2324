@@ -36,7 +36,7 @@ State Cell::setState(State state) {
 // por lo que se debe de cambiar la forma de acceder a ellas:
 //                   |(i-2,j)|
 //                   |(i-1,j)|
-// (i,j-2) | (i,j-1) | (i,j)  | (i,j+1) |(i,j+2)
+// (i,j-2) | (i,j-1) | (i,j) | (i,j+1) | (i,j+2)
 //                   |(i+1,j)|
 //                   |(i+2,j)|
 // Luego probar con frontera reflectora
