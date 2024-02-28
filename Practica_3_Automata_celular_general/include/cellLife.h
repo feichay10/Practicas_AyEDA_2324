@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * Universidad de La Laguna
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
@@ -22,12 +22,18 @@
 #include <iostream>
 
 #include "cell.h"
+#include "positionDim.h"
 
 class CellLife : public Cell {
  public:
+  CellLife(const Position&, const State);
+  void nextState(const Lattice&);
+  void updateState();
+  std::ostream& display(std::ostream&);
+  friend std::ostream& operator<<(std::ostream&, const CellLife&);
 
  private:
-
+  PositionDim<2, int> position_;
 };
 
 #endif  // CELLLIFE_H

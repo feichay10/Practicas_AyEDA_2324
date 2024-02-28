@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * Universidad de La Laguna
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
@@ -25,9 +25,21 @@
 
 class Lattice1D : public Lattice {
  public:
+  Lattice1D(int size);
+  ~Lattice1D();
+
+  void nextGeneration();
+  std::size_t Population() const;
+
+  Cell& operator[](const Position&) const;
+
+  std::ostream& display(std::ostream&);
 
  private:
-
+  int size_;
+  Cell** lattice_;
+  int population_;
+  borderType borderType_;
 };
 
 #endif  // LATTICE1D_H

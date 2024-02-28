@@ -26,10 +26,14 @@
 
 template <int Dim = 2, class Coordinate_t = int>
 class PositionDim : public Position {
- private:
-  Coordinate_t coordinates_[Dim];
-
  public:
+  // Constructor por defecto
+  PositionDim() {
+    for (int d = 0; d < Dim; d++) {
+      Coordinates[d] = 0;
+    }
+  }
+  
   // Constructor con lista variable de parámetros
   PositionDim(int sz, ...) {
     va_list vl;
@@ -39,8 +43,11 @@ class PositionDim : public Position {
     }
     va_end(vl);
   }
-  
+
   Coor_t operator[](unsigned int) const;
+
+ private:
+  Coordinate_t coordinates_[Dim];
 };
 
 #endif  // POSITIONDIM_H

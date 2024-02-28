@@ -6,7 +6,7 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 3: Autómata celular general
- * @file lattice.h
+ * @file lattice.cc
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief Tiene la responsabilidad de crear y almacenar las células que
  * representan el espacio celular. Como la representación del espacio celular
@@ -20,28 +20,9 @@
  *
  */
 
-#ifndef LATTICE_H
-#define LATTICE_H
+#include "../include/lattice.h"
 
-#include <iostream>
-
-#include "cell.h"
-#include "factoryCell.h"
-
-enum borderType { kOpen = 0, kPeriodic = 1, kReflective = 2, kNoBorder = 3 };
-
-class Lattice {
- public:
-  Lattice();
-  Lattice(const char*, const FactoryCell&);
-  virtual ~Lattice();
-
-  virtual void nextGeneration() = 0;
-  virtual std::size_t Population() const = 0;
-
-  virtual Cell& operator[](const Position&) const = 0;
-  virtual std::ostream& display(std::ostream&) const = 0;
-  friend std::ostream& operator<<(std::ostream&, const Lattice&);
-};
-
-#endif  // LATTICE_H
+// El constructor del reticulo inicializa los punteros de la estructura de
+// datos con la dirección de la célula creada en memoria dinámica
+Lattice::Lattice() {
+}

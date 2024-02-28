@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * Universidad de La Laguna
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
@@ -8,7 +8,8 @@
  * Práctica 3: Autómata celular general
  * @file cellACE.h
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
- * @brief
+ * @brief Representa una célula de un autómata celular elemental y hereda de la
+ * clase Cell
  * @version 0.1
  * @date
  *
@@ -22,12 +23,20 @@
 #include <iostream>
 
 #include "cell.h"
+#include "positionDim.h"
+
+class Lattice;
 
 class CellACE : public Cell {
  public:
+  CellACE(const Position&, const State);
+  void nextState(const Lattice&);
+  void updateState();
+  std::ostream& display(std::ostream&);
+  friend std::ostream& operator<<(std::ostream&, const CellACE&);
 
  private:
-
+  PositionDim<1, int> position_;
 };
 
 #endif  // CELLACE_H

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * Universidad de La Laguna
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
@@ -21,11 +21,28 @@
 
 #include <iostream>
 
+#include "position.h"
+#include "lattice.h"
+
+enum State { kDead = 0, kAlive = 1 };
+
+class Lattice;
 class Cell {
  public:
+  Cell();
+  Cell(const Position&, const State);
 
- private:
+  State getState() const;
+  void setState(State);
 
+  virtual void nextState(const Lattice&) = 0;
+  virtual void updateState();
+
+  virtual std::ostream& display(std::ostream&) = 0;
+  friend std::ostream& operator<<(std::ostream&, const Cell&);
+
+  State state_;
+  State nextState_;
 };
 
 #endif  // CELL_H

@@ -20,14 +20,27 @@
 #define LATTICE2D_H
 
 #include <iostream>
+#include <vector>
 
 #include "lattice.h"
 
 class Lattice2D : public Lattice {
  public:
+  Lattice2D(int N, int M);
+  ~Lattice2D();
+
+  void nextGeneration();
+  std::size_t Population() const;
+
+  Cell& operator[](const Position&) const;
+
+  std::ostream& display(std::ostream&);
 
  private:
-
+  int rows_;
+  int columns_;
+  std::vector<std::vector<Cell*>> lattice_;
+  borderType borderType_;
 };
 
 #endif  // LATTICE2D_H
