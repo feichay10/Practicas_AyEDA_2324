@@ -17,3 +17,8 @@
  */
 
 #include "../include/cell.h"
+
+Cell::Cell(Position& position, const State state) {
+  position_ = position;
+  state_ = state;
+}

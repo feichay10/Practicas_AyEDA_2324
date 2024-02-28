@@ -26,11 +26,10 @@
 
 enum State { kDead = 0, kAlive = 1 };
 
-class Lattice;
 class Cell {
  public:
-  Cell();
-  Cell(const Position&, const State);
+  Cell() = default;
+  Cell(Position&, const State&);
 
   State getState() const;
   void setState(State);
@@ -43,7 +42,7 @@ class Cell {
 protected:
   State state_;
   State nextState_;
-  Position& position_;
+  Position &position_;
 
   virtual std::ostream& display(std::ostream&) = 0;
 };

@@ -24,8 +24,6 @@
 #include "cell.h"
 #include "position.h"
 
-// enum State { kDead = 0, kAlive = 1 };
-
 class Cell;
 
 class FactoryCell {
