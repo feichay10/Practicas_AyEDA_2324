@@ -31,7 +31,6 @@ class CellACE : public Cell {
  public:
   CellACE(const Position&, const State);
   void nextState(const Lattice&);
-  void updateState();
   std::ostream& display(std::ostream&);
   friend std::ostream& operator<<(std::ostream&, const CellACE&);
 

@@ -41,6 +41,7 @@ class Cell {
   virtual std::ostream& display(std::ostream&) = 0;
   friend std::ostream& operator<<(std::ostream&, const Cell&);
 
+protected:
   State state_;
   State nextState_;
 };

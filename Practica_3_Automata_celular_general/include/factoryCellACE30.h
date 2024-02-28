@@ -28,6 +28,7 @@
 class FactoryCellAce30 : public FactoryCell {
  public:
   Cell* createCell(const Position& p, const State& s) const {
+    
     return new CellAce30(p, s);
   }
 };
