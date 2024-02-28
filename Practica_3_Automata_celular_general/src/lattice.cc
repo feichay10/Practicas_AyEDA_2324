@@ -24,5 +24,12 @@
 
 // El constructor del reticulo inicializa los punteros de la estructura de
 // datos con la dirección de la célula creada en memoria dinámica
-Lattice::Lattice() {
+Lattice::Lattice() {}
+
+// El constructor del reticulo inicializa los punteros de la estructura de
+// datos con la dirección de la célula creada en memoria dinámica
+Lattice::Lattice(const char* filename, const FactoryCell& factory) {
+  switch (factory) {
+    
+  }
 }

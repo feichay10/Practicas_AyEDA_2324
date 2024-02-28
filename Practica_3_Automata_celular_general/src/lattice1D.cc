@@ -6,7 +6,7 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 3: Autómata celular general
- * @file factoryCell.h
+ * @file lattice1D.cc
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
@@ -16,22 +16,15 @@
  *
  */
 
-#ifndef FACTORYCELL_H
-#define FACTORYCELL_H
+#include "../include/lattice1D.h"
 
-#include <iostream>
+Lattice1D::Lattice1D(int size) {
+  size_ = size + 2; // Se añaden dos células para los bordes
 
-#include "cell.h"
-#include "position.h"
+  lattice1D_ = new CellACE*[size_];
+  for (int i = 0; i < size_; i++) {
+    lattice1D_[i] = new CellACE(PositionDim<1, int>(i), kDead);
+  }
 
-// enum State { kDead = 0, kAlive = 1 };
-
-class Cell;
-
-class FactoryCell {
- public:
-  // Método creador de células
-  virtual Cell* createCell(const Position&, const State&) const = 0;
-};
-
-#endif  // FACTORYCELL_H
+  loadInitialConfiguration();
+}

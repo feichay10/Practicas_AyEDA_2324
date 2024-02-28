@@ -29,12 +29,13 @@ class Lattice;
 
 class CellACE : public Cell {
  public:
-  CellACE(const Position&, const State);
-  void nextState(const Lattice&);
+  CellACE() = default;
+  CellACE(const PositionDim<1, int>&, const State);
+
   std::ostream& display(std::ostream&);
   friend std::ostream& operator<<(std::ostream&, const CellACE&);
 
- private:
+ protected:
   PositionDim<1, int> position_;
 };
 

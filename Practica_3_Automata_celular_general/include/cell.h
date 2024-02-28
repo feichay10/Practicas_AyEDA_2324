@@ -24,7 +24,7 @@
 #include "position.h"
 #include "lattice.h"
 
-// enum State { kDead = 0, kAlive = 1 };
+enum State { kDead = 0, kAlive = 1 };
 
 class Lattice;
 class Cell {
@@ -38,12 +38,14 @@ class Cell {
   virtual void nextState(const Lattice&) = 0;
   virtual void updateState();
 
-  virtual std::ostream& display(std::ostream&) = 0;
   friend std::ostream& operator<<(std::ostream&, const Cell&);
 
 protected:
   State state_;
   State nextState_;
+  Position& position_;
+
+  virtual std::ostream& display(std::ostream&) = 0;
 };
 
 #endif  // CELL_H

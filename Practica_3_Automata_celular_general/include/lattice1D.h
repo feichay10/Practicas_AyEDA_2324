@@ -22,6 +22,7 @@
 #include <iostream>
 
 #include "lattice.h"
+#include "cellACE.h"
 
 class Lattice1D : public Lattice {
  public:
@@ -32,12 +33,13 @@ class Lattice1D : public Lattice {
   std::size_t Population() const;
 
   Cell& operator[](const Position&) const;
-
   std::ostream& display(std::ostream&);
 
  private:
+  void loadInitialConfiguration();
+
   int size_;
-  Cell** lattice_;
+  CellACE** lattice1D_;
   int population_;
   borderType borderType_;
 };

@@ -8,7 +8,8 @@
  * Práctica 3: Autómata celular general
  * @file cellACE.cc
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
- * @brief 
+ * @brief Representa una célula de un autómata celular elemental y hereda de la
+ * clase Cell
  * @version 0.1
  * @date
  *
@@ -18,12 +19,4 @@
 
 #include "../include/cellACE.h"
 
-CellACE::CellACE(const Position& position, const State state) : Cell(position, state) {}
-
-void CellACE::nextState(const Lattice& lattice) {
-  int left = lattice.getCell(position_ - 1).getState();
-  int right = lattice.getCell(position_ + 1).getState();
-  int center = lattice.getCell(position_).getState();
-
-  nextState_ = static_cast<State>((center + right + center * right + left * center * right) % 2);
-}
+CellACE::CellACE(const PositionDim<1, int>& position, const State state) : Cell(state), position_(position) {}

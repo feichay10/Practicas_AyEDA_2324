@@ -15,3 +15,35 @@
  * @copyright Copyright (c) 2024
  *
  */
+
+#include <iostream>
+
+#include "../include/functions.h"
+#include "../include/functions.h"
+#include "../include/lattice.h"
+#include "../include/position.h"
+#include "../include/cell.h"
+
+void checkProgramParameters(int argc, char* argv[]) {
+  if (argc == 2 && std::string(argv[1]) == "-help") {
+    throw kUsage;
+    exit(EXIT_FAILURE);
+  } else if (argc == 1) {
+    throw std::string("No arguments provided. Use ") + argv[0] + " -help for more information.";
+    exit(EXIT_FAILURE);
+  }
+
+  for (int i = 1; i < argc; i++) {
+    if (std::string(argv[i]) == "-dim") {
+      if (i + 1 == 1) {
+        std::cout << "Automata celular elemental" << std::endl;
+      } else {
+        std::cout << "Automata celular, juego de la vida" << std::endl;
+      }
+    }
+  }
+}
+
+int main(int argc, char* argv[]) {
+
+}

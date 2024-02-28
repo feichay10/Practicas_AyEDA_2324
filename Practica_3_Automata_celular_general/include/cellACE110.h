@@ -25,9 +25,13 @@
 
 class CellACE110 : public CellACE {
  public:
+  CellACE110(const PositionDim<1, int>&, const State);
 
- private:
+  void nextState(const Lattice&);
+  void updateState();
 
+  std::ostream& display(std::ostream&);
+  friend std::ostream& operator<<(std::ostream&, const CellACE110&);
 };
 
 #endif  // CELLACE110_H

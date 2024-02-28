@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <stdarg.h>
 
 #include "position.h"
 
