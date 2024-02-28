@@ -24,7 +24,7 @@
 #include "position.h"
 #include "lattice.h"
 
-enum State { kDead = 0, kAlive = 1 };
+// enum State { kDead = 0, kAlive = 1 };
 
 class Lattice;
 class Cell {
