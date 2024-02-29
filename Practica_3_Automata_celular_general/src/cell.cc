@@ -18,7 +18,12 @@
 
 #include "../include/cell.h"
 
-Cell::Cell(Position& position, const State state) {
-  position_ = position;
+Cell::Cell(Position& position, const State& state) : position_(position), state_(state), nextState_(state) {}
+
+State Cell::getState() const {
+  return state_;
+}
+
+void Cell::setState(State state) {
   state_ = state;
 }

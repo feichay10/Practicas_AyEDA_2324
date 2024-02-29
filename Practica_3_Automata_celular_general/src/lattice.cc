@@ -24,12 +24,15 @@
 
 // El constructor del reticulo inicializa los punteros de la estructura de
 // datos con la dirección de la célula creada en memoria dinámica
-Lattice::Lattice() {}
+Lattice::Lattice() {
 
-// El constructor del reticulo inicializa los punteros de la estructura de
-// datos con la dirección de la célula creada en memoria dinámica
+}
+
+// Segundo constructor que recibe como parámetro el nombre de un fichero.
+// La primera fila del fichero de texto contiene la dimensión de espacio
+// celular; en la segunda fila se indica el tamaño inicial del retículo para
+// cada dimensión. A continuación contiene las cadenas de caracteres que
+// representan el estado de las células.
 Lattice::Lattice(const char* filename, const FactoryCell& factory) {
-  switch (factory) {
-    
-  }
+
 }

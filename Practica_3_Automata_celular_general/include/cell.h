@@ -21,15 +21,15 @@
 
 #include <iostream>
 
-#include "position.h"
 #include "lattice.h"
+#include "position.h"
+#include "factoryCell.h"
 
-enum State { kDead = 0, kAlive = 1 };
-
+class Lattice;
 class Cell {
  public:
   Cell() = default;
-  Cell(Position&, const State&);
+  Cell(Position& position, const State& state);
 
   State getState() const;
   void setState(State);
@@ -39,10 +39,10 @@ class Cell {
 
   friend std::ostream& operator<<(std::ostream&, const Cell&);
 
-protected:
+ protected:
   State state_;
   State nextState_;
-  Position &position_;
+  Position& position_;
 
   virtual std::ostream& display(std::ostream&) = 0;
 };

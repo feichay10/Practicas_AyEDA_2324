@@ -24,6 +24,8 @@
 #define LATTICE_H
 
 #include <iostream>
+#include <fstream>
+#include <vector>
 
 #include "cell.h"
 #include "factoryCell.h"

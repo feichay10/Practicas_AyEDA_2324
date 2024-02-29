@@ -19,10 +19,12 @@
 #include <iostream>
 
 #include "../include/functions.h"
-#include "../include/functions.h"
 #include "../include/lattice.h"
 #include "../include/position.h"
 #include "../include/cell.h"
+#include "../include/cellLife.h"
+#include "../include/factoryCell.h"
+
 
 void checkProgramParameters(int argc, char* argv[]) {
   if (argc == 2 && std::string(argv[1]) == "-help") {
