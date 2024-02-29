@@ -29,22 +29,27 @@ class Lattice;
 class Cell {
  public:
   Cell() = default;
-  Cell(Position& position, const State& state);
+  Cell(Position& position, const State& state) : position_(position), state_(state) {
+    nextState_ = state_;
+  }
 
-  State getState() const;
-  void setState(State);
+  State getState() const { return state_; }
+  void setState(State state) { state_ = state; }
 
-  virtual void nextState(const Lattice&) = 0;
-  virtual void updateState();
+  virtual void nextState(const Lattice& lattice) = 0;
+  virtual void updateState() {
+    state_ = nextState_;
+  }
 
-  friend std::ostream& operator<<(std::ostream&, const Cell&);
+  virtual std::ostream& display(std::ostream&) = 0;
+  friend std::ostream& operator<<(std::ostream& os, Cell& cell) {
+    return cell.display(os);
+  }
 
  protected:
   State state_;
   State nextState_;
   Position& position_;
-
-  virtual std::ostream& display(std::ostream&) = 0;
 };
 
 #endif  // CELL_H

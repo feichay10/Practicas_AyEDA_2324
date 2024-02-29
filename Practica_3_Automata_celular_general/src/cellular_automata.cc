@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * Universidad de La Laguna
  * Escuela Superior de Ingeniería y Tecnología
  * Grado en Ingeniería Informática
@@ -18,20 +18,19 @@
 
 #include <iostream>
 
+#include "../include/cell.h"
+#include "../include/factoryCell.h"
 #include "../include/functions.h"
 #include "../include/lattice.h"
 #include "../include/position.h"
-#include "../include/cell.h"
-#include "../include/cellLife.h"
-#include "../include/factoryCell.h"
-
 
 void checkProgramParameters(int argc, char* argv[]) {
   if (argc == 2 && std::string(argv[1]) == "-help") {
     throw kUsage;
     exit(EXIT_FAILURE);
   } else if (argc == 1) {
-    throw std::string("No arguments provided. Use ") + argv[0] + " -help for more information.";
+    throw std::string("No arguments provided. Use ") + argv[0] +
+        " -help for more information.";
     exit(EXIT_FAILURE);
   }
 
@@ -47,5 +46,11 @@ void checkProgramParameters(int argc, char* argv[]) {
 }
 
 int main(int argc, char* argv[]) {
+  try {
+    checkProgramParameters(argc, argv);
+  } catch (std::string& e) {
+    std::cerr << e << std::endl;
+  }
 
+  return 0;
 }

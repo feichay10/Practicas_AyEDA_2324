@@ -23,8 +23,8 @@
 #ifndef LATTICE_H
 #define LATTICE_H
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <vector>
 
 #include "cell.h"
@@ -34,8 +34,15 @@ enum borderType { kOpen = 0, kPeriodic = 1, kReflective = 2, kNoBorder = 3 };
 
 class Lattice {
  public:
-  Lattice();
-  Lattice(const char*, const FactoryCell&);
+  // El lattice dispone de un constructor que inicializa todas la celulas a un
+  // estado por defecto, y luego solicitara por teclado la posicion de las
+  // celulas que deben tener otro valor de estado en la configuracion inicial
+  Lattice() {
+  }
+  Lattice(const char* file, FactoryCell& factory) {
+    file_ = file;
+    factoryCell_ = &factory;
+  }
   virtual ~Lattice();
 
   virtual void nextGeneration() = 0;
@@ -44,6 +51,10 @@ class Lattice {
   virtual Cell& operator[](const Position&) const = 0;
   virtual std::ostream& display(std::ostream&) const = 0;
   friend std::ostream& operator<<(std::ostream&, const Lattice&);
+
+ protected:
+  std::string file_;
+  FactoryCell* factoryCell_;
 };
 
 #endif  // LATTICE_H

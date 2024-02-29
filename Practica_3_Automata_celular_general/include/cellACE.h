@@ -22,18 +22,23 @@
 #include <iostream>
 
 #include "cell.h"
-#include "positionDim.h"
+
+// class Cell;
 
 class CellACE : public Cell {
  public:
+  CellACE() = default;
   CellACE(const Position&, const State);
-  void nextState(const Lattice&) override;
-  void updateState() override;
-  std::ostream& display(std::ostream&);
+
+  void nextState(const Lattice& lattice);
+  void updateState();
+
   friend std::ostream& operator<<(std::ostream&, const CellACE&);
 
  private:
   PositionDim<1, int> position_;
+
+  std::ostream& display(std::ostream&) override;
 };
 
 #endif  // CELLACE_H

@@ -22,16 +22,25 @@
 #include <iostream>
 
 #include "cell.h"
+#include "cellACE.h"
+#include "cellACE110.h"
 #include "position.h"
 
 enum State { kDead = 0, kAlive = 1 };
 
-class Cell;
+// class Cell;
 
 class FactoryCell {
  public:
   // Método creador de células
   virtual Cell* createCell(const Position& position, const State& state) const = 0;
+};
+
+class FactoryCellACE110 : public FactoryCell {
+ public:
+  Cell* createCell(const Position& p, const State& s) const {
+    return new CellACE110(p, s);
+  }
 };
 
 #endif  // FACTORYCELL_H

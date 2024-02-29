@@ -21,11 +21,11 @@
 
 #include <iostream>
 
-#include "cellACE.h"
+#include "cell.h"
 
 class CellACE110 : public CellACE {
  public:
-  CellACE110(const Position&, const State);
+  CellACE110(const Position& position, const State state) : CellACE(position, state) {}
   void nextState(const Lattice&) override;
   void updateState() override;
   std::ostream& display(std::ostream&);
