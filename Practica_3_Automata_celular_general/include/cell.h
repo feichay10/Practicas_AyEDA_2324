@@ -28,7 +28,7 @@
 class Lattice;
 class Cell {
  public:
-  Cell() = default;
+  Cell() {};
   Cell(Position& position, const State& state) : position_(position), state_(state) {
     nextState_ = state_;
   }
