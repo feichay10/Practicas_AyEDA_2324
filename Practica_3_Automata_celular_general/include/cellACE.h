@@ -6,7 +6,7 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 3: Autómata celular general
- * @file cellLife.h
+ * @file cellACE.h
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
@@ -16,24 +16,24 @@
  *
  */
 
-#ifndef CELLLIFE_H
-#define CELLLIFE_H
+#ifndef CELLACE_H
+#define CELLACE_H
 
 #include <iostream>
 
 #include "cell.h"
 #include "positionDim.h"
 
-class CellLife : public Cell {
+class CellACE : public Cell {
  public:
-  CellLife(const Position&, const State);
+  CellACE(const Position&, const State);
   void nextState(const Lattice&) override;
   void updateState() override;
   std::ostream& display(std::ostream&);
-  friend std::ostream& operator<<(std::ostream&, const CellLife&);
+  friend std::ostream& operator<<(std::ostream&, const CellACE&);
 
  private:
-  PositionDim<2, int> position_;
+  PositionDim<1, int> position_;
 };
 
-#endif  // CELLLIFE_H
+#endif  // CELLACE_H
