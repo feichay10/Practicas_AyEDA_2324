@@ -21,14 +21,12 @@
 
 #include <iostream>
 
-#include "cell.h"
-#include "cellACE.h"
-#include "cellACE110.h"
+// #include "cell.h"
 #include "position.h"
 
 enum State { kDead = 0, kAlive = 1 };
 
-// class Cell;
+class Cell;
 
 class FactoryCell {
  public:
@@ -38,7 +36,7 @@ class FactoryCell {
 
 class FactoryCellACE110 : public FactoryCell {
  public:
-  Cell* createCell(const Position& p, const State& s) const {
+  Cell* createCell(const PositionDim<1, int>& p, const State& s) const {
     return new CellACE110(p, s);
   }
 };
