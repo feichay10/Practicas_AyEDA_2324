@@ -22,7 +22,6 @@
 #include "../include/factoryCell.h"
 #include "../include/functions.h"
 #include "../include/lattice.h"
-#include "../include/position.h"
 
 void checkProgramParameters(int argc, char* argv[]) {
   if (argc == 2 && std::string(argv[1]) == "-help") {

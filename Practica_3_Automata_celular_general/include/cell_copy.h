@@ -60,21 +60,6 @@ public:
     std::ostream& display(std::ostream&) const;
 };
 
-// Clase CellLife que representa el juego de la vida
-class CellLife : public Cell {
-public:
-    // Constructor que acepta una posición y un estado
-    CellLife(const Position& pos, const State& state) : Cell(pos, state) {}
-
-    // Método para calcular el siguiente estado basado en las reglas del juego de la vida
-    void nextState(const Lattice&);
-
-    // Método para mostrar el estado actual del juego de la vida
-    std::ostream& display(std::ostream&) const;
-
-    
-};
-
 // Clase CellACE110 que representa un autómata celular elemental con reglas 110
 class CellACE110 : public CellACE {
 public:

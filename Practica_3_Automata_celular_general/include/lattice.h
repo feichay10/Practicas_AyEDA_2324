@@ -29,100 +29,88 @@
 
 #include "cell.h"
 #include "factoryCell.h"
+#include "position.h"
 
 enum borderType { kOpen = 0, kPeriodic = 1, kReflective = 2, kNoBorder = 3 };
 
 class Lattice {
  public:
-  Lattice() = default;
-  Lattice(const Position& size, const State& state, FactoryCell& factory);
-  Lattice(const char* file, FactoryCell& factory);
+  Lattice(const FactoryCell& factory) : factoryCell_(factory) {}
   virtual ~Lattice();
 
   virtual void nextGeneration() = 0;
   virtual std::size_t Population() const = 0;
 
   virtual Cell& operator[](const Position&) const = 0;
-  virtual std::ostream& display(std::ostream&) const = 0;
   friend std::ostream& operator<<(std::ostream&, const Lattice&);
 
  protected:
   virtual void loadInitialConfiguration();
+  virtual std::ostream& display(std::ostream&) const = 0;
 
-  std::string file_;
-  FactoryCell* factoryCell_;
+  const FactoryCell& factoryCell_;
 };
 
 class Lattice1D : public Lattice {
- public:
-  Lattice1D() = default;
-  Lattice1D(const Position& size, const State& state, FactoryCell& factory) {
-    size1D_ = size[0] + 2;
-    cells_ = new Cell*[size1D_];
-    for (int i = 0; i < size1D_; i++) {
-      cells_[i] = factory.createCell(PositionDim<1>(i), state);
+  public:
+    Lattice1D(const FactoryCell& factory, unsigned int size) : Lattice(factory), size_(size) {
+      size_ = size + 2;
+      cells_ = new Cell*[size_];
+      for (unsigned int i = 0; i < size_; i++) {
+        cells_[i] = factoryCell_.createCell(PositionDim<1>(i), kDead);
+      }
+    
+      loadInitialConfiguration();
     }
 
-    loadInitialConfiguration();
-  }
-
-  ~Lattice1D() override {
-    for (int i = 0; i < size1D_; i++) {
-      delete cells_[i];
+    ~Lattice1D() {
+      for (unsigned int i = 0; i < size_; i++) {
+        delete cells_[i];
+      }
+      delete[] cells_;
     }
-    delete[] cells_;
-  }
 
-  void nextGeneration() {
-    for (int i = 1; i < size1D_ - 1; i++) {
-      cells_[i]->nextState(*this);
-    }
-    for (int i = 1; i < size1D_ - 1; i++) {
-      cells_[i]->updateState();
-    }
-  }
-
-  std::size_t Population() const {
-    size_t population_ = 0;
-    for (int i = 1; i < size1D_ - 1; i++) {
-      if (cells_[i]->getState() == kAlive) {
-        population_++;
+    void nextGeneration() override {
+      for (unsigned int i = 1; i < size_ - 1; i++) {
+        cells_[i]->nextState(*this);
+      }
+      for (unsigned int i = 1; i < size_ - 1; i++) {
+        cells_[i]->updateState();
       }
     }
-    return population_;
-  }
 
-  Cell& operator[](const Position& position) const override {
-    return *cells_[position[0]];
-  }
-  
-  std::ostream& display(std::ostream& os) const override {
-    for (int i = 1; i < size1D_ - 1; i++) {
-      os << *cells_[i];
+    std::size_t Population() const override {
+      std::size_t population = 0;
+      for (unsigned int i = 1; i < size_ - 1; i++) {
+        if (cells_[i]->getState() == kAlive) {
+          population++;
+        }
+      }
+      return population;
     }
-    return os;
-  }
 
-  friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
-    return lattice.display(os);
-  }
+    Cell& operator[](const PositionDim<1, int>& position) const {
+      return *cells_[position[0]];
+    }
 
- private:
-  void loadInitialConfiguration() {
+  protected:
+    std::ostream& display(std::ostream& os) const override {
+      for (unsigned int i = 0; i < size_; i++) {
+        // os << *cells_[i];
+      }
+      return os;
+    }
 
-  }
-
-  int size1D_;
-  Cell** cells_;
+    Cell** cells_;
+    unsigned int size_;
 };
 
 class Lattice1D_Open : public Lattice1D {
- public:
-  Lattice1D_Open() = default;
-  Lattice1D_Open(const Position& size, const State& state, FactoryCell& factory);
-  ~Lattice1D_Open() = default;
-
-  Cell& operator[](const Position&) const override;
+  public:
+    Lattice1D_Open(const FactoryCell& factory, unsigned int size) : Lattice1D(factory, size) {
+      cells_[0] = factoryCell_.createCell(PositionDim<1>(0), kDead);
+      cells_[size_ - 1] = factoryCell_.createCell(PositionDim<1>(size_ - 1), kDead);
+    }
 };
 
 #endif  // LATTICE_H

@@ -21,71 +21,44 @@
 
 #include <iostream>
 
+#include "lattice.h"
 #include "position.h"
-
-enum State { kDead = 0, kAlive = 1 };
-
-class Lattice;
-class Lattice1D;
+#include "state.h"
 
 class Cell {
  public:
-  Cell() = default;
-  Cell(Position& position, const State& state);
+  Cell(const Position& position, const State& state);
 
-  virtual ~Cell() {}
+  State getState() const;
+  void setState(State state);
 
-  State getState() const { return state_; }
-  void setState(State state) { state_ = state; }
-
-  virtual void updateState() { state_ = nextState_; }
   virtual void nextState(const Lattice& lattice) = 0;
+  void updateState();
 
   virtual std::ostream& display(std::ostream&) = 0;
-  friend std::ostream& operator<<(std::ostream& os, Cell& cell) {
-    return cell.display(os);
-  }
+  friend std::ostream& operator<<(std::ostream& os, Cell& cell);
 
  protected:
   State state_;
   State nextState_;
-  Position& position_;
+  const Position& position_;
 };
 
 class CellACE : public Cell {
  public:
-  CellACE() = default;
-  CellACE(const Position& position, const State state);
+  CellACE(const Position& position, const State& state) : Cell(position, state) {}
 
-  virtual void nextState(const Lattice& lattice) override = 0;
-  void updateState() override { state_ = nextState_; }
-
-  virtual std::ostream& display(std::ostream& os) override = 0;
-  friend std::ostream& operator<<(std::ostream& os, const CellACE& cell);
+  virtual void nextState(const Lattice1D&) = 0;
+  virtual std::ostream& display(std::ostream&) = 0;
 };
 
 class CellACE110 : public CellACE {
  public:
-  CellACE110() = default;
-  CellACE110(const Position& position, const State state) : CellACE(position, state) {
-    position_ = position;
-    state_ = state;
-  }
+  CellACE110(const Position& position, const State& state);
 
-  void nextState(const Lattice1D& lattice) {
-    int left = lattice[PositionDim<1, int>(position_[0] - 1)].getState();
-    int right = lattice[PositionDim<1, int>(position_[0] + 1)].getState();
-    int center = lattice[position_].getState();
-  }
-
-  std::ostream& display(std::ostream& os) const {
-    os << state_;
-    return os;
-  }
-
-  friend std::ostream& operator<<(std::ostream& os, const CellACE110& cell) {
-    return cell.display(os);
-  }
+  void nextState(const Lattice1D& lattice);
+  
+  std::ostream& display(std::ostream& os) override;
 };
 
 #endif  // CELL_H

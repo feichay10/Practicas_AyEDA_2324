@@ -21,10 +21,12 @@
 
 #include <iostream>
 
+#include "state.h"
 #include "cell.h"
 
 class Cell;
 class CellACE110;
+class Position;
 
 class FactoryCell {
  public:
@@ -34,8 +36,11 @@ class FactoryCell {
 
 class FactoryCellACE110 : public FactoryCell {
  public:
-  Cell* createCell (const Position& position, const State& state) const {
-    return new CellACE110(position, state);
+  Cell* createCell (const Position& p, const State& s) const override {
+    // Cell* cell = new CellACE110(p, s);
+    // return &cell;
+
+    return new CellACE110(p, s);
   }
 };
 
