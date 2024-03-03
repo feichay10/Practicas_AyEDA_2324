@@ -20,32 +20,24 @@
 #define LATTICE1D_H
 
 #include <iostream>
+#include <fstream>
+#include <vector>
 
 #include "lattice.h"
-#include "position.h"
+#include "factoryCell.h"
 
 class Lattice1D : public Lattice {
  public:
-  Lattice1D(int size, const FactoryCell& factory) {
-    size_ = size;
-    cells_ = new Cell*[size_];
-    for (int i = 0; i < size_; i++) {
-      cells_[i] = factory.createCell(PositionDim<1, int>(i), kDead);
-    }    
-  }
-  Lattice1D(const char* file, const FactoryCell& factory) {}
-  ~Lattice1D();
+  Lattice1D(std::string fileName, const FactoryCell& factory);
+  Lattice1D(const int& size, const FactoryCell& factory);
+  virtual ~Lattice1D();
 
   void nextGeneration() override;
   std::size_t Population() const override;
-
-  Cell& operator[](const Position&) const override;
-  std::ostream& display(std::ostream&) const override;
+  std::ostream& display(std::ostream& os, const Lattice& lattice) override;
 
  protected:
   Cell** cells_;
-  int size_;
-  PositionDim<1, int> position_;
 };
 
 #endif  // LATTICE1D_H

@@ -21,44 +21,29 @@
 
 #include <iostream>
 
-#include "lattice.h"
 #include "position.h"
 #include "state.h"
 
+class Lattice;
+
 class Cell {
  public:
-  Cell(const Position& position, const State& state);
+  Cell(const Position& position, const State& state)
+      : position_(position), state_(state), nextState_(state) {}
 
   State getState() const;
   void setState(State state);
 
   virtual void nextState(const Lattice& lattice) = 0;
-  void updateState();
+  virtual void updateState();
 
-  virtual std::ostream& display(std::ostream&) = 0;
   friend std::ostream& operator<<(std::ostream& os, Cell& cell);
 
  protected:
+  virtual std::ostream& display(std::ostream&) = 0;
   State state_;
   State nextState_;
   const Position& position_;
-};
-
-class CellACE : public Cell {
- public:
-  CellACE(const Position& position, const State& state) : Cell(position, state) {}
-
-  virtual void nextState(const Lattice1D&) = 0;
-  virtual std::ostream& display(std::ostream&) = 0;
-};
-
-class CellACE110 : public CellACE {
- public:
-  CellACE110(const Position& position, const State& state);
-
-  void nextState(const Lattice1D& lattice);
-  
-  std::ostream& display(std::ostream& os) override;
 };
 
 #endif  // CELL_H

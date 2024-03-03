@@ -34,29 +34,15 @@ class Position {
 
 template <int Dim = 2, class Coordinate_t = int>
 class PositionDim : public Position {
- private:
-  Coordinate_t coordinates_[Dim];
-
  public:
   // Constructor con lista variable de parámetros
-  PositionDim(int sz, ...) {
-    va_list vl;
-    va_start(vl, sz);
-    for (int d = 0; d < Dim; d++) {
-      coordinates_[d] = va_arg(vl, Coor_t);
-    }
-    va_end(vl);
-  }
+  PositionDim(int sz, ...);
 
+  // Operador de acceso a la i-ésima coordenada
   Coor_t operator[](unsigned int) const;
-};
 
-template <int Dim, class Coordinate_t>
-Coor_t PositionDim<Dim, Coordinate_t>::operator[](unsigned int i) const {
-  if (i >= Dim) {
-    throw std::out_of_range("PositionDim::operator[]");
-  }
-  return coordinates_[i];
-}
+ private:
+  Coordinate_t coordinates_[Dim];
+};
 
 #endif  // POSITION_H

@@ -6,7 +6,7 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 3: Autómata celular general
- * @file factoryCell.h
+ * @file cellACE110.h
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
@@ -16,18 +16,17 @@
  *
  */
 
-#ifndef FACTORYCELL_H
-#define FACTORYCELL_H
+#ifndef CELLACE110_H
+#define CELLACE110_H
 
-#include <iostream>
+#include "cellACE.h"
 
-#include "state.h"
-#include "cell.h"
-
-class FactoryCell {
+class CellACE110 : public CellACE {
  public:
-  // Método creador de células
-  virtual Cell* createCell(const Position& position, const State& state) const = 0;
+  CellACE110(const Position& position, const State& state) : CellACE(position, state) {}
+  void nextState(const Lattice& lattice) override;
+  void updateState() override;
+  std::ostream& display(std::ostream& os) override;
 };
 
-#endif  // FACTORYCELL_H
+#endif  // CELLACE110_H

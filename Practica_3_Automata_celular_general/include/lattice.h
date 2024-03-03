@@ -26,6 +26,8 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <string>
+#include <sstream>
 
 #include "cell.h"
 #include "factoryCell.h"
@@ -35,82 +37,13 @@ enum borderType { kOpen = 0, kPeriodic = 1, kReflective = 2, kNoBorder = 3 };
 
 class Lattice {
  public:
-  Lattice(const FactoryCell& factory) : factoryCell_(factory) {}
-  virtual ~Lattice();
-
+  virtual Cell* operator[](const Position& position) const = 0;
   virtual void nextGeneration() = 0;
   virtual std::size_t Population() const = 0;
-
-  virtual Cell& operator[](const Position&) const = 0;
-  friend std::ostream& operator<<(std::ostream&, const Lattice&);
+  friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
 
  protected:
-  virtual void loadInitialConfiguration();
-  virtual std::ostream& display(std::ostream&) const = 0;
-
-  const FactoryCell& factoryCell_;
-};
-
-class Lattice1D : public Lattice {
-  public:
-    Lattice1D(const FactoryCell& factory, unsigned int size) : Lattice(factory), size_(size) {
-      size_ = size + 2;
-      cells_ = new Cell*[size_];
-      for (unsigned int i = 0; i < size_; i++) {
-        cells_[i] = factoryCell_.createCell(PositionDim<1>(i), kDead);
-      }
-    
-      loadInitialConfiguration();
-    }
-
-    ~Lattice1D() {
-      for (unsigned int i = 0; i < size_; i++) {
-        delete cells_[i];
-      }
-      delete[] cells_;
-    }
-
-    void nextGeneration() override {
-      for (unsigned int i = 1; i < size_ - 1; i++) {
-        cells_[i]->nextState(*this);
-      }
-      for (unsigned int i = 1; i < size_ - 1; i++) {
-        cells_[i]->updateState();
-      }
-    }
-
-    std::size_t Population() const override {
-      std::size_t population = 0;
-      for (unsigned int i = 1; i < size_ - 1; i++) {
-        if (cells_[i]->getState() == kAlive) {
-          population++;
-        }
-      }
-      return population;
-    }
-
-    Cell& operator[](const PositionDim<1, int>& position) const {
-      return *cells_[position[0]];
-    }
-
-  protected:
-    std::ostream& display(std::ostream& os) const override {
-      for (unsigned int i = 0; i < size_; i++) {
-        // os << *cells_[i];
-      }
-      return os;
-    }
-
-    Cell** cells_;
-    unsigned int size_;
-};
-
-class Lattice1D_Open : public Lattice1D {
-  public:
-    Lattice1D_Open(const FactoryCell& factory, unsigned int size) : Lattice1D(factory, size) {
-      cells_[0] = factoryCell_.createCell(PositionDim<1>(0), kDead);
-      cells_[size_ - 1] = factoryCell_.createCell(PositionDim<1>(size_ - 1), kDead);
-    }
+  virtual std::ostream& display(std::ostream& os, const Lattice& lattice);
 };
 
 #endif  // LATTICE_H

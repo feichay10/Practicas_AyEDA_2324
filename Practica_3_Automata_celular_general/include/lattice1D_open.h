@@ -19,19 +19,11 @@
 #ifndef LATTICE1D_OPEN_H
 #define LATTICE1D_OPEN_H
 
-#include <iostream>
-
 #include "lattice1D.h"
 
 class Lattice1D_Open : public Lattice1D {
  public:
-  Lattice1D_Open();
-  Lattice1D_Open(const char*, const FactoryCell&);
-  ~Lattice1D_Open();
-
-  void nextGeneration();
-  std::size_t Population() const;
-
-  Cell& operator[](const Position&) const;
-  std::ostream& display(std::ostream&) const;
+  Cell* operator[](const Position& position) const override;
 };
+
+#endif  // LATTICE1D_OPEN_H
