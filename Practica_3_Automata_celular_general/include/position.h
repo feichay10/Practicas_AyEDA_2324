@@ -32,17 +32,4 @@ class Position {
   virtual Coor_t operator[](unsigned int) const = 0;
 };
 
-template <int Dim = 2, class Coordinate_t = int>
-class PositionDim : public Position {
- public:
-  // Constructor con lista variable de parámetros
-  PositionDim(int sz, ...);
-
-  // Operador de acceso a la i-ésima coordenada
-  Coor_t operator[](unsigned int) const;
-
- private:
-  Coordinate_t coordinates_[Dim];
-};
-
 #endif  // POSITION_H

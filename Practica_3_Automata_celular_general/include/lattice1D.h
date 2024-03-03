@@ -30,15 +30,15 @@ class Lattice1D : public Lattice {
  public:
   Lattice1D(const int& size, const FactoryCell& factory);
   Lattice1D(const char* fileName, const FactoryCell& factory);
-  virtual ~Lattice1D();
+  ~Lattice1D();
 
   void nextGeneration() override;
   std::size_t Population() const override;
 
   Cell* operator[](const PositionDim<1,int>& position) const;
-  std::ostream& display(std::ostream& os, const Lattice& lattice) override;
 
  protected:
+  std::ostream& display(std::ostream& os, const Lattice& lattice) override;
   int size_;
   Cell** cells_;
   borderType borderType_;

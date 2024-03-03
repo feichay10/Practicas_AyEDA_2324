@@ -22,6 +22,6 @@ Lattice1D::Lattice1D(const int& size, const FactoryCell& factory) {
   size_ = size + 2;
   cells_ = new Cell*[size_];
   for (int i = 0; i < size_; i++) {
-    cells_[i] = factory.createCell(PositionDim<1, int>(i), kDead);
+    cells_[i] = factory.createCell(PositionDim<1, int>(1, i), kDead);
   }
 }
