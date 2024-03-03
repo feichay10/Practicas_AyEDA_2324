@@ -37,13 +37,14 @@ enum borderType { kOpen = 0, kPeriodic = 1, kReflective = 2, kNoBorder = 3 };
 
 class Lattice {
  public:
-  virtual Cell* operator[](const Position& position) const = 0;
   virtual void nextGeneration() = 0;
   virtual std::size_t Population() const = 0;
+
+  virtual Cell* operator[](const Position& position) const = 0;
   friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
 
  protected:
-  virtual std::ostream& display(std::ostream& os, const Lattice& lattice);
+  virtual std::ostream& display(std::ostream& os, const Lattice& lattice) = 0;
 };
 
 #endif  // LATTICE_H

@@ -21,7 +21,6 @@
 
 #include <iostream>
 
-#include "state.h"
 #include "cell.h"
 
 class FactoryCell {

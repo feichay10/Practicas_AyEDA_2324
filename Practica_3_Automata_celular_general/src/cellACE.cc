@@ -6,7 +6,7 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 3: Autómata celular general
- * @file state.h
+ * @file cellACE.cc
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
@@ -16,11 +16,11 @@
  *
  */
 
-#ifndef STATE_H
-#define STATE_H
+#include "../include/cellACE.h"
 
-#include <iostream>
+CellACE::CellACE(const Position& position, const State& state) : Cell(position, state) {}
 
-enum State { kDead = 0, kAlive = 1 };
-
-#endif  // STATE_H
+std::ostream& CellACE::display(std::ostream& os) {
+  os << state_;
+  return os;
+}

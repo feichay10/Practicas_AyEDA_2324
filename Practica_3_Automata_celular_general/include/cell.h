@@ -22,14 +22,17 @@
 #include <iostream>
 
 #include "position.h"
-#include "state.h"
+
+enum State { kDead = 0, kAlive = 1 };
 
 class Lattice;
 
 class Cell {
  public:
-  Cell(const Position& position, const State& state)
-      : position_(position), state_(state), nextState_(state) {}
+  Cell() = default;
+  Cell(const Position& position, const State& state);
+  Cell(const PositionDim<1, int>& position, const State& state);
+  Cell(const PositionDim<2, int>& position, const State& state);
 
   State getState() const;
   void setState(State state);
@@ -41,6 +44,7 @@ class Cell {
 
  protected:
   virtual std::ostream& display(std::ostream&) = 0;
+
   State state_;
   State nextState_;
   const Position& position_;

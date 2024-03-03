@@ -20,16 +20,38 @@
 #define FACTORYCELLTYPES_H
 
 #include <iostream>
-#include "factoryCell.h"
+
 #include "cell.h"
 #include "cellACE.h"
 #include "cellACE110.h"
+#include "factoryCell.h"
 
 class FactoryCellACE110 : public FactoryCell {
  public:
-  Cell* createCell (const Position& p, const State& s) const override {
+  Cell* createCell(const Position& p, const State& s) const override {
     return new CellACE110(p, s);
   }
 };
+
+// class FactoryCellACE30 : public FactoryCell {
+//  public:
+//   Cell* createCell (const Position& p, const State& s) const override {
+//     return new CellACE30(p, s);
+//   }
+// };
+
+// class FactoryCellLife23_3 : public FactoryCell {
+//  public:
+//   Cell* createCell (const Position& p, const State& s) const override {
+//     return new CellLife23_3(p, s);
+//   }
+// };
+
+// class FactoryCellLife51_346 : public FactoryCell {
+//  public:
+//   Cell* createCell (const Position& p, const State& s) const override {
+//     return new CellLife51_346(p, s);
+//   }
+// };
 
 #endif  // FACTORYCELLTYPES_H

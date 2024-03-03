@@ -6,9 +6,9 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 3: Autómata celular general
- * @file lattice.cc
+ * @file lattice1D.cc
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
- * @brief 
+ * @brief
  * @version 0.1
  * @date
  *
@@ -16,7 +16,12 @@
  *
  */
 
-#include "../include/lattice.h"
+#include "../include/lattice1D.h"
 
-
-
+Lattice1D::Lattice1D(const int& size, const FactoryCell& factory) {
+  size_ = size + 2;
+  cells_ = new Cell*[size_];
+  for (int i = 0; i < size_; i++) {
+    cells_[i] = factory.createCell(PositionDim<1, int>(i), kDead);
+  }
+}

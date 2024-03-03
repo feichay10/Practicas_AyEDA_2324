@@ -21,9 +21,13 @@
 
 #include "cell.h"
 
+class Lattice1D;
+
 class CellACE : public Cell {
  public:
-  CellACE(const Position& position, const State& state) : Cell(position, state) {}
+  CellACE(const Position& position, const State& state);
+  virtual void nextState(const Lattice1D& lattice) = 0;
+  std::ostream& display(std::ostream& os) override;
 };
 
 #endif  // CELLACE_H
