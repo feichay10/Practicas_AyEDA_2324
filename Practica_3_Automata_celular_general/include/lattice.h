@@ -23,30 +23,22 @@
 #ifndef LATTICE_H
 #define LATTICE_H
 
-#include <fstream>
 #include <iostream>
-#include <vector>
-#include <string>
-#include <sstream>
 
-#include "cell.h"
-#include "factoryCell.h"
 #include "position.h"
 
 enum borderType { kOpen = 0, kPeriodic = 1, kReflective = 2, kNoBorder = 3 };
 
 class Lattice {
  public:
-  Lattice() = default;
-  virtual ~Lattice() = default;
   virtual void nextGeneration() = 0;
   virtual std::size_t Population() const = 0;
 
-  virtual Cell* operator[](const Position& position) const = 0;
+  virtual Cell& operator[](const Position& position) const = 0;
   friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
 
  protected:
-  virtual std::ostream& display(std::ostream& os, const Lattice& lattice) = 0;
+  virtual std::ostream& display(std::ostream& os) const = 0;
 };
 
 #endif  // LATTICE_H

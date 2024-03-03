@@ -13,21 +13,30 @@
  * @date
  *
  * @copyright Copyright (c) 2024
+ * 
  *
  */
 
 #include "../include/cellACE110.h"
+#include "../include/lattice1D_open.h"
+#include "../include/positiondim.h"
 
-CellACE110::CellACE110(const Position& position, const State& state) : CellACE(position, state) {}
+CellACE110::CellACE110(Position& position, const State& state) : CellACE(position, state) {}
 
-void CellACE110::nextState(const Lattice1D& lattice) {
-  // int left = lattice[PositionDim<1, int>(1, position_[0] - 1)].getState();
-  // int right = lattice[PositionDim<1, int>(1, position_[0] + 1)].getState();
-  // int center = lattice[PositionDim<1, int>(1, position_[0] + 1)].getState();
+// Implementar la regla 110-> C^{G+1} = (C + R + C * R + L * C * R) % 2
+void CellACE110::nextState(const Lattice& lattice) {
+  int leftState = lattice[PositionDim<1>(1, position_[0] - 1)].getState();
+  int rightState = lattice[PositionDim<1>(1, position_[0] + 1)].getState();
+  int centerState = lattice[PositionDim<1>(1, position_[0])].getState();
 
-  int left = lattice[position_[0] - 1].getState();
-  int center = lattice[position_[0]].getState();
-  int right = lattice[position_[0] + 1].getState();
+  nextState_ = static_cast<State>((leftState + rightState + leftState * rightState + centerState) % 2);
+}
 
-  nextState_ = static_cast<State>((left + center + right) % 2);
+void CellACE110::updateState() {
+  state_ = nextState_;
+}
+
+std::ostream& CellACE110::display(std::ostream& os) {
+  os << nextState_;
+  return os;
 }

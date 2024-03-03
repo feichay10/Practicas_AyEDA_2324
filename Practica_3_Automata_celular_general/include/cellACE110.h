@@ -23,8 +23,10 @@
 
 class CellACE110 : public CellACE {
  public:
-  CellACE110(const Position& position, const State& state);
-  void nextState(const Lattice1D& lattice) override;
+  CellACE110(Position& position, const State& state);
+  void nextState(const Lattice& lattice);
+  void updateState();
+  std::ostream& display(std::ostream& os);
 };
 
 #endif  // CELLACE110_H

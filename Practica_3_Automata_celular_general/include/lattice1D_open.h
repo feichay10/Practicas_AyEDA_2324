@@ -8,7 +8,7 @@
  * Práctica 3: Autómata celular general
  * @file lattice1D_open.h
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
- * @brief 
+ * @brief
  * @version 0.1
  * @date
  *
@@ -19,11 +19,23 @@
 #ifndef LATTICE1D_OPEN_H
 #define LATTICE1D_OPEN_H
 
+#include <iostream>
+
 #include "lattice1D.h"
+#include "cell.h"
+
+enum openBorderType { kCold = 0, kHot = 1 };
 
 class Lattice1D_Open : public Lattice1D {
  public:
-  Cell* operator[](const Position& position) const override;
+  Lattice1D_Open(int& size, const FactoryCell& factory, openBorderType openBorderType);
+  // Lattice1D_Open(const char* file, const FactoryCell& factory, openBorderType openBorderType);
+  ~Lattice1D_Open();
+  Cell& operator[](const Position& position) const override;
+
+ private:
+  openBorderType openBorderType_ = kCold;
+  Cell* borderLattice_;
 };
 
 #endif  // LATTICE1D_OPEN_H

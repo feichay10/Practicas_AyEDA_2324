@@ -1,19 +1,5 @@
-# CC=g++
-# CXXFLAGS=-g -std=c++14
-
-# OBJS = build/cellular_automata.o build/cell.o build/lattice.o build/functions.o
-
-# all: ${OBJS}
-# 	$(CC) $(CXXFLAGS) -o cellular_automata ${OBJS}
-
-# build/%.o: src/%.cc
-# 	$(CC) $(CXXFLAGS) -c $< -o $@
-
-# clean: 
-# 	rm -rf build/*.o cellular_automata
-
 CXX		 := g++
-CXXFLAGS=-g -std=c++14 #-fsanitize=address #-Wall #-Wextra
+CXXFLAGS=-g -std=c++17 #-fsanitize=address #-Wall #-Wextra
 
 BIN     := bin
 SRC     := src
@@ -51,3 +37,14 @@ run:
 clean:
 	@echo "🧹 Clearing..."
 	rm -f $(BIN)/* $(BUILD)/*
+
+# CC=g++
+# CXXFLAGS=-g -std=c++14
+
+# OBJS = src/cellular_automata.o src/cellACE110.o src/functions.o src/lattice1D_open.o src/lattice1D.o
+
+# all: ${OBJS}
+# 	$(CC) $(CXXFLAGS) -o cellular_automata ${OBJS}
+
+# clean: 
+# 	rm -rf src/*.o cellular_automata

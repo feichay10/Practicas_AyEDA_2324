@@ -22,7 +22,6 @@
 #include <iostream>
 
 #include "position.h"
-#include "positionDim.h"
 
 enum State { kDead = 0, kAlive = 1 };
 
@@ -30,16 +29,13 @@ class Lattice;
 
 class Cell {
  public:
-  Cell() = default;
-  Cell(const Position& position, const State& state);
-  Cell(const PositionDim<1, int>& position, const State& state);
-  Cell(const PositionDim<2, int>& position, const State& state);
+  Cell(Position& position, const State& state) : position_(position), state_(state), nextState_(state) {}
 
-  State getState() const;
-  void setState(State state);
+  State getState() const { return state_; }
+  void setState(State state) { state_ = state; }
 
   virtual void nextState(const Lattice& lattice) = 0;
-  virtual void updateState();
+  virtual void updateState() { state_ = nextState_; }
 
   friend std::ostream& operator<<(std::ostream& os, Cell& cell);
 
@@ -48,7 +44,7 @@ class Cell {
 
   State state_;
   State nextState_;
-  const Position& position_;
+  Position& position_;
 };
 
 #endif  // CELL_H

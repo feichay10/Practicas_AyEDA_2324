@@ -19,29 +19,28 @@
 #ifndef LATTICE1D_H
 #define LATTICE1D_H
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <vector>
 
-#include "lattice.h"
 #include "factoryCell.h"
+#include "lattice.h"
 
 class Lattice1D : public Lattice {
  public:
-  Lattice1D(const int& size, const FactoryCell& factory);
+  Lattice1D(int& size, const FactoryCell& factory);
   Lattice1D(const char* fileName, const FactoryCell& factory);
-  ~Lattice1D();
+  virtual ~Lattice1D();
 
-  void nextGeneration() override;
-  std::size_t Population() const override;
-
-  Cell* operator[](const PositionDim<1,int>& position) const;
+  void nextGeneration();
+  std::size_t Population() const;
 
  protected:
-  std::ostream& display(std::ostream& os, const Lattice& lattice) override;
+  std::ostream& display(std::ostream& os) const;
+  void loadInitialLattice();
+ 
   int size_;
-  Cell** cells_;
-  borderType borderType_;
+  Cell** lattice_;
 };
 
 #endif  // LATTICE1D_H

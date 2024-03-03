@@ -17,13 +17,18 @@
  */
 
 #include "../include/lattice1D.h"
+#include "../include/positionDim.h"
 
-Lattice1D::Lattice1D(const int& size, const FactoryCell& factory) {
+Lattice1D::Lattice1D(int& size, const FactoryCell& factory) {
   size_ = size + 2;
-  cells_ = new Cell*[size_];
+  lattice_ = new Cell*[size_];
+  Position* position;
   for (int i = 0; i < size_; i++) {
-    cells_[i] = factory.createCell(PositionDim<1, int>(1, i), kDead);
+    position = new PositionDim<1>(1, i);
+    lattice_[i] = factory.createCell(*position, kDead);
   }
+
+  loadInitialLattice();
 }
 
 Lattice1D::Lattice1D(const char* fileName, const FactoryCell& factory) {
@@ -33,48 +38,63 @@ Lattice1D::Lattice1D(const char* fileName, const FactoryCell& factory) {
     exit(1);
   }
   file >> size_;
-  cells_ = new Cell*[size_];
+  lattice_ = new Cell*[size_];
+  Position* position;
   for (int i = 0; i < size_; i++) {
-    int state;
-    file >> state;
-    cells_[i] = factory.createCell(PositionDim<1, int>(1, i), static_cast<State>(state));
+    position = new PositionDim<1>(1, i);
+    lattice_[i] = factory.createCell(*position, kDead);
   }
   file.close();
 }
 
 Lattice1D::~Lattice1D() {
   for (int i = 0; i < size_; i++) {
-    delete cells_[i];
+    delete lattice_[i];
   }
-  delete[] cells_;
+  delete[] lattice_;
 }
 
 void Lattice1D::nextGeneration() {
   for (int i = 0; i < size_; i++) {
-    cells_[i]->nextState(*this);
+    lattice_[i]->nextState(*this);
   }
   for (int i = 0; i < size_; i++) {
-    cells_[i]->updateState();
+    lattice_[i]->updateState();
   }
 }
 
 std::size_t Lattice1D::Population() const {
   std::size_t population = 0;
   for (int i = 0; i < size_; i++) {
-    if (cells_[i]->getState() == kAlive) {
+    if (lattice_[i]->getState() == kAlive) {
       population++;
     }
   }
   return population;
 }
 
-Cell* Lattice1D::operator[](const PositionDim<1, int>& position) const {
-  return cells_[position[0]];
+std::ostream& Lattice1D::display(std::ostream& os) const {
+  for (int i = 0; i < size_; i++) {
+    os << *lattice_[i];
+  }
+  os << std::endl;
+  return os;
 }
 
-std::ostream& Lattice1D::display(std::ostream& os, const Lattice& lattice) {
-  for (int i = 0; i < size_; i++) {
-    os << *cells_[i];
+void Lattice1D::loadInitialLattice() {
+  std::string pos;
+  int population = 0;
+  std::cout << "Enter the position of the live cells." << std::endl;
+  std::cout << "To finish, press 'q'. " << std::endl;
+  std::cout << "\n Cell " << population + 1 << std::endl;
+  while (population <= size_) {
+    std::cin >> pos;
+    if (pos == "q") {
+      break;
+    }
+    int position = std::stoi(pos);
+    lattice_[position]->setState(kAlive);
+    population++;
+    std::cout << "\n Cell " << population + 1 << std::endl;
   }
-  return os;
 }
