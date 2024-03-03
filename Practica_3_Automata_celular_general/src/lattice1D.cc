@@ -68,7 +68,7 @@ std::size_t Lattice1D::Population() const {
   return population;
 }
 
-Cell* Lattice1D::operator[](const PositionDim<1,int>& position) const {
+Cell* Lattice1D::operator[](const PositionDim<1, int>& position) const {
   return cells_[position[0]];
 }
 
