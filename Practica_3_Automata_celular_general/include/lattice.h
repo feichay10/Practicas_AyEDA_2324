@@ -37,6 +37,8 @@ enum borderType { kOpen = 0, kPeriodic = 1, kReflective = 2, kNoBorder = 3 };
 
 class Lattice {
  public:
+  Lattice() = default;
+  virtual ~Lattice() = default;
   virtual void nextGeneration() = 0;
   virtual std::size_t Population() const = 0;
 
