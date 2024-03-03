@@ -21,9 +21,13 @@
 CellACE110::CellACE110(const Position& position, const State& state) : CellACE(position, state) {}
 
 void CellACE110::nextState(const Lattice1D& lattice) {
-  int left = lattice[PositionDim<1, int>(1, position_[0] - 1)].getState();
-  int right = lattice[PositionDim<1, int>(1, position_[0] + 1)].getState();
-  int center = lattice[PositionDim<1, int>(1, position_[0] + 1)].getState();
+  // int left = lattice[PositionDim<1, int>(1, position_[0] - 1)].getState();
+  // int right = lattice[PositionDim<1, int>(1, position_[0] + 1)].getState();
+  // int center = lattice[PositionDim<1, int>(1, position_[0] + 1)].getState();
+
+  int left = lattice[position_[0] - 1].getState();
+  int center = lattice[position_[0]].getState();
+  int right = lattice[position_[0] + 1].getState();
 
   nextState_ = static_cast<State>((left + center + right) % 2);
 }
