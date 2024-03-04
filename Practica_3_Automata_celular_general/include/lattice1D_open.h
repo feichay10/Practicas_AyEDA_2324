@@ -28,7 +28,7 @@ enum openBorderType { kCold = 0, kHot = 1 };
 class Lattice1D_Open : public Lattice1D {
  public:
   Lattice1D_Open(int& size, const FactoryCell& factory, borderType border, openBorderType openBorderType);
-  Lattice1D_Open(const std::string fileName, const FactoryCell& factory, borderType border, openBorderType openBorderType);
+  Lattice1D_Open(const std::string& fileName, const FactoryCell& factory, borderType border, openBorderType openBorderType);
   ~Lattice1D_Open();
   Cell& operator[](const Position& position) const override;
 

@@ -29,7 +29,7 @@ Lattice1D_Periodic::Lattice1D_Periodic(int& size, const FactoryCell& factory, bo
   lattice_[size_] = borderLattice_;
 }
 
-Lattice1D_Periodic::Lattice1D_Periodic(const std::string fileName, const FactoryCell& factory, borderType border) : Lattice1D(fileName, factory, border) {
+Lattice1D_Periodic::Lattice1D_Periodic(const std::string& fileName, const FactoryCell& factory, borderType border) : Lattice1D(fileName, factory, border) {
   Position* position;
   position = new PositionDim<1>(1, -1);
   borderLattice_ = factory.createCell(*position, kDead);

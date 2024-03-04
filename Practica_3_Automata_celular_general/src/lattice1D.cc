@@ -37,10 +37,12 @@ Lattice1D::Lattice1D(int& size, const FactoryCell& factory, borderType border) {
   }
 }
 
-Lattice1D::Lattice1D(const std::string fileName, const FactoryCell& factory, borderType border) {
+Lattice1D::Lattice1D(const std::string& fileName, const FactoryCell& factory, borderType border) {
   std::ifstream file(fileName);
   std::string line;
   State state;
+  borderType_ = border;
+  Position* position;
 
   if (!file.is_open()) {
     std::cerr << "Error: File not found" << std::endl;
@@ -52,12 +54,11 @@ Lattice1D::Lattice1D(const std::string fileName, const FactoryCell& factory, bor
     std::cerr << "Error: Dimension mismatch" << std::endl;
     exit(1);
   }
+
   file >> size_;
   size_ += 2;
   lattice_ = new Cell*[size_];
-  borderType_ = border;
-  Position* position;
-  
+
   while (file >> line) {
     for (int i = 0; i < size_ - 2; i++) {
       position = new PositionDim<1>(1, i + 1);

@@ -30,7 +30,7 @@
 class Lattice1D : public Lattice {
  public:
   Lattice1D(int& size, const FactoryCell& factory, borderType border);
-  Lattice1D(const std::string fileName, const FactoryCell& factory, borderType border);
+  Lattice1D(const std::string& fileName, const FactoryCell& factory, borderType border);
   virtual ~Lattice1D();
 
   void nextGeneration();
