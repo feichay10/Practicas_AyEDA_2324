@@ -1,5 +1,5 @@
 CXX		 := g++
-CXXFLAGS=-g -std=c++17 #-fsanitize=address #-Wall #-Wextra
+CXXFLAGS=-g -std=c++14 #-fsanitize=address #-Wall #-Wextra
 
 BIN     := bin
 SRC     := src

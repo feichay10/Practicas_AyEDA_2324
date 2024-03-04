@@ -22,6 +22,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <limits>
 
 #include "factoryCell.h"
 #include "lattice.h"

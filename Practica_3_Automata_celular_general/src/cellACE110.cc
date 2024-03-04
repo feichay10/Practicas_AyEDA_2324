@@ -18,7 +18,7 @@
  */
 
 #include "../include/cellACE110.h"
-#include "../include/lattice1D_open.h"
+#include "../include/lattice1D.h"
 #include "../include/positiondim.h"
 
 CellACE110::CellACE110(Position& position, const State& state) : CellACE(position, state) {}

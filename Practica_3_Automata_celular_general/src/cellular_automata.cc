@@ -25,9 +25,12 @@
 #include "../include/lattice1D.h"
 #include "../include/lattice1D_open.h"
 #include "../include/lattice1D_periodic.h"
+#include "../include/lattice2D.h"
+#include "../include/lattice2D_reflective.h"
 #include "../include/factoryCell.h"
 #include "../include/factoryCellACE110.h"
 #include "../include/factoryCellACE30.h"
+#include "../include/factoryCellLife23_3.h"
 #include "../include/functions.h"
 
 int dim = 0;
@@ -56,6 +59,10 @@ void checkProgramParameters(int argc, char* argv[]) {
       dim = std::stoi(argv[i + 1]);
     } else if (std::string(argv[i]) == "-size") {
       size = std::stoi(argv[i + 1]);
+      if (dim == 2) {
+        rows = size;
+        columns = std::stoi(argv[i + 2]);
+      }
     } else if (std::string(argv[i]) == "-init") {
       fileIn = argv[i + 1];
     } else if (std::string(argv[i]) == "-cell") {
@@ -63,6 +70,8 @@ void checkProgramParameters(int argc, char* argv[]) {
         factoryCell = new FactoryCellACE110();
       } else if (std::string(argv[i + 1]) == "Ace30") {
         factoryCell = new FactoryCellACE30();
+      } else if (std::string(argv[i + 1]) == "Life23_3") {
+        factoryCell = new FactoryCellLife23_3();
       }
     } else if (std::string(argv[i]) == "-border") {
       if (std::string(argv[i + 1]) == "open") {
@@ -92,7 +101,13 @@ void checkProgramParameters(int argc, char* argv[]) {
       }
       break;
     case 2:
-      // lattice = new Lattice2D(size, *factoryCell);
+      if (border == kReflective) {
+        std::cout << "Borde reflectante" << border << std::endl;
+        lattice = new Lattice2D_Reflective(rows, columns, *factoryCell, border);
+      } else if (border == kNoBorder) {
+        std::cout << "No border" << std::endl;
+        // lattice = new Lattice2D(size, size, *factoryCell, border);
+      }
       break;
     default:
       throw std::string("Invalid dimension. Use -help for more information.");
