@@ -55,10 +55,10 @@ Lattice1D::~Lattice1D() {
 }
 
 void Lattice1D::nextGeneration() {
-  for (int i = 0; i < size_; i++) {
+  for (int i = 1; i < size_ - 1; i++) {
     lattice_[i]->nextState(*this);
   }
-  for (int i = 0; i < size_; i++) {
+  for (int i = 1; i < size_ - 1; i++) {
     lattice_[i]->updateState();
   }
 }
@@ -74,10 +74,11 @@ std::size_t Lattice1D::Population() const {
 }
 
 std::ostream& Lattice1D::display(std::ostream& os) const {
-  for (int i = 0; i < size_; i++) {
+  os << *lattice_[0] << "|";
+  for (int i = 1; i < size_ - 1; i++) {
     os << *lattice_[i];
   }
-  os << std::endl;
+  os << "|" << *lattice_[size_ - 1] << std::endl;
   return os;
 }
 
@@ -86,15 +87,24 @@ void Lattice1D::loadInitialLattice() {
   int population = 0;
   std::cout << "Enter the position of the live cells." << std::endl;
   std::cout << "To finish, press 'q'. " << std::endl;
-  std::cout << "\n Cell " << population + 1 << std::endl;
-  while (population <= size_) {
+  std::cout << "\nCell " << population + 1 << std::endl;
+
+  while (population <= size_ - 2) {
     std::cin >> pos;
     if (pos == "q") {
       break;
     }
     int position = std::stoi(pos);
+
+    if (position < 1 || position > size_ - 1) {
+      std::cerr << "Error: Position out of range" << std::endl;
+      continue;
+    }
+
     lattice_[position]->setState(kAlive);
     population++;
-    std::cout << "\n Cell " << population + 1 << std::endl;
+    std::cout << "\nCell " << population + 1 << std::endl;
   }
+
+  system("clear");
 }

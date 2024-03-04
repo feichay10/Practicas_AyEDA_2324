@@ -22,7 +22,6 @@
 #include <iostream>
 
 #include "lattice1D.h"
-#include "cell.h"
 
 enum openBorderType { kCold = 0, kHot = 1 };
 

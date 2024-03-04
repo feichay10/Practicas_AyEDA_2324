@@ -8,8 +8,7 @@ INCLUDE := include
 LIB     := lib
 LIBRARIES   := 
 EXECUTABLE  := cellular_automata
-PARAMS	:= -size 10 10 -border open 0
-PARAMS1	:= -size 10 10 -border reflective -init ../dataFile/file2.txt
+PARAMS	:= -dim 1 -size 10 -cell Ace110 -border open 0
 SOURCES := $(wildcard $(SRC)/*.cc)
 OBJS	:= $(patsubst $(SRC)/%.cc, $(BUILD)/%.o,$(SOURCES))
 

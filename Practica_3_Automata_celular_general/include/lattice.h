@@ -29,6 +29,8 @@
 
 enum borderType { kOpen = 0, kPeriodic = 1, kReflective = 2, kNoBorder = 3 };
 
+class Cell;
+
 class Lattice {
  public:
   virtual void nextGeneration() = 0;
