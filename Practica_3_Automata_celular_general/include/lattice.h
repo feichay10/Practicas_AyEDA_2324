@@ -41,6 +41,7 @@ class Lattice {
 
  protected:
   virtual std::ostream& display(std::ostream& os) const = 0;
+  borderType borderType_;
 };
 
 #endif  // LATTICE_H

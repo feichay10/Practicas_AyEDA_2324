@@ -19,7 +19,7 @@
 #include "../include/lattice1D_open.h"
 #include "../include/positionDim.h"
 
-Lattice1D_Open::Lattice1D_Open(int& size, const FactoryCell& factory, openBorderType openBorderType) : Lattice1D(size, factory), openBorderType_(openBorderType) {
+Lattice1D_Open::Lattice1D_Open(int& size, const FactoryCell& factory, borderType border, openBorderType openBorderType) : Lattice1D(size, factory, border), openBorderType_(openBorderType) {
   Position* position;
   if (openBorderType_ == kCold) {
     position = new PositionDim<1>(1, -1);

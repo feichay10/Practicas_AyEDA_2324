@@ -19,9 +19,10 @@
 #include "../include/lattice1D.h"
 #include "../include/positionDim.h"
 
-Lattice1D::Lattice1D(int& size, const FactoryCell& factory) {
+Lattice1D::Lattice1D(int& size, const FactoryCell& factory, borderType border) {
   size_ = size + 2;
   lattice_ = new Cell*[size_];
+  borderType_ = border;
   Position* position;
   for (int i = 0; i < size_; i++) {
     position = new PositionDim<1>(1, i);
@@ -29,9 +30,13 @@ Lattice1D::Lattice1D(int& size, const FactoryCell& factory) {
   }
 
   loadInitialLattice();
+  if (borderType_ == kPeriodic) {
+    lattice_[0]->setState(lattice_[size_ - 2]->getState());
+    lattice_[size_ - 1]->setState(lattice_[1]->getState());
+  }
 }
 
-Lattice1D::Lattice1D(const char* fileName, const FactoryCell& factory) {
+Lattice1D::Lattice1D(const char* fileName, const FactoryCell& factory, borderType border) {
   std::ifstream file(fileName);
   if (!file.is_open()) {
     std::cerr << "Error: File not found" << std::endl;
@@ -60,6 +65,11 @@ void Lattice1D::nextGeneration() {
   }
   for (int i = 1; i < size_ - 1; i++) {
     lattice_[i]->updateState();
+  }
+
+  if (borderType_ == kPeriodic) {
+    lattice_[0]->setState(lattice_[size_ - 2]->getState());
+    lattice_[size_ - 1]->setState(lattice_[1]->getState());
   }
 }
 

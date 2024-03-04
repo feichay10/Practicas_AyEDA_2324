@@ -36,11 +36,6 @@ void CellACE30::updateState() {
 }
 
 std::ostream& CellACE30::display(std::ostream& os) {
-  if (state_ == kDead) {
-    os << " ";
-  } else {
-    os << "X";
-  }
-
+  os << (state_ == kDead ? " " : "X");
   return os;
 }

@@ -24,6 +24,7 @@
 #include "../include/lattice.h"
 #include "../include/lattice1D.h"
 #include "../include/lattice1D_open.h"
+#include "../include/lattice1D_periodic.h"
 #include "../include/factoryCell.h"
 #include "../include/factoryCellACE110.h"
 #include "../include/factoryCellACE30.h"
@@ -67,10 +68,10 @@ void checkProgramParameters(int argc, char* argv[]) {
       if (std::string(argv[i + 1]) == "open") {
         border = kOpen;
         openBorder = static_cast<openBorderType>(std::stoi(argv[i + 2]));
-      } else if (std::string(argv[i + 1]) == "reflective") {
-        border = kReflective;
       } else if (std::string(argv[i + 1]) == "periodic") {
         border = kPeriodic;
+      } else if (std::string(argv[i + 1]) == "reflective") {
+        border = kReflective;
       } else if (std::string(argv[i + 1]) == "noborder") {
         border = kNoBorder;
       }
@@ -81,11 +82,14 @@ void checkProgramParameters(int argc, char* argv[]) {
     case 1:
       if (border == kOpen) {
         if (openBorder == kCold) {
-          lattice = new Lattice1D_Open(size, *factoryCell, kCold);
+          lattice = new Lattice1D_Open(size, *factoryCell, border, kCold);
         } else if (openBorder == kHot) {
-          lattice = new Lattice1D_Open(size, *factoryCell, kHot);
+          lattice = new Lattice1D_Open(size, *factoryCell, border, kHot);
         }
-      } 
+      } else if (border == kPeriodic) { 
+        std::cout << "Borde periodico" << border << std::endl;
+        lattice = new Lattice1D_Periodic(size, *factoryCell, border);
+      }
       break;
     case 2:
       // lattice = new Lattice2D(size, *factoryCell);
@@ -101,7 +105,7 @@ void checkProgramParameters(int argc, char* argv[]) {
   std::cout << "Open border: " << openBorder << std::endl;
 
   std::cout << "\nInitial lattice: " << std::endl;
-  std::cout << lattice << std::endl;
+  std::cout << *lattice << std::endl;
 
   menu(*lattice);
 }
