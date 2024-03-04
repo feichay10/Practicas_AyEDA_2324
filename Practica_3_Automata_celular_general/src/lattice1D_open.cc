@@ -32,6 +32,19 @@ Lattice1D_Open::Lattice1D_Open(int& size, const FactoryCell& factory, borderType
   lattice_[size_ - 1] = borderLattice_;
 }
 
+Lattice1D_Open::Lattice1D_Open(const std::string fileName, const FactoryCell& factory, borderType border, openBorderType openBorderType) : Lattice1D(fileName, factory, border), openBorderType_(openBorderType) {
+  Position* position;
+  if (openBorderType_ == kCold) {
+    position = new PositionDim<1>(1, -1);
+    borderLattice_ = factory.createCell(*position, kDead);
+  } else {
+    position = new PositionDim<1>(1, -1);
+    borderLattice_ = factory.createCell(*position, kAlive);
+  }
+  lattice_[0] = borderLattice_;
+  lattice_[size_ - 1] = borderLattice_;
+}
+
 Lattice1D_Open::~Lattice1D_Open() {
   delete borderLattice_;
 }

@@ -51,14 +51,9 @@ void menu(Lattice &lattice) {
         if (!commandFlag) {
           std::cout << lattice;
         }
-        // std::cout << "Current population: " << lattice.Population() << std::endl;
+        std::cout << "\tCurrent population: " << lattice.Population() << std::endl;
         break;
       case 'L':
-        std::cout << "Initial lattice: " << std::endl;
-        if (!commandFlag) {
-          std::cout << lattice;
-        }
-        std::cout << "Current population: " << lattice.Population() << std::endl << std::endl;
         std::cout << "Next 5 generations: " << std::endl;
         for (int i = 0; i < 5; i++) {
           lattice.nextGeneration();
@@ -66,7 +61,7 @@ void menu(Lattice &lattice) {
             std::cout << lattice;
           }
           // std::cout << "Generation: " << lattice.getGeneration() << std::endl << std::endl;
-          // std::cout << "Current population: " << lattice.Population() << std::endl;
+          std::cout << "\tCurrent population: " << lattice.Population() << std::endl;
         }
         break;
       case 'c':
@@ -80,10 +75,10 @@ void menu(Lattice &lattice) {
       case 's':
         std::cout << "Enter the file name: ";
         std::cin >> fileOut;
-        // lattice.saveToFile(fileOut);
+        lattice.saveToFile(fileOut);
         break;
       case 'a':
-        // cellEvolution(lattice);
+        cellEvolution(lattice);
         break;
       default:
         std::cout << "Invalid command." << std::endl;
@@ -91,4 +86,19 @@ void menu(Lattice &lattice) {
     }
     textMenu();
   } while (true);
+}
+
+void cellEvolution(Lattice &lattice) {
+  std::cout << "\nUse 'Enter' to continue the generation" << std::endl;
+  std::cout << "Use 'q' to end the cell evolution" << std::endl << std::endl;
+  std::cout << lattice << std::endl;
+  // Limpiar el búfer de entrada para descartar el carácter de nueva línea
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  while (true) {
+    lattice.nextGeneration();
+    std::cout << lattice;
+    if (std::cin.get() == 'q') {
+      break;
+    }
+  }
 }

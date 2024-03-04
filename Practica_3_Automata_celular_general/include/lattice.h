@@ -35,6 +35,7 @@ class Lattice {
  public:
   virtual void nextGeneration() = 0;
   virtual std::size_t Population() const = 0;
+  virtual void saveToFile(const std::string& fileName) const = 0;
 
   virtual Cell& operator[](const Position& position) const = 0;
   friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
@@ -42,6 +43,7 @@ class Lattice {
  protected:
   virtual std::ostream& display(std::ostream& os) const = 0;
   borderType borderType_;
+  int dim_;
 };
 
 #endif  // LATTICE_H

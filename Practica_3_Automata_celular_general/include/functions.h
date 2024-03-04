@@ -54,6 +54,6 @@ const std::string kUsage =
 // void setBorder(const std::string& arg, borderType& borderTypeVar, Lattice &lattice);
 void textMenu();
 void menu(Lattice &lattice);
-// void cellEvolution(Lattice &lattice);
+void cellEvolution(Lattice &lattice);
 
 #endif  // FUNCTIONS_H_

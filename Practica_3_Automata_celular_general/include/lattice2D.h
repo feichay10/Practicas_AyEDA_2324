@@ -35,6 +35,7 @@ class Lattice2D : public Lattice {
 
   void nextGeneration();
   std::size_t Population() const;
+  void saveToFile(const std::string& fileName) const;
 
  protected:
   std::ostream& display(std::ostream& os) const;

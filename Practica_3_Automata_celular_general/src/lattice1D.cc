@@ -20,6 +20,7 @@
 #include "../include/positionDim.h"
 
 Lattice1D::Lattice1D(int& size, const FactoryCell& factory, borderType border) {
+  dim_ = 1;
   size_ = size + 2;
   lattice_ = new Cell*[size_];
   borderType_ = border;
@@ -36,20 +37,39 @@ Lattice1D::Lattice1D(int& size, const FactoryCell& factory, borderType border) {
   }
 }
 
-Lattice1D::Lattice1D(const char* fileName, const FactoryCell& factory, borderType border) {
+Lattice1D::Lattice1D(const std::string fileName, const FactoryCell& factory, borderType border) {
   std::ifstream file(fileName);
+  std::string line;
+  State state;
+
   if (!file.is_open()) {
     std::cerr << "Error: File not found" << std::endl;
     exit(1);
   }
-  file >> size_;
-  lattice_ = new Cell*[size_];
-  Position* position;
-  for (int i = 0; i < size_; i++) {
-    position = new PositionDim<1>(1, i);
-    lattice_[i] = factory.createCell(*position, kDead);
+
+  file >> dim_;
+  if (dim_ != 1) {
+    std::cerr << "Error: Dimension mismatch" << std::endl;
+    exit(1);
   }
-  file.close();
+  file >> size_;
+  size_ += 2;
+  lattice_ = new Cell*[size_];
+  borderType_ = border;
+  Position* position;
+  
+  while (file >> line) {
+    for (int i = 0; i < size_ - 2; i++) {
+      position = new PositionDim<1>(1, i + 1);
+      state = (line[i] == '0') ? kDead : kAlive;
+      lattice_[i + 1] = factory.createCell(*position, state);
+    }
+  }
+
+  if (borderType_ == kPeriodic) {
+    lattice_[0]->setState(lattice_[size_ - 2]->getState());
+    lattice_[size_ - 1]->setState(lattice_[1]->getState());
+  }
 }
 
 Lattice1D::~Lattice1D() {
@@ -83,12 +103,28 @@ std::size_t Lattice1D::Population() const {
   return population;
 }
 
+void Lattice1D::saveToFile(const std::string& fileName) const {
+  std::ofstream output(fileName);
+  if (!output.is_open()) {
+    std::cerr << "Error: File could not be opened." << fileName << std::endl;
+    exit(EXIT_FAILURE);
+  }
+  
+  output << dim_ << std::endl;
+  output << size_ - 2<< std::endl;
+  for (int i = 1; i < size_ - 1; i++) {
+    output << lattice_[i]->getState();
+  }
+  
+  output.close();
+}
+
 std::ostream& Lattice1D::display(std::ostream& os) const {
   os << *lattice_[0] << "|";
   for (int i = 1; i < size_ - 1; i++) {
     os << *lattice_[i];
   }
-  os << "|" << *lattice_[size_ - 1] << std::endl;
+  os << "|" << *lattice_[size_ - 1];
   return os;
 }
 

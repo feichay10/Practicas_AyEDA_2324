@@ -33,7 +33,7 @@
 #include "../include/factoryCellLife23_3.h"
 #include "../include/functions.h"
 
-int dim = 0;
+int dim = 1;
 int size;
 int rows;
 int columns;
@@ -54,16 +54,36 @@ void checkProgramParameters(int argc, char* argv[]) {
     exit(EXIT_FAILURE);
   }
 
+  int sizeFlag = 0, initFlag = 0;
+
+  // Si se inicializa los parametros -size e -init a la vez da error
+  for (int i = 1; i < argc; i++) {
+    if (std::string(argv[i]) == "-size") {
+      sizeFlag++;
+    } else if (std::string(argv[i]) == "-init") {
+      initFlag++;
+    }
+  }
+
+  if (sizeFlag == 1 && initFlag == 1) {
+    throw std::string("Error: Cannot initialize both -size and -init at the same time.");
+    exit(EXIT_FAILURE);
+  }
+
+  bool sizeFlag2 = false, initFlag2 = false;
+
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-dim") {
       dim = std::stoi(argv[i + 1]);
     } else if (std::string(argv[i]) == "-size") {
+      sizeFlag2 = true;
       size = std::stoi(argv[i + 1]);
       if (dim == 2) {
         rows = size;
         columns = std::stoi(argv[i + 2]);
       }
     } else if (std::string(argv[i]) == "-init") {
+      initFlag2 = true;
       fileIn = argv[i + 1];
     } else if (std::string(argv[i]) == "-cell") {
       if (std::string(argv[i + 1]) == "Ace110") {
@@ -87,7 +107,8 @@ void checkProgramParameters(int argc, char* argv[]) {
     }
   }
 
-  switch (dim) {
+  if (sizeFlag2) {
+    switch (dim) {
     case 1:
       if (border == kOpen) {
         if (openBorder == kCold) {
@@ -112,12 +133,40 @@ void checkProgramParameters(int argc, char* argv[]) {
     default:
       throw std::string("Invalid dimension. Use -help for more information.");
       break;
+    }
+  } else if (initFlag2) {
+    switch (dim) {
+      case 1:
+        if (border == kOpen) {
+          if (openBorder == kCold) {
+            lattice = new Lattice1D_Open(fileIn, *factoryCell, border, kCold);
+          } else if (openBorder == kHot) {
+            lattice = new Lattice1D_Open(fileIn, *factoryCell, border, kHot);
+          }
+        } else if (border == kPeriodic) {
+          std::cout << "Borde periodico" << border << std::endl;
+          lattice = new Lattice1D_Periodic(fileIn, *factoryCell, border);
+        }
+        break;
+      case 2:
+        if (border == kReflective) {
+          std::cout << "Borde reflectante" << border << std::endl;
+          lattice = new Lattice2D_Reflective(rows, columns, *factoryCell, border);
+        } else if (border == kNoBorder) {
+          std::cout << "No border" << std::endl;
+          // lattice = new Lattice2D(size, size, *factoryCell, border);
+        }
+        break;
+      default:
+        throw std::string("Invalid dimension. Use -help for more information.");
+        break;
+    }
   }
 
-  std::cout << "Dimension: " << dim << std::endl;
-  std::cout << "Size: " << size << std::endl;
-  std::cout << "Border: " << border << std::endl;
-  std::cout << "Open border: " << openBorder << std::endl;
+  // std::cout << "Dimension: " << dim << std::endl;
+  // std::cout << "Size: " << size << std::endl;
+  // std::cout << "Border: " << border << std::endl;
+  // std::cout << "Open border: " << openBorder << std::endl;
 
   std::cout << "\nInitial lattice: " << std::endl;
   std::cout << *lattice << std::endl;

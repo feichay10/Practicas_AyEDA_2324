@@ -92,6 +92,22 @@ std::size_t Lattice2D::Population() const {
   return population;
 }
 
+void Lattice2D::saveToFile(const std::string& fileName) const {
+  std::ofstream file(fileName);
+  if (!file.is_open()) {
+    std::cerr << "Error: File not found" << std::endl;
+    exit(1);
+  }
+  file << rows_ << " " << columns_ << std::endl;
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      file << lattice_[i][j]->getState();
+    }
+    file << std::endl;
+  }
+  file.close();
+}
+
 std::ostream& Lattice2D::display(std::ostream& os) const {
   for (int i = 0; i < rows_; i++) {
     for (int j = 0; j < columns_; j++) {
