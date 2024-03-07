@@ -20,7 +20,7 @@
 
 #include "dispersionFunction.h"
 
-template <typename Key>
+template <class Key>
 class DFModule {
  public:
   explicit DFModule(const unsigned tableSize) : tableSize_(tableSize) {}
@@ -30,7 +30,7 @@ class DFModule {
   unsigned tableSize_;
 };
 
-template <typename Key>
+template <class Key>
 unsigned DFModule<Key>::operator()(const Key &k) const {
   return k % tableSize_;
 }

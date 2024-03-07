@@ -20,7 +20,7 @@
 
 #include "key.h"
 
-template <typename Key>
+template <class Key>
 class ExplorationFunction {
  public:
   virtual unsigned operator()(const Key&, unsigned) const = 0;

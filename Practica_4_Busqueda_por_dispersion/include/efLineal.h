@@ -20,13 +20,13 @@
 
 #include "explorationFunction.h"
 
-template <typename Key>
+template <class Key>
 class EFLineal : public ExplorationFunction<Key> {
  public:
   unsigned operator()(const Key& key, unsigned i) const;
 };
 
-template <typename Key>
+template <class Key>
 unsigned EFLineal<Key>::operator()(const Key& key, unsigned i) const {
   return i;
 }
