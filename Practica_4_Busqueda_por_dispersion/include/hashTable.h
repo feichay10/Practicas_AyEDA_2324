@@ -35,9 +35,7 @@ class HashTable {
   bool search(const Key& k) const;
   bool insert(const Key& k);
 
-  std::ostream& operator<<(std::ostream& os) const {
-
-  }
+  std::ostream& operator<<(std::ostream& os) const;
 
  private:
   unsigned tableSize_;
