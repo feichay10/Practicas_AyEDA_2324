@@ -105,7 +105,7 @@ void checkProgramParameters(int argc, char* argv[]) {
   std::cout << "Block size: " << blockSize << std::endl;
   std::cout << "Exploration function: " << ef << std::endl;
 
-  setParameters(tableSize, df, dispersionTechnic, blockSize, ef);
+  makeHashTable(tableSize, df, dispersionTechnic, blockSize, ef);
 }
 
 int main(int argc, char* argv[]) {

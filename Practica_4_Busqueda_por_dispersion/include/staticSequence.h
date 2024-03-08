@@ -23,17 +23,20 @@
 template <class Key>
 class StaticSequence : public Sequence<Key> {
  public:
-  StaticSequence() = default;
+  StaticSequence();
   StaticSequence(int blockSize);
   ~StaticSequence();
   bool search(const Key& k) const;
   bool insert(const Key& k);
-  bool isFull() const = 0;
+  bool isFull() const;
 
  private:
   Key* data_;
   int blockSize_;
 };
+
+template <class Key>
+StaticSequence<Key>::StaticSequence() {}
 
 template <class Key>
 StaticSequence<Key>::StaticSequence(int blockSize) {

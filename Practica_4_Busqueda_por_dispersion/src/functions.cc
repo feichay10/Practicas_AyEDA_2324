@@ -17,14 +17,11 @@
  */
 
 #include "../include/functions.h"
-#include "../include/dfModule.h"
-#include "../include/dfRandom.h"
-#include "../include/dfSum.h"
 
-void setParameters(int tableSize, std::string df, std::string dispersionTechnic, int blockSize, std::string ef) {
+void makeHashTable(int tableSize, std::string df, std::string dispersionTechnic, int blockSize, std::string ef) {
   DispersionFunction<keyType>* dispersionFunction;
   ExplorationFunction<keyType>* explorationFunction;
-  // HashTable<keyType, Container = dispersionTechnic>* hashTable;
+  Sequence<keyType>* sequence;
 
   if (df == "module") {
     dispersionFunction = new dfModule<keyType>(tableSize);
@@ -32,8 +29,13 @@ void setParameters(int tableSize, std::string df, std::string dispersionTechnic,
     dispersionFunction = new dfRandom<keyType>(tableSize);
   } else if (df == "sum") {
     dispersionFunction = new dfSum<keyType>(tableSize);
-  } else {
-    throw std::string("Invalid dispersion function.");
-    exit(EXIT_FAILURE);
   }
+
+  if (dispersionTechnic == "open") {
+    sequence = new DynamicSequence<keyType>();
+  } else if (dispersionTechnic == "close") {
+    sequence = new StaticSequence<keyType>(blockSize);
+  }
+
+  // HashTable<keyType, Nif> hashTable(tableSize, dispersionFunction, explorationFunction, blockSize);
 }

@@ -19,12 +19,8 @@
 #ifndef FUNCTIONS_H_
 #define FUNCTIONS_H_
 
-#include <chrono>
-#include <fstream>
 #include <iostream>
-#include <limits>
 #include <string>
-#include <thread>
 
 #include "../include/dfModule.h"
 #include "../include/dfRandom.h"
@@ -62,6 +58,6 @@ const std::string kUsage =
 
 typedef Key<long> keyType;
 
-void setParameters(int, std::string, std::string, int, std::string);
+void makeHashTable(int, std::string, std::string, int, std::string);
 
 #endif  // FUNCTIONS_H_

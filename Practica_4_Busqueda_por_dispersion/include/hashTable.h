@@ -38,8 +38,8 @@
 template <class Key, class Container = StaticSequence<Key>>
 class HashTable {
  public:
-  HashTable(unsigned tableSize, DispersionFunction<Key>& fd,
-            ExplorationFunction<Key>& fe, unsigned blockSize);
+  HashTable(int tableSize, DispersionFunction<Key>& fd,
+            ExplorationFunction<Key>& fe, int blockSize);
   ~HashTable();
 
   bool search(const Key& k) const;
@@ -48,31 +48,31 @@ class HashTable {
   std::ostream& operator<<(std::ostream& os) const;
 
  private:
-  unsigned tableSize_;
+  int tableSize_;
   Container** table_;
   DispersionFunction<Key>& fd_;
   ExplorationFunction<Key>& fe_;
-  unsigned blockSize_;
+  int blockSize_;
 };
 
 template <class Key, class Container>
-HashTable<Key, Container>::HashTable(unsigned tableSize,
+HashTable<Key, Container>::HashTable(int tableSize,
                                      DispersionFunction<Key>& fd,
                                      ExplorationFunction<Key>& fe,
-                                     unsigned blockSize) {
+                                     int blockSize) {
   tableSize_ = tableSize;
   fd_ = fd;
   fe_ = fe;
   blockSize_ = blockSize;
   table_ = new Container*[tableSize_];
-  for (unsigned i = 0; i < tableSize_; i++) {
+  for (int i = 0; i < tableSize_; i++) {
     table_[i] = new Container(blockSize_);
   }
 }
 
 template <class Key, class Container>
 HashTable<Key, Container>::~HashTable() {
-  for (unsigned i = 0; i < tableSize_; i++) {
+  for (int i = 0; i < tableSize_; i++) {
     delete table_[i];
   }
   delete[] table_;
@@ -80,8 +80,8 @@ HashTable<Key, Container>::~HashTable() {
 
 template <class Key, class Container>
 bool HashTable<Key, Container>::search(const Key& k) const {
-  unsigned index = fd_(k, tableSize_);
-  unsigned i = 0;
+  int index = fd_(k, tableSize_);
+  int i = 0;
   while (i < tableSize_ && !table_[index]->empty()) {
     if (table_[index]->search(k)) {
       return true;
@@ -94,8 +94,8 @@ bool HashTable<Key, Container>::search(const Key& k) const {
 
 template <class Key, class Container>
 bool HashTable<Key, Container>::insert(const Key& k) {
-  unsigned index = fd_(k, tableSize_);
-  unsigned i = 0;
+  int index = fd_(k, tableSize_);
+  int i = 0;
   while (i < tableSize_ && !table_[index]->empty()) {
     index = (index + fe_(k, i, tableSize_)) % tableSize_;
     i++;
@@ -112,11 +112,11 @@ bool HashTable<Key, Container>::insert(const Key& k) {
 // 1 | 2 | 3 | 4 | 5 | 6 | ... | tableSize    -> Values
 template <class Key, class Container>
 std::ostream& HashTable<Key, Container>::operator<<(std::ostream& os) const {
-  for (unsigned i = 0; i < tableSize_; i++) {
+  for (int i = 0; i < tableSize_; i++) {
     os << i << " | ";
   }
   os << std::endl;
-  for (unsigned i = 0; i < tableSize_; i++) {
+  for (int i = 0; i < tableSize_; i++) {
     os << table_[i] << " | ";
   }
   os << std::endl;
