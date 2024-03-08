@@ -48,7 +48,7 @@ StaticSequence<Key>::~StaticSequence() {
 
 template <class Key>
 bool StaticSequence<Key>::search(const Key& k) const {
-  for (int i = 0; i < size_; i++) {
+  for (int i = 0; i < blockSize_; i++) {
     if (data_[i] == k) {
       return true;
     }
@@ -59,7 +59,7 @@ bool StaticSequence<Key>::search(const Key& k) const {
 template <class Key>
 bool StaticSequence<Key>::insert(const Key& k) {
   if (!search(k)) {
-    for (int i = 0; i < size_; i++) {
+    for (int i = 0; i < blockSize_; i++) {
       if (data_[i] == NULL) {
         data_[i] = k;
         return true;
@@ -71,7 +71,7 @@ bool StaticSequence<Key>::insert(const Key& k) {
 
 template <class Key>
 bool StaticSequence<Key>::isFull() const {
-  for (int i = 0; i < size_; i++) {
+  for (int i = 0; i < blockSize_; i++) {
     if (data_[i] == NULL) {
       return false;
     }
