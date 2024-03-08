@@ -17,6 +17,16 @@
 
 #include <iostream>
 
-#include "../include/key.h"
+#include "../include/nif.h"
 
-typedef Key<long> keyType;
+typedef Nif KeyType;
+
+int main() {
+  Nif nif1(12345678);
+  Nif nif2(87654321);
+  std::cout << "NIF1: " << nif1 << std::endl;
+  std::cout << "NIF2: " << nif2 << std::endl;
+
+  Nif nif3;
+  std::cout << "NIF3: " << nif3 << std::endl;
+}

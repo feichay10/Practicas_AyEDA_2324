@@ -37,8 +37,15 @@ class Key {
   bool operator>=(const Key<T> &other) const;
   bool operator==(const Key<T> &other) const;
   T operator/(const Key<T> &other) const;
-  friend std::ostream &operator<<(std::ostream &os, const Key &key);
-  friend std::istream &operator>>(std::istream &is, const Key &key);
+  friend std::istream& operator>>(std::istream& is, Key& key) {
+    is >> key.key_;
+    return is;
+  }
+
+  friend std::ostream& operator<<(std::ostream& os, const Key& key) {
+    os << key.key_;
+    return os;
+  }
 
  private:
   T key_;

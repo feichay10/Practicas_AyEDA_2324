@@ -7,8 +7,8 @@ BUILD	:= build
 INCLUDE := include
 LIB     := lib
 LIBRARIES   := 
-EXECUTABLE  := cellular_automata
-PARAMS	:= -dim 1 -size 10 -cell Ace110 -border open 0
+EXECUTABLE  := dispersionSearch
+PARAMS	:= 
 SOURCES := $(wildcard $(SRC)/*.cc)
 OBJS	:= $(patsubst $(SRC)/%.cc, $(BUILD)/%.o,$(SOURCES))
 
@@ -36,14 +36,3 @@ run:
 clean:
 	@echo "🧹 Clearing..."
 	rm -f $(BIN)/* $(BUILD)/*
-
-# CC=g++
-# CXXFLAGS=-g -std=c++14
-
-# OBJS = src/cellular_automata.o src/cellACE110.o src/functions.o src/lattice1D_open.o src/lattice1D.o
-
-# all: ${OBJS}
-# 	$(CC) $(CXXFLAGS) -o cellular_automata ${OBJS}
-
-# clean: 
-# 	rm -rf src/*.o cellular_automata
