@@ -75,7 +75,7 @@ void checkProgramParameters(int argc, char* argv[]) {
       }
     } else if (std::string(argv[i]) == "-fd") {
       if (i + 1 < argc) {
-        if (std::string(argv[i + 1]) != "module" || std::string(argv[i + 1]) != "sum" || std::string(argv[i + 1]) != "random") {
+        if (std::string(argv[i + 1]) != "module" && std::string(argv[i + 1]) != "sum" && std::string(argv[i + 1]) != "random") {
           throw std::string("Invalid dispersion function. Use random or sum.");
           exit(EXIT_FAILURE);
         } else {
@@ -87,7 +87,7 @@ void checkProgramParameters(int argc, char* argv[]) {
       }
     } else if (std::string(argv[i]) == "-hash") {
       if (i + 1 < argc) {
-        if (std::string(argv[i + 1]) != "open" || std::string(argv[i + 1]) != "close") {
+        if (std::string(argv[i + 1]) != "open" && std::string(argv[i + 1]) != "close") {
           throw std::string("Invalid dispersion technic. Use open or closed.");
           exit(EXIT_FAILURE);
         } else {
@@ -99,7 +99,7 @@ void checkProgramParameters(int argc, char* argv[]) {
       }
     } else if (std::string (argv[i]) == "-fe") {
       if (i + 1 < argc) {
-        if (std::string(argv[i + 1]) != "lineal" || std::string(argv[i + 1]) != "quadratic" || std::string(argv[i + 1]) != "double" || std::string(argv[i + 1]) != "redispersion") {
+        if (std::string(argv[i + 1]) != "lineal" && std::string(argv[i + 1]) != "quadratic" && std::string(argv[i + 1]) != "double" && std::string(argv[i + 1]) != "redispersion") {
           throw std::string("Invalid exploration function. Use lineal, quadratic, double or redispersion.");
           exit(EXIT_FAILURE);
         } else {
@@ -118,7 +118,7 @@ void checkProgramParameters(int argc, char* argv[]) {
   std::cout << "Block size: " << blockSize << std::endl;
   std::cout << "Exploration function: " << ef << std::endl;
 
-  
+  setParameters(tableSize, df, dispersionTechnic, blockSize, ef);
 }
 
 int main(int argc, char* argv[]) {
@@ -126,6 +126,6 @@ int main(int argc, char* argv[]) {
     checkProgramParameters(argc, argv);
   } catch (std::string& e) {
     std::cerr << kRedBold << "Error: " << e << kReset << std::endl;
-    return 1;
+    exit(EXIT_FAILURE);
   }
 }
