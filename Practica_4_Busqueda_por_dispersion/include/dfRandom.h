@@ -5,7 +5,7 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 4: Búsqueda por dispersión
- * @file dfSum.h
+ * @file dfRandom.h
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
@@ -15,29 +15,27 @@
  *
  */
 
-#ifndef DFSUM_H
-#define DFSUM_H
+#ifndef DFRANDOM_H
+#define DFRANDOM_H
 
 #include "dispersionFunction.h"
 
 template <class Key>
-class DFSum : public DispersionFunction<Key> {
+class DFRandom : public DispersionFunction<Key> {
  public:
-  explicit DFSum(const unsigned n) : tableSize_(n) {}
+ public:
+  explicit DFRandom(const unsigned n) : tableSize_(n) {}
   unsigned operator()(const Key& k) const;
 
  private:
   unsigned tableSize_; 
 };
 
-// Basada en la suma, h(k) = sum(k_i) % tableSize
+// Basada en pseudoaleatorios, h(k) = {srand(k); rand()}
 template <class Key>
-unsigned DFSum<Key>::operator()(const Key& k) const {
-  unsigned sum = 0;
-  for (unsigned i = 0; i < k.size(); i++) {
-    sum += k[i];
-  }
-  return sum % tableSize_;
+unsigned DFRandom<Key>::operator()(const Key& k) const {
+  srand(k);
+  return rand() % tableSize_;
 }
 
-#endif  // DFSUM_H
+#endif  // DFRANDOM_H

@@ -5,7 +5,7 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 4: Búsqueda por dispersión
- * @file DFModule.h
+ * @file dfModule.h
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
@@ -30,6 +30,7 @@ class DFModule {
   unsigned tableSize_;
 };
 
+// Basada en el módulo, h(k) = k % tableSize
 template <class Key>
 unsigned DFModule<Key>::operator()(const Key &k) const {
   return k % tableSize_;
