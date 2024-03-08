@@ -21,10 +21,10 @@
 #include "dispersionFunction.h"
 
 template <class Key>
-class DFRandom : public DispersionFunction<Key> {
+class dfRandom : public DispersionFunction<Key> {
  public:
  public:
-  explicit DFRandom(const unsigned n) : tableSize_(n) {}
+  explicit dfRandom(const unsigned n) : tableSize_(n) {}
   unsigned operator()(const Key& k) const;
 
  private:
@@ -33,7 +33,7 @@ class DFRandom : public DispersionFunction<Key> {
 
 // Basada en pseudoaleatorios, h(k) = {srand(k); rand()}
 template <class Key>
-unsigned DFRandom<Key>::operator()(const Key& k) const {
+unsigned dfRandom<Key>::operator()(const Key& k) const {
   srand(k);
   return rand() % tableSize_;
 }

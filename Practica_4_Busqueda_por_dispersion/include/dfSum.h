@@ -21,9 +21,9 @@
 #include "dispersionFunction.h"
 
 template <class Key>
-class DFSum : public DispersionFunction<Key> {
+class dfSum : public DispersionFunction<Key> {
  public:
-  explicit DFSum(const unsigned n) : tableSize_(n) {}
+  explicit dfSum(const unsigned n) : tableSize_(n) {}
   unsigned operator()(const Key& k) const;
 
  private:
@@ -32,7 +32,7 @@ class DFSum : public DispersionFunction<Key> {
 
 // Basada en la suma, h(k) = sum(k_i) % tableSize
 template <class Key>
-unsigned DFSum<Key>::operator()(const Key& k) const {
+unsigned dfSum<Key>::operator()(const Key& k) const {
   unsigned sum = 0;
   for (unsigned i = 0; i < k.size(); i++) {
     sum += k[i];
