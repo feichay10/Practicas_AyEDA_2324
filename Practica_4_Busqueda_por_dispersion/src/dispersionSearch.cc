@@ -17,16 +17,29 @@
 
 #include <iostream>
 
+#include "../include/functions.h"
 #include "../include/nif.h"
+
 
 typedef Nif KeyType;
 
-int main() {
-  Nif nif1(12345678);
-  Nif nif2(87654321);
-  std::cout << "NIF1: " << nif1 << std::endl;
-  std::cout << "NIF2: " << nif2 << std::endl;
+void checkProgramParameters(int argc, char* argv[]) {
+  if (argc == 2 && std::string(argv[1]) == "-help") {
+    throw kUsage;
+    exit(EXIT_FAILURE);
+  } else if (argc == 1) {
+    throw std::string("No arguments provided. Use ") + argv[0] + " -help for more information.";
+    exit(EXIT_FAILURE);
+  }
 
-  Nif nif3;
-  std::cout << "NIF3: " << nif3 << std::endl;
+
+}
+
+int main(int argc, char* argv[]) {
+  try {
+    checkProgramParameters(argc, argv);
+  } catch (std::string& e) {
+    std::cerr << kRedBold << "Error: " << e << kReset << std::endl;
+    return 1;
+  }
 }
