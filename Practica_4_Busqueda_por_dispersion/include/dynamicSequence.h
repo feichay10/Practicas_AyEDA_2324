@@ -25,14 +25,53 @@ class DynamicSequence : public Sequence<Key> {
  public:
   DynamicSequence();
   ~DynamicSequence();
+
   bool search(const Key& k) const;
   bool insert(const Key& k);
-  void print() const;
+  bool isFull() const;
 
  private:
   Key* data_;
-  int size_;
-  int capacity_;
+  int size_ = 0;
 };
+
+template <class Key>
+DynamicSequence<Key>::DynamicSequence() {
+  data_ = new Key[size_];
+}
+
+template <class Key>
+DynamicSequence<Key>::~DynamicSequence() {
+  delete[] data_;
+}
+
+template <class Key>
+bool DynamicSequence<Key>::search(const Key& k) const {
+  for (int i = 0; i < size_; i++) {
+    if (data_[i] == k) {
+      return true;
+    }
+  }
+  return false;
+}
+
+template <class Key>
+bool DynamicSequence<Key>::insert(const Key& k) {
+  if (!search(k)) {
+    size_++;
+    for (int i = 0; i < size_; i++) {
+      if (data_[i] == NULL) {
+        data_[i] = k;
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+template <class Key>
+bool DynamicSequence<Key>::isFull() const {
+  return false;
+}
 
 #endif // DYNAMICSEQUENCE_H

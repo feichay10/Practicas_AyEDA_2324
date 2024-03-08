@@ -23,24 +23,22 @@
 template <class Key>
 class StaticSequence : public Sequence<Key> {
  public:
+  StaticSequence() = default;
   StaticSequence(int blockSize);
   ~StaticSequence();
   bool search(const Key& k) const;
   bool insert(const Key& k);
-  virtual bool isFull() const = 0;
+  bool isFull() const = 0;
 
  private:
   Key* data_;
-  int size_;
-  int capacity_;
   int blockSize_;
 };
 
 template <class Key>
-StaticSequence<Key>::StaticSequence(int blockSize) : blockSize_(blockSize) {
+StaticSequence<Key>::StaticSequence(int blockSize) {
   data_ = new Key[blockSize_];
-  size_ = 0;
-  capacity_ = blockSize_;
+  blockSize_ = blockSize;
 }
 
 template <class Key>
@@ -60,11 +58,24 @@ bool StaticSequence<Key>::search(const Key& k) const {
 
 template <class Key>
 bool StaticSequence<Key>::insert(const Key& k) {
-  if (isFull()) {
-    return false;
+  if (!search(k)) {
+    for (int i = 0; i < size_; i++) {
+      if (data_[i] == NULL) {
+        data_[i] = k;
+        return true;
+      }
+    }
   }
-  data_[size_] = k;
-  size_++;
+  return false;
+}
+
+template <class Key>
+bool StaticSequence<Key>::isFull() const {
+  for (int i = 0; i < size_; i++) {
+    if (data_[i] == NULL) {
+      return false;
+    }
+  }
   return true;
 }
 
