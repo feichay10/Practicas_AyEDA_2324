@@ -21,9 +21,9 @@
 #include "dispersionFunction.h"
 
 template <class Key>
-class DFModule {
+class dfModule : public DispersionFunction<Key> {
  public:
-  explicit DFModule(const unsigned tableSize) : tableSize_(tableSize) {}
+  explicit dfModule(const unsigned tableSize) : tableSize_(tableSize) {}
   unsigned operator()(const Key &k) const;
 
  private:
@@ -32,7 +32,7 @@ class DFModule {
 
 // Basada en el módulo, h(k) = k % tableSize
 template <class Key>
-unsigned DFModule<Key>::operator()(const Key &k) const {
+unsigned dfModule<Key>::operator()(const Key &k) const {
   return k % tableSize_;
 }
 
