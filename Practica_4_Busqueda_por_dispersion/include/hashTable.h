@@ -55,25 +55,6 @@ class HashTable {
   unsigned blockSize_;
 };
 
-// El método constructor recibe los parámetros necesarios para inicializar sus atributos.
-// HashTable<Key,Container>::HashTable(unsigned, DispersionFunction<Key>&, ExplorationFunction<Key>&,unsigned);
-//   a. El tamaño de la tabla que se utiliza para inicializar el atributo tableSize.
-//   b. Un objeto del tipo función de dispersión para inicializar el atributo fd.
-//   c. Un objeto del tipo función de exploración para inicializar el atributo fe.
-//   d. El tamaño del bloque que se utiliza para inicializar el atributo blockSize.
-//   e. El atributo table se inicializa creando un objeto Container en memoria dinámica
-//   para cada una de sus posiciones del array de tamaño tableSize.
-// 10. Para implementar la técnica de dispersión abierta se utilizará una especialización parcial
-// de la plantilla cuando se utiliza el tipo dynamicSequence<Key> como parámetro
-// Container.
-// template<class Key> class HashTable<Key, dynamicSequence<Key> >
-// 11. Para la implementación de la técnica de dispersión abierta no se requieren los atributos
-// función de exploración y tamaño del bloque, utilizados por las estrategias de exploración.
-// Por tanto, el constructor de la clase sólo requiere los parámetros:
-// HashTable<Key,dynamicSequence<Key> >::HashTable(unsigned, DispersionFunction<Key>&);
-//   a. El atributo table es un array con tableSize posiciones, cada una de las cuales
-//   contiene un objeto dynamicSequence<Key>.
-
 template <class Key, class Container>
 HashTable<Key, Container>::HashTable(unsigned tableSize,
                                      DispersionFunction<Key>& fd,

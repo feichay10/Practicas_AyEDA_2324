@@ -17,22 +17,9 @@
 
 #include <iostream>
 
-#include "../include/dfModule.h"
-#include "../include/dfRandom.h"
-#include "../include/dfSum.h"
-#include "../include/dispersionFunction.h"
-#include "../include/dynamicSequence.h"
-#include "../include/efDoubleDispersion.h"
-#include "../include/efLineal.h"
-#include "../include/efQuadratic.h"
-#include "../include/efRedispersion.h"
-#include "../include/explorationFunction.h"
 #include "../include/functions.h"
-#include "../include/hashTable.h"
 #include "../include/key.h"
 #include "../include/nif.h"
-#include "../include/sequence.h"
-#include "../include/staticSequence.h"
 
 typedef Nif KeyType;
 

@@ -26,6 +26,23 @@
 #include <string>
 #include <thread>
 
+#include "../include/dfModule.h"
+#include "../include/dfRandom.h"
+#include "../include/dfSum.h"
+#include "../include/dispersionFunction.h"
+#include "../include/dynamicSequence.h"
+#include "../include/efDoubleDispersion.h"
+#include "../include/efLineal.h"
+#include "../include/efQuadratic.h"
+#include "../include/efRedispersion.h"
+#include "../include/explorationFunction.h"
+#include "../include/functions.h"
+#include "../include/hashTable.h"
+#include "../include/key.h"
+#include "../include/nif.h"
+#include "../include/sequence.h"
+#include "../include/staticSequence.h"
+
 const std::string kRedBold = "\033[1;31m";
 const std::string kGreenBold = "\033[1;32m";
 const std::string kBold = "\033[1m";
@@ -43,7 +60,8 @@ const std::string kUsage =
     "closed dispersion."
     "\n  -help  Show this message.";
 
-void checkFile(std::string fileIn);
-void textMenu();
+typedef Key<long> keyType;
+
+void setParameters(int, std::string, std::string, int, std::string);
 
 #endif  // FUNCTIONS_H_

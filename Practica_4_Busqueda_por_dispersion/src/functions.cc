@@ -17,3 +17,23 @@
  */
 
 #include "../include/functions.h"
+#include "../include/dfModule.h"
+#include "../include/dfRandom.h"
+#include "../include/dfSum.h"
+
+void setParameters(int tableSize, std::string df, std::string dispersionTechnic, int blockSize, std::string ef) {
+  DispersionFunction<keyType>* dispersionFunction;
+  ExplorationFunction<keyType>* explorationFunction;
+  // HashTable<keyType, Container = dispersionTechnic>* hashTable;
+
+  if (df == "module") {
+    dispersionFunction = new dfModule<keyType>(tableSize);
+  } else if (df == "random") {
+    dispersionFunction = new dfRandom<keyType>(tableSize);
+  } else if (df == "sum") {
+    dispersionFunction = new dfSum<keyType>(tableSize);
+  } else {
+    throw std::string("Invalid dispersion function.");
+    exit(EXIT_FAILURE);
+  }
+}
