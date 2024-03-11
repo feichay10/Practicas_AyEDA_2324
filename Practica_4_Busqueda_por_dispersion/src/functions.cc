@@ -33,9 +33,8 @@ void makeHashTable(int tableSize, std::string df, std::string dispersionTechnic,
 
   if (dispersionTechnic == "open") {
     sequence = new DynamicSequence<keyType>();
+    HashTable<keyType, DynamicSequence<keyType>> hashTable(tableSize, *dispersionFunction, *explorationFunction, blockSize);
   } else if (dispersionTechnic == "close") {
     sequence = new StaticSequence<keyType>(blockSize);
   }
-
-  // HashTable<keyType, Nif> hashTable(tableSize, dispersionFunction, explorationFunction, blockSize);
 }

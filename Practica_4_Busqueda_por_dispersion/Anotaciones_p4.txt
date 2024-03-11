@@ -1,0 +1,5 @@
+Practica 04 - Búsqueda por dispersión
+
+- La tabla hash tendra objetos de tipo NIF
+- Sequence dynamic -> no num blocK ni funcion de exploracion
+- Los metodos de Sequence los podemos heredar para HashTable

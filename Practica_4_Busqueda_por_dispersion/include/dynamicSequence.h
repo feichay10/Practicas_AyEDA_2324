@@ -28,7 +28,6 @@ class DynamicSequence : public Sequence<Key> {
 
   bool search(const Key& k) const;
   bool insert(const Key& k);
-  bool isFull() const;
 
  private:
   Key* data_;
@@ -66,11 +65,6 @@ bool DynamicSequence<Key>::insert(const Key& k) {
       }
     }
   }
-  return false;
-}
-
-template <class Key>
-bool DynamicSequence<Key>::isFull() const {
   return false;
 }
 

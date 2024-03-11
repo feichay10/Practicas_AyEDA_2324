@@ -23,7 +23,7 @@
 template <class Key>
 class dfSum : public DispersionFunction<Key> {
  public:
-  explicit dfSum(const unsigned n) : tableSize_(n) {}
+  explicit dfSum(const unsigned tableSize) : tableSize_(tableSize) {}
   unsigned operator()(const Key& k) const;
 
  private:

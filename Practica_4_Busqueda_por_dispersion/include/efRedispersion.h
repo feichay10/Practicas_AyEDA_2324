@@ -25,7 +25,7 @@ template <class Key>
 class EFRedispersion : public ExplorationFunction<Key> {
  public:
   EFRedispersion() {}
-  EFRedispersion(DispersionFunction<Key> *f) : df_(f) {}
+  EFRedispersion(DispersionFunction<Key>* f) : df_(f) {}
   unsigned operator()(const Key& k, unsigned i) const;
 
  private:
@@ -33,6 +33,10 @@ class EFRedispersion : public ExplorationFunction<Key> {
 };
 
 // Redispersión, g(k,i) = f^(i)(k)
+// La implementación de la estrategia de exploración por redispersión se utiliza
+// el generador de números pseudo-aleatorios. Se inicializa la semilla del
+// generador con el valor de la clave, srand(k), y se retorna el valor de la
+// i-ésima llamada a rand() como el valor de desplazamiento f^(i)(k).
 template <class Key>
 unsigned EFRedispersion<Key>::operator()(const Key& k, unsigned i) const {
   return df_->operator()(k, i);

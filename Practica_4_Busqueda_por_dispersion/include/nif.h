@@ -19,6 +19,7 @@
 #define NIF_H
 
 #include <iostream>
+#include <ctime>
 
 #include "key.h"
 
@@ -83,6 +84,7 @@ long Nif::operator/(const Nif& other) const {
   return key_ / other.key_;
 }
 
+// Sobrecarga de operador de conversión
 Nif::operator long() {
   return key_;
 }

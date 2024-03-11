@@ -36,10 +36,11 @@
 #include "../include/staticSequence.h"
 
 template <class Key, class Container = StaticSequence<Key>>
-class HashTable {
+class HashTable : public Sequence<Key> {
  public:
   HashTable(int tableSize, DispersionFunction<Key>& fd,
-            ExplorationFunction<Key>& fe, int blockSize);
+            ExplorationFunction<Key>& fe, int blockSize);     // Dispersion cerrada
+  HashTable(unsigned tableSize, DispersionFunction<Key>& fd); // Dispersion abierta
   ~HashTable();
 
   bool search(const Key& k) const;
@@ -67,6 +68,17 @@ HashTable<Key, Container>::HashTable(int tableSize,
   table_ = new Container*[tableSize_];
   for (int i = 0; i < tableSize_; i++) {
     table_[i] = new Container(blockSize_);
+  }
+}
+
+template <class Key, class Container>
+HashTable<Key, Container>::HashTable(unsigned tableSize,
+                                     DispersionFunction<Key>& fd) {
+  tableSize_ = tableSize;
+  fd_ = fd;
+  table_ = new Container*[tableSize_];
+  for (int i = 0; i < tableSize_; i++) {
+    table_[i] = new Container();
   }
 }
 

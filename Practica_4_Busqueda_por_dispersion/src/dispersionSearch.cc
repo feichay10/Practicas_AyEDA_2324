@@ -21,15 +21,8 @@
 #include "../include/key.h"
 #include "../include/nif.h"
 
-typedef Nif KeyType;
-
-// a. -ts <s>, s es el tamaño de la tabla.
-// b. -fd <f>, f es el código que identifica a una función de dispersión.
-// c. -hash <open|close>, indica la técnica de dispersión a utilizar. Implica el tipo de
-// secuencia utilizada para el parámetro Container.
-// d. -bs <s>, s es el tamaño del bloque. Sólo para dispersión cerrada.
-// e. -fe <f>, f es el código que identifica a una función de exploración. Sólo para
-// dispersión cerrada
+typedef Nif nif;
+// typedef Key<long> keyType;
 
 int tableSize = 0;
 std::string df = "module";
@@ -104,13 +97,12 @@ void checkProgramParameters(int argc, char* argv[]) {
   std::cout << "Dispersion technic: " << dispersionTechnic << std::endl;
   std::cout << "Block size: " << blockSize << std::endl;
   std::cout << "Exploration function: " << ef << std::endl;
-
-  makeHashTable(tableSize, df, dispersionTechnic, blockSize, ef);
 }
 
 int main(int argc, char* argv[]) {
   try {
     checkProgramParameters(argc, argv);
+    makeHashTable(tableSize, df, dispersionTechnic, blockSize, ef);
   } catch (std::string& e) {
     std::cerr << kRedBold << "Error: " << e << kReset << std::endl;
     exit(EXIT_FAILURE);

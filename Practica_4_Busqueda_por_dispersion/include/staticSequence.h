@@ -26,6 +26,7 @@ class StaticSequence : public Sequence<Key> {
   StaticSequence();
   StaticSequence(int blockSize);
   ~StaticSequence();
+  
   bool search(const Key& k) const;
   bool insert(const Key& k);
   bool isFull() const;
