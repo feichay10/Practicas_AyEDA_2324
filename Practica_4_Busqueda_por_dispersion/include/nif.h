@@ -18,75 +18,26 @@
 #ifndef NIF_H
 #define NIF_H
 
-#include <iostream>
 #include <ctime>
+#include <iostream>
 
-#include "key.h"
-
-class Nif : public Key<long> {
+class Nif {
  public:
-  Nif();
-  Nif(long nif);
-  ~Nif() = default;
+  Nif() { 
+    srand(time(NULL));
+    nif_ = rand() % 100000000;
+   }
+  Nif(const long nif) { nif_ = nif; }
+  bool operator==(const Nif& other) const { return nif_ == other.nif_; }
+  bool operator!=(const Nif& other) const { return !(*this == other); }
+  operator long() { return nif_; }
+  operator unsigned int() const { return nif_; }
 
-  bool operator<(const Nif& other) const;
-  bool operator>(const Nif& other) const;
-  bool operator<=(const Nif& other) const;
-  bool operator>=(const Nif& other) const;
-  bool operator==(const Nif& other) const;
-  long operator/(const Nif& other) const;
-  friend std::istream& operator>>(std::istream& is, Nif& nif) {
-    is >> nif.key_;
-    return is;
-  }
-
-  friend std::ostream& operator<<(std::ostream& os, const Nif& nif) {
-    os << nif.key_;
-    return os;
-  }
-
-  operator long();
+  unsigned int operator%(unsigned int m) const { return nif_ % m; }
+  long size() const { return 9; }
 
  private:
-  long key_;
+  long nif_;
 };
-
-Nif::Nif() {
-  srand(time(nullptr));
-  key_ = rand() % 100000000; 
-}
-
-Nif::Nif(long nif) {
-  key_ = nif;
-}
-
-bool Nif::operator<(const Nif& other) const {
-  return key_ < other.key_;
-}
-
-bool Nif::operator>(const Nif& other) const {
-  return key_ > other.key_;
-}
-
-bool Nif::operator<=(const Nif& other) const {
-  return key_ <= other.key_;
-}
-
-bool Nif::operator>=(const Nif& other) const {
-  return key_ >= other.key_;
-}
-
-bool Nif::operator==(const Nif& other) const {
-  return key_ == other.key_;
-}
-
-long Nif::operator/(const Nif& other) const {
-  return key_ / other.key_;
-}
-
-// Sobrecarga de operador de conversión
-Nif::operator long() {
-  return key_;
-}
 
 #endif  // NIF_H

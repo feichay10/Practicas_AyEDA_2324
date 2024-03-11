@@ -24,7 +24,7 @@ template <class Key>
 class dfSum : public DispersionFunction<Key> {
  public:
   explicit dfSum(const unsigned tableSize) : tableSize_(tableSize) {}
-  unsigned operator()(const Key& k) const;
+  unsigned operator()(const Key& k) const override;
 
  private:
   unsigned tableSize_; 
@@ -33,11 +33,7 @@ class dfSum : public DispersionFunction<Key> {
 // Basada en la suma, h(k) = sum(k_i) % tableSize
 template <class Key>
 unsigned dfSum<Key>::operator()(const Key& k) const {
-  unsigned sum = 0;
-  for (unsigned i = 0; i < k.size(); i++) {
-    sum += k[i];
-  }
-  return sum % tableSize_;
+  
 }
 
 #endif  // DFSUM_H

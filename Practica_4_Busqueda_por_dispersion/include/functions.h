@@ -34,7 +34,6 @@
 #include "../include/explorationFunction.h"
 #include "../include/functions.h"
 #include "../include/hashTable.h"
-#include "../include/key.h"
 #include "../include/nif.h"
 #include "../include/sequence.h"
 #include "../include/staticSequence.h"
@@ -56,7 +55,7 @@ const std::string kUsage =
     "closed dispersion."
     "\n  -help  Show this message.";
 
-typedef Key<long> keyType;
+typedef Nif keyType;
 
 void makeHashTable(int, std::string, std::string, int, std::string);
 

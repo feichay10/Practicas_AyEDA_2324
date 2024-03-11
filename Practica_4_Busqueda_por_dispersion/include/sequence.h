@@ -18,8 +18,6 @@
 #ifndef SEQUENCE_H
 #define SEQUENCE_H
 
-#include "key.h"
-
 template <class Key>
 class Sequence {
  public:

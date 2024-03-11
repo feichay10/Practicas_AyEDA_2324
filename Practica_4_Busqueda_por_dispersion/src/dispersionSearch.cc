@@ -18,11 +18,9 @@
 #include <iostream>
 
 #include "../include/functions.h"
-#include "../include/key.h"
 #include "../include/nif.h"
 
 typedef Nif nif;
-// typedef Key<long> keyType;
 
 int tableSize = 0;
 std::string df = "module";
@@ -100,11 +98,16 @@ void checkProgramParameters(int argc, char* argv[]) {
 }
 
 int main(int argc, char* argv[]) {
-  try {
-    checkProgramParameters(argc, argv);
-    makeHashTable(tableSize, df, dispersionTechnic, blockSize, ef);
-  } catch (std::string& e) {
-    std::cerr << kRedBold << "Error: " << e << kReset << std::endl;
-    exit(EXIT_FAILURE);
-  }
+  Nif nif;
+
+  std::cout << "NIF: " << nif << std::endl;
+
+
+  // try {
+  //   checkProgramParameters(argc, argv);
+  //   makeHashTable(tableSize, df, dispersionTechnic, blockSize, ef);
+  // } catch (std::string& e) {
+  //   std::cerr << kRedBold << "Error: " << e << kReset << std::endl;
+  //   exit(EXIT_FAILURE);
+  // }
 }

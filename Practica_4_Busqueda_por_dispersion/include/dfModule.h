@@ -24,7 +24,7 @@ template <class Key>
 class dfModule : public DispersionFunction<Key> {
  public:
   explicit dfModule(const unsigned tableSize) : tableSize_(tableSize) {}
-  unsigned operator()(const Key &k) const;
+  unsigned operator()(const Key &k) const override;
 
  private:
   unsigned tableSize_;

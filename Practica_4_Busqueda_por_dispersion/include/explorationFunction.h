@@ -18,8 +18,6 @@
 #ifndef EXPLORATIONFUNCTION_H
 #define EXPLORATIONFUNCTION_H
 
-#include "key.h"
-
 template <class Key>
 class ExplorationFunction {
  public:

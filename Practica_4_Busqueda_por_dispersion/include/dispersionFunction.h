@@ -18,8 +18,6 @@
 #ifndef DISPERSIONFUNCTION_H
 #define DISPERSIONFUNCTION_H
 
-#include "key.h"
-
 template <class Key>
 class DispersionFunction {
  public:
