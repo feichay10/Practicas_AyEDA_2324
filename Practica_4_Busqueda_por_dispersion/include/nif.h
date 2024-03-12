@@ -42,6 +42,16 @@ class Nif {
     return nif_string[i] - '0';
   }
 
+  friend std::ostream& operator<<(std::ostream& os, const Nif& nif) {
+    os << nif.nif_;
+    return os;
+  }
+
+  friend std::istream& operator>>(std::istream& is, Nif& nif) {
+    is >> nif.nif_;
+    return is;
+  }
+
   auto begin() const { return std::to_string(nif_).begin(); }
   auto end() const { return std::to_string(nif_).end(); }
 

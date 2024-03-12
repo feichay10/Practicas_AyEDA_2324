@@ -55,37 +55,38 @@ StaticSequence<Key>::~StaticSequence() {
   delete[] data_;
 }
 
-// template <class Key>
-// bool StaticSequence<Key>::search(const Key& k) const {
-//   for (unsigned i = 0; i < blockSize_; i++) {
-//     if (data_[i] == k) {
-//       return true;
-//     }
-//   }
-//   return false;
-// }
+template <class Key>
+bool StaticSequence<Key>::search(const Key& k) const {
+  for (unsigned i = 0; i < blockSize_; i++) {
+    if (data_[i] == k) {
+      return true;
+    }
+  }
+  return false;
+}
 
-// template <class Key>
-// bool StaticSequence<Key>::insert(const Key& k) {
-//   if (!search(k)) {
-//     for (unsigned i = 0; i < blockSize_; i++) {
-//       if (data_[i] == NULL) {
-//         data_[i] = k;
-//         return true;
-//       }
-//     }
-//   }
-//   return false;
-// }
+template <class Key>
+bool StaticSequence<Key>::insert(const Key& k) {
+  if (search(k)) {
+    return false;
+  }
+  for (unsigned i = 0; i < blockSize_; i++) {
+    if (data_[i] == static_cast<Key>(0)) {
+      data_[i] = k;
+      return true;
+    }
+  }
+  return false;
+}
 
-// template <class Key>
-// bool StaticSequence<Key>::isFull() const {
-//   for (unsigned i = 0; i < blockSize_; i++) {
-//     if (data_[i] == NULL) {
-//       return false;
-//     }
-//   }
-//   return true;
-// }
+template <class Key>
+bool StaticSequence<Key>::isFull() const {
+  for (unsigned i = 0; i < blockSize_; i++) {
+    if (data_[i] == 0) {
+      return false;
+    }
+  }
+  return true;
+}
 
 #endif  // STATICSEQUENCE_H

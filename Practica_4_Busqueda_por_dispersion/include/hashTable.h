@@ -37,8 +37,11 @@
 template <class Key, class Container = StaticSequence<Key>>
 class HashTable {
  public:
-  HashTable(unsigned tableSize, DispersionFunction<Key>& fd, ExplorationFunction<Key>& fe, unsigned blockSize);  // Dispersion cerrada
-  HashTable(unsigned tableSize, DispersionFunction<Key>& fd);  // Dispersion abierta
+  HashTable(unsigned tableSize, DispersionFunction<Key>& fd,
+            ExplorationFunction<Key>& fe,
+            unsigned blockSize);  // Dispersion cerrada
+  HashTable(unsigned tableSize,
+            DispersionFunction<Key>& fd);  // Dispersion abierta
   ~HashTable();
 
   bool search(const Key& k) const;
@@ -47,33 +50,33 @@ class HashTable {
   std::ostream& operator<<(std::ostream& os) const;
 
  private:
+  void createTable();
+
   unsigned tableSize_;
-  Container** table_;
+  Sequence<Key>** table_;
   DispersionFunction<Key>* fd_;
   ExplorationFunction<Key>* fe_;
   unsigned blockSize_;
 };
 
-// template <class Key, class Container>
-// HashTable<Key, Container>::HashTable(unsigned tableSize,
-//                                      DispersionFunction<Key>& fd,
-//                                      ExplorationFunction<Key>& fe,
-//                                      unsigned blockSize)
-//     : tableSize_(tableSize), fd_(fd), fe_(fe), blockSize_(blockSize) {
-//   table_ = new Container*[tableSize_];
-//   for (unsigned i = 0; i < tableSize_; i++) {
-//     table_[i] = new Container(blockSize_);
-//   }
-// }
-
 template <class Key, class Container>
-HashTable<Key, Container>::HashTable(unsigned tableSize, DispersionFunction<Key>& fd) {
+HashTable<Key, Container>::HashTable(unsigned tableSize,
+                                     DispersionFunction<Key>& fd,
+                                     ExplorationFunction<Key>& fe,
+                                     unsigned blockSize) {
   tableSize_ = tableSize;
   fd_ = &fd;
-  table_ = new Container*[tableSize_];
-  for (unsigned i = 0; i < tableSize_; i++) {
-    table_[i] = new Container();
-  }
+  fe_ = &fe;
+  blockSize_ = blockSize;
+  createTable();
+}
+
+template <class Key, class Container>
+HashTable<Key, Container>::HashTable(unsigned tableSize,
+                                     DispersionFunction<Key>& fd) {
+  tableSize_ = tableSize;
+  fd_ = &fd;
+  createTable();
 }
 
 template <class Key, class Container>
@@ -127,6 +130,20 @@ std::ostream& HashTable<Key, Container>::operator<<(std::ostream& os) const {
   }
   os << std::endl;
   return os;
+}
+
+template <class Key, class Container>
+void HashTable<Key, Container>::createTable() {
+  table_ = new Sequence<Key>*[tableSize_];
+  if (typeid(Container) == typeid(StaticSequence<Key>)) {
+    for (unsigned i = 0; i < tableSize_; i++) {
+      table_[i] = new StaticSequence<Key>(blockSize_);
+    }
+  } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
+    for (unsigned i = 0; i < tableSize_; i++) {
+      table_[i] = new DynamicSequence<Key>();
+    }
+  }
 }
 
 #endif  // HASHTABLE_H
