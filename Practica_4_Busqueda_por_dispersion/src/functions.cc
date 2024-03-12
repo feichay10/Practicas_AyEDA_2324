@@ -18,6 +18,80 @@
 
 #include "../include/functions.h"
 
+void checkProgramParameters(int argc, char* argv[]) {
+  if (argc == 2 && std::string(argv[1]) == "-help") {
+    throw kUsage;
+    exit(EXIT_FAILURE);
+  } else if (argc == 1) {
+    throw std::string("No arguments provided. Use ") + argv[0] +
+        " -help for more information.";
+    exit(EXIT_FAILURE);
+  }
+
+  HashTableParameters parameters;
+
+  for (int i = 1; i < argc; i++) {
+    if (std::string(argv[i]) == "-ts") {
+      if (i + 1 < argc) {
+        if (std::stoi(argv[i + 1]) < 1) {
+          throw std::string("Invalid table size. Table size must be greater than 0.");
+          exit(EXIT_FAILURE);
+        } else {
+          parameters.tableSize = std::stoi(argv[i + 1]);
+        }
+      } else {
+        throw std::string("Table size not provided.");
+        exit(EXIT_FAILURE);
+      }
+    } else if (std::string(argv[i]) == "-fd") {
+      if (i + 1 < argc) {
+        if (std::string(argv[i + 1]) != "module" && std::string(argv[i + 1]) != "sum" && std::string(argv[i + 1]) != "random") {
+          throw std::string("Invalid dispersion function. Use random or sum.");
+          exit(EXIT_FAILURE);
+        } else {
+          // df = std::string(argv[i + 1]);
+          parameters.df = std::string(argv[i + 1]);
+        }
+      } else {
+        throw std::string("Dispersion function not provided.");
+        exit(EXIT_FAILURE);
+      }
+    } else if (std::string(argv[i]) == "-hash") {
+      if (i + 1 < argc) {
+        if (std::string(argv[i + 1]) != "open" && std::string(argv[i + 1]) != "close") {
+          throw std::string("Invalid dispersion technic. Use open or closed.");
+          exit(EXIT_FAILURE);
+        } else {
+          // dispersionTechnic = std::string(argv[i + 1]);
+          parameters.dispersionTechnic = std::string(argv[i + 1]);
+        }
+      } else {
+        throw std::string("Dispersion technic not provided.");
+        exit(EXIT_FAILURE);
+      }
+    } else if (std::string (argv[i]) == "-fe") {
+      if (i + 1 < argc) {
+        if (std::string(argv[i + 1]) != "lineal" && std::string(argv[i + 1]) != "quadratic" && std::string(argv[i + 1]) != "double" && std::string(argv[i + 1]) != "redispersion") {
+          throw std::string("Invalid exploration function. Use lineal, quadratic, double or redispersion.");
+          exit(EXIT_FAILURE);
+        } else {
+          // ef = std::string(argv[i + 1]);
+          parameters.ef = std::string(argv[i + 1]);
+        }
+      } else {
+        throw std::string("Exploration function not provided.");
+        exit(EXIT_FAILURE);
+      }
+    }
+  }
+
+  std::cout << "Table size: " << parameters.tableSize << std::endl;
+  std::cout << "Dispersion function: " << parameters.df << std::endl;
+  std::cout << "Dispersion technic: " << parameters.dispersionTechnic << std::endl;
+  std::cout << "Block size: " << parameters.blockSize << std::endl;
+  std::cout << "Exploration function: " << parameters.ef << std::endl;
+}
+
 void makeHashTable(unsigned tableSize, std::string df, std::string dispersionTechnic, unsigned blockSize, std::string ef) {
   DispersionFunction<keyType>* dispersionFunction;
   ExplorationFunction<keyType>* explorationFunction;
@@ -32,6 +106,7 @@ void makeHashTable(unsigned tableSize, std::string df, std::string dispersionTec
 
   if (dispersionTechnic == "open") {
     HashTable<keyType, DynamicSequence<keyType>> hashTable(tableSize, *dispersionFunction);
+    menu(static_cast<HashTable<keyType, DynamicSequence<keyType>>>(hashTable));
   } else if (dispersionTechnic == "close") {
     if (ef == "lineal") {
       explorationFunction = new efLineal<keyType>;
@@ -49,7 +124,8 @@ void makeHashTable(unsigned tableSize, std::string df, std::string dispersionTec
   // delete explorationFunction;
 }
 
-void menuOpen(HashTable<keyType, DynamicSequence<keyType>> hashTable) {
+
+void menu(HashTable<keyType, DynamicSequence<keyType>> hashTable) {
   int option = 0;
   do {
     std::cout << kGreenBold << "1. Insertar" << kReset << std::endl;

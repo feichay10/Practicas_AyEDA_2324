@@ -66,7 +66,16 @@ const std::string kUsage =
 
 using keyType = Nif;
 
+struct HashTableParameters {
+  unsigned tableSize = 0;
+  std::string df = "module";
+  std::string dispersionTechnic = "open";
+  unsigned blockSize = 0;
+  std::string ef = "lineal";
+};
+
+void checkProgramParameters(int, char*[]);
 void makeHashTable(unsigned, std::string, std::string, unsigned, std::string);
-void menuOpen(HashTable<keyType, DynamicSequence<keyType>>&);
+void menu(HashTable<keyType, DynamicSequence<keyType>>&);
 
 #endif  // FUNCTIONS_H_
