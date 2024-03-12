@@ -19,24 +19,19 @@
 #include "../include/functions.h"
 
 void makeHashTable(unsigned tableSize, std::string df, std::string dispersionTechnic, unsigned blockSize, std::string ef) {
-  // DispersionFunction<keyType> dispersionFunction;
+  DispersionFunction<keyType>* dispersionFunction;
   ExplorationFunction<keyType>* explorationFunction;
-  Sequence<keyType>* sequence;
-  HashTable<keyType, Sequence<keyType>>* hashTable;
 
   if (df == "module") {
-    // dispersionFunction = new dfModule<keyType>(tableSize);
-    dfModule<keyType> dispersionFunction(tableSize);
+    dispersionFunction = new dfModule<keyType>(tableSize); 
   } else if (df == "random") {
-    // dispersionFunction = new dfRandom<keyType>(tableSize);
-    dfRandom<keyType> dispersionFunction(tableSize);
+    dispersionFunction = new dfRandom<keyType>(tableSize);
   } else if (df == "sum") {
-    // dispersionFunction = new dfSum<keyType>(tableSize);
-    dfSum<keyType> dispersionFunction(tableSize);
+    dispersionFunction = new dfSum<keyType>(tableSize);
   }
 
   if (dispersionTechnic == "open") {
-    // hashTable = new HashTable<keyType, Sequence<keyType>>(tableSize, *dispersionFunction);
+    HashTable<keyType, DynamicSequence<keyType>>* hashTable = new HashTable<keyType, DynamicSequence<keyType>>(tableSize, *dispersionFunction);
   } else if (dispersionTechnic == "close") {
     if (ef == "lineal") {
       explorationFunction = new efLineal<keyType>;
