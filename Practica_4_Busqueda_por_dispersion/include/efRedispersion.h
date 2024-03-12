@@ -32,14 +32,13 @@ class efRedispersion : public ExplorationFunction<Key> {
   DispersionFunction<Key>* df_;
 };
 
-// Redispersión, g(k,i) = f^(i)(k)
-// La implementación de la estrategia de exploración por redispersión se utiliza
-// el generador de números pseudo-aleatorios. Se inicializa la semilla del
-// generador con el valor de la clave, srand(k), y se retorna el valor de la
-// i-ésima llamada a rand() como el valor de desplazamiento f^(i)(k).
 template <class Key>
 unsigned efRedispersion<Key>::operator()(const Key& k, unsigned i) const {
-  return df_->operator()(k, i);
+  srand(k);
+  for (unsigned j = 0; j < i; j++) {
+    rand();
+  }
+  return rand();
 }
 
 #endif  // EFREDISPERSION_H

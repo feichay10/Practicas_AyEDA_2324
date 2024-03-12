@@ -21,21 +21,23 @@
 #include "dispersionFunction.h"
 #include "explorationFunction.h"
 
-template <class Key>
+//  la implementación de la función de exploración por dispersión doble, la función
+// de dispersión auxiliar f(k) se pasa por parámetro al constructor de la clase derivada
+template<class Key>
 class efDoubleDispersion : public ExplorationFunction<Key> {
  public:
   efDoubleDispersion() {}
-  efDoubleDispersion(DispersionFunction<Key> *f) : df_(f) {}
-  unsigned operator()(const Key &k, unsigned i) const override;
+  efDoubleDispersion(DispersionFunction<Key>* f) : df_(f) {}
+  unsigned operator()(const Key& k, unsigned i) const override;
 
  private:
-  DispersionFunction<Key> *df_;
+  DispersionFunction<Key>* df_;
 };
 
-// Doble dispersión, g(k,i) = f(k) * i
-template <class Key>
-unsigned efDoubleDispersion<Key>::operator()(const Key &k, unsigned i) const {
-  return df_->operator()(k) * i;
+//  g(k,i) = f(k) + i 
+template<class Key>
+unsigned efDoubleDispersion<Key>::operator()(const Key& k, unsigned i) const {
+  return df_->operator()(k) + i;
 }
 
 #endif  // EFDOUBLEDISPERSION_H
