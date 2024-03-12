@@ -42,6 +42,47 @@ void makeHashTable(unsigned tableSize, std::string df, std::string dispersionTec
     } else if (ef == "redispersion") {
       explorationFunction = new efRedispersion<keyType>;
     }
-    // hashTable = new HashTable<keyType, Sequence<keyType>>(tableSize, *dispersionFunction, *explorationFunction, blockSize);
+    HashTable<keyType, StaticSequence<keyType>> hashTable(tableSize, *dispersionFunction, *explorationFunction, blockSize);
   }
+
+  // delete dispersionFunction;
+  // delete explorationFunction;
+}
+
+void menuOpen(HashTable<keyType, DynamicSequence<keyType>> hashTable) {
+  int option = 0;
+  do {
+    std::cout << kGreenBold << "1. Insertar" << kReset << std::endl;
+    std::cout << kGreenBold << "2. Buscar" << kReset << std::endl;
+    std::cout << kGreenBold << "3. Salir" << kReset << std::endl;
+    std::cout << kBold << "Opción: " << kReset;
+    std::cin >> option;
+    
+    switch (option) {
+      case 1: {
+        keyType key;
+        std::cout << kBold << "Introduce la clave a insertar: " << kReset;
+        std::cin >> key;
+        hashTable.insert(key);
+        break;
+      }
+      case 2: {
+        keyType key;
+        std::cout << kBold << "Introduce la clave a buscar: " << kReset;
+        std::cin >> key;
+        if (hashTable.search(key)) {
+          std::cout << kGreenBold << "Clave encontrada" << kReset << std::endl;
+        } else {
+          std::cout << kRedBold << "Clave no encontrada" << kReset << std::endl;
+        }
+        break;
+      }
+      case 3:
+        std::cout << kBold << "Saliendo..." << kReset << std::endl;
+        exit(EXIT_SUCCESS);
+      default:
+        std::cout << kRedBold << "Opción no válida" << kReset << std::endl;
+        break;
+    }
+  } while (option != 3);
 }
