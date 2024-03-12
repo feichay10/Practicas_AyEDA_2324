@@ -34,7 +34,17 @@ class Nif {
   operator unsigned int() const { return nif_; }
 
   unsigned int operator%(unsigned int m) const { return nif_ % m; }
-  long size() const { return 9; }
+  // operator[]
+  unsigned operator[](unsigned i) const {
+    std::string nif_string = std::to_string(nif_);
+    if (i >= nif_string.size()) {
+      return 0;
+    }
+    return nif_string[i] - '0';
+  }
+
+  auto begin() const { return std::to_string(nif_).begin(); }
+  auto end() const { return std::to_string(nif_).end(); }
 
  private:
   long nif_;

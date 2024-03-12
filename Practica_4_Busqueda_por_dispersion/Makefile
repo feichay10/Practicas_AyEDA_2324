@@ -2,7 +2,7 @@ CXX		 := g++
 CXXFLAGS=-g -std=c++14 #-fsanitize=address #-Wall #-Wextra
 
 BIN     := bin
-SRC     := src
+SRC     := test
 BUILD	:= build
 INCLUDE := include
 LIB     := lib

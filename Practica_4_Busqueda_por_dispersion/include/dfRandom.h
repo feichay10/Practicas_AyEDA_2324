@@ -37,7 +37,7 @@ class dfRandom : public DispersionFunction<Key> {
 // Basada en pseudoaleatorios, h(k) = {srand(k); rand()}
 template <class Key>
 unsigned dfRandom<Key>::operator()(const Key& k) const {
-  srand(static_cast<unsigned>(k));
+  srand(k);
   return rand() % tableSize_;
 }
 

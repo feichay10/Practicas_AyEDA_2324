@@ -34,8 +34,14 @@ class dfSum : public DispersionFunction<Key> {
 template <class Key>
 unsigned dfSum<Key>::operator()(const Key& k) const {
   unsigned sum = 0;
-  for (int i = 0; i < k.size(); i++) {
-    sum += k % 10;
+  unsigned count = 0;
+  // Itera sobre los dígitos del NIF para obtener el número de dígitos
+  for (auto i : k) { 
+    count++;
+  }
+  // Itera sobre los dígitos del NIF para sumarlos
+  for (unsigned i = 0; i < count; i++) { 
+    sum += k[i];
   }
   return sum % tableSize_;
 }

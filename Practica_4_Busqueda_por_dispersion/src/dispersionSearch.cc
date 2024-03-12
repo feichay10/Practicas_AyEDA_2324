@@ -100,7 +100,8 @@ void checkProgramParameters(int argc, char* argv[]) {
 int main(int argc, char* argv[]) {
   Nif nif;
 
-  std::cout << "NIF: " << nif << std::endl;
+
+  // std::cout << "NIF: " << nif << std::endl;
 
 
   // try {
