@@ -20,11 +20,16 @@
 
 #include "sequence.h"
 
+/**
+ * @brief Clase para implementar la técnica dispersion cerrada
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class StaticSequence : public Sequence<Key> {
  public:
   StaticSequence();
-  StaticSequence(int blockSize);
+  StaticSequence(unsigned blockSize);
   ~StaticSequence();
   
   bool search(const Key& k) const;
@@ -33,14 +38,14 @@ class StaticSequence : public Sequence<Key> {
 
  private:
   Key* data_;
-  int blockSize_;
+  unsigned blockSize_;
 };
 
 template <class Key>
 StaticSequence<Key>::StaticSequence() {}
 
 template <class Key>
-StaticSequence<Key>::StaticSequence(int blockSize) {
+StaticSequence<Key>::StaticSequence(unsigned blockSize) {
   data_ = new Key[blockSize_];
   blockSize_ = blockSize;
 }
@@ -50,37 +55,37 @@ StaticSequence<Key>::~StaticSequence() {
   delete[] data_;
 }
 
-template <class Key>
-bool StaticSequence<Key>::search(const Key& k) const {
-  for (int i = 0; i < blockSize_; i++) {
-    if (data_[i] == k) {
-      return true;
-    }
-  }
-  return false;
-}
+// template <class Key>
+// bool StaticSequence<Key>::search(const Key& k) const {
+//   for (unsigned i = 0; i < blockSize_; i++) {
+//     if (data_[i] == k) {
+//       return true;
+//     }
+//   }
+//   return false;
+// }
 
-template <class Key>
-bool StaticSequence<Key>::insert(const Key& k) {
-  // if (!search(k)) {
-  //   for (int i = 0; i < blockSize_; i++) {
-  //     if (data_[i] == NULL) {
-  //       data_[i] = k;
-  //       return true;
-  //     }
-  //   }
-  // }
-  // return false;
-}
+// template <class Key>
+// bool StaticSequence<Key>::insert(const Key& k) {
+//   if (!search(k)) {
+//     for (unsigned i = 0; i < blockSize_; i++) {
+//       if (data_[i] == NULL) {
+//         data_[i] = k;
+//         return true;
+//       }
+//     }
+//   }
+//   return false;
+// }
 
-template <class Key>
-bool StaticSequence<Key>::isFull() const {
-  // for (int i = 0; i < blockSize_; i++) {
-  //   if (data_[i] == NULL) {
-  //     return false;
-  //   }
-  // }
-  // return true;
-}
+// template <class Key>
+// bool StaticSequence<Key>::isFull() const {
+//   for (unsigned i = 0; i < blockSize_; i++) {
+//     if (data_[i] == NULL) {
+//       return false;
+//     }
+//   }
+//   return true;
+// }
 
 #endif  // STATICSEQUENCE_H

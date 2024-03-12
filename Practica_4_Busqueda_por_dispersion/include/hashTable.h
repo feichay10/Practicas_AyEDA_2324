@@ -38,8 +38,10 @@ template <class Key, class Container = StaticSequence<Key>>
 class HashTable : public Sequence<Key> {
  public:
   HashTable(unsigned tableSize, DispersionFunction<Key>& fd,
-            ExplorationFunction<Key>& fe, unsigned blockSize);     // Dispersion cerrada
-  HashTable(unsigned tableSize, DispersionFunction<Key>& fd); // Dispersion abierta
+            ExplorationFunction<Key>& fe,
+            unsigned blockSize);  // Dispersion cerrada
+  HashTable(unsigned tableSize,
+            DispersionFunction<Key>& fd);  // Dispersion abierta
   ~HashTable();
 
   bool search(const Key& k) const;
@@ -55,24 +57,20 @@ class HashTable : public Sequence<Key> {
   unsigned blockSize_;
 };
 
-template <class Key, class Container>
-HashTable<Key, Container>::HashTable(unsigned tableSize,
-                                     DispersionFunction<Key>& fd,
-                                     ExplorationFunction<Key>& fe,
-                                     unsigned blockSize) {
-  tableSize_ = tableSize;
-  fd_ = fd;
-  fe_ = fe;
-  blockSize_ = blockSize;
-  table_ = new Container*[tableSize_];
-  for (unsigned i = 0; i < tableSize_; i++) {
-    table_[i] = new Container(blockSize_);
-  }
-}
+// template <class Key, class Container>
+// HashTable<Key, Container>::HashTable(unsigned tableSize,
+//                                      DispersionFunction<Key>& fd,
+//                                      ExplorationFunction<Key>& fe,
+//                                      unsigned blockSize)
+//     : tableSize_(tableSize), fd_(fd), fe_(fe), blockSize_(blockSize) {
+//   table_ = new Container*[tableSize_];
+//   for (unsigned i = 0; i < tableSize_; i++) {
+//     table_[i] = new Container(blockSize_);
+//   }
+// }
 
 template <class Key, class Container>
-HashTable<Key, Container>::HashTable(unsigned tableSize,
-                                     DispersionFunction<Key>& fd) {
+HashTable<Key, Container>::HashTable(unsigned tableSize, DispersionFunction<Key>& fd) {
   tableSize_ = tableSize;
   fd_ = fd;
   table_ = new Container*[tableSize_];
@@ -89,34 +87,34 @@ HashTable<Key, Container>::~HashTable() {
   delete[] table_;
 }
 
-template <class Key, class Container>
-bool HashTable<Key, Container>::search(const Key& k) const {
-  unsigned index = fd_(k, tableSize_);
-  unsigned i = 0;
-  while (i < tableSize_ && !table_[index]->empty()) {
-    if (table_[index]->search(k)) {
-      return true;
-    }
-    index = (index + fe_(k, i, tableSize_)) % tableSize_;
-    i++;
-  }
-  return false;
-}
+// template <class Key, class Container>
+// bool HashTable<Key, Container>::search(const Key& k) const {
+//   unsigned index = fd_(k, tableSize_);
+//   unsigned i = 0;
+//   while (i < tableSize_ && !table_[index]->empty()) {
+//     if (table_[index]->search(k)) {
+//       return true;
+//     }
+//     index = (index + fe_(k, i, tableSize_)) % tableSize_;
+//     i++;
+//   }
+//   return false;
+// }
 
-template <class Key, class Container>
-bool HashTable<Key, Container>::insert(const Key& k) {
-  unsigned index = fd_(k, tableSize_);
-  unsigned i = 0;
-  while (i < tableSize_ && !table_[index]->empty()) {
-    index = (index + fe_(k, i, tableSize_)) % tableSize_;
-    i++;
-  }
-  if (i < tableSize_) {
-    table_[index]->insert(k);
-    return true;
-  }
-  return false;
-}
+// template <class Key, class Container>
+// bool HashTable<Key, Container>::insert(const Key& k) {
+//   unsigned index = fd_(k, tableSize_);
+//   unsigned i = 0;
+//   while (i < tableSize_ && !table_[index]->empty()) {
+//     index = (index + fe_(k, i, tableSize_)) % tableSize_;
+//     i++;
+//   }
+//   if (i < tableSize_) {
+//     table_[index]->insert(k);
+//     return true;
+//   }
+//   return false;
+// }
 
 // Prunsigned the hash table as:
 // 0 | 1 | 2 | 3 | 4 | 5 | ... | tableSize-1  -> Position

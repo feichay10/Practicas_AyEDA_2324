@@ -23,10 +23,10 @@
 
 class Nif {
  public:
-  Nif() { 
+  Nif() {
     srand(time(NULL));
     nif_ = rand() % 100000000;
-   }
+  }
   Nif(const long nif) { nif_ = nif; }
   bool operator==(const Nif& other) const { return nif_ == other.nif_; }
   bool operator!=(const Nif& other) const { return !(*this == other); }

@@ -57,6 +57,6 @@ const std::string kUsage =
 
 typedef Nif keyType;
 
-void makeHashTable(int, std::string, std::string, int, std::string);
+void makeHashTable(unsigned, std::string, std::string, unsigned, std::string);
 
 #endif  // FUNCTIONS_H_

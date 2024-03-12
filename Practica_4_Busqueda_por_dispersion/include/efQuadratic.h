@@ -21,13 +21,13 @@
 #include "explorationFunction.h"
 
 template <class Key>
-class EFQuadratic : public ExplorationFunction<Key> {
+class efQuadratic : public ExplorationFunction<Key> {
  public:
   unsigned operator()(const Key& k, unsigned i) const;
 };
 
 template <class Key>
-unsigned EFQuadratic<Key>::operator()(const Key& k, unsigned i) const {
+unsigned efQuadratic<Key>::operator()(const Key& k, unsigned i) const {
   return i * i;
 }
 

@@ -21,13 +21,13 @@
 #include "explorationFunction.h"
 
 template <class Key>
-class EFLineal : public ExplorationFunction<Key> {
+class efLineal : public ExplorationFunction<Key> {
  public:
   unsigned operator()(const Key& k, unsigned i) const;
 };
 
 template <class Key>
-unsigned EFLineal<Key>::operator()(const Key& k, unsigned i) const {
+unsigned efLineal<Key>::operator()(const Key& k, unsigned i) const {
   return i;
 }
 

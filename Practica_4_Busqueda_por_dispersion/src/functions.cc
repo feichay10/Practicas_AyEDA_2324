@@ -18,23 +18,35 @@
 
 #include "../include/functions.h"
 
-void makeHashTable(int tableSize, std::string df, std::string dispersionTechnic, int blockSize, std::string ef) {
-  DispersionFunction<keyType>* dispersionFunction;
+void makeHashTable(unsigned tableSize, std::string df, std::string dispersionTechnic, unsigned blockSize, std::string ef) {
+  // DispersionFunction<keyType> dispersionFunction;
   ExplorationFunction<keyType>* explorationFunction;
   Sequence<keyType>* sequence;
+  HashTable<keyType, Sequence<keyType>>* hashTable;
 
   if (df == "module") {
-    dispersionFunction = new dfModule<keyType>(tableSize);
+    // dispersionFunction = new dfModule<keyType>(tableSize);
+    dfModule<keyType> dispersionFunction(tableSize);
   } else if (df == "random") {
-    dispersionFunction = new dfRandom<keyType>(tableSize);
+    // dispersionFunction = new dfRandom<keyType>(tableSize);
+    dfRandom<keyType> dispersionFunction(tableSize);
   } else if (df == "sum") {
-    dispersionFunction = new dfSum<keyType>(tableSize);
+    // dispersionFunction = new dfSum<keyType>(tableSize);
+    dfSum<keyType> dispersionFunction(tableSize);
   }
 
   if (dispersionTechnic == "open") {
-    sequence = new DynamicSequence<keyType>();
-    // HashTable<keyType, DynamicSequence<keyType>> hashTable(tableSize, *dispersionFunction, *explorationFunction, blockSize);
+    // hashTable = new HashTable<keyType, Sequence<keyType>>(tableSize, *dispersionFunction);
   } else if (dispersionTechnic == "close") {
-    sequence = new StaticSequence<keyType>(blockSize);
+    if (ef == "lineal") {
+      explorationFunction = new efLineal<keyType>;
+    } else if (ef == "double") {
+      explorationFunction = new efDoubleDispersion<keyType>;
+    } else if (ef == "quadratic") {
+      explorationFunction = new efQuadratic<keyType>;
+    } else if (ef == "redispersion") {
+      explorationFunction = new efRedispersion<keyType>;
+    }
+    // hashTable = new HashTable<keyType, Sequence<keyType>>(tableSize, *dispersionFunction, *explorationFunction, blockSize);
   }
 }

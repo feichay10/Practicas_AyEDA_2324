@@ -22,10 +22,10 @@
 #include "explorationFunction.h"
 
 template <class Key>
-class EFDoubleDispersion : public ExplorationFunction<Key> {
+class efDoubleDispersion : public ExplorationFunction<Key> {
  public:
-  EFDoubleDispersion() {}
-  EFDoubleDispersion(DispersionFunction<Key> *f) : df_(f) {}
+  efDoubleDispersion() {}
+  efDoubleDispersion(DispersionFunction<Key> *f) : df_(f) {}
   unsigned operator()(const Key &k, unsigned i) const;
 
  private:
@@ -34,7 +34,7 @@ class EFDoubleDispersion : public ExplorationFunction<Key> {
 
 // Doble dispersión, g(k,i) = f(k) * i
 template <class Key>
-unsigned EFDoubleDispersion<Key>::operator()(const Key &k, unsigned i) const {
+unsigned efDoubleDispersion<Key>::operator()(const Key &k, unsigned i) const {
   return df_->operator()(k) * i;
 }
 

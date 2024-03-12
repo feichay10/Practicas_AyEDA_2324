@@ -33,7 +33,11 @@ class dfSum : public DispersionFunction<Key> {
 // Basada en la suma, h(k) = sum(k_i) % tableSize
 template <class Key>
 unsigned dfSum<Key>::operator()(const Key& k) const {
-  
+  unsigned sum = 0;
+  for (int i = 0; i < k.size(); i++) {
+    sum += k % 10;
+  }
+  return sum % tableSize_;
 }
 
 #endif  // DFSUM_H

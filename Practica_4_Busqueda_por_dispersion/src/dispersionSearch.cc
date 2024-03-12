@@ -22,10 +22,10 @@
 
 typedef Nif nif;
 
-int tableSize = 0;
+unsigned tableSize = 0;
 std::string df = "module";
 std::string dispersionTechnic = "open";
-int blockSize = 0;
+unsigned blockSize = 0;
 std::string ef = "lineal";
 
 void checkProgramParameters(int argc, char* argv[]) {

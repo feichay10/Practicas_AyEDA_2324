@@ -20,6 +20,11 @@
 
 #include "sequence.h"
 
+/**
+ * @brief Clase para implementar la técnica dispersion abierta
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class DynamicSequence : public Sequence<Key> {
  public:
@@ -44,28 +49,28 @@ DynamicSequence<Key>::~DynamicSequence() {
   delete[] data_;
 }
 
-template <class Key>
-bool DynamicSequence<Key>::search(const Key& k) const {
-  for (int i = 0; i < size_; i++) {
-    if (data_[i] == k) {
-      return true;
-    }
-  }
-  return false;
-}
+// template <class Key>
+// bool DynamicSequence<Key>::search(const Key& k) const {
+//   for (int i = 0; i < size_; i++) {
+//     if (data_[i] == k) {
+//       return true;
+//     }
+//   }
+//   return false;
+// }
 
-template <class Key>
-bool DynamicSequence<Key>::insert(const Key& k) {
-  // if (!search(k)) {
-  //   size_++;
-  //   for (int i = 0; i < size_; i++) {
-  //     if (data_[i] == NULL) {
-  //       data_[i] = k;
-  //       return true;
-  //     }
-  //   }
-  // }
-  // return false;
-}
+// template <class Key>
+// bool DynamicSequence<Key>::insert(const Key& k) {
+//   if (!search(k)) {
+//     size_++;
+//     for (int i = 0; i < size_; i++) {
+//       if (data_[i] == NULL) {
+//         data_[i] = k;
+//         return true;
+//       }
+//     }
+//   }
+//   return false;
+// }
 
 #endif // DYNAMICSEQUENCE_H

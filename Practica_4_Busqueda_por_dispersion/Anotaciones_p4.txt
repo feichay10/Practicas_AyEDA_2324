@@ -3,3 +3,13 @@ Practica 04 - Búsqueda por dispersión
 - La tabla hash tendra objetos de tipo NIF
 - Sequence dynamic -> no num blocK ni funcion de exploracion
 - Los metodos de Sequence los podemos heredar para HashTable
+
+DUDAS:
+
+Si nosotros tenemos que crear un puntero a una instancia de la clase, por ejemplo DispersionFunction<Key>, lo tendriamos
+que hacer con una declaracion de un puntero a esta clase. Mi duda es, ¿si tenemos que crear un puntero no habría que pasar
+por parametros al constructor de la clase HashTable un puntero y no una referencia?
+
+Nosotros para crear un objeto de las clases genericas, ya sea DispersionFunction<Key> o ExplorationFunction<Key> habria que hacerlo
+creando un puntero a un instancia de estas clases entiendo yo. La cosa es que si hay que hacer esto ultimo no entiendo porque a los
+constructores de la clase HashTable tienen como parametro un referencia a estas clases.
