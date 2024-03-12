@@ -61,16 +61,18 @@ bool DynamicSequence<Key>::search(const Key& k) const {
 
 template <class Key>
 bool DynamicSequence<Key>::insert(const Key& k) {
-  if (!search(k)) {
-    size_++;
-    for (int i = 0; i < size_; i++) {
-      if (data_[i] == NULL) {
-        data_[i] = k;
-        return true;
-      }
-    }
+  if (search(k)) {
+    return false;
   }
-  return false;
+  Key* temp = new Key[size_ + 1];
+  for (int i = 0; i < size_; i++) {
+    temp[i] = data_[i];
+  }
+  temp[size_] = k;
+  delete[] data_;
+  data_ = temp;
+  size_++;
+  return true;
 }
 
 #endif // DYNAMICSEQUENCE_H

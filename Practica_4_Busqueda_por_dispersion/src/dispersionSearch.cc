@@ -98,17 +98,10 @@ void checkProgramParameters(int argc, char* argv[]) {
 }
 
 int main(int argc, char* argv[]) {
-  Nif nif;
-
-
-  // std::cout << "NIF: " << nif << std::endl;
-
-
-  // try {
-  //   checkProgramParameters(argc, argv);
-  //   makeHashTable(tableSize, df, dispersionTechnic, blockSize, ef);
-  // } catch (std::string& e) {
-  //   std::cerr << kRedBold << "Error: " << e << kReset << std::endl;
-  //   exit(EXIT_FAILURE);
-  // }
+  try {
+    checkProgramParameters(argc, argv);
+    makeHashTable(tableSize, df, dispersionTechnic, blockSize, ef);
+  } catch (std::string message) {
+    std::cerr << message << std::endl;
+  }
 }
