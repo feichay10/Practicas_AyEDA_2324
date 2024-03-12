@@ -23,7 +23,7 @@
 template <class Key>
 class efQuadratic : public ExplorationFunction<Key> {
  public:
-  unsigned operator()(const Key& k, unsigned i) const;
+  unsigned operator()(const Key& k, unsigned i) const override;
 };
 
 template <class Key>

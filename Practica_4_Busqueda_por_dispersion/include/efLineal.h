@@ -23,7 +23,7 @@
 template <class Key>
 class efLineal : public ExplorationFunction<Key> {
  public:
-  unsigned operator()(const Key& k, unsigned i) const;
+  unsigned operator()(const Key& k, unsigned i) const override;
 };
 
 template <class Key>

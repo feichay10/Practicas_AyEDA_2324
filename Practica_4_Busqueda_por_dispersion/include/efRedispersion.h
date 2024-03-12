@@ -26,7 +26,7 @@ class efRedispersion : public ExplorationFunction<Key> {
  public:
   efRedispersion() {}
   efRedispersion(DispersionFunction<Key>* f) : df_(f) {}
-  unsigned operator()(const Key& k, unsigned i) const;
+  unsigned operator()(const Key& k, unsigned i) const override;
 
  private:
   DispersionFunction<Key>* df_;
