@@ -34,13 +34,13 @@ void makeHashTable(unsigned tableSize, std::string df, std::string dispersionTec
     HashTable<keyType, DynamicSequence<keyType>> hashTable(tableSize, *dispersionFunction);
   } else if (dispersionTechnic == "close") {
     if (ef == "lineal") {
-      
+      explorationFunction = new efLineal<keyType>;
     } else if (ef == "double") {
-      
+      explorationFunction = new efDoubleDispersion<keyType>;
     } else if (ef == "quadratic") {
-      
+      explorationFunction = new efQuadratic<keyType>;
     } else if (ef == "redispersion") {
-      
+      explorationFunction = new efRedispersion<keyType>;
     }
     // hashTable = new HashTable<keyType, Sequence<keyType>>(tableSize, *dispersionFunction, *explorationFunction, blockSize);
   }
