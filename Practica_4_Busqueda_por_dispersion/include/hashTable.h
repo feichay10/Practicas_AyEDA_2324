@@ -49,8 +49,8 @@ class HashTable {
  private:
   unsigned tableSize_;
   Container** table_;
-  DispersionFunction<Key>& fd_;
-  ExplorationFunction<Key>& fe_;
+  DispersionFunction<Key>* fd_;
+  ExplorationFunction<Key>* fe_;
   unsigned blockSize_;
 };
 
@@ -69,7 +69,7 @@ class HashTable {
 template <class Key, class Container>
 HashTable<Key, Container>::HashTable(unsigned tableSize, DispersionFunction<Key>& fd) {
   tableSize_ = tableSize;
-  fd_ = fd;
+  fd_ = &fd;
   table_ = new Container*[tableSize_];
   for (unsigned i = 0; i < tableSize_; i++) {
     table_[i] = new Container();

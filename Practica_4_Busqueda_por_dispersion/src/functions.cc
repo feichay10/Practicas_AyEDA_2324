@@ -21,26 +21,26 @@
 void makeHashTable(unsigned tableSize, std::string df, std::string dispersionTechnic, unsigned blockSize, std::string ef) {
   DispersionFunction<keyType>* dispersionFunction;
   ExplorationFunction<keyType>* explorationFunction;
-
+  
   if (df == "module") {
-    dispersionFunction = new dfModule<keyType>(tableSize); 
-  } else if (df == "random") {
-    dispersionFunction = new dfRandom<keyType>(tableSize);
+    dispersionFunction = new dfModule<keyType>(tableSize);
   } else if (df == "sum") {
     dispersionFunction = new dfSum<keyType>(tableSize);
+  } else if (df == "random") {
+    dispersionFunction = new dfRandom<keyType>(tableSize);
   }
 
   if (dispersionTechnic == "open") {
-    HashTable<keyType, DynamicSequence<keyType>>* hashTable = new HashTable<keyType, DynamicSequence<keyType>>(tableSize, *dispersionFunction);
+    HashTable<keyType, DynamicSequence<keyType>> hashTable(tableSize, *dispersionFunction);
   } else if (dispersionTechnic == "close") {
     if (ef == "lineal") {
-      explorationFunction = new efLineal<keyType>;
+      
     } else if (ef == "double") {
-      explorationFunction = new efDoubleDispersion<keyType>;
+      
     } else if (ef == "quadratic") {
-      explorationFunction = new efQuadratic<keyType>;
+      
     } else if (ef == "redispersion") {
-      explorationFunction = new efRedispersion<keyType>;
+      
     }
     // hashTable = new HashTable<keyType, Sequence<keyType>>(tableSize, *dispersionFunction, *explorationFunction, blockSize);
   }

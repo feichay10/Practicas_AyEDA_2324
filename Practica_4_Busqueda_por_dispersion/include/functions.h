@@ -55,7 +55,7 @@ const std::string kUsage =
     "closed dispersion."
     "\n  -help  Show this message.";
 
-typedef Nif keyType;
+using keyType = Nif;
 
 void makeHashTable(unsigned, std::string, std::string, unsigned, std::string);
 

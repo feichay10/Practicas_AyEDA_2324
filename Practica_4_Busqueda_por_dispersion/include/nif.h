@@ -28,13 +28,12 @@ class Nif {
     nif_ = rand() % 100000000;
   }
   Nif(const long nif) { nif_ = nif; }
+  
   bool operator==(const Nif& other) const { return nif_ == other.nif_; }
   bool operator!=(const Nif& other) const { return !(*this == other); }
   operator long() { return nif_; }
   operator unsigned int() const { return nif_; }
-
   unsigned int operator%(unsigned int m) const { return nif_ % m; }
-  // operator[]
   unsigned operator[](unsigned i) const {
     std::string nif_string = std::to_string(nif_);
     if (i >= nif_string.size()) {
