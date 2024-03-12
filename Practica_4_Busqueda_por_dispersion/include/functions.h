@@ -43,17 +43,26 @@ const std::string kGreenBold = "\033[1;32m";
 const std::string kBold = "\033[1m";
 const std::string kReset = "\033[0m";
 
-const std::string kUsage =
-    "Usage: ./dispersionSearch -ts <s> -fd <f> -hash <open|close> -bs <s> -fe "
-    "<f>"
-    "\n\nOptions:"
-    "\n  -ts <s>  Size of the table."
-    "\n  -fd <f>  Code that identifies a dispersion function."
-    "\n  -hash <open|close>  Indicates the dispersion technique to use."
-    "\n  -bs <s>  Size of the block. Only for closed dispersion."
-    "\n  -fe <f>  Code that identifies an exploration function. Only for "
-    "closed dispersion."
-    "\n  -help  Show this message.";
+const std::string kUsage = 
+    kBold + "NOMBRE\n" + kReset +
+    "       dispersionSearch - Dispersed Search\n\n" + 
+    kBold + "SINOPSIS\n" + kReset + 
+    "       ./dispersionSearch -ts <s> -fd <f> -hash <open|close> -bs <s> -fe <f>\n\n" +
+    kBold + "DESCRIPCIÓN\n" + kReset +
+    "       Program that performs a dispersed search in a hash table.\n\n" +
+    kBold + "OPCIONES" + kReset +
+    kBold + "\n\t  -ts <s>" + kReset + 
+    "\n\t\tSize of the table.\n" +
+    kBold + "\n\t  -fd <f>, f = module|sum|random" + kReset +
+    "\n\t\tCode that identifies a dispersion function.\n" +
+    kBold + "\n\t  -hash <open|close>" + kReset + 
+    "\n\t\tIndicates the dispersion technique to use.\n" +
+    kBold + "\n\t  -bs <s>" + kReset +   
+    "\n\t\tSize of the block. Only for closed dispersion.\n" +
+    kBold + "\n\t  -fe <f>, f = lineal|quadratic|double|redispersion" + kReset +
+    "\n\t\tCode that identifies an exploration function. Only for closed dispersion.\n" +
+    kBold + "\n\t  -help" + kReset + 
+    "\n\t\tShow this message.";
 
 using keyType = Nif;
 
