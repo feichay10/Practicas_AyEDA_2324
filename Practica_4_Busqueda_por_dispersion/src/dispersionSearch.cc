@@ -20,6 +20,7 @@
 #include "../include/functions.h"
 
 //TODO: Fix print() on staticSequence
+//TODO: Do the search function on all the classes
 
 int main(int argc, char* argv[]) {
   HashTableParameters parameters;
