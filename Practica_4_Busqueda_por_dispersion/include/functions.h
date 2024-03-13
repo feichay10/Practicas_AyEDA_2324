@@ -32,7 +32,6 @@
 #include "../include/efQuadratic.h"
 #include "../include/efRedispersion.h"
 #include "../include/explorationFunction.h"
-#include "../include/functions.h"
 #include "../include/hashTable.h"
 #include "../include/nif.h"
 #include "../include/sequence.h"
@@ -74,8 +73,8 @@ struct HashTableParameters {
   std::string ef = "lineal";
 };
 
-void checkProgramParameters(int, char*[]);
-void makeHashTable(unsigned, std::string, std::string, unsigned, std::string);
+HashTableParameters checkProgramParameters(int, char*[], HashTableParameters&);
+void makeHashTable(HashTableParameters&);
 void menu(HashTable<keyType, DynamicSequence<keyType>>&);
 
 #endif  // FUNCTIONS_H_

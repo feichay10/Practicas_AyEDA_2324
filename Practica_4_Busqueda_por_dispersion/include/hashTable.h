@@ -39,15 +39,14 @@ class HashTable {
  public:
   HashTable(unsigned tableSize, DispersionFunction<Key>& fd,
             ExplorationFunction<Key>& fe,
-            unsigned blockSize);  // Dispersion cerrada
+            unsigned blockSize);           // Dispersion cerrada
   HashTable(unsigned tableSize,
             DispersionFunction<Key>& fd);  // Dispersion abierta
   ~HashTable();
 
   bool search(const Key& k) const;
   bool insert(const Key& k);
-
-  std::ostream& operator<<(std::ostream& os) const;
+  void print();
 
  private:
   void createTable();
@@ -101,35 +100,30 @@ HashTable<Key, Container>::~HashTable() {
 //   return false;
 // }
 
-// template <class Key, class Container>
-// bool HashTable<Key, Container>::insert(const Key& k) {
-//   unsigned index = fd_(k, tableSize_);
-//   unsigned i = 0;
-//   while (i < tableSize_ && !table_[index]->empty()) {
-//     index = (index + fe_(k, i, tableSize_)) % tableSize_;
-//     i++;
-//   }
-//   if (i < tableSize_) {
-//     table_[index]->insert(k);
-//     return true;
-//   }
-//   return false;
-// }
-
-// Prunsigned the hash table as:
-// 0 | 1 | 2 | 3 | 4 | 5 | ... | tableSize-1  -> Position
-// 1 | 2 | 3 | 4 | 5 | 6 | ... | tableSize    -> Values
 template <class Key, class Container>
-std::ostream& HashTable<Key, Container>::operator<<(std::ostream& os) const {
-  for (unsigned i = 0; i < tableSize_; i++) {
-    os << i << " | ";
+bool HashTable<Key, Container>::insert(const Key& k) {
+  bool output = false;
+  unsigned index = (*fd_)(k);
+  if (table_[index]->insert(k)) {
+    output = true;
+  } else {
+    int attempt = 0;
+    while (attempt < blockSize_ && !table_[index]->insert(k)) {
+      index = (*fe_)(k, index);
+      if (table_[index]->insert(k)) output = true;
+      attempt++;
+    }
   }
-  os << std::endl;
-  for (unsigned i = 0; i < tableSize_; i++) {
-    os << table_[i] << " | ";
+  return output;
+}
+
+template <class Key, class Container>
+void HashTable<Key, Container>::print() {
+  for (int i = 0; i < tableSize_; ++i) {
+    std::cout << i << ") [ ";
+    table_[i]->print();
+    std::cout << "]" << std::endl;
   }
-  os << std::endl;
-  return os;
 }
 
 template <class Key, class Container>
@@ -137,7 +131,8 @@ void HashTable<Key, Container>::createTable() {
   table_ = new Sequence<Key>*[tableSize_];
   if (typeid(Container) == typeid(StaticSequence<Key>)) {
     for (unsigned i = 0; i < tableSize_; i++) {
-      table_[i] = new StaticSequence<Key>(blockSize_);
+      // table_[i] = new StaticSequence<Key>(blockSize_);
+
     }
   } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
     for (unsigned i = 0; i < tableSize_; i++) {

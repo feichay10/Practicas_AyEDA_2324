@@ -18,7 +18,7 @@
 
 #include "../include/functions.h"
 
-void checkProgramParameters(int argc, char* argv[]) {
+HashTableParameters checkProgramParameters(int argc, char* argv[], HashTableParameters& parameters) {
   if (argc == 2 && std::string(argv[1]) == "-help") {
     throw kUsage;
     exit(EXIT_FAILURE);
@@ -27,8 +27,6 @@ void checkProgramParameters(int argc, char* argv[]) {
         " -help for more information.";
     exit(EXIT_FAILURE);
   }
-
-  HashTableParameters parameters;
 
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-ts") {
@@ -49,7 +47,6 @@ void checkProgramParameters(int argc, char* argv[]) {
           throw std::string("Invalid dispersion function. Use random or sum.");
           exit(EXIT_FAILURE);
         } else {
-          // df = std::string(argv[i + 1]);
           parameters.df = std::string(argv[i + 1]);
         }
       } else {
@@ -62,7 +59,6 @@ void checkProgramParameters(int argc, char* argv[]) {
           throw std::string("Invalid dispersion technic. Use open or closed.");
           exit(EXIT_FAILURE);
         } else {
-          // dispersionTechnic = std::string(argv[i + 1]);
           parameters.dispersionTechnic = std::string(argv[i + 1]);
         }
       } else {
@@ -75,7 +71,6 @@ void checkProgramParameters(int argc, char* argv[]) {
           throw std::string("Invalid exploration function. Use lineal, quadratic, double or redispersion.");
           exit(EXIT_FAILURE);
         } else {
-          // ef = std::string(argv[i + 1]);
           parameters.ef = std::string(argv[i + 1]);
         }
       } else {
@@ -90,75 +85,80 @@ void checkProgramParameters(int argc, char* argv[]) {
   std::cout << "Dispersion technic: " << parameters.dispersionTechnic << std::endl;
   std::cout << "Block size: " << parameters.blockSize << std::endl;
   std::cout << "Exploration function: " << parameters.ef << std::endl;
+
+  return parameters;
 }
 
-void makeHashTable(unsigned tableSize, std::string df, std::string dispersionTechnic, unsigned blockSize, std::string ef) {
+void makeHashTable(HashTableParameters& parameters) {
   DispersionFunction<keyType>* dispersionFunction;
   ExplorationFunction<keyType>* explorationFunction;
   
-  if (df == "module") {
-    dispersionFunction = new dfModule<keyType>(tableSize);
-  } else if (df == "sum") {
-    dispersionFunction = new dfSum<keyType>(tableSize);
-  } else if (df == "random") {
-    dispersionFunction = new dfRandom<keyType>(tableSize);
+  if (parameters.df == "module") {
+    dispersionFunction = new dfModule<keyType>(parameters.tableSize);
+  } else if (parameters.df == "sum") {
+    dispersionFunction = new dfSum<keyType>(parameters.tableSize);
+  } else if (parameters.df == "random") {
+    dispersionFunction = new dfRandom<keyType>(parameters.tableSize);
   }
 
-  if (dispersionTechnic == "open") {
-    HashTable<keyType, DynamicSequence<keyType>> hashTable(tableSize, *dispersionFunction);
-    menu(static_cast<HashTable<keyType, DynamicSequence<keyType>>>(hashTable));
-  } else if (dispersionTechnic == "close") {
-    if (ef == "lineal") {
+  if (parameters.dispersionTechnic == "open") {
+    HashTable<keyType, DynamicSequence<keyType>> hashTable(parameters.tableSize, *dispersionFunction);
+    menu(hashTable);
+  } else if (parameters.dispersionTechnic == "close") {
+    if (parameters.ef == "lineal") {
       explorationFunction = new efLineal<keyType>;
-    } else if (ef == "double") {
+    } else if (parameters.ef == "double") {
       explorationFunction = new efDoubleDispersion<keyType>;
-    } else if (ef == "quadratic") {
+    } else if (parameters.ef == "quadratic") {
       explorationFunction = new efQuadratic<keyType>;
-    } else if (ef == "redispersion") {
+    } else if (parameters.ef == "redispersion") {
       explorationFunction = new efRedispersion<keyType>;
     }
-    HashTable<keyType, StaticSequence<keyType>> hashTable(tableSize, *dispersionFunction, *explorationFunction, blockSize);
+    HashTable<keyType, StaticSequence<keyType>> hashTable(parameters.tableSize, *dispersionFunction, *explorationFunction, parameters.blockSize);
   }
-
-  // delete dispersionFunction;
-  // delete explorationFunction;
 }
 
-
-void menu(HashTable<keyType, DynamicSequence<keyType>> hashTable) {
+void menu(HashTable<keyType, DynamicSequence<keyType>>& hashTable) {
   int option = 0;
   do {
-    std::cout << kGreenBold << "1. Insertar" << kReset << std::endl;
-    std::cout << kGreenBold << "2. Buscar" << kReset << std::endl;
-    std::cout << kGreenBold << "3. Salir" << kReset << std::endl;
-    std::cout << kBold << "Opción: " << kReset;
+    std::cout << "\n###### Tabla de Hash ######" << std::endl;
+    std::cout << kRedBold << "  [1]." << kReset << kBold << " Insertar" << std::endl;
+    std::cout << kRedBold << "  [2]." << kReset << kBold << " Buscar" << std::endl;
+    std::cout << kRedBold << "  [3]." << kReset << kBold << " Imprimir tabla" << std::endl;
+    std::cout << kRedBold << "  [4]." << kReset << kBold << " Salir" << kReset << std::endl;
+    std::cout << "Selecciona una opción: ";
     std::cin >> option;
-    
+
     switch (option) {
       case 1: {
         keyType key;
         std::cout << kBold << "Introduce la clave a insertar: " << kReset;
         std::cin >> key;
         hashTable.insert(key);
+        hashTable.print();
         break;
       }
       case 2: {
         keyType key;
         std::cout << kBold << "Introduce la clave a buscar: " << kReset;
         std::cin >> key;
-        if (hashTable.search(key)) {
-          std::cout << kGreenBold << "Clave encontrada" << kReset << std::endl;
-        } else {
-          std::cout << kRedBold << "Clave no encontrada" << kReset << std::endl;
-        }
+        // if (hashTable.search(key)) {
+        //   std::cout << kGreenBold << "Clave encontrada" << kReset << std::endl;
+        // } else {
+        //   std::cout << kRedBold << "Clave no encontrada" << kReset << std::endl;
+        // }
         break;
       }
       case 3:
+        std::cout << kBold << "Tabla hash: " << kReset << std::endl;
+        hashTable.print();
+        break;
+      case 4:
         std::cout << kBold << "Saliendo..." << kReset << std::endl;
         exit(EXIT_SUCCESS);
       default:
         std::cout << kRedBold << "Opción no válida" << kReset << std::endl;
         break;
     }
-  } while (option != 3);
+  } while (option != 4);
 }

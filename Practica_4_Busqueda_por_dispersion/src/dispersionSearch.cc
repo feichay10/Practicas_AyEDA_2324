@@ -20,11 +20,10 @@
 #include "../include/functions.h"
 
 int main(int argc, char* argv[]) {
-  HashTableParameters parameters; // TODO: Paso por referencia
-
+  HashTableParameters parameters;
   try {
-    checkProgramParameters(argc, argv);
-    makeHashTable(tableSize, df, dispersionTechnic, blockSize, ef);
+    parameters = checkProgramParameters(argc, argv, parameters);
+    makeHashTable(parameters);
   } catch (std::string message) {
     std::cerr << message << std::endl;
   }

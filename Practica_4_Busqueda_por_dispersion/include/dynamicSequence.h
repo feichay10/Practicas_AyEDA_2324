@@ -33,6 +33,7 @@ class DynamicSequence : public Sequence<Key> {
 
   bool search(const Key& k) const;
   bool insert(const Key& k);
+  void print();
 
  private:
   Key* data_;
@@ -73,6 +74,13 @@ bool DynamicSequence<Key>::insert(const Key& k) {
   data_ = temp;
   size_++;
   return true;
+}
+
+template <class Key>
+void DynamicSequence<Key>::print() {
+  for (int i = 0; i < size_; ++i) {
+    std::cout << "[" << data_[i] << "] "; 
+  }
 }
 
 #endif // DYNAMICSEQUENCE_H
