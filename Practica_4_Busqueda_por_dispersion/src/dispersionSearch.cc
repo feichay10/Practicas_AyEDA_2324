@@ -19,6 +19,8 @@
 
 #include "../include/functions.h"
 
+//TODO: Fix print() on staticSequence
+
 int main(int argc, char* argv[]) {
   HashTableParameters parameters;
   try {

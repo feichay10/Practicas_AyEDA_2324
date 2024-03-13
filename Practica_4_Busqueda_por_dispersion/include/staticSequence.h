@@ -35,6 +35,7 @@ class StaticSequence : public Sequence<Key> {
   bool search(const Key& k) const;
   bool insert(const Key& k);
   bool isFull() const;
+  void print();
 
  private:
   Key* data_;
@@ -87,6 +88,13 @@ bool StaticSequence<Key>::isFull() const {
     }
   }
   return true;
+}
+
+template <class Key>
+void StaticSequence<Key>::print() {
+  for (unsigned i = 0; i < blockSize_; ++i) {
+    std::cout << "[" << data_[i] << "] ";
+  }  
 }
 
 #endif  // STATICSEQUENCE_H
