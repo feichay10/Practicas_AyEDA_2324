@@ -102,6 +102,7 @@ void makeHashTable(HashTableParameters& parameters) {
   }
 
   if (parameters.dispersionTechnic == "open") {
+    std::cout << "\nOpen dispersion" << std::endl;
     HashTable<keyType, DynamicSequence<keyType>> hashTable(parameters.tableSize, *dispersionFunction);
     menu(hashTable);
   } else if (parameters.dispersionTechnic == "close") {
@@ -114,11 +115,17 @@ void makeHashTable(HashTableParameters& parameters) {
     } else if (parameters.ef == "redispersion") {
       explorationFunction = new efRedispersion<keyType>;
     }
+    std::cout << "\nClose dispersion" << std::endl;
     HashTable<keyType, StaticSequence<keyType>> hashTable(parameters.tableSize, *dispersionFunction, *explorationFunction, parameters.blockSize);
+    menu(hashTable);
   }
 }
 
-void menu(HashTable<keyType, DynamicSequence<keyType>>& hashTable) {
+template <typename HashTableType>
+void menu(HashTableType& hashTable) {
+  // Comprobar el tipo de hashTable
+  std::cout << typeid(hashTable).name() << std::endl;
+
   int option = 0;
   do {
     std::cout << "\n###### Tabla de Hash ######" << std::endl;

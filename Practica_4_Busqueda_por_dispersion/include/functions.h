@@ -75,6 +75,8 @@ struct HashTableParameters {
 
 HashTableParameters checkProgramParameters(int, char*[], HashTableParameters&);
 void makeHashTable(HashTableParameters&);
-void menu(HashTable<keyType, DynamicSequence<keyType>>&);
+
+template <typename HashTableType>
+void menu(HashTableType&);
 
 #endif  // FUNCTIONS_H_
