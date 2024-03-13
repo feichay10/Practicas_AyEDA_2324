@@ -21,6 +21,7 @@
 
 //TODO: Fix print() on staticSequence
 //TODO: Do the search function on all the classes
+//TODO: Check when inserted element is already in the table
 
 int main(int argc, char* argv[]) {
   HashTableParameters parameters;

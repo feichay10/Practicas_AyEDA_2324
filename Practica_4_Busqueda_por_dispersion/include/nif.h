@@ -24,8 +24,9 @@
 class Nif {
  public:
   Nif() {
-    srand(time(NULL));
-    nif_ = rand() % 100000000;
+    // srand(time(NULL));
+    // nif_ = rand() % 100000000;
+    nif_ = 76;
   }
   Nif(const long nif) { nif_ = nif; }
   

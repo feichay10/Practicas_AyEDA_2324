@@ -88,40 +88,27 @@ HashTable<Key, Container>::~HashTable() {
 
 template <class Key, class Container>
 bool HashTable<Key, Container>::search(const Key& k) const {
-  bool output = false;
   unsigned index = (*fd_)(k);
-  if (table_[index]->search(k)) {
-    output = true;
-  } else {
-    int attempt = 0;
-    while (attempt < blockSize_ && !table_[index]->search(k)) {
-      index = (*fe_)(k, index);
-      if (table_[index]->search(k)) {
-        output = true;
-      }
-      attempt++;
-    }
+  if (typeid(Container) == typeid(StaticSequence<Key>)) {
+    return table_[index]->search(k);
+  } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
+    return table_[index]->search(k);
   }
-  return output;
+  return false;
 }
 
 template <class Key, class Container>
 bool HashTable<Key, Container>::insert(const Key& k) {
-  bool output = false;
   unsigned index = (*fd_)(k);
-  if (table_[index]->insert(k)) {
-    output = true;
-  } else {
-    int attempt = 0;
-    while (attempt < blockSize_ && !table_[index]->insert(k)) {
-      index = (*fe_)(k, index);
-      if (table_[index]->insert(k)) {
-        output = true;
-      }
-      attempt++;
+  if (typeid(Container) == typeid(StaticSequence<Key>)) {
+    if (table_[index]->isFull()) {
+      return false;
     }
+    return table_[index]->insert(k);
+  } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
+    return table_[index]->insert(k);
   }
-  return output;
+  return false;
 }
 
 template <class Key, class Container>

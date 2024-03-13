@@ -33,6 +33,7 @@ class DynamicSequence : public Sequence<Key> {
 
   bool search(const Key& k) const;
   bool insert(const Key& k);
+  bool isFull() const;
   void print();
 
  private:
@@ -54,25 +55,31 @@ template <class Key>
 bool DynamicSequence<Key>::search(const Key& k) const {
   for (int i = 0; i < size_; i++) {
     if (data_[i] == k) {
+      std::cout << "Element found" << std::endl;
       return true;
     }
   }
+  std::cout << "Element not found" << std::endl;
   return false;
 }
 
 template <class Key>
 bool DynamicSequence<Key>::insert(const Key& k) {
   if (!search(k)) {
-    Key* temp = new Key[size_ + 1];
-    for (int i = 0; i < size_; i++) {
-      temp[i] = data_[i];
-    }
-    temp[size_] = k;
-    delete[] data_;
-    data_ = temp;
     size_++;
+    for (int i = 0; i < size_; ++i) {
+      if (data_[i] == 0) {
+        data_[i] = k;
+        return true;
+      }
+    }
     return true;
   }
+  return false;
+}
+
+template <class Key>
+bool DynamicSequence<Key>::isFull() const {
   return false;
 }
 
