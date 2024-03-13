@@ -65,6 +65,18 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
         throw std::string("Dispersion technic not provided.");
         exit(EXIT_FAILURE);
       }
+    } else if (std::string(argv[i]) == "-bs") {
+      if (i + 1 < argc) {
+        if (std::stoi(argv[i + 1]) < 1) {
+          throw std::string("Invalid block size. Block size must be greater than 0.");
+          exit(EXIT_FAILURE);
+        } else {
+          parameters.blockSize = std::stoi(argv[i + 1]);
+        }
+      } else {
+        throw std::string("Block size not provided.");
+        exit(EXIT_FAILURE);
+      }
     } else if (std::string (argv[i]) == "-fe") {
       if (i + 1 < argc) {
         if (std::string(argv[i + 1]) != "lineal" && std::string(argv[i + 1]) != "quadratic" && std::string(argv[i + 1]) != "double" && std::string(argv[i + 1]) != "redispersion") {
@@ -124,10 +136,11 @@ void makeHashTable(HashTableParameters& parameters) {
 template <typename HashTableType>
 void menu(HashTableType& hashTable) {
   // Comprobar el tipo de hashTable
-  std::cout << typeid(hashTable).name() << std::endl;
+  // std::cout << typeid(hashTable).name() << std::endl;
 
-  int option = 0;
-  do {
+  std::string option;
+  int optionMenu;
+  while (true) {
     std::cout << "\n###### Tabla de Hash ######" << std::endl;
     std::cout << kRedBold << "  [1]." << kReset << kBold << " Insertar" << std::endl;
     std::cout << kRedBold << "  [2]." << kReset << kBold << " Buscar" << std::endl;
@@ -136,7 +149,27 @@ void menu(HashTableType& hashTable) {
     std::cout << "Selecciona una opción: ";
     std::cin >> option;
 
-    switch (option) {
+    // Si la opción es de tipo char, muestra un mensaje de opción no válida
+    if (option.size() == 1 && isalpha(option[0])) {
+      std::cout << kRedBold << "Opción no válida" << kReset << std::endl;
+      continue;
+    } 
+
+    // Si la opción es un número, la convierte a entero
+    if (isalnum(option[0]) && option.size() == 1) {
+      optionMenu = std::stoi(option);
+    } else {
+      std::cout << kRedBold << "Opción no válida" << kReset << std::endl;
+      continue;
+    }
+
+    // Si la opcion es una string que no es un número, muestra un mensaje de opción no válida
+    if (option.size() > 1) {
+      std::cout << kRedBold << "Opción no válida" << kReset << std::endl;
+      continue;
+    }
+
+    switch (optionMenu) {
       case 1: {
         keyType key;
         std::cout << kBold << "Introduce la clave a insertar: " << kReset;
@@ -149,11 +182,11 @@ void menu(HashTableType& hashTable) {
         keyType key;
         std::cout << kBold << "Introduce la clave a buscar: " << kReset;
         std::cin >> key;
-        // if (hashTable.search(key)) {
-        //   std::cout << kGreenBold << "Clave encontrada" << kReset << std::endl;
-        // } else {
-        //   std::cout << kRedBold << "Clave no encontrada" << kReset << std::endl;
-        // }
+        if (!hashTable.search(key)) {
+          std::cout << "La clave " << kCyanBold << key << kReset << kRedBold << " NO" << kReset << " no se encuentra en la tabla" << kReset << std::endl << std::endl;
+        } else {
+          std::cout << "La clave " << kCyanBold << key << kReset << kGreenBold << " SI" << kReset << " se encuentra en la tabla" << kReset << std::endl << std::endl;
+        }
         break;
       }
       case 3:
@@ -167,5 +200,5 @@ void menu(HashTableType& hashTable) {
         std::cout << kRedBold << "Opción no válida" << kReset << std::endl;
         break;
     }
-  } while (option != 4);
+  }
 }

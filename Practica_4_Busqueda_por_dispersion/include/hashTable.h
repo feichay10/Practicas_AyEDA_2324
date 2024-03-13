@@ -86,19 +86,24 @@ HashTable<Key, Container>::~HashTable() {
   delete[] table_;
 }
 
-// template <class Key, class Container>
-// bool HashTable<Key, Container>::search(const Key& k) const {
-//   unsigned index = fd_(k, tableSize_);
-//   unsigned i = 0;
-//   while (i < tableSize_ && !table_[index]->empty()) {
-//     if (table_[index]->search(k)) {
-//       return true;
-//     }
-//     index = (index + fe_(k, i, tableSize_)) % tableSize_;
-//     i++;
-//   }
-//   return false;
-// }
+template <class Key, class Container>
+bool HashTable<Key, Container>::search(const Key& k) const {
+  bool output = false;
+  unsigned index = (*fd_)(k);
+  if (table_[index]->search(k)) {
+    output = true;
+  } else {
+    int attempt = 0;
+    while (attempt < blockSize_ && !table_[index]->search(k)) {
+      index = (*fe_)(k, index);
+      if (table_[index]->search(k)) {
+        output = true;
+      }
+      attempt++;
+    }
+  }
+  return output;
+}
 
 template <class Key, class Container>
 bool HashTable<Key, Container>::insert(const Key& k) {
@@ -110,7 +115,9 @@ bool HashTable<Key, Container>::insert(const Key& k) {
     int attempt = 0;
     while (attempt < blockSize_ && !table_[index]->insert(k)) {
       index = (*fe_)(k, index);
-      if (table_[index]->insert(k)) output = true;
+      if (table_[index]->insert(k)) {
+        output = true;
+      }
       attempt++;
     }
   }
@@ -131,8 +138,7 @@ void HashTable<Key, Container>::createTable() {
   table_ = new Sequence<Key>*[tableSize_];
   if (typeid(Container) == typeid(StaticSequence<Key>)) {
     for (unsigned i = 0; i < tableSize_; i++) {
-      // table_[i] = new StaticSequence<Key>(blockSize_);
-
+      table_[i] = new StaticSequence<Key>(blockSize_);
     }
   } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
     for (unsigned i = 0; i < tableSize_; i++) {

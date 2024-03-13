@@ -37,7 +37,7 @@ class DynamicSequence : public Sequence<Key> {
 
  private:
   Key* data_;
-  int size_ = 0;
+  unsigned size_ = 0;
 };
 
 template <class Key>
@@ -62,18 +62,18 @@ bool DynamicSequence<Key>::search(const Key& k) const {
 
 template <class Key>
 bool DynamicSequence<Key>::insert(const Key& k) {
-  if (search(k)) {
-    return false;
+  if (!search(k)) {
+    Key* temp = new Key[size_ + 1];
+    for (int i = 0; i < size_; i++) {
+      temp[i] = data_[i];
+    }
+    temp[size_] = k;
+    delete[] data_;
+    data_ = temp;
+    size_++;
+    return true;
   }
-  Key* temp = new Key[size_ + 1];
-  for (int i = 0; i < size_; i++) {
-    temp[i] = data_[i];
-  }
-  temp[size_] = k;
-  delete[] data_;
-  data_ = temp;
-  size_++;
-  return true;
+  return false;
 }
 
 template <class Key>

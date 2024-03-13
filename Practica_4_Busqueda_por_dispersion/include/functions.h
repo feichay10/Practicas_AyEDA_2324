@@ -39,6 +39,7 @@
 
 const std::string kRedBold = "\033[1;31m";
 const std::string kGreenBold = "\033[1;32m";
+const std::string kCyanBold = "\033[36m\033[1m";
 const std::string kBold = "\033[1m";
 const std::string kReset = "\033[0m";
 

@@ -30,6 +30,7 @@ class Nif {
   Nif(const long nif) { nif_ = nif; }
   
   bool operator==(const Nif& other) const { return nif_ == other.nif_; }
+  bool operator==(int other) const { return nif_ == other; }
   bool operator!=(const Nif& other) const { return !(*this == other); }
   operator long() { return nif_; }
   operator unsigned int() const { return nif_; }

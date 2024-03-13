@@ -8,8 +8,8 @@ INCLUDE := include
 LIB     := lib
 LIBRARIES   := 
 EXECUTABLE  := dispersionSearch
-PARAMS	:= -ts 10 -fd module -hash close -bs 5 -fe lineal
-PARAMS1 := -ts 10 -fd module -hash open -bs 5 -fe lineal
+PARAMS	:= -ts 10 -fd module -hash open -bs 5 -fe lineal
+PARAMS1 := -ts 10 -fd module -hash close -bs 5 -fe lineal
 SOURCES := $(wildcard $(SRC)/*.cc)
 OBJS	:= $(patsubst $(SRC)/%.cc, $(BUILD)/%.o,$(SOURCES))
 
