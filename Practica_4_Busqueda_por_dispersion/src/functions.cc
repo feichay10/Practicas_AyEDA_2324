@@ -107,8 +107,10 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
   std::cout << "Table size: " << parameters.tableSize << std::endl;
   std::cout << "Dispersion function: " << parameters.dispersionFunction << std::endl;
   std::cout << "Dispersion technic: " << parameters.dispersionTechnic << std::endl;
-  std::cout << "Block size: " << parameters.blockSize << std::endl;
-  std::cout << "Exploration function: " << parameters.explorationFunction << std::endl;
+  if (parameters.dispersionTechnic == "close") {
+    std::cout << "Block size: " << parameters.blockSize << std::endl;
+    std::cout << "Exploration function: " << parameters.explorationFunction << std::endl;
+  }
 
   return parameters;
 }
@@ -147,7 +149,7 @@ void makeHashTable(HashTableParameters& parameters) {
 
 template <typename HashTableType>
 void menu(HashTableType& hashTable) {
-  // Comprobar el tipo de hashTable
+  // Check the type of hashTable
   // std::cout << typeid(hashTable).name() << std::endl;
 
   std::string option;
@@ -162,13 +164,13 @@ void menu(HashTableType& hashTable) {
     std::cout << "Select an option: ";
     std::cin >> option;
 
-    // Si la opción es de tipo char, muestra un mensaje de opción no válida
+    // If the option is of type char, display an invalid option message
     if (option.size() == 1 && isalpha(option[0])) {
       std::cout << kRedBold << "Invalid option" << kReset << std::endl;
       continue;
     } 
 
-    // Si la opción es un número, la convierte a entero
+    // If the option is a number, convert it to an integer
     if (isalnum(option[0]) && option.size() == 1) {
       optionMenu = std::stoi(option);
     } else {
@@ -176,7 +178,7 @@ void menu(HashTableType& hashTable) {
       continue;
     }
 
-    // Si la opcion es una string que no es un número, muestra un mensaje de opción no válida
+    // If the option is a string that is not a number, display an invalid option message
     if (option.size() > 1) {
       std::cout << kRedBold << "Invalid option" << kReset << std::endl;
       continue;
