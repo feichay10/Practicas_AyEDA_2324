@@ -43,8 +43,8 @@ class StaticSequence : public Sequence<Key> {
 
 template <class Key>
 StaticSequence<Key>::StaticSequence(unsigned blockSize) {
+  data_ = new Key[blockSize];
   blockSize_ = blockSize;
-  data_ = new Key[blockSize_];
 }
 
 template <class Key>
@@ -66,7 +66,7 @@ template <class Key>
 bool StaticSequence<Key>::insert(const Key& k) {
   if (!search(k)) {
     for (unsigned i = 0; i < blockSize_; i++) {
-      if (data_[i] == static_cast<Key>(0)) {
+      if (data_[i] == 0) {
         data_[i] = k;
         return true;
       }

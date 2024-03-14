@@ -13,3 +13,10 @@ por parametros al constructor de la clase HashTable un puntero y no una referenc
 Nosotros para crear un objeto de las clases genericas, ya sea DispersionFunction<Key> o ExplorationFunction<Key> habria que hacerlo
 creando un puntero a un instancia de estas clases entiendo yo. La cosa es que si hay que hacer esto ultimo no entiendo porque a los
 constructores de la clase HashTable tienen como parametro un referencia a estas clases.
+
+
+DUDA 2:
+Tengo una duda con el tipo de dato nif y es que si el constructor por defecto crea e inicializa un dato nif con un valor
+aleatorio, no entiendo muy bien porque el programa luego se tiene que insertar elementos. Podria deducir que crear un nif
+aleatorio es para que la tabla se inicialice con al menos un valor aleatorio creado por Nif y ya luego de ahi partir de si 
+se inserta o se busca algun elemento de la tabla.

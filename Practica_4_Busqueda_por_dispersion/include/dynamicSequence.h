@@ -55,27 +55,27 @@ template <class Key>
 bool DynamicSequence<Key>::search(const Key& k) const {
   for (int i = 0; i < size_; i++) {
     if (data_[i] == k) {
-      std::cout << "Element found" << std::endl;
       return true;
     }
   }
-  std::cout << "Element not found" << std::endl;
   return false;
 }
 
 template <class Key>
 bool DynamicSequence<Key>::insert(const Key& k) {
-  if (!search(k)) {
-    size_++;
-    for (int i = 0; i < size_; ++i) {
-      if (data_[i] == 0) {
-        data_[i] = k;
-        return true;
-      }
-    }
-    return true;
+  if (search(k)) {
+    std::cout << "Element " << k << " already exists " << std::endl;
+    return false;
   }
-  return false;
+  size_++;
+  Key* temp = new Key[size_];
+  for (int i = 0; i < size_ - 1; ++i) {
+    temp[i] = data_[i];
+  }
+  temp[size_ - 1] = k;
+  delete[] data_;
+  data_ = temp;
+  return true;
 }
 
 template <class Key>

@@ -169,6 +169,8 @@ void menu(HashTableType& hashTable) {
       continue;
     }
 
+    // system("clear");
+
     switch (optionMenu) {
       case 1: {
         keyType key;
