@@ -21,6 +21,11 @@
 #include "sequence.h"
 #include <vector>
 
+/**
+ * @brief Class for implementing close addressing dispersion technique
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class StaticSequence : public Sequence<Key> {
  public:
@@ -34,21 +39,17 @@ class StaticSequence : public Sequence<Key> {
   void print();
 
  private:
-  // Key* data_;
-  // Key data_[];
-  std::vector<Key> data_;
+  Key* data_;
   unsigned blockSize_;
 };
 
 template <class Key>
 StaticSequence<Key>::StaticSequence(unsigned blockSize) {
-  // data_ = new Key[blockSize];
-  data_.resize(blockSize);
-  // Eliminar el contenido del array
+  data_ = new Key[blockSize];
+  // Clear the contents of the array
   for (unsigned i = 0; i < blockSize; i++) {
     data_[i] = 0;
   }
-
   blockSize_ = blockSize;
 }
 

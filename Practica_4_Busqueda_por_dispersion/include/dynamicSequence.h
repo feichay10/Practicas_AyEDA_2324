@@ -21,7 +21,7 @@
 #include "sequence.h"
 
 /**
- * @brief Clase para implementar la técnica dispersion abierta
+ * @brief Class for implementing open addressing dispersion technique
  * 
  * @tparam Key 
  */

@@ -44,34 +44,37 @@ const std::string kBold = "\033[1m";
 const std::string kReset = "\033[0m";
 
 const std::string kUsage =
-    kBold + "NOMBRE\n" + kReset +
-    "       dispersionSearch - Dispersed Search\n\n" + kBold + "SINOPSIS\n" +
+    kBold + "NAME\n" + kReset +
+    "       dispersionSearch - Dispersed Search\n\n" + kBold + "SYNOPSIS\n" +
     kReset +
     "       ./dispersionSearch -ts <s> -fd <f> -hash <open|close> -bs <s> -fe "
     "<f>\n\n" +
-    kBold + "DESCRIPCIÓN\n" + kReset +
+    kBold + "DESCRIPTION\n" + kReset +
     "       Program that performs a dispersed search in a hash table.\n\n" +
     kBold + "OPCIONES" + kReset + kBold + "\n\t  -ts <s>" + kReset +
     "\n\t\tSize of the table.\n" + kBold +
     "\n\t  -fd <f>, f = module|sum|random" + kReset +
-    "\n\t\tCode that identifies a dispersion function.\n" + kBold +
-    "\n\t  -hash <open|close>" + kReset +
-    "\n\t\tIndicates the dispersion technique to use.\n" + kBold +
-    "\n\t  -bs <s>" + kReset +
+    "\n\t\tCode that identifies a dispersion function. If dispersion function "
+    "is not \n\t\tprovided, the default will be the modulus function\n" +
+    kBold + "\n\t  -hash <open|close>" + kReset +
+    "\n\t\tIndicates the dispersion technique to use. If dispersion technique "
+    "is not \n\t\tprovided, the default will be the open.\n" +
+    kBold + "\n\t  -bs <s>" + kReset +
     "\n\t\tSize of the block. Only for closed dispersion.\n" + kBold +
     "\n\t  -fe <f>, f = lineal|quadratic|double|redispersion" + kReset +
     "\n\t\tCode that identifies an exploration function. Only for closed "
-    "dispersion.\n" +
+    "dispersion. \n\t\tIf explotration function is not provided, the default will be "
+    "the lineal \n\t\tfunction.\n" +
     kBold + "\n\t  -help" + kReset + "\n\t\tShow this message.";
 
 using keyType = Nif;
 
 struct HashTableParameters {
-  unsigned tableSize = 0;
-  std::string df = "module";
-  std::string dispersionTechnic = "open";
-  unsigned blockSize = 0;
-  std::string ef = "lineal";
+  unsigned tableSize;
+  std::string dispersionFunction;
+  std::string dispersionTechnic;
+  unsigned blockSize;
+  std::string explorationFunction;
 };
 
 HashTableParameters checkProgramParameters(int, char*[], HashTableParameters&);
