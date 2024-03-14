@@ -29,6 +29,8 @@ int main() {
   std::cout << "Module: " << dfModule(k) << std::endl;
   std::cout << "Suma: " << dfSum(k) << std::endl;
   std::cout << "Random: " << dfRandom(k) << std::endl;
+  
+  Key k1 = 78767650;
 
-
+  std::cout << "NIF: " << k1 << k1.letterNif(k1) << std::endl;
 }
