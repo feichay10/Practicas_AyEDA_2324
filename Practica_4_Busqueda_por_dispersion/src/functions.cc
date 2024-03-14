@@ -87,10 +87,10 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
     }
   }
 
-  if (parameters.dispersionTechnic == "open") {
+  if (parameters.dispersionTechnic == "open" && parameters.blockSize != 0) {
     throw std::string("Block size is only for close dispersion.");
     exit(EXIT_FAILURE);
-  } else if (parameters.dispersionTechnic == "open") {
+  } else if (parameters.dispersionTechnic == "open" && parameters.explorationFunction != "") {
     throw std::string("Exploration function is only for close dispersion.");
     exit(EXIT_FAILURE);
   }
