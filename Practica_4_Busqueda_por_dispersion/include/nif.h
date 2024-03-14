@@ -21,6 +21,8 @@
 #include <ctime>
 #include <iostream>
 
+const char letters[] = "TRWAGMYFPDXBNJZSQVHLCKE";
+
 class Nif {
  public:
   Nif() {
@@ -29,6 +31,9 @@ class Nif {
   }
   
   Nif(const long nif) { nif_ = nif; }
+  char letterNif(Nif nif) {
+    return letters[nif.nif_ % 23];
+  }
   
   bool operator==(const Nif& other) const { return nif_ == other.nif_; }
   bool operator==(int other) const { return nif_ == other; }
@@ -36,6 +41,7 @@ class Nif {
   operator long() { return nif_; }
   operator unsigned int() const { return nif_; }
   unsigned int operator%(unsigned int m) const { return nif_ % m; }
+
   unsigned operator[](unsigned i) const {
     std::string nif_string = std::to_string(nif_);
     if (i >= nif_string.size()) {

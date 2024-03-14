@@ -112,7 +112,11 @@ bool StaticSequence<Key>::remove(const Key& k) {
 template <class Key>
 void StaticSequence<Key>::print() {
   for (unsigned i = 0; i < blockSize_; ++i) {
-    std::cout << "[" << data_[i] << "] ";
+    if (data_[i] == 0) {
+      std::cout << "[" << data_[i] << "] ";
+    } else {
+      std::cout << "[" << data_[i] << data_[i].letterNif(data_[i]) << "] ";
+    }
   }  
 }
 

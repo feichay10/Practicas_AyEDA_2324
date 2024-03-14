@@ -107,7 +107,7 @@ bool DynamicSequence<Key>::isFull() const {
 template <class Key>
 void DynamicSequence<Key>::print() {
   for (int i = 0; i < size_; ++i) {
-    std::cout << "[" << data_[i] << "] "; 
+    std::cout << "[" << data_[i] << data_[i].letterNif(data_[i]) << "] "; 
   }
 }
 
