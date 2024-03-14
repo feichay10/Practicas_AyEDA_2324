@@ -54,6 +54,7 @@ class Nif {
     return is;
   }
 
+  // For dfSum class
   auto begin() const { return std::to_string(nif_).begin(); }
   auto end() const { return std::to_string(nif_).end(); }
 
