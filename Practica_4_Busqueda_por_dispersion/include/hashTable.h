@@ -46,6 +46,7 @@ class HashTable {
 
   bool search(const Key& k) const;
   bool insert(const Key& k);
+  bool remove(const Key& k);
   void print();
 
  private:
@@ -110,6 +111,17 @@ bool HashTable<Key, Container>::insert(const Key& k) {
   } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
     std::cout << "Inserting " << k << " in " << index << std::endl;
     return table_[index]->insert(k);
+  }
+  return false;
+}
+
+template <class Key, class Container>
+bool HashTable<Key, Container>::remove(const Key& k) {
+  unsigned index = (*fd_)(k);
+  if (typeid(Container) == typeid(StaticSequence<Key>)) {
+    return table_[index]->remove(k);
+  } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
+    return table_[index]->remove(k);
   }
   return false;
 }

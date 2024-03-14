@@ -33,6 +33,7 @@ class DynamicSequence : public Sequence<Key> {
 
   bool search(const Key& k) const;
   bool insert(const Key& k);
+  bool remove(const Key& k);
   bool isFull() const;
   void print();
 
@@ -73,6 +74,26 @@ bool DynamicSequence<Key>::insert(const Key& k) {
     temp[i] = data_[i];
   }
   temp[size_ - 1] = k;
+  delete[] data_;
+  data_ = temp;
+  return true;
+}
+
+template <class Key>
+bool DynamicSequence<Key>::remove(const Key& k) {
+  if (!search(k)) {
+    std::cout << "Element " << k << " does not exist " << std::endl;
+    return false;
+  }
+  size_--;
+  Key* temp = new Key[size_];
+  int j = 0;
+  for (int i = 0; i < size_ + 1; ++i) {
+    if (data_[i] != k) {
+      temp[j] = data_[i];
+      j++;
+    }
+  }
   delete[] data_;
   data_ = temp;
   return true;

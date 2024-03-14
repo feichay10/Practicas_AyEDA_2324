@@ -145,7 +145,8 @@ void menu(HashTableType& hashTable) {
     std::cout << kRedBold << "  [1]." << kReset << kBold << " Insertar" << std::endl;
     std::cout << kRedBold << "  [2]." << kReset << kBold << " Buscar" << std::endl;
     std::cout << kRedBold << "  [3]." << kReset << kBold << " Imprimir tabla" << std::endl;
-    std::cout << kRedBold << "  [4]." << kReset << kBold << " Salir" << kReset << std::endl;
+    std::cout << kRedBold << "  [4]." << kReset << kBold << " Eliminar" << kReset << std::endl;
+    std::cout << kRedBold << "  [5]." << kReset << kBold << " Salir" << kReset << std::endl;
     std::cout << "Selecciona una opción: ";
     std::cin >> option;
 
@@ -195,7 +196,16 @@ void menu(HashTableType& hashTable) {
         std::cout << kBold << "Tabla hash: " << kReset << std::endl;
         hashTable.print();
         break;
-      case 4:
+      case 4: {
+        keyType key;
+        std::cout << kBold << "Introduce la clave a eliminar: " << kReset;
+        std::cin >> key;
+        hashTable.remove(key);
+        hashTable.print();
+        break;
+      }
+
+      case 5:
         std::cout << kBold << "Saliendo..." << kReset << std::endl;
         exit(EXIT_SUCCESS);
       default:

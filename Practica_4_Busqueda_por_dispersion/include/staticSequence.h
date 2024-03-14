@@ -29,6 +29,7 @@ class StaticSequence : public Sequence<Key> {
 
   bool search(const Key& k) const;
   bool insert(const Key& k);
+  bool remove(const Key& k);
   bool isFull() const;
   void print();
 
@@ -42,11 +43,12 @@ class StaticSequence : public Sequence<Key> {
 template <class Key>
 StaticSequence<Key>::StaticSequence(unsigned blockSize) {
   // data_ = new Key[blockSize];
-  // data_[blockSize];
   data_.resize(blockSize);
+  // Eliminar el contenido del array
   for (unsigned i = 0; i < blockSize; i++) {
     data_[i] = 0;
   }
+
   blockSize_ = blockSize;
 }
 
@@ -88,6 +90,22 @@ bool StaticSequence<Key>::isFull() const {
     }
   }
   return true;
+}
+
+template <class Key>
+bool StaticSequence<Key>::remove(const Key& k) {
+  if (!search(k)) {
+    std::cout << "Element " << k << " does not exist " << std::endl;
+    return false;
+  }
+  for (unsigned i = 0; i < blockSize_; i++) {
+    if (data_[i] == k) {
+      data_[i] = 0;
+      std::cout << "Element " << k << " removed " << std::endl;
+      return true;
+    }
+  }
+  return false;
 }
 
 template <class Key>
