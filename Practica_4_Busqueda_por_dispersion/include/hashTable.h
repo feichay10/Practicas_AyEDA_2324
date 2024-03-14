@@ -103,21 +103,19 @@ template <class Key, class Container>
 bool HashTable<Key, Container>::insert(const Key& k) {
   unsigned index = (*fd_)(k);
   if (typeid(Container) == typeid(StaticSequence<Key>)) {
-    if (table_[index]->isFull()) { // return true if the sequence is full
-      std::cout << "Element " << k << " cannot be inserted in " << index << " because it is full." << std::endl;
-      // Comprobar hasta que se encuentre un hueco
-      while (table_[index]->isFull()) {
-        index = (*fe_)(k, index);
+    if (!(*table_[index]).insert(k)) {
+      int attempt = 0;
+      while (attempt < tableSize_) {
+        index = (*fe_)(k, attempt) % tableSize_;
+        if (index < tableSize_) {
+          (*table_[index]).insert(k);
+          return true;
+        }
+        attempt++;
       }
-      std::cout << "Inserting " << k << " in " << index << std::endl;
-      return table_[index]->insert(k);
-      // return false;
-    } else {
-      std::cout << "Inserting " << k << " in " << index << std::endl;
-      return table_[index]->insert(k);
+      return false;
     }
-    // std::cout << "Inserting " << k << " in " << index << std::endl;
-    // return table_[index]->insert(k);
+    return false;
   } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
     std::cout << "Inserting " << k << " in " << index << std::endl;
     return table_[index]->insert(k);

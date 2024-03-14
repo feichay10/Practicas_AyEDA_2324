@@ -76,11 +76,6 @@ bool StaticSequence<Key>::insert(const Key& k) {
     return false;
   }
 
-  if (isFull()) {
-    std::cout << "Element " << k << " cannot be inserted because the sequence is full" << std::endl;
-    return false;
-  }
-
   for (unsigned i = 0; i < blockSize_; i++) {
     if (data_[i] == 0) {
       data_[i] = k;
