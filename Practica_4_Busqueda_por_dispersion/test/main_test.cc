@@ -33,4 +33,10 @@ int main() {
   Key k1 = 78767650;
 
   std::cout << "NIF: " << k1 << k1.letterNif(k1) << std::endl;
+
+  // Creame 6 NIFs aleatorios y guardalos en un array
+  Nif nifs[6];
+  for (int i = 0; i < 6; i++) {
+    std::cout << "NIF: " << nifs[i] << nifs[i].letterNif(nifs[i]) << std::endl;
+  }
 }

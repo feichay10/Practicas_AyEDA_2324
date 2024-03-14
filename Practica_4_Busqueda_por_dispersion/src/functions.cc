@@ -161,6 +161,8 @@ void menu(HashTableType& hashTable) {
     std::cout << kRedBold << "  [3]." << kReset << kBold << " Delete" << kReset << std::endl;
     std::cout << kRedBold << "  [4]." << kReset << kBold << " Print table" << std::endl;
     std::cout << kRedBold << "  [5]." << kReset << kBold << " Exit" << kReset << std::endl;
+    std::cout << kRedBold << "  [6]." << kReset << kBold << " Clear" << kReset << std::endl;
+    std::cout << kRedBold << "  [7]." << kReset << kBold << " Insert by file" << kReset << std::endl;
     std::cout << "Select an option: ";
     std::cin >> option;
 
@@ -221,7 +223,19 @@ void menu(HashTableType& hashTable) {
       case 5:
         std::cout << kBold << "Exiting..." << kReset << std::endl;
         exit(EXIT_SUCCESS);
-      dexplorationFunctionault:
+      case 6:
+        system("clear");
+        break;
+      case 7: {
+        std::string file;
+        std::cout << kBold << "Enter the file name: " << kReset;
+        std::cin >> file;
+        hashTable.insertByFile(file);
+        hashTable.print();
+        break;
+      
+      }
+      default:
         std::cout << kRedBold << "Invalid option" << kReset << std::endl;
         break;
     }

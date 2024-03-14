@@ -34,6 +34,7 @@ class StaticSequence : public Sequence<Key> {
 
   bool search(const Key& k) const;
   bool insert(const Key& k);
+  bool insertByFile(std::string file);
   bool remove(const Key& k);
   bool isFull() const;
   void print();
@@ -74,6 +75,12 @@ bool StaticSequence<Key>::insert(const Key& k) {
     std::cout << "Element " << k << " already exists " << std::endl;
     return false;
   }
+
+  if (isFull()) {
+    std::cout << "Element " << k << " cannot be inserted because the sequence is full" << std::endl;
+    return false;
+  }
+
   for (unsigned i = 0; i < blockSize_; i++) {
     if (data_[i] == 0) {
       data_[i] = k;
@@ -81,6 +88,25 @@ bool StaticSequence<Key>::insert(const Key& k) {
     }
   }
   return false;
+}
+
+template <class Key>
+bool StaticSequence<Key>::insertByFile(std::string file) {
+  std::ifstream fileStream(file);
+  if (!fileStream.is_open()) {
+    std::cout << "File " << file << " does not exist" << std::endl;
+    return false;
+  }
+  std::vector<Key> keys;
+  Key key;
+  while (fileStream >> key) {
+    keys.push_back(key);
+  }
+  fileStream.close();
+  for (unsigned i = 0; i < keys.size(); i++) {
+    insert(keys[i]);
+  }
+  return true;
 }
 
 template <class Key>

@@ -46,6 +46,7 @@ class HashTable {
 
   bool search(const Key& k) const;
   bool insert(const Key& k);
+  bool insertByFile(std::string file);
   bool remove(const Key& k);
   void print();
 
@@ -102,17 +103,41 @@ template <class Key, class Container>
 bool HashTable<Key, Container>::insert(const Key& k) {
   unsigned index = (*fd_)(k);
   if (typeid(Container) == typeid(StaticSequence<Key>)) {
-    if (table_[index]->isFull()) {
+    if (table_[index]->isFull()) { // return true if the sequence is full
       std::cout << "Element " << k << " cannot be inserted in " << index << " because it is full." << std::endl;
-      return false;
+      // Comprobar hasta que se encuentre un hueco
+      while (table_[index]->isFull()) {
+        index = (*fe_)(k, index);
+      }
+      std::cout << "Inserting " << k << " in " << index << std::endl;
+      return table_[index]->insert(k);
+      // return false;
+    } else {
+      std::cout << "Inserting " << k << " in " << index << std::endl;
+      return table_[index]->insert(k);
     }
-    std::cout << "Inserting " << k << " in " << index << std::endl;
-    return table_[index]->insert(k);
+    // std::cout << "Inserting " << k << " in " << index << std::endl;
+    // return table_[index]->insert(k);
   } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
     std::cout << "Inserting " << k << " in " << index << std::endl;
     return table_[index]->insert(k);
   }
   return false;
+}
+
+template <class Key, class Container>
+bool HashTable<Key, Container>::insertByFile(std::string file) {
+  std::ifstream fileStream(file);
+  if (!fileStream.is_open()) {
+    std::cout << "File " << file << " not found." << std::endl;
+    return false;
+  }
+  Key k;
+  while (fileStream >> k) {
+    insert(k);
+  }
+  fileStream.close();
+  return true;
 }
 
 template <class Key, class Container>

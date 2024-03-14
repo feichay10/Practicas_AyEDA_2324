@@ -33,6 +33,7 @@ class DynamicSequence : public Sequence<Key> {
 
   bool search(const Key& k) const;
   bool insert(const Key& k);
+  bool insertByFile(std::string file);
   bool remove(const Key& k);
   bool isFull() const;
   void print();
@@ -76,6 +77,21 @@ bool DynamicSequence<Key>::insert(const Key& k) {
   temp[size_ - 1] = k;
   delete[] data_;
   data_ = temp;
+  return true;
+}
+
+template <class Key>
+bool DynamicSequence<Key>::insertByFile(std::string file) {
+  std::ifstream fileStream(file);
+  if (!fileStream.is_open()) {
+    std::cout << "File " << file << " does not exist" << std::endl;
+    return false;
+  }
+  Key key;
+  while (fileStream >> key) {
+    insert(key);
+  }
+  fileStream.close();
   return true;
 }
 
