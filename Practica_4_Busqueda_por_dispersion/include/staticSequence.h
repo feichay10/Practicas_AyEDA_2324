@@ -19,31 +19,34 @@
 #define STATICSEQUENCE_H
 
 #include "sequence.h"
+#include <vector>
 
-/**
- * @brief Clase para implementar la técnica dispersion cerrada
- * 
- * @tparam Key 
- */
 template <class Key>
 class StaticSequence : public Sequence<Key> {
  public:
   StaticSequence(unsigned blockSize);
   ~StaticSequence();
-  
+
   bool search(const Key& k) const;
   bool insert(const Key& k);
   bool isFull() const;
   void print();
 
  private:
-  Key* data_;
+  // Key* data_;
+  // Key data_[];
+  std::vector<Key> data_;
   unsigned blockSize_;
 };
 
 template <class Key>
 StaticSequence<Key>::StaticSequence(unsigned blockSize) {
-  data_ = new Key[blockSize];
+  // data_ = new Key[blockSize];
+  // data_[blockSize];
+  data_.resize(blockSize);
+  for (unsigned i = 0; i < blockSize; i++) {
+    data_[i] = 0;
+  }
   blockSize_ = blockSize;
 }
 
@@ -64,12 +67,14 @@ bool StaticSequence<Key>::search(const Key& k) const {
 
 template <class Key>
 bool StaticSequence<Key>::insert(const Key& k) {
-  if (!search(k)) {
-    for (unsigned i = 0; i < blockSize_; i++) {
-      if (data_[i] == 0) {
-        data_[i] = k;
-        return true;
-      }
+  if (search(k)) {
+    std::cout << "Element " << k << " already exists " << std::endl;
+    return false;
+  }
+  for (unsigned i = 0; i < blockSize_; i++) {
+    if (data_[i] == 0) {
+      data_[i] = k;
+      return true;
     }
   }
   return false;

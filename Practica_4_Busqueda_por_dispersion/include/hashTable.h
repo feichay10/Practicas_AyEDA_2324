@@ -102,8 +102,7 @@ bool HashTable<Key, Container>::insert(const Key& k) {
   unsigned index = (*fd_)(k);
   if (typeid(Container) == typeid(StaticSequence<Key>)) {
     if (table_[index]->isFull()) {
-      std::cout << "Element " << k << " cannot be inserted in " << index
-                << " because it is full." << std::endl;
+      std::cout << "Element " << k << " cannot be inserted in " << index << " because it is full." << std::endl;
       return false;
     }
     std::cout << "Inserting " << k << " in " << index << std::endl;
