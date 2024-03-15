@@ -96,28 +96,25 @@ bool HashTable<Key, Container>::search(const Key& k) const {
   } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
     return table_[index]->search(k);
   }
-  return false;
 }
 
 // h(x) = x mod tableSize_ 		
 // g(x,i) = i*i (fd_)
-// (h(x) + g(x,i)) mod 7 
+// (h(x) + g(x,i)) mod tableSize
 template <class Key, class Container>
 bool HashTable<Key, Container>::insert(const Key& k) {
   unsigned index = (*fd_)(k); // Calcula la posición inicial utilizando la función de dispersión
   if (typeid(Container) == typeid(StaticSequence<Key>)) {
     unsigned i = 1;
-    while (table_[index]->isFull()) {
-      std::cout << "Index: " << index << std::endl;
-      std::cout << "Element " << k << " cannot be inserted in " << index << " because it is full." << std::endl;
-      index = (index + (*fe_)(k, i)) % tableSize_;
-      std::cout << "New index: " << index << std::endl;
+    unsigned functionValue = (*fd_)(k);
+    while (table_[index]->isFull()) { // Si la posición está ocupada, se calcula la nueva posición
+      std::cout << "Collision in " << index << std::endl;
+      unsigned explorationFunctionValue = (*fe_)(k, i);
+      index = (functionValue + explorationFunctionValue) % tableSize_;
       i++;
     }
     std::cout << "Inserting " << k << " in " << index << std::endl;
     return table_[index]->insert(k);
-
-
   } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
     std::cout << "Inserting " << k << " in " << index << std::endl;
     return table_[index]->insert(k);
