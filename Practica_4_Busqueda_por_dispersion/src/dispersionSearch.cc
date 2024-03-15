@@ -19,9 +19,8 @@
 
 #include "../include/functions.h"
 
-//TODO: Fix print() on staticSequence
-//TODO: Do the search function on all the classes
 //TODO: Check when inserted element is already in the table
+//TODO: Check the enter key is a valid nif, with a length of 8 characters
 
 int main(int argc, char* argv[]) {
   HashTableParameters parameters;

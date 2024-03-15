@@ -34,10 +34,10 @@ class efDoubleDispersion : public ExplorationFunction<Key> {
   DispersionFunction<Key>* df_;
 };
 
-//  g(k,i) = f(k) + i 
+//  g(k,i) = f(k) * i 
 template<class Key>
 unsigned efDoubleDispersion<Key>::operator()(const Key& k, unsigned i) const {
-  return df_->operator()(k) + i;
+  return df_->operator()(k) * i;
 }
 
 #endif  // EFDOUBLEDISPERSION_H

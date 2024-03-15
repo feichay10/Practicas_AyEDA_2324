@@ -96,6 +96,7 @@ bool HashTable<Key, Container>::search(const Key& k) const {
   } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
     return table_[index]->search(k);
   }
+  return false;
 }
 
 // h(x) = x mod tableSize_ 		
