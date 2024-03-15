@@ -91,12 +91,13 @@ HashTable<Key, Container>::~HashTable() {
 template <class Key, class Container>
 bool HashTable<Key, Container>::search(const Key& k) const {
   unsigned index = (*fd_)(k);
-  if (typeid(Container) == typeid(StaticSequence<Key>)) {
-    return table_[index]->search(k);
-  } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
-    return table_[index]->search(k);
-  }
-  return false;
+  // if (typeid(Container) == typeid(StaticSequence<Key>)) {
+  //   return table_[index]->search(k);
+  // } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
+  //   return table_[index]->search(k);
+  // }
+  // return false;
+  return table_[index]->search(k);
 }
 
 // h(x) = x mod tableSize_ 		
@@ -106,6 +107,10 @@ template <class Key, class Container>
 bool HashTable<Key, Container>::insert(const Key& k) {
   unsigned index = (*fd_)(k); // Calcula la posición inicial utilizando la función de dispersión
   if (typeid(Container) == typeid(StaticSequence<Key>)) {
+    if (table_[index]->search(k)) {
+      std::cout << "Element " << k << " already exists " << std::endl;
+      return false;
+    }
     unsigned i = 1;
     unsigned functionValue = (*fd_)(k);
     while (table_[index]->isFull()) { // Si la posición está ocupada, se calcula la nueva posición
@@ -117,6 +122,10 @@ bool HashTable<Key, Container>::insert(const Key& k) {
     std::cout << "Inserting " << k << " in " << index << std::endl;
     return table_[index]->insert(k);
   } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
+    if (table_[index]->search(k)) {
+      std::cout << "Element " << k << " already exists on the table" << std::endl;
+      return false;
+    }
     std::cout << "Inserting " << k << " in " << index << std::endl;
     return table_[index]->insert(k);
   }
@@ -141,12 +150,27 @@ bool HashTable<Key, Container>::insertByFile(std::string file) {
 template <class Key, class Container>
 bool HashTable<Key, Container>::remove(const Key& k) {
   unsigned index = (*fd_)(k);
-  if (typeid(Container) == typeid(StaticSequence<Key>)) {
-    return table_[index]->remove(k);
-  } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
+  if (!table_[index]->search(k)) {
+    std::cout << "Element " << k << " does not exist" << std::endl;
+    return false;
+  } else {
+    std::cout << "Removing " << k << " from " << index << std::endl;
     return table_[index]->remove(k);
   }
   return false;
+
+  // if (typeid(Container) == typeid(StaticSequence<Key>)) {
+  //   if (!table_[index]->search(k)) {
+  //     std::cout << "Element " << k << " does not exist" << std::endl;
+  //     return false;
+  //   } else {
+  //     std::cout << "Removing " << k << " from " << index << std::endl;
+  //     return table_[index]->remove(k);
+  //   }
+  // } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
+  //   return table_[index]->remove(k);
+  // }
+  // return false;
 }
 
 template <class Key, class Container>

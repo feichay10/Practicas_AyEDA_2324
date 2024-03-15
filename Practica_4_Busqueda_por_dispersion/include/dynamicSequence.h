@@ -65,10 +65,6 @@ bool DynamicSequence<Key>::search(const Key& k) const {
 
 template <class Key>
 bool DynamicSequence<Key>::insert(const Key& k) {
-  if (search(k)) {
-    std::cout << "Element " << k << " already exists " << std::endl;
-    return false;
-  }
   size_++;
   Key* temp = new Key[size_];
   for (int i = 0; i < size_ - 1; ++i) {
@@ -97,10 +93,6 @@ bool DynamicSequence<Key>::insertByFile(std::string file) {
 
 template <class Key>
 bool DynamicSequence<Key>::remove(const Key& k) {
-  if (!search(k)) {
-    std::cout << "Element " << k << " does not exist " << std::endl;
-    return false;
-  }
   size_--;
   Key* temp = new Key[size_];
   int j = 0;

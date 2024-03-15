@@ -199,7 +199,7 @@ void menu(HashTableType& hashTable) {
       }
       case 2: {
         keyType key;
-        std::cout << kBold << "Enter the key to search" << kReset;
+        std::cout << kBold << "Enter the key to search: " << kReset;
         std::cin >> key;
         if (!hashTable.search(key)) {
           std::cout << "The key " << kCyanBold << key << kReset << kRedBold << " is not" << kReset << " on the table." << kReset << std::endl << std::endl;
@@ -210,7 +210,7 @@ void menu(HashTableType& hashTable) {
       }
       case 3: {
         keyType key;
-        std::cout << kBold << "Enter the key to remove " << kReset;
+        std::cout << kBold << "Enter the key to remove: " << kReset;
         std::cin >> key;
         hashTable.remove(key);
         hashTable.print();

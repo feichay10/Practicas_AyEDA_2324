@@ -71,11 +71,6 @@ bool StaticSequence<Key>::search(const Key& k) const {
 
 template <class Key>
 bool StaticSequence<Key>::insert(const Key& k) {
-  if (search(k)) {
-    std::cout << "Element " << k << " already exists " << std::endl;
-    return false;
-  }
-
   for (unsigned i = 0; i < blockSize_; i++) {
     if (data_[i] == 0) {
       data_[i] = k;
@@ -114,16 +109,18 @@ bool StaticSequence<Key>::isFull() const {
   return true;
 }
 
+// TODO: Remove the element from the array and shift the elements to the left
 template <class Key>
 bool StaticSequence<Key>::remove(const Key& k) {
-  if (!search(k)) {
-    std::cout << "Element " << k << " does not exist " << std::endl;
-    return false;
-  }
   for (unsigned i = 0; i < blockSize_; i++) {
     if (data_[i] == k) {
       data_[i] = 0;
       std::cout << "Element " << k << " removed " << std::endl;
+      // Shift the elements to the left and remove the last element
+      for (unsigned j = i; j < blockSize_ - 1; j++) {
+        data_[j] = data_[j + 1];
+      }
+      data_[blockSize_ - 1] = 0;
       return true;
     }
   }

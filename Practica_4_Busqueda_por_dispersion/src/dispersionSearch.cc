@@ -21,6 +21,7 @@
 
 //TODO: Check when inserted element is already in the table
 //TODO: Check the enter key is a valid nif, with a length of 8 characters
+//TODO: Check why the program is not working well when in the parameters set only for dispersion open and warning message is out
 
 int main(int argc, char* argv[]) {
   HashTableParameters parameters;
