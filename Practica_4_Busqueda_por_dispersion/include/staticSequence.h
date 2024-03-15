@@ -36,6 +36,7 @@ class StaticSequence : public Sequence<Key> {
   bool insert(const Key& k);
   bool insertByFile(std::string file);
   bool remove(const Key& k);
+  bool clear();
   bool isFull() const;
   void print();
 
@@ -125,6 +126,14 @@ bool StaticSequence<Key>::remove(const Key& k) {
     }
   }
   return false;
+}
+
+template <class Key>
+bool StaticSequence<Key>::clear() {
+  for (unsigned i = 0; i < blockSize_; i++) {
+    data_[i] = 0;
+  }
+  return true;
 }
 
 template <class Key>

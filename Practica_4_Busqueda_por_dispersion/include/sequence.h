@@ -28,6 +28,7 @@ class Sequence {
   virtual bool insert(const Key& k) = 0;
   virtual bool insertByFile(std::string file) = 0;
   virtual bool remove(const Key& k) = 0;
+  virtual bool clear() = 0;
   virtual bool isFull() const = 0;
   virtual void print() = 0;
 };

@@ -21,6 +21,7 @@
 
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 #include "../include/dfModule.h"
 #include "../include/dfRandom.h"
@@ -40,6 +41,9 @@
 const std::string kRedBold = "\033[1;31m";
 const std::string kGreenBold = "\033[1;32m";
 const std::string kCyanBold = "\033[36m\033[1m";
+const std::string kPurpleBold = "\033[35m\033[1m";
+const std::string kBlueBold = "\033[33m\033[1m";
+const std::string kGrayBold = "\033[37m\033[1m";
 const std::string kBold = "\033[1m";
 const std::string kReset = "\033[0m";
 

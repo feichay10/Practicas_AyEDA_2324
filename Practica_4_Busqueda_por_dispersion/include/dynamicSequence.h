@@ -35,6 +35,7 @@ class DynamicSequence : public Sequence<Key> {
   bool insert(const Key& k);
   bool insertByFile(std::string file);
   bool remove(const Key& k);
+  bool clear();
   bool isFull() const;
   void print();
 
@@ -88,6 +89,13 @@ bool DynamicSequence<Key>::insertByFile(std::string file) {
     insert(key);
   }
   fileStream.close();
+  return true;
+}
+
+template <class Key>
+bool DynamicSequence<Key>::clear() {
+  delete[] data_;
+  size_ = 0;
   return true;
 }
 

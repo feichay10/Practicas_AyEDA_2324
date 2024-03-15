@@ -37,17 +37,15 @@
 template <class Key, class Container = StaticSequence<Key>>
 class HashTable {
  public:
-  HashTable(unsigned tableSize, DispersionFunction<Key>& fd,
-            ExplorationFunction<Key>& fe,
-            unsigned blockSize);           // Dispersion cerrada
-  HashTable(unsigned tableSize,
-            DispersionFunction<Key>& fd);  // Dispersion abierta
+  HashTable(unsigned tableSize, DispersionFunction<Key>& fd, ExplorationFunction<Key>& fe, unsigned blockSize); // Dispersion cerrada
+  HashTable(unsigned tableSize, DispersionFunction<Key>& fd); // Dispersion abierta
   ~HashTable();
 
   bool search(const Key& k) const;
   bool insert(const Key& k);
   bool insertByFile(std::string file);
   bool remove(const Key& k);
+  bool clear();
   void print();
 
  private:
@@ -171,6 +169,14 @@ bool HashTable<Key, Container>::remove(const Key& k) {
   //   return table_[index]->remove(k);
   // }
   // return false;
+}
+
+template <class Key, class Container>
+bool HashTable<Key, Container>::clear() {
+  for (unsigned i = 0; i < tableSize_; i++) {
+    table_[i]->clear();
+  }
+  return true;
 }
 
 template <class Key, class Container>
