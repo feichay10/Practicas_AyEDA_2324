@@ -99,23 +99,25 @@ bool HashTable<Key, Container>::search(const Key& k) const {
   return false;
 }
 
+// h(x) = x mod tableSize_ 		
+// g(x,i) = i*i (fd_)
+// (h(x) + g(x,i)) mod 7 
 template <class Key, class Container>
 bool HashTable<Key, Container>::insert(const Key& k) {
-  unsigned index = (*fd_)(k);
+  unsigned index = (*fd_)(k); // Calcula la posición inicial utilizando la función de dispersión
   if (typeid(Container) == typeid(StaticSequence<Key>)) {
-    if (!(*table_[index]).insert(k)) {
-      int attempt = 0;
-      while (attempt < tableSize_) {
-        index = (*fe_)(k, attempt) % tableSize_;
-        if (index < tableSize_) {
-          (*table_[index]).insert(k);
-          return true;
-        }
-        attempt++;
-      }
-      return false;
+    unsigned i = 1;
+    while (table_[index]->isFull()) {
+      std::cout << "Index: " << index << std::endl;
+      std::cout << "Element " << k << " cannot be inserted in " << index << " because it is full." << std::endl;
+      index = (index + (*fe_)(k, i)) % tableSize_;
+      std::cout << "New index: " << index << std::endl;
+      i++;
     }
-    return false;
+    std::cout << "Inserting " << k << " in " << index << std::endl;
+    return table_[index]->insert(k);
+
+
   } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
     std::cout << "Inserting " << k << " in " << index << std::endl;
     return table_[index]->insert(k);
