@@ -84,10 +84,6 @@ bool StaticSequence<Key>::insert(const Key& k) {
 template <class Key>
 bool StaticSequence<Key>::insertByFile(std::string file) {
   std::ifstream fileStream(file);
-  if (!fileStream.is_open()) {
-    std::cout << "File " << file << " does not exist" << std::endl;
-    return false;
-  }
   std::vector<Key> keys;
   Key key;
   while (fileStream >> key) {

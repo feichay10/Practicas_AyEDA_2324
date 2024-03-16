@@ -150,14 +150,14 @@ bool HashTable<Key, Container>::insert(const Key& k) {
     unsigned i = 1;
     unsigned functionValue = (*fd_)(k);
     while (table_[index]->isFull()) { // Si la posición está ocupada, se calcula la nueva posición
-      std::cout << "Collision in " << index << std::endl;
-      unsigned explorationFunctionValue = (*fe_)(k, i);
-      index = (functionValue + explorationFunctionValue) % tableSize_;
-      i++;
       if (table_[index]->isFull()) {
         std::cout << "Table is full" << std::endl;
         return false;
       }
+      std::cout << "Collision in " << index << std::endl;
+      unsigned explorationFunctionValue = (*fe_)(k, i);
+      index = (functionValue + explorationFunctionValue) % tableSize_;
+      i++;
     }
     std::cout << "Inserting " << k << " in " << index << std::endl;
     return table_[index]->insert(k);

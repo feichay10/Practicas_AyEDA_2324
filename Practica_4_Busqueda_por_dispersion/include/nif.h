@@ -21,53 +21,24 @@
 #include <ctime>
 #include <iostream>
 
-const char letters[] = "TRWAGMYFPDXBNJZSQVHLCKE";
-
 class Nif {
  public:
-  Nif() {
-    srand(time(NULL));
-    nif_ = rand() % 100000000;
-  }
-  
-  Nif(const long nif) { nif_ = nif; }
+  Nif();
+  Nif(const long nif);
 
-  char letterNif(Nif nif) {
-    return letters[nif.nif_ % 23];
-  }
-  
-  bool checkNif(Nif nif) {
-    std::string nif_string = std::to_string(nif.nif_);
-    if (nif_string.size() != 8) {
-      return false;
-    }
-    return true;
-  }
-  
-  bool operator==(const Nif& other) const { return nif_ == other.nif_; }
-  bool operator==(int other) const { return nif_ == other; }
-  bool operator!=(const Nif& other) const { return !(*this == other); }
-  operator long() { return nif_; }
-  operator unsigned int() const { return nif_; }
-  unsigned int operator%(unsigned int m) const { return nif_ % m; }
+  char letterNif(Nif nif);
+  bool checkNif(Nif nif);
 
-  unsigned operator[](unsigned i) const {
-    std::string nif_string = std::to_string(nif_);
-    if (i >= nif_string.size()) {
-      return 0;
-    }
-    return nif_string[i] - '0';
-  }
+  bool operator==(const Nif& other) const;
+  bool operator==(int other) const;
+  bool operator!=(const Nif& other) const;
+  operator long();
+  operator unsigned int() const;
+  unsigned int operator%(unsigned int m) const;
+  unsigned operator[](unsigned i) const;
 
-  friend std::ostream& operator<<(std::ostream& os, const Nif& nif) {
-    os << nif.nif_;
-    return os;
-  }
-
-  friend std::istream& operator>>(std::istream& is, Nif& nif) {
-    is >> nif.nif_;
-    return is;
-  }
+  friend std::ostream& operator<<(std::ostream& os, const Nif& nif);
+  friend std::istream& operator>>(std::istream& is, Nif& nif);
 
   // For dfSum class
   auto begin() const { return std::to_string(nif_).begin(); }
