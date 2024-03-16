@@ -18,6 +18,11 @@
 #ifndef EXPLORATIONFUNCTION_H
 #define EXPLORATIONFUNCTION_H
 
+/**
+ * @brief Abstract class that represents the exploration function
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class ExplorationFunction {
  public:

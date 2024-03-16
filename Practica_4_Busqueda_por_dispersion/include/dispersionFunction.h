@@ -20,6 +20,11 @@
 
 #include "nif.h"
 
+/**
+ * @brief Abstract class that represents the dispersion function
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class DispersionFunction {
  public:

@@ -18,12 +18,14 @@
 
 #include "../include/functions.h"
 
-HashTableParameters checkProgramParameters(int argc, char* argv[], HashTableParameters& parameters) {
+HashTableParameters checkProgramParameters(int argc, char* argv[],
+                                           HashTableParameters& parameters) {
   if (argc == 2 && std::string(argv[1]) == "-help") {
     throw kUsage;
     exit(EXIT_FAILURE);
   } else if (argc == 1) {
-    throw std::string("No arguments provided. Use ") + argv[0] + " -help for more information.";
+    throw std::string("No arguments provided. Use ") + argv[0] +
+        " -help for more information.";
     exit(EXIT_FAILURE);
   }
 
@@ -31,7 +33,8 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
     if (std::string(argv[i]) == "-ts") {
       if (i + 1 < argc) {
         if (std::stoi(argv[i + 1]) < 1) {
-          throw std::string("Invalid table size. Table size must be greater than 0.");
+          throw std::string(
+              "Invalid table size. Table size must be greater than 0.");
           exit(EXIT_FAILURE);
         } else {
           parameters.tableSize = std::stoi(argv[i + 1]);
@@ -42,7 +45,9 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
       }
     } else if (std::string(argv[i]) == "-fd") {
       if (i + 1 < argc) {
-        if (std::string(argv[i + 1]) != "module" && std::string(argv[i + 1]) != "sum" && std::string(argv[i + 1]) != "random") {
+        if (std::string(argv[i + 1]) != "module" &&
+            std::string(argv[i + 1]) != "sum" &&
+            std::string(argv[i + 1]) != "random") {
           throw std::string("Invalid dispersion function. Use random or sum.");
           exit(EXIT_FAILURE);
         } else {
@@ -51,7 +56,8 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
       }
     } else if (std::string(argv[i]) == "-hash") {
       if (i + 1 < argc) {
-        if (std::string(argv[i + 1]) != "open" && std::string(argv[i + 1]) != "close") {
+        if (std::string(argv[i + 1]) != "open" &&
+            std::string(argv[i + 1]) != "close") {
           throw std::string("Invalid dispersion technic. Use open or closed.");
           exit(EXIT_FAILURE);
         } else {
@@ -61,11 +67,14 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
     } else if (std::string(argv[i]) == "-bs") {
       if (i + 1 < argc) {
         if (std::stoi(argv[i + 1]) < 1) {
-          throw std::string("Invalid block size. Block size must be greater than 0.");
+          throw std::string(
+              "Invalid block size. Block size must be greater than 0.");
           exit(EXIT_FAILURE);
         } else {
           if (std::stoi(argv[i + 1]) > parameters.tableSize) {
-            throw std::string("Invalid block size. Block size must be less than the table size.");
+            throw std::string(
+                "Invalid block size. Block size must be less than the table "
+                "size.");
             exit(EXIT_FAILURE);
           } else {
             parameters.blockSize = std::stoi(argv[i + 1]);
@@ -75,10 +84,15 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
         throw std::string("Block size not provided.");
         exit(EXIT_FAILURE);
       }
-    } else if (std::string (argv[i]) == "-fe") {
+    } else if (std::string(argv[i]) == "-fe") {
       if (i + 1 < argc) {
-        if (std::string(argv[i + 1]) != "lineal" && std::string(argv[i + 1]) != "quadratic" && std::string(argv[i + 1]) != "double" && std::string(argv[i + 1]) != "redispersion") {
-          throw std::string("Invalid exploration function. Use lineal, quadratic, double or redispersion.");
+        if (std::string(argv[i + 1]) != "lineal" &&
+            std::string(argv[i + 1]) != "quadratic" &&
+            std::string(argv[i + 1]) != "double" &&
+            std::string(argv[i + 1]) != "redispersion") {
+          throw std::string(
+              "Invalid exploration function. Use lineal, quadratic, double or "
+              "redispersion.");
           exit(EXIT_FAILURE);
         } else {
           parameters.explorationFunction = std::string(argv[i + 1]);
@@ -90,7 +104,8 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
   if (parameters.dispersionTechnic == "open" && parameters.blockSize != 0) {
     throw std::string("Block size is only for close dispersion.");
     exit(EXIT_FAILURE);
-  } else if (parameters.dispersionTechnic == "open" && parameters.explorationFunction != "") {
+  } else if (parameters.dispersionTechnic == "open" &&
+             parameters.explorationFunction != "") {
     throw std::string("Exploration function is only for close dispersion.");
     exit(EXIT_FAILURE);
   }
@@ -104,17 +119,40 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
     parameters.explorationFunction = "lineal";
   }
 
-  std::cout << kPurpleBold << "+------------------------------------+" << std::endl;
-  std::cout << "|          " << kReset << kCyanBold << "Hash Information" << kReset << kPurpleBold << "          |" << std::endl;
-  std::cout << "+------------------------------------+"<< kReset << std::endl;
-  std::cout << kPurpleBold << "|" << kReset << kGrayBold << " Table size: " << kBlueBold << parameters.tableSize << kPurpleBold << std::setw(24 - std::to_string(parameters.tableSize).length()) << "|" << kReset << std::endl;
-  std::cout << kPurpleBold << "|" << kReset << kGrayBold << " Dispersion function: " << kBlueBold << parameters.dispersionFunction << kPurpleBold << std::setw(15 - parameters.dispersionFunction.length()) << "|" << kReset << std::endl;
-  std::cout << kPurpleBold << "|" << kReset << kGrayBold << " Dispersion technic: " << kBlueBold << parameters.dispersionTechnic << kPurpleBold << std::setw(16 - parameters.dispersionTechnic.length()) << "|" << kReset << std::endl;
+  std::cout << kPurpleBold << "+------------------------------------+"
+            << std::endl;
+  std::cout << "|          " << kReset << kCyanBold << "Hash Information"
+            << kReset << kPurpleBold << "          |" << std::endl;
+  std::cout << "+------------------------------------+" << kReset << std::endl;
+  std::cout << kPurpleBold << "|" << kReset << kGrayBold
+            << " Table size: " << kBlueBold << parameters.tableSize
+            << kPurpleBold
+            << std::setw(24 - std::to_string(parameters.tableSize).length())
+            << "|" << kReset << std::endl;
+  std::cout << kPurpleBold << "|" << kReset << kGrayBold
+            << " Dispersion function: " << kBlueBold
+            << parameters.dispersionFunction << kPurpleBold
+            << std::setw(15 - parameters.dispersionFunction.length()) << "|"
+            << kReset << std::endl;
+  std::cout << kPurpleBold << "|" << kReset << kGrayBold
+            << " Dispersion technic: " << kBlueBold
+            << parameters.dispersionTechnic << kPurpleBold
+            << std::setw(16 - parameters.dispersionTechnic.length()) << "|"
+            << kReset << std::endl;
   if (parameters.dispersionTechnic == "close") {
-    std::cout << kPurpleBold << "|" << kReset << " Block size: " << parameters.blockSize << kPurpleBold<< std::setw(24 - std::to_string(parameters.blockSize).length()) << "|" << kReset << std::endl;
-    std::cout << kPurpleBold << "|" << kReset << " Exploration function: " << parameters.explorationFunction << kPurpleBold << std::setw(14 - parameters.explorationFunction.length()) << kReset << "|" << std::endl;
+    std::cout << kPurpleBold << "|" << kReset << kGrayBold
+              << " Block size: " << kBlueBold << parameters.blockSize
+              << kPurpleBold
+              << std::setw(24 - std::to_string(parameters.blockSize).length())
+              << "|" << kReset << std::endl;
+    std::cout << kPurpleBold << "|" << kReset << kGrayBold
+              << " Exploration function: " << kBlueBold
+              << parameters.explorationFunction << kReset << kPurpleBold
+              << std::setw(14 - parameters.explorationFunction.length()) << "|"
+              << kReset << std::endl;
   }
-  std::cout << kPurpleBold << "+------------------------------------+" << kReset << std::endl;
+  std::cout << kPurpleBold << "+------------------------------------+" << kReset
+            << std::endl;
 
   return parameters;
 }
@@ -122,7 +160,7 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
 void makeHashTable(HashTableParameters& parameters) {
   DispersionFunction<keyType>* dispersionFunction;
   ExplorationFunction<keyType>* explorationFunction;
-  
+
   if (parameters.dispersionFunction == "module") {
     dispersionFunction = new dfModule<keyType>(parameters.tableSize);
   } else if (parameters.dispersionFunction == "sum") {
@@ -154,14 +192,22 @@ void menu(HashTableType& hashTable) {
   std::string option;
   int optionMenu;
   while (true) {
-    std::cout << kGrayBold << "\n###### Hash Table ######" << kReset << std::endl;
-    std::cout << kRedBold << "  [1]." << kReset << kBold << " Insert" << std::endl;
-    std::cout << kRedBold << "  [2]." << kReset << kBold << " Insert by file" << kReset << std::endl;
-    std::cout << kRedBold << "  [3]." << kReset << kBold << " Search" << std::endl;
-    std::cout << kRedBold << "  [4]." << kReset << kBold << " Remove" << kReset << std::endl;
-    std::cout << kRedBold << "  [5]." << kReset << kBold << " Clear table" << kReset << std::endl;
-    std::cout << kRedBold << "  [6]." << kReset << kBold << " Print table" << std::endl;
-    std::cout << kRedBold << "  [7]." << kReset << kBold << " Exit" << kReset << std::endl;
+    std::cout << kGrayBold << "\n###### Hash Table ######" << kReset
+              << std::endl;
+    std::cout << kRedBold << "  [1]." << kReset << kBold << " Insert"
+              << std::endl;
+    std::cout << kRedBold << "  [2]." << kReset << kBold << " Insert by file"
+              << kReset << std::endl;
+    std::cout << kRedBold << "  [3]." << kReset << kBold << " Search"
+              << std::endl;
+    std::cout << kRedBold << "  [4]." << kReset << kBold << " Remove" << kReset
+              << std::endl;
+    std::cout << kRedBold << "  [5]." << kReset << kBold << " Clear table"
+              << kReset << std::endl;
+    std::cout << kRedBold << "  [6]." << kReset << kBold << " Print table"
+              << std::endl;
+    std::cout << kRedBold << "  [7]." << kReset << kBold << " Exit" << kReset
+              << std::endl;
     std::cout << "Select an option: ";
     std::cin >> option;
 
@@ -169,7 +215,7 @@ void menu(HashTableType& hashTable) {
     if (option.size() == 1 && isalpha(option[0])) {
       std::cout << kRedBold << "Invalid option" << kReset << std::endl;
       continue;
-    } 
+    }
 
     // If the option is a number, convert it to an integer
     if (isalnum(option[0]) && option.size() == 1) {
@@ -179,12 +225,12 @@ void menu(HashTableType& hashTable) {
       continue;
     }
 
-    // If the option is a string that is not a number, display an invalid option message
+    // If the option is a string that is not a number, display an invalid option
+    // message
     if (option.size() > 1) {
       std::cout << kRedBold << "Invalid option" << kReset << std::endl;
       continue;
     }
-
 
     switch (optionMenu) {
       case 1: {
@@ -208,9 +254,15 @@ void menu(HashTableType& hashTable) {
         std::cout << kGrayBold << "Enter the key to search: " << kReset;
         std::cin >> key;
         if (!hashTable.search(key)) {
-          std::cout << "The key " << kCyanBold << key << kReset << kRedBold << " is not" << kReset << " on the table." << kReset << std::endl << std::endl;
+          std::cout << "The key " << kCyanBold << key << kReset << kRedBold
+                    << " is not" << kReset << " on the table." << kReset
+                    << std::endl
+                    << std::endl;
         } else {
-          std::cout << "The key " << kCyanBold << key << kReset << kGreenBold << " is" << kReset << " on the table." << kReset << std::endl << std::endl;
+          std::cout << "The key " << kCyanBold << key << kReset << kGreenBold
+                    << " is" << kReset << " on the table." << kReset
+                    << std::endl
+                    << std::endl;
         }
         break;
       }
@@ -230,7 +282,7 @@ void menu(HashTableType& hashTable) {
       case 6:
         std::cout << kGrayBold << "Hash Table: " << kReset << std::endl;
         hashTable.print();
-        break; 
+        break;
       case 7:
         std::cout << "Exiting..." << std::endl;
         exit(EXIT_SUCCESS);

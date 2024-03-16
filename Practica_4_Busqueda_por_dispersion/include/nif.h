@@ -31,6 +31,7 @@ class Nif {
   }
   
   Nif(const long nif) { nif_ = nif; }
+
   char letterNif(Nif nif) {
     return letters[nif.nif_ % 23];
   }

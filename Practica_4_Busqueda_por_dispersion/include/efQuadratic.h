@@ -20,12 +20,25 @@
 
 #include "explorationFunction.h"
 
+/**
+ * @brief Class for implementing quadratic exploration technique
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class efQuadratic : public ExplorationFunction<Key> {
  public:
   unsigned operator()(const Key& k, unsigned i) const override;
 };
 
+/**
+ * @brief Operator for quadratic exploration
+ * 
+ * @tparam Key 
+ * @param k 
+ * @param i 
+ * @return unsigned 
+ */
 template <class Key>
 unsigned efQuadratic<Key>::operator()(const Key& k, unsigned i) const {
   return i * i;

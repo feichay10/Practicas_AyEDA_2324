@@ -30,10 +30,15 @@
 #include "../include/efQuadratic.h"
 #include "../include/efRedispersion.h"
 #include "../include/explorationFunction.h"
-#include "../include/functions.h"
 #include "../include/sequence.h"
 #include "../include/staticSequence.h"
 
+/**
+ * @brief Class for implementing a hash table
+ * 
+ * @tparam Key 
+ * @tparam Container 
+ */
 template <class Key, class Container = StaticSequence<Key>>
 class HashTable {
  public:
@@ -58,6 +63,16 @@ class HashTable {
   unsigned blockSize_;
 };
 
+/**
+ * @brief Construct a new Hash Table< Key,  Container>:: Hash Table object
+ * 
+ * @tparam Key 
+ * @tparam Container 
+ * @param tableSize 
+ * @param fd 
+ * @param fe 
+ * @param blockSize 
+ */
 template <class Key, class Container>
 HashTable<Key, Container>::HashTable(unsigned tableSize,
                                      DispersionFunction<Key>& fd,
@@ -70,6 +85,14 @@ HashTable<Key, Container>::HashTable(unsigned tableSize,
   createTable();
 }
 
+/**
+ * @brief Construct a new Hash Table< Key,  Container>:: Hash Table object
+ * 
+ * @tparam Key 
+ * @tparam Container 
+ * @param tableSize 
+ * @param fd 
+ */
 template <class Key, class Container>
 HashTable<Key, Container>::HashTable(unsigned tableSize,
                                      DispersionFunction<Key>& fd) {
@@ -78,6 +101,12 @@ HashTable<Key, Container>::HashTable(unsigned tableSize,
   createTable();
 }
 
+/**
+ * @brief Destroy the Hash Table< Key,  Container>:: Hash Table object
+ * 
+ * @tparam Key 
+ * @tparam Container 
+ */
 template <class Key, class Container>
 HashTable<Key, Container>::~HashTable() {
   for (unsigned i = 0; i < tableSize_; i++) {
@@ -86,21 +115,30 @@ HashTable<Key, Container>::~HashTable() {
   delete[] table_;
 }
 
+/**
+ * @brief Method that searches for a key in the table
+ * 
+ * @tparam Key 
+ * @tparam Container 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template <class Key, class Container>
 bool HashTable<Key, Container>::search(const Key& k) const {
   unsigned index = (*fd_)(k);
-  // if (typeid(Container) == typeid(StaticSequence<Key>)) {
-  //   return table_[index]->search(k);
-  // } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
-  //   return table_[index]->search(k);
-  // }
-  // return false;
   return table_[index]->search(k);
 }
 
-// h(x) = x mod tableSize_ 		
-// g(x,i) = i*i (fd_)
-// (h(x) + g(x,i)) mod tableSize
+/**
+ * @brief Method that inserts a key in the table
+ * 
+ * @tparam Key 
+ * @tparam Container 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template <class Key, class Container>
 bool HashTable<Key, Container>::insert(const Key& k) {
   unsigned index = (*fd_)(k); // Calcula la posición inicial utilizando la función de dispersión
@@ -130,6 +168,15 @@ bool HashTable<Key, Container>::insert(const Key& k) {
   return false;
 }
 
+/**
+ * @brief Method that inserts a key in the table from a file
+ * 
+ * @tparam Key 
+ * @tparam Container 
+ * @param file 
+ * @return true 
+ * @return false 
+ */
 template <class Key, class Container>
 bool HashTable<Key, Container>::insertByFile(std::string file) {
   std::ifstream fileStream(file);
@@ -145,6 +192,15 @@ bool HashTable<Key, Container>::insertByFile(std::string file) {
   return true;
 }
 
+/**
+ * @brief Method that removes a key from the table
+ * 
+ * @tparam Key 
+ * @tparam Container 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template <class Key, class Container>
 bool HashTable<Key, Container>::remove(const Key& k) {
   unsigned index = (*fd_)(k);
@@ -156,21 +212,17 @@ bool HashTable<Key, Container>::remove(const Key& k) {
     return table_[index]->remove(k);
   }
   return false;
-
-  // if (typeid(Container) == typeid(StaticSequence<Key>)) {
-  //   if (!table_[index]->search(k)) {
-  //     std::cout << "Element " << k << " does not exist" << std::endl;
-  //     return false;
-  //   } else {
-  //     std::cout << "Removing " << k << " from " << index << std::endl;
-  //     return table_[index]->remove(k);
-  //   }
-  // } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
-  //   return table_[index]->remove(k);
-  // }
-  // return false;
 }
 
+
+/**
+ * @brief Method that clears the table
+ * 
+ * @tparam Key 
+ * @tparam Container 
+ * @return true 
+ * @return false 
+ */
 template <class Key, class Container>
 bool HashTable<Key, Container>::clear() {
   for (unsigned i = 0; i < tableSize_; i++) {
@@ -179,6 +231,12 @@ bool HashTable<Key, Container>::clear() {
   return true;
 }
 
+/**
+ * @brief Method that prints the table
+ * 
+ * @tparam Key 
+ * @tparam Container 
+ */
 template <class Key, class Container>
 void HashTable<Key, Container>::print() {
   for (int i = 0; i < tableSize_; ++i) {
@@ -188,6 +246,12 @@ void HashTable<Key, Container>::print() {
   }
 }
 
+/**
+ * @brief Method that creates the table
+ * 
+ * @tparam Key 
+ * @tparam Container 
+ */
 template <class Key, class Container>
 void HashTable<Key, Container>::createTable() {
   table_ = new Sequence<Key>*[tableSize_];

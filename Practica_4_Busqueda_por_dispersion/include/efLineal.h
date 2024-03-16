@@ -20,12 +20,25 @@
 
 #include "explorationFunction.h"
 
+/**
+ * @brief Class for implementing lineal exploration technique
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class efLineal : public ExplorationFunction<Key> {
  public:
   unsigned operator()(const Key& k, unsigned i) const override;
 };
 
+/**
+ * @brief Operator for lineal exploration
+ * 
+ * @tparam Key 
+ * @param k 
+ * @param i 
+ * @return unsigned 
+ */
 template <class Key>
 unsigned efLineal<Key>::operator()(const Key& k, unsigned i) const {
   return i;

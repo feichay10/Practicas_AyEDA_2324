@@ -21,6 +21,11 @@
 #include "dispersionFunction.h"
 #include "explorationFunction.h"
 
+/**
+ * @brief Class for implementing redispersion exploration technique
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class efRedispersion : public ExplorationFunction<Key> {
  public:
@@ -32,6 +37,14 @@ class efRedispersion : public ExplorationFunction<Key> {
   DispersionFunction<Key>* df_;
 };
 
+/**
+ * @brief Operator for redispersion exploration
+ * 
+ * @tparam Key 
+ * @param k 
+ * @param i 
+ * @return unsigned 
+ */
 template <class Key>
 unsigned efRedispersion<Key>::operator()(const Key& k, unsigned i) const {
   srand(k);

@@ -21,8 +21,11 @@
 #include "dispersionFunction.h"
 #include "explorationFunction.h"
 
-//  la implementación de la función de exploración por dispersión doble, la función
-// de dispersión auxiliar f(k) se pasa por parámetro al constructor de la clase derivada
+/**
+ * @brief Class for implementing double dispersion exploration technique
+ * 
+ * @tparam Key 
+ */
 template<class Key>
 class efDoubleDispersion : public ExplorationFunction<Key> {
  public:
@@ -34,7 +37,14 @@ class efDoubleDispersion : public ExplorationFunction<Key> {
   DispersionFunction<Key>* df_;
 };
 
-//  g(k,i) = f(k) * i 
+/**
+ * @brief Operator for double dispersion exploration
+ * 
+ * @tparam Key 
+ * @param k 
+ * @param i 
+ * @return unsigned 
+ */
 template<class Key>
 unsigned efDoubleDispersion<Key>::operator()(const Key& k, unsigned i) const {
   return df_->operator()(k) * i;

@@ -44,16 +44,34 @@ class DynamicSequence : public Sequence<Key> {
   unsigned size_ = 0;
 };
 
+/**
+ * @brief Construct a new Dynamic Sequence< Key>:: Dynamic Sequence object
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 DynamicSequence<Key>::DynamicSequence() {
   data_ = new Key[size_];
 }
 
+/**
+ * @brief Destroy the Dynamic Sequence< Key>:: Dynamic Sequence object
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 DynamicSequence<Key>::~DynamicSequence() {
   delete[] data_;
 }
 
+/**
+ * @brief Method that searches for a key in the table
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool DynamicSequence<Key>::search(const Key& k) const {
   for (int i = 0; i < size_; i++) {
@@ -64,6 +82,13 @@ bool DynamicSequence<Key>::search(const Key& k) const {
   return false;
 }
 
+/**
+ * @brief Method that inserts a key in the table
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return true 
+ */
 template <class Key>
 bool DynamicSequence<Key>::insert(const Key& k) {
   size_++;
@@ -77,6 +102,14 @@ bool DynamicSequence<Key>::insert(const Key& k) {
   return true;
 }
 
+/**
+ * @brief Method that inserts a key in the table from a file
+ * 
+ * @tparam Key 
+ * @param file 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool DynamicSequence<Key>::insertByFile(std::string file) {
   std::ifstream fileStream(file);
@@ -92,6 +125,12 @@ bool DynamicSequence<Key>::insertByFile(std::string file) {
   return true;
 }
 
+/**
+ * @brief Method that clears the table
+ * 
+ * @tparam Key 
+ * @return true 
+ */
 template <class Key>
 bool DynamicSequence<Key>::clear() {
   delete[] data_;
@@ -99,6 +138,14 @@ bool DynamicSequence<Key>::clear() {
   return true;
 }
 
+/**
+ * @brief Method that removes a key from the table
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool DynamicSequence<Key>::remove(const Key& k) {
   size_--;
@@ -115,11 +162,23 @@ bool DynamicSequence<Key>::remove(const Key& k) {
   return true;
 }
 
+/**
+ * @brief Method that checks if the table is full
+ * 
+ * @tparam Key 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool DynamicSequence<Key>::isFull() const {
   return false;
 }
 
+/**
+ * @brief Method that prints the table
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 void DynamicSequence<Key>::print() {
   for (int i = 0; i < size_; ++i) {

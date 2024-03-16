@@ -20,6 +20,11 @@
 
 #include "dispersionFunction.h"
 
+/**
+ * @brief Class that represents the module dispersion function
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class dfModule : public DispersionFunction<Key> {
  public:
@@ -30,7 +35,13 @@ class dfModule : public DispersionFunction<Key> {
   unsigned tableSize_;
 };
 
-// Basada en el módulo, h(k) = k % tableSize
+/**
+ * @brief Operator that returns the module of the key
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return unsigned 
+ */
 template <class Key>
 unsigned dfModule<Key>::operator()(const Key &k) const {
   return k % tableSize_;

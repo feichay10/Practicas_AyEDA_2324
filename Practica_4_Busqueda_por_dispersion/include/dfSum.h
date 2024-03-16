@@ -20,6 +20,11 @@
 
 #include "dispersionFunction.h"
 
+/**
+ * @brief Class that represents the sum dispersion function
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class dfSum : public DispersionFunction<Key> {
  public:
@@ -30,16 +35,22 @@ class dfSum : public DispersionFunction<Key> {
   unsigned tableSize_; 
 };
 
-// Basada en la suma, h(k) = sum(k_i) % tableSize
+/**
+ * @brief Operator that returns the sum of the key
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return unsigned 
+ */
 template <class Key>
 unsigned dfSum<Key>::operator()(const Key& k) const {
   unsigned sum = 0;
   unsigned count = 0;
-  // Itera sobre los dígitos del NIF para obtener el número de dígitos
+  // Iterate over the digits of the NIF to obtain the number of digits
   for (auto i : k) { 
     count++;
   }
-  // Itera sobre los dígitos del NIF para sumarlos
+  // Iterate over the digits of the NIF to sum them up
   for (unsigned i = 0; i < count; i++) { 
     sum += k[i];
   }

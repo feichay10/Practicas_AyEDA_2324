@@ -23,6 +23,11 @@
 
 #include "dispersionFunction.h"
 
+/**
+ * @brief Class that represents the random dispersion function
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class dfRandom : public DispersionFunction<Key> {
  public:
@@ -34,7 +39,13 @@ class dfRandom : public DispersionFunction<Key> {
   unsigned tableSize_; 
 };
 
-// Basada en pseudoaleatorios, h(k) = {srand(k); rand()}
+/**
+ * @brief Operator that returns the random number of the key
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return unsigned 
+ */
 template <class Key>
 unsigned dfRandom<Key>::operator()(const Key& k) const {
   srand(k);
