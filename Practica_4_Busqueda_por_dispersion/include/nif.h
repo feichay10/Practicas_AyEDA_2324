@@ -36,6 +36,14 @@ class Nif {
     return letters[nif.nif_ % 23];
   }
   
+  bool checkNif(Nif nif) {
+    std::string nif_string = std::to_string(nif.nif_);
+    if (nif_string.size() != 8) {
+      return false;
+    }
+    return true;
+  }
+  
   bool operator==(const Nif& other) const { return nif_ == other.nif_; }
   bool operator==(int other) const { return nif_ == other; }
   bool operator!=(const Nif& other) const { return !(*this == other); }

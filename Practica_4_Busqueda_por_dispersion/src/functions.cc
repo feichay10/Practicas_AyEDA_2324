@@ -18,14 +18,12 @@
 
 #include "../include/functions.h"
 
-HashTableParameters checkProgramParameters(int argc, char* argv[],
-                                           HashTableParameters& parameters) {
+HashTableParameters checkProgramParameters(int argc, char* argv[], HashTableParameters& parameters) {
   if (argc == 2 && std::string(argv[1]) == "-help") {
     throw kUsage;
     exit(EXIT_FAILURE);
   } else if (argc == 1) {
-    throw std::string("No arguments provided. Use ") + argv[0] +
-        " -help for more information.";
+    throw std::invalid_argument("No arguments provided. Use " + std::string(argv[0]) + " -help for more information.");
     exit(EXIT_FAILURE);
   }
 
@@ -33,14 +31,13 @@ HashTableParameters checkProgramParameters(int argc, char* argv[],
     if (std::string(argv[i]) == "-ts") {
       if (i + 1 < argc) {
         if (std::stoi(argv[i + 1]) < 1) {
-          throw std::string(
-              "Invalid table size. Table size must be greater than 0.");
+          throw std::invalid_argument("Invalid table size. Table size must be greater than 0.");
           exit(EXIT_FAILURE);
         } else {
           parameters.tableSize = std::stoi(argv[i + 1]);
         }
       } else {
-        throw std::string("Table size not provided.");
+        throw std::invalid_argument("Table size not provided.");
         exit(EXIT_FAILURE);
       }
     } else if (std::string(argv[i]) == "-fd") {
@@ -48,7 +45,7 @@ HashTableParameters checkProgramParameters(int argc, char* argv[],
         if (std::string(argv[i + 1]) != "module" &&
             std::string(argv[i + 1]) != "sum" &&
             std::string(argv[i + 1]) != "random") {
-          throw std::string("Invalid dispersion function. Use random or sum.");
+          throw std::invalid_argument("Invalid dispersion function. Use random or sum.");
           exit(EXIT_FAILURE);
         } else {
           parameters.dispersionFunction = std::string(argv[i + 1]);
@@ -58,7 +55,7 @@ HashTableParameters checkProgramParameters(int argc, char* argv[],
       if (i + 1 < argc) {
         if (std::string(argv[i + 1]) != "open" &&
             std::string(argv[i + 1]) != "close") {
-          throw std::string("Invalid dispersion technic. Use open or closed.");
+          throw std::invalid_argument("Invalid dispersion technic. Use open or closed.");
           exit(EXIT_FAILURE);
         } else {
           parameters.dispersionTechnic = std::string(argv[i + 1]);
@@ -67,21 +64,18 @@ HashTableParameters checkProgramParameters(int argc, char* argv[],
     } else if (std::string(argv[i]) == "-bs") {
       if (i + 1 < argc) {
         if (std::stoi(argv[i + 1]) < 1) {
-          throw std::string(
-              "Invalid block size. Block size must be greater than 0.");
+          throw std::invalid_argument("Invalid block size. Block size must be greater than 0.");
           exit(EXIT_FAILURE);
         } else {
           if (std::stoi(argv[i + 1]) > parameters.tableSize) {
-            throw std::string(
-                "Invalid block size. Block size must be less than the table "
-                "size.");
+            throw std::invalid_argument("Invalid block size. Block size must be less than the table size.");
             exit(EXIT_FAILURE);
           } else {
             parameters.blockSize = std::stoi(argv[i + 1]);
           }
         }
       } else {
-        throw std::string("Block size not provided.");
+        throw std::invalid_argument("Block size not provided.");
         exit(EXIT_FAILURE);
       }
     } else if (std::string(argv[i]) == "-fe") {
@@ -90,9 +84,7 @@ HashTableParameters checkProgramParameters(int argc, char* argv[],
             std::string(argv[i + 1]) != "quadratic" &&
             std::string(argv[i + 1]) != "double" &&
             std::string(argv[i + 1]) != "redispersion") {
-          throw std::string(
-              "Invalid exploration function. Use lineal, quadratic, double or "
-              "redispersion.");
+          throw std::invalid_argument("Invalid exploration function. Use lineal, quadratic, double or redispersion.");
           exit(EXIT_FAILURE);
         } else {
           parameters.explorationFunction = std::string(argv[i + 1]);
@@ -102,11 +94,12 @@ HashTableParameters checkProgramParameters(int argc, char* argv[],
   }
 
   if (parameters.dispersionTechnic == "open" && parameters.blockSize != 0) {
-    throw std::string("Block size is only for close dispersion.");
+    throw std::invalid_argument("Block size is only for close dispersion.");
     exit(EXIT_FAILURE);
-  } else if (parameters.dispersionTechnic == "open" &&
-             parameters.explorationFunction != "") {
-    throw std::string("Exploration function is only for close dispersion.");
+  } 
+  
+  if (parameters.dispersionTechnic == "open" && parameters.explorationFunction != "") {
+    throw std::invalid_argument("Exploration function is only for close dispersion.");
     exit(EXIT_FAILURE);
   }
 
@@ -234,14 +227,20 @@ void menu(HashTableType& hashTable) {
 
     switch (optionMenu) {
       case 1: {
+        std::cout << std::endl;
         keyType key;
         std::cout << kGrayBold << "Enter the key to insert: " << kReset;
         std::cin >> key;
+        if (!key.checkNif(key)) {
+          std::cout << kRedBold << "Invalid NIF. The NIF must have 8 digits." << kReset << std::endl;
+          break;
+        }
         hashTable.insert(key);
         hashTable.print();
         break;
       }
       case 2: {
+        std::cout << std::endl;
         std::string file;
         std::cout << kGrayBold << "Enter the file name: " << kReset;
         std::cin >> file;
@@ -250,9 +249,14 @@ void menu(HashTableType& hashTable) {
         break;
       }
       case 3: {
+        std::cout << std::endl;
         keyType key;
         std::cout << kGrayBold << "Enter the key to search: " << kReset;
         std::cin >> key;
+        if (!key.checkNif(key)) {
+          std::cout << kRedBold << "Invalid NIF. The NIF must have 8 digits." << kReset << std::endl;
+          break;
+        }
         if (!hashTable.search(key)) {
           std::cout << "The key " << kCyanBold << key << kReset << kRedBold
                     << " is not" << kReset << " on the table." << kReset
@@ -267,19 +271,36 @@ void menu(HashTableType& hashTable) {
         break;
       }
       case 4: {
+        std::cout << std::endl;
         keyType key;
         std::cout << kGrayBold << "Enter the key to remove: " << kReset;
         std::cin >> key;
+        if (!key.checkNif(key)) {
+          std::cout << kRedBold << "Invalid NIF. The NIF must have 8 digits." << kReset << std::endl;
+          break;
+        }
         hashTable.remove(key);
         hashTable.print();
         break;
       }
-      case 5:
-        hashTable.clear();
-        std::cout << kGrayBold << "Table cleared" << kReset << std::endl;
-        hashTable.print();
+      case 5: {
+        std::string option;
+        std::cout << std::endl;
+        std::cout << kGrayBold << "¿Are you sure you want to clear the table? (y/n): ";
+        std::cin >> option;
+        if (option == "y" || option == "Y") {
+          hashTable.clear();
+          std::cout << kGrayBold << "Table cleared" << kReset << std::endl;
+          hashTable.print();
+        } else if (option == "n" || option == "N") {
+          std::cout << kGrayBold << "Table not cleared" << kReset << std::endl;
+        } else {
+          std::cout << kRedBold << "Invalid option" << kReset << std::endl;
+        }
         break;
+      }
       case 6:
+        std::cout << std::endl;
         std::cout << kGrayBold << "Hash Table: " << kReset << std::endl;
         hashTable.print();
         break;

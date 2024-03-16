@@ -154,6 +154,10 @@ bool HashTable<Key, Container>::insert(const Key& k) {
       unsigned explorationFunctionValue = (*fe_)(k, i);
       index = (functionValue + explorationFunctionValue) % tableSize_;
       i++;
+      if (table_[index]->isFull()) {
+        std::cout << "Table is full" << std::endl;
+        return false;
+      }
     }
     std::cout << "Inserting " << k << " in " << index << std::endl;
     return table_[index]->insert(k);
@@ -186,6 +190,16 @@ bool HashTable<Key, Container>::insertByFile(std::string file) {
   }
   Key k;
   while (fileStream >> k) {
+    if (k.checkNif(k) == false) {
+      std::cout << "NIF " << k << " is not valid" << std::endl;
+      continue;
+    }
+    if (typeid(Container) == typeid(StaticSequence<Key>)) {
+      if (table_[(*fd_)(k)]->isFull()) {
+        std::cout << "Table is full" << std::endl;
+        return false;
+      }
+    } 
     insert(k);
   }
   fileStream.close();
@@ -247,7 +261,7 @@ void HashTable<Key, Container>::print() {
 }
 
 /**
- * @brief Method that creates the table
+ * @brief Method that initializes the table
  * 
  * @tparam Key 
  * @tparam Container 
