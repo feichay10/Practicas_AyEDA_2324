@@ -93,15 +93,15 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
     }
   }
 
-  if (parameters.dispersionTechnic == "open" && parameters.blockSize != 0) {
-    throw std::invalid_argument("Block size is only for close dispersion.");
-    exit(EXIT_FAILURE);
-  } 
+  // if (parameters.dispersionTechnic == "open" && parameters.blockSize != 0) {
+  //   throw std::invalid_argument("Block size is only for close dispersion.");
+  //   exit(EXIT_FAILURE);
+  // } 
   
-  if (parameters.dispersionTechnic == "open" && parameters.explorationFunction != "") {
-    throw std::invalid_argument("Exploration function is only for close dispersion.");
-    exit(EXIT_FAILURE);
-  }
+  // if (parameters.dispersionTechnic == "open" && parameters.explorationFunction != "") {
+  //   throw std::invalid_argument("Exploration function is only for close dispersion.");
+  //   exit(EXIT_FAILURE);
+  // }
 
   // Set default values
   if (parameters.dispersionFunction == "") {
@@ -112,39 +112,37 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
     parameters.explorationFunction = "lineal";
   }
 
-  std::cout << kPurpleBold << "+------------------------------------+"
-            << std::endl;
-  std::cout << "|          " << kReset << kCyanBold << "Hash Information"
-            << kReset << kPurpleBold << "          |" << std::endl;
-  std::cout << "+------------------------------------+" << kReset << std::endl;
-  std::cout << kPurpleBold << "|" << kReset << kGrayBold
-            << " Table size: " << kBlueBold << parameters.tableSize
-            << kPurpleBold
+  std::cout << PURPLE_BOLD << "+------------------------------------+" << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "|" << RESET << ORANGE_BG << GRAY_BOLD << "          Hash Information          " << RESET << PURPLE_BOLD << "|" << std::endl;
+  std::cout << "+------------------------------------+" << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
+            << " Table size: " << BLUE_BOLD << parameters.tableSize
+            << PURPLE_BOLD
             << std::setw(24 - std::to_string(parameters.tableSize).length())
-            << "|" << kReset << std::endl;
-  std::cout << kPurpleBold << "|" << kReset << kGrayBold
-            << " Dispersion function: " << kBlueBold
-            << parameters.dispersionFunction << kPurpleBold
+            << "|" << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
+            << " Dispersion function: " << BLUE_BOLD
+            << parameters.dispersionFunction << PURPLE_BOLD
             << std::setw(15 - parameters.dispersionFunction.length()) << "|"
-            << kReset << std::endl;
-  std::cout << kPurpleBold << "|" << kReset << kGrayBold
-            << " Dispersion technic: " << kBlueBold
-            << parameters.dispersionTechnic << kPurpleBold
+            << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
+            << " Dispersion technic: " << BLUE_BOLD
+            << parameters.dispersionTechnic << PURPLE_BOLD
             << std::setw(16 - parameters.dispersionTechnic.length()) << "|"
-            << kReset << std::endl;
+            << RESET << std::endl;
   if (parameters.dispersionTechnic == "close") {
-    std::cout << kPurpleBold << "|" << kReset << kGrayBold
-              << " Block size: " << kBlueBold << parameters.blockSize
-              << kPurpleBold
+    std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
+              << " Block size: " << BLUE_BOLD << parameters.blockSize
+              << PURPLE_BOLD
               << std::setw(24 - std::to_string(parameters.blockSize).length())
-              << "|" << kReset << std::endl;
-    std::cout << kPurpleBold << "|" << kReset << kGrayBold
-              << " Exploration function: " << kBlueBold
-              << parameters.explorationFunction << kReset << kPurpleBold
+              << "|" << RESET << std::endl;
+    std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
+              << " Exploration function: " << BLUE_BOLD
+              << parameters.explorationFunction << RESET << PURPLE_BOLD
               << std::setw(14 - parameters.explorationFunction.length()) << "|"
-              << kReset << std::endl;
+              << RESET << std::endl;
   }
-  std::cout << kPurpleBold << "+------------------------------------+" << kReset
+  std::cout << PURPLE_BOLD << "+------------------------------------+" << RESET
             << std::endl;
 
   return parameters;
@@ -185,28 +183,28 @@ void menu(HashTableType& hashTable) {
   std::string option;
   int optionMenu;
   while (true) {
-    std::cout << kGrayBold << "\n###### Hash Table ######" << kReset
+    std::cout << GRAY_BOLD << "\n###### Hash Table ######" << RESET
               << std::endl;
-    std::cout << kRedBold << "  [1]." << kReset << kBold << " Insert"
+    std::cout << RED_BOLD << "  [1]." << RESET << BOLD << " Insert"
               << std::endl;
-    std::cout << kRedBold << "  [2]." << kReset << kBold << " Insert by file"
-              << kReset << std::endl;
-    std::cout << kRedBold << "  [3]." << kReset << kBold << " Search"
+    std::cout << RED_BOLD << "  [2]." << RESET << BOLD << " Insert by file"
+              << RESET << std::endl;
+    std::cout << RED_BOLD << "  [3]." << RESET << BOLD << " Search"
               << std::endl;
-    std::cout << kRedBold << "  [4]." << kReset << kBold << " Remove" << kReset
+    std::cout << RED_BOLD << "  [4]." << RESET << BOLD << " Remove" << RESET
               << std::endl;
-    std::cout << kRedBold << "  [5]." << kReset << kBold << " Clear table"
-              << kReset << std::endl;
-    std::cout << kRedBold << "  [6]." << kReset << kBold << " Print table"
+    std::cout << RED_BOLD << "  [5]." << RESET << BOLD << " Clear table"
+              << RESET << std::endl;
+    std::cout << RED_BOLD << "  [6]." << RESET << BOLD << " Print table"
               << std::endl;
-    std::cout << kRedBold << "  [7]." << kReset << kBold << " Exit" << kReset
+    std::cout << RED_BOLD << "  [7]." << RESET << BOLD << " Exit" << RESET
               << std::endl;
     std::cout << "Select an option: ";
     std::cin >> option;
 
     // If the option is of type char, display an invalid option message
     if (option.size() == 1 && isalpha(option[0])) {
-      std::cout << kRedBold << "Invalid option" << kReset << std::endl;
+      std::cout << RED_BOLD << "Invalid option" << RESET << std::endl;
       continue;
     }
 
@@ -214,14 +212,14 @@ void menu(HashTableType& hashTable) {
     if (isalnum(option[0]) && option.size() == 1) {
       optionMenu = std::stoi(option);
     } else {
-      std::cout << kRedBold << "Invalid option" << kReset << std::endl;
+      std::cout << RED_BOLD << "Invalid option" << RESET << std::endl;
       continue;
     }
 
     // If the option is a string that is not a number, display an invalid option
     // message
     if (option.size() > 1) {
-      std::cout << kRedBold << "Invalid option" << kReset << std::endl;
+      std::cout << RED_BOLD << "Invalid option" << RESET << std::endl;
       continue;
     }
 
@@ -229,10 +227,11 @@ void menu(HashTableType& hashTable) {
       case 1: {
         std::cout << std::endl;
         keyType key;
-        std::cout << kGrayBold << "Enter the key to insert: " << kReset;
+        std::cout << GRAY_BOLD << "Enter the key to insert: " << RESET << ORANGE_BG;
         std::cin >> key;
+        std::cout << RESET;
         if (!key.checkNif(key)) {
-          std::cout << kRedBold << "Invalid NIF. The NIF must have 8 digits." << kReset << std::endl;
+          std::cout << RED_BOLD << "Invalid NIF. The NIF must have 8 digits." << RESET << std::endl;
           break;
         }
         hashTable.insert(key);
@@ -242,8 +241,9 @@ void menu(HashTableType& hashTable) {
       case 2: {
         std::cout << std::endl;
         std::string file;
-        std::cout << kGrayBold << "Enter the file name: " << kReset;
+        std::cout << GRAY_BOLD << "Enter the file name: " << RESET << ORANGE_BG;
         std::cin >> file;
+        std::cout << RESET;
         hashTable.insertByFile(file);
         hashTable.print();
         break;
@@ -251,20 +251,21 @@ void menu(HashTableType& hashTable) {
       case 3: {
         std::cout << std::endl;
         keyType key;
-        std::cout << kGrayBold << "Enter the key to search: " << kReset;
+        std::cout << GRAY_BOLD << "Enter the key to search: " << RESET << ORANGE_BG;
         std::cin >> key;
+        std::cout << RESET;
         if (!key.checkNif(key)) {
-          std::cout << kRedBold << "Invalid NIF. The NIF must have 8 digits." << kReset << std::endl;
+          std::cout << RED_BOLD << "Invalid NIF. The NIF must have 8 digits." << RESET << std::endl;
           break;
         }
         if (!hashTable.search(key)) {
-          std::cout << "The key " << kCyanBold << key << kReset << kRedBold
-                    << " is not" << kReset << " on the table." << kReset
+          std::cout << "The key " << CYAN_BOLD << key << RESET << RED_BOLD
+                    << " is not" << RESET << " on the table." << RESET
                     << std::endl
                     << std::endl;
         } else {
-          std::cout << "The key " << kCyanBold << key << kReset << kGreenBold
-                    << " is" << kReset << " on the table." << kReset
+          std::cout << "The key " << CYAN_BOLD << key << RESET << GREEN_BOLD
+                    << " is" << RESET << " on the table." << RESET
                     << std::endl
                     << std::endl;
         }
@@ -273,10 +274,10 @@ void menu(HashTableType& hashTable) {
       case 4: {
         std::cout << std::endl;
         keyType key;
-        std::cout << kGrayBold << "Enter the key to remove: " << kReset;
+        std::cout << GRAY_BOLD << "Enter the key to remove: " << RESET << ORANGE_BG;
         std::cin >> key;
         if (!key.checkNif(key)) {
-          std::cout << kRedBold << "Invalid NIF. The NIF must have 8 digits." << kReset << std::endl;
+          std::cout << RED_BOLD << "Invalid NIF. The NIF must have 8 digits." << RESET << std::endl;
           break;
         }
         hashTable.remove(key);
@@ -286,29 +287,30 @@ void menu(HashTableType& hashTable) {
       case 5: {
         std::string option;
         std::cout << std::endl;
-        std::cout << kGrayBold << "¿Are you sure you want to clear the table? (y/n): ";
+        std::cout << GRAY_BOLD << "¿Are you sure you want to clear the table? (y/n): " << RESET << ORANGE_BG;
         std::cin >> option;
+        std::cout << RESET;
         if (option == "y" || option == "Y") {
           hashTable.clear();
-          std::cout << kGrayBold << "Table cleared" << kReset << std::endl;
+          std::cout << GRAY_BOLD << "Table cleared" << RESET << std::endl;
           hashTable.print();
         } else if (option == "n" || option == "N") {
-          std::cout << kGrayBold << "Table not cleared" << kReset << std::endl;
+          std::cout << GRAY_BOLD << "Table not cleared" << RESET << std::endl;
         } else {
-          std::cout << kRedBold << "Invalid option" << kReset << std::endl;
+          std::cout << RED_BOLD << "Invalid option" << RESET << std::endl;
         }
         break;
       }
       case 6:
         std::cout << std::endl;
-        std::cout << kGrayBold << "Hash Table: " << kReset << std::endl;
+        std::cout << GRAY_BOLD << "Hash Table: " << RESET << std::endl;
         hashTable.print();
         break;
       case 7:
         std::cout << "Exiting..." << std::endl;
         exit(EXIT_SUCCESS);
       default:
-        std::cout << kRedBold << "Invalid option" << kReset << std::endl;
+        std::cout << RED_BOLD << "Invalid option" << RESET << std::endl;
         break;
     }
   }

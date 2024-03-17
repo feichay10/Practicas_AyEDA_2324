@@ -18,8 +18,8 @@
 #ifndef DFRANDOM_H
 #define DFRANDOM_H
 
-#include <cstdlib>
-#include <ctime>
+// #include <cstdlib>
+// #include <ctime>
 
 #include "dispersionFunction.h"
 
@@ -30,7 +30,6 @@
  */
 template <class Key>
 class dfRandom : public DispersionFunction<Key> {
- public:
  public:
   explicit dfRandom(const unsigned tableSize) : tableSize_(tableSize) {}
   unsigned operator()(const Key& k) const override;

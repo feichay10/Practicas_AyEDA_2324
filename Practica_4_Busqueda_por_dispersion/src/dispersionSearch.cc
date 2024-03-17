@@ -21,6 +21,7 @@
 
 //TODO: Check when the table is full and i want to insert a new element
 //TODO: Set if isFull on the StaticSequence class when inserted a new element
+//TODO: Set default or by parameters fd to double dispersion
 
 int main(int argc, char* argv[]) {
   HashTableParameters parameters;

@@ -127,7 +127,8 @@ bool StaticSequence<Key>::remove(const Key& k) {
 template <class Key>
 bool StaticSequence<Key>::clear() {
   for (unsigned i = 0; i < blockSize_; i++) {
-    data_[i] = 0;
+    // data_[i] = 0;
+    delete &data_[i];
   }
   return true;
 }

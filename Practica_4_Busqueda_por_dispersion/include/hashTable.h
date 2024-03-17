@@ -150,14 +150,20 @@ bool HashTable<Key, Container>::insert(const Key& k) {
     unsigned i = 1;
     unsigned functionValue = (*fd_)(k);
     while (table_[index]->isFull()) { // Si la posición está ocupada, se calcula la nueva posición
-      if (table_[index]->isFull()) {
-        std::cout << "Table is full" << std::endl;
-        return false;
-      }
+      // if (table_[index]->isFull()) {
+      //   std::cout << "Table is full" << std::endl;
+      //   return false;
+      // }
       std::cout << "Collision in " << index << std::endl;
       unsigned explorationFunctionValue = (*fe_)(k, i);
       index = (functionValue + explorationFunctionValue) % tableSize_;
       i++;
+
+      // TODO: Check if the table is full when the exploration function is full
+      if (table_[index]->isFull()) {
+        std::cout << "Table is full" << std::endl;
+        return false;
+      }
     }
     std::cout << "Inserting " << k << " in " << index << std::endl;
     return table_[index]->insert(k);
@@ -228,7 +234,6 @@ bool HashTable<Key, Container>::remove(const Key& k) {
   return false;
 }
 
-
 /**
  * @brief Method that clears the table
  * 
@@ -240,6 +245,7 @@ bool HashTable<Key, Container>::remove(const Key& k) {
 template <class Key, class Container>
 bool HashTable<Key, Container>::clear() {
   for (unsigned i = 0; i < tableSize_; i++) {
+    delete table_[i];
     table_[i]->clear();
   }
   return true;

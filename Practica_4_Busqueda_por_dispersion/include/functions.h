@@ -37,39 +37,26 @@
 #include "../include/nif.h"
 #include "../include/sequence.h"
 #include "../include/staticSequence.h"
-
-const std::string kRedBold = "\033[1;31m";
-const std::string kGreenBold = "\033[1;32m";
-const std::string kCyanBold = "\033[36m\033[1m";
-const std::string kPurpleBold = "\033[35m\033[1m";
-const std::string kBlueBold = "\033[33m\033[1m";
-const std::string kGrayBold = "\033[37m\033[1m";
-const std::string kBold = "\033[1m";
-const std::string kReset = "\033[0m";
+#include "../include/colors.h"
 
 const std::string kUsage =
-    kBold + "NAME\n" + kReset +
-    "       dispersionSearch - Dispersed Search\n\n" + kBold + "SYNOPSIS\n" +
-    kReset +
-    "       ./dispersionSearch -ts <s> -fd <f> -hash <open|close> -bs <s> -fe "
-    "<f>\n\n" +
-    kBold + "DESCRIPTION\n" + kReset +
-    "       Program that performs a dispersed search in a hash table.\n\n" +
-    kBold + "OPCIONES" + kReset + kBold + "\n\t  -ts <s>" + kReset +
-    "\n\t\tSize of the table.\n" + kBold +
-    "\n\t  -fd <f>, f = module|sum|random" + kReset +
-    "\n\t\tCode that identifies a dispersion function. If dispersion function "
-    "is not \n\t\tprovided, the default will be the modulus function\n" +
-    kBold + "\n\t  -hash <open|close>" + kReset +
-    "\n\t\tIndicates the dispersion technique to use. If dispersion technique "
-    "is not \n\t\tprovided, the default will be the open.\n" +
-    kBold + "\n\t  -bs <s>" + kReset +
-    "\n\t\tSize of the block. Only for closed dispersion.\n" + kBold +
-    "\n\t  -fe <f>, f = lineal|quadratic|double|redispersion" + kReset +
-    "\n\t\tCode that identifies an exploration function. Only for closed "
-    "dispersion. \n\t\tIf explotration function is not provided, the default will be "
-    "the lineal \n\t\tfunction.\n" +
-    kBold + "\n\t  -help" + kReset + "\n\t\tShow this message.";
+    BOLD + std::string("NAME\n") + RESET +
+    std::string("       dispersionSearch - Dispersed Search\n\n") + BOLD + std::string("SYNOPSIS\n") +
+    RESET +
+    std::string("       ./dispersionSearch -ts <s> -fd <f> -hash <open|close> -bs <s> -fe <f>\n\n") +
+    BOLD + std::string("DESCRIPTION\n") + RESET +
+    std::string("       Program that performs a dispersed search in a hash table.\n\n") +
+    BOLD + std::string("OPCIONES") + RESET + BOLD + std::string("\n\t  -ts <s>") + RESET +
+    std::string("\n\t\tSize of the table.\n") + BOLD +
+    std::string("\n\t  -fd <f>, f = module|sum|random") + RESET +
+    std::string("\n\t\tCode that identifies a dispersion function. If dispersion function is not \n\t\tprovided, the default will be the modulus function\n") +
+    BOLD + std::string("\n\t  -hash <open|close>") + RESET +
+    std::string("\n\t\tIndicates the dispersion technique to use. If dispersion technique is not \n\t\tprovided, the default will be the open.\n") +
+    BOLD + std::string("\n\t  -bs <s>") + RESET +
+    std::string("\n\t\tSize of the block. Only for closed dispersion.\n") + BOLD +
+    std::string("\n\t  -fe <f>, f = lineal|quadratic|double|redispersion") + RESET +
+    std::string( "\n\t\tCode that identifies an exploration function. Only for closed dispersion. \n\t\tIf explotration function is not provided, the default will be the lineal \n\t\tfunction.\n") +
+    BOLD + std::string("\n\t  -help") + RESET + std::string("\n\t\tShow this message.");
 
 using keyType = Nif;
 
