@@ -66,6 +66,7 @@ struct HashTableParameters {
   std::string dispersionTechnic;
   unsigned blockSize;
   std::string explorationFunction;
+  std::string dfForExploration;
 };
 
 HashTableParameters checkProgramParameters(int, char*[], HashTableParameters&);

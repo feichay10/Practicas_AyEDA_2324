@@ -150,17 +150,12 @@ bool HashTable<Key, Container>::insert(const Key& k) {
     unsigned i = 1;
     unsigned functionValue = (*fd_)(k);
     while (table_[index]->isFull()) { // Si la posición está ocupada, se calcula la nueva posición
-      // if (table_[index]->isFull()) {
-      //   std::cout << "Table is full" << std::endl;
-      //   return false;
-      // }
       std::cout << "Collision in " << index << std::endl;
       unsigned explorationFunctionValue = (*fe_)(k, i);
       index = (functionValue + explorationFunctionValue) % tableSize_;
       i++;
-
-      // TODO: Check if the table is full when the exploration function is full
-      if (table_[index]->isFull()) {
+      // Check if the table is full
+      if (i == tableSize_) {
         std::cout << "Table is full" << std::endl;
         return false;
       }
@@ -199,12 +194,6 @@ bool HashTable<Key, Container>::insertByFile(std::string file) {
     if (k.checkNif(k) == false) {
       std::cout << "NIF " << k << " is not valid" << std::endl;
       continue;
-    }
-    if (typeid(Container) == typeid(StaticSequence<Key>)) {
-      if (table_[(*fd_)(k)]->isFull()) {
-        std::cout << "Table is full" << std::endl;
-        return false;
-      }
     } 
     insert(k);
   }
@@ -245,7 +234,6 @@ bool HashTable<Key, Container>::remove(const Key& k) {
 template <class Key, class Container>
 bool HashTable<Key, Container>::clear() {
   for (unsigned i = 0; i < tableSize_; i++) {
-    delete table_[i];
     table_[i]->clear();
   }
   return true;
