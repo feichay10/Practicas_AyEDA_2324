@@ -19,8 +19,6 @@
 
 #include "../include/functions.h"
 
-//TODO: Set default or by parameters fd to double dispersion
-
 int main(int argc, char* argv[]) {
   HashTableParameters parameters;
   try {

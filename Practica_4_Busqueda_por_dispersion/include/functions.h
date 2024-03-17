@@ -54,8 +54,9 @@ const std::string kUsage =
     std::string("\n\t\tIndicates the dispersion technique to use. If dispersion technique is not \n\t\tprovided, the default will be the open.\n") +
     BOLD + std::string("\n\t  -bs <s>") + RESET +
     std::string("\n\t\tSize of the block. Only for closed dispersion.\n") + BOLD +
-    std::string("\n\t  -fe <f>, f = lineal|quadratic|double|redispersion") + RESET +
+    std::string("\n\t  -fe <f>, f = lineal|quadratic|double|redispersion [fd]") + RESET +
     std::string( "\n\t\tCode that identifies an exploration function. Only for closed dispersion. \n\t\tIf explotration function is not provided, the default will be the lineal \n\t\tfunction.\n") +
+    std::string("\n\t\tIf redispersion functions is provided, in the next parameters it must \n\t\tprovided a avalaible dispersion function") +
     BOLD + std::string("\n\t  -help") + RESET + std::string("\n\t\tShow this message.");
 
 using keyType = Nif;
