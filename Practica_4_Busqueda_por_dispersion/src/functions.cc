@@ -31,8 +31,7 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
     if (std::string(argv[i]) == "-ts") {
       if (i + 1 < argc) {
         if (std::stoi(argv[i + 1]) < 1) {
-          throw std::invalid_argument(
-              "Invalid table size. Table size must be greater than 0.");
+          throw std::invalid_argument("Invalid table size. Table size must be greater than 0.");
           exit(EXIT_FAILURE);
         } else {
           parameters.tableSize = std::stoi(argv[i + 1]);
@@ -46,8 +45,7 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
         if (std::string(argv[i + 1]) != "module" &&
             std::string(argv[i + 1]) != "sum" &&
             std::string(argv[i + 1]) != "random") {
-          throw std::invalid_argument(
-              "Invalid dispersion function. Use random or sum.");
+          throw std::invalid_argument("Invalid dispersion function. Use random or sum.");
           exit(EXIT_FAILURE);
         } else {
           parameters.dispersionFunction = std::string(argv[i + 1]);
@@ -57,8 +55,7 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
       if (i + 1 < argc) {
         if (std::string(argv[i + 1]) != "open" &&
             std::string(argv[i + 1]) != "close") {
-          throw std::invalid_argument(
-              "Invalid dispersion technic. Use open or closed.");
+          throw std::invalid_argument("Invalid dispersion technic. Use open or closed.");
           exit(EXIT_FAILURE);
         } else {
           parameters.dispersionTechnic = std::string(argv[i + 1]);
@@ -67,14 +64,11 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
     } else if (std::string(argv[i]) == "-bs") {
       if (i + 1 < argc) {
         if (std::stoi(argv[i + 1]) < 1) {
-          throw std::invalid_argument(
-              "Invalid block size. Block size must be greater than 0.");
+          throw std::invalid_argument("Invalid block size. Block size must be greater than 0.");
           exit(EXIT_FAILURE);
         } else {
           if (std::stoi(argv[i + 1]) > parameters.tableSize) {
-            throw std::invalid_argument(
-                "Invalid block size. Block size must be less than the table "
-                "size.");
+            throw std::invalid_argument("Invalid block size. Block size must be less than the table size.");
             exit(EXIT_FAILURE);
           } else {
             parameters.blockSize = std::stoi(argv[i + 1]);
@@ -89,7 +83,7 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
           std::string(argv[i + 1]) == "quadratic" ||
           std::string(argv[i + 1]) == "double" ||
           std::string(argv[i + 1]) == "redispersion") {
-        if (std::string(argv[i + 1]) == "redispersion") {
+        if (std::string(argv[i + 1]) == "double") {
           parameters.dfForExploration = std::string(argv[i + 2]);
           if (std::string(argv[i + 2]) != "module" &&
               std::string(argv[i + 2]) != "sum" &&
@@ -98,14 +92,12 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
             exit(EXIT_FAILURE);
           }
         }
-      parameters.explorationFunction = std::string(argv[i + 1]);
+        parameters.explorationFunction = std::string(argv[i + 1]);
+      } else {
+        throw std::invalid_argument("Invalid exploration function. Use lineal, quadratic, double or redispersion.");
+        exit(EXIT_FAILURE);
       }
-    } /*else {
-      throw std::invalid_argument(
-          "Invalid exploration function. Use lineal, quadratic, double or "
-          "redispersion.");
-      exit(EXIT_FAILURE);
-    }*/
+    }
   }
 
   // Set default values
@@ -117,44 +109,44 @@ HashTableParameters checkProgramParameters(int argc, char* argv[], HashTablePara
     parameters.explorationFunction = "lineal";
   }
 
-  std::cout << PURPLE_BOLD << "+--------------------------------------------+" << RESET << std::endl;
-  std::cout << PURPLE_BOLD << "|" << RESET << ORANGE_BG << GRAY_BOLD << "              Hash Information              " << RESET << PURPLE_BOLD << "|" << std::endl;
-  std::cout << "+--------------------------------------------+" << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "+----------------------------------------------+" << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "|" << RESET << ORANGE_BG << GRAY_BOLD << "               Hash Information               " << RESET << PURPLE_BOLD << "|" << std::endl;
+  std::cout << "+----------------------------------------------+" << RESET << std::endl;
   std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
             << " Table size: " << BLUE_BOLD << parameters.tableSize
             << PURPLE_BOLD
-            << std::setw(32 - std::to_string(parameters.tableSize).length())
+            << std::setw(34 - std::to_string(parameters.tableSize).length())
             << "|" << RESET << std::endl;
   std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
             << " Dispersion function: " << BLUE_BOLD
             << parameters.dispersionFunction << PURPLE_BOLD
-            << std::setw(23 - parameters.dispersionFunction.length()) << "|"
+            << std::setw(25 - parameters.dispersionFunction.length()) << "|"
             << RESET << std::endl;
   std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
             << " Dispersion technic: " << BLUE_BOLD
             << parameters.dispersionTechnic << PURPLE_BOLD
-            << std::setw(24 - parameters.dispersionTechnic.length()) << "|"
+            << std::setw(26 - parameters.dispersionTechnic.length()) << "|"
             << RESET << std::endl;
   if (parameters.dispersionTechnic == "close") {
     std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
               << " Block size: " << BLUE_BOLD << parameters.blockSize
               << PURPLE_BOLD
-              << std::setw(32 - std::to_string(parameters.blockSize).length())
+              << std::setw(34 - std::to_string(parameters.blockSize).length())
               << "|" << RESET << std::endl;
     std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
               << " Exploration function: " << BLUE_BOLD
               << parameters.explorationFunction << RESET << PURPLE_BOLD
-              << std::setw(22 - parameters.explorationFunction.length()) << "|"
+              << std::setw(24 - parameters.explorationFunction.length()) << "|"
               << RESET << std::endl;
-    if (parameters.explorationFunction == "redispersion") {
+    if (parameters.explorationFunction == "double") {
       std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
                 << " Dispersion function for exploration: " << BLUE_BOLD
                 << parameters.dfForExploration << PURPLE_BOLD
-                << std::setw(5 - parameters.dfForExploration.length()) << "|"
+                << std::setw(9 - parameters.dfForExploration.length()) << "|"
                 << RESET << std::endl;
     }
   }
-  std::cout << PURPLE_BOLD << "+--------------------------------------------+" << RESET
+  std::cout << PURPLE_BOLD << "+----------------------------------------------+" << RESET
             << std::endl;
 
   return parameters;
@@ -180,10 +172,6 @@ void makeHashTable(HashTableParameters& parameters) {
     if (parameters.explorationFunction == "lineal") {
       explorationFunction = new efLineal<keyType>;
     } else if (parameters.explorationFunction == "double") {
-      explorationFunction = new efDoubleDispersion<keyType>;
-    } else if (parameters.explorationFunction == "quadratic") {
-      explorationFunction = new efQuadratic<keyType>;
-    } else if (parameters.explorationFunction == "redispersion") {
       if (parameters.dfForExploration == "module") {
         dfForExploration = new dfModule<keyType>(parameters.tableSize);
       } else if (parameters.dfForExploration == "sum") {
@@ -191,6 +179,10 @@ void makeHashTable(HashTableParameters& parameters) {
       } else if (parameters.dfForExploration == "random") {
         dfForExploration = new dfRandom<keyType>(parameters.tableSize);
       }
+      explorationFunction = new efDoubleDispersion<keyType>(dfForExploration);
+    } else if (parameters.explorationFunction == "quadratic") {
+      explorationFunction = new efQuadratic<keyType>;
+    } else if (parameters.explorationFunction == "redispersion") {
       explorationFunction = new efRedispersion<keyType>(dfForExploration);
     }
     HashTable<keyType, StaticSequence<keyType>> hashTable(parameters.tableSize, *dispersionFunction, *explorationFunction, parameters.blockSize);
@@ -296,6 +288,7 @@ void menu(HashTableType& hashTable) {
         keyType key;
         std::cout << GRAY_BOLD << "Enter the key to remove: " << RESET << GOLD;
         std::cin >> key;
+        std::cout << RESET;
         if (!key.checkNif(key)) {
           std::cout << RED_BOLD << "Invalid NIF. The NIF must have 8 digits." << RESET << std::endl;
           break;

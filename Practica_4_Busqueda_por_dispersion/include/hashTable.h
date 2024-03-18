@@ -141,15 +141,15 @@ bool HashTable<Key, Container>::search(const Key& k) const {
  */
 template <class Key, class Container>
 bool HashTable<Key, Container>::insert(const Key& k) {
-  unsigned index = (*fd_)(k); // Calcula la posición inicial utilizando la función de dispersión
+  unsigned index = (*fd_)(k); // Calculates the initial position using the dispersion function
   if (typeid(Container) == typeid(StaticSequence<Key>)) {
     if (table_[index]->search(k)) {
-      std::cout << "Element " << k << " already exists " << std::endl;
+      std::cout << "Element " << k << " already exists on the table" << std::endl;
       return false;
     }
     unsigned i = 1;
     unsigned functionValue = (*fd_)(k);
-    while (table_[index]->isFull()) { // Si la posición está ocupada, se calcula la nueva posición
+    while (table_[index]->isFull()) { // If the position is occupied, the new position is calculated.
       std::cout << "Collision in " << index << std::endl;
       unsigned explorationFunctionValue = (*fe_)(k, i);
       index = (functionValue + explorationFunctionValue) % tableSize_;

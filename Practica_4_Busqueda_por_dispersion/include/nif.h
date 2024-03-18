@@ -34,7 +34,6 @@ class Nif {
   bool operator!=(const Nif& other) const;
   operator long();
   operator unsigned int() const;
-  unsigned int operator%(unsigned int m) const;
   unsigned operator[](unsigned i) const;
 
   friend std::ostream& operator<<(std::ostream& os, const Nif& nif);

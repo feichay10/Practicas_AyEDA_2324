@@ -60,10 +60,6 @@ Nif::operator unsigned int() const {
   return nif_;
 }
 
-unsigned int Nif::operator%(unsigned int m) const {
-  return nif_ % m;
-}
-
 unsigned Nif::operator[](unsigned i) const {
   std::string nif_string = std::to_string(nif_);
   return nif_string[i] - '0';

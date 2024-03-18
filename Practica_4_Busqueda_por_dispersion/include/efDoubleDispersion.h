@@ -29,7 +29,6 @@
 template<class Key>
 class efDoubleDispersion : public ExplorationFunction<Key> {
  public:
-  efDoubleDispersion() {}
   efDoubleDispersion(DispersionFunction<Key>* f) : df_(f) {}
   unsigned operator()(const Key& k, unsigned i) const override;
 

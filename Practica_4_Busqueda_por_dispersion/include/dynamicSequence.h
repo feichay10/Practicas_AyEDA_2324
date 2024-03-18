@@ -31,13 +31,13 @@ class DynamicSequence : public Sequence<Key> {
   DynamicSequence();
   ~DynamicSequence();
 
-  bool search(const Key& k) const;
-  bool insert(const Key& k);
-  bool insertByFile(std::string file);
-  bool remove(const Key& k);
-  bool clear();
-  bool isFull() const;
-  void print();
+  bool search(const Key& k) const override;
+  bool insert(const Key& k) override;
+  bool insertByFile(std::string file) override;
+  bool remove(const Key& k) override;
+  bool clear() override;
+  bool isFull() const override;
+  void print() override;
 
  private:
   Key* data_;
@@ -163,7 +163,7 @@ bool DynamicSequence<Key>::remove(const Key& k) {
 }
 
 /**
- * @brief Method that checks if the table is full
+ * @brief Method that checks if the index is full
  * 
  * @tparam Key 
  * @return true 

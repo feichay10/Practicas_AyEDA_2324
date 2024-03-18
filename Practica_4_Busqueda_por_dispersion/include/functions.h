@@ -72,7 +72,6 @@ struct HashTableParameters {
 
 HashTableParameters checkProgramParameters(int, char*[], HashTableParameters&);
 void makeHashTable(HashTableParameters&);
-
 template <typename HashTableType>
 void menu(HashTableType&);
 

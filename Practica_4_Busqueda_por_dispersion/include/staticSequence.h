@@ -32,19 +32,25 @@ class StaticSequence : public Sequence<Key> {
   StaticSequence(unsigned blockSize);
   ~StaticSequence();
 
-  bool search(const Key& k) const;
-  bool insert(const Key& k);
-  bool insertByFile(std::string file);
-  bool remove(const Key& k);
-  bool clear();
-  bool isFull() const;
-  void print();
+  bool search(const Key& k) const override;
+  bool insert(const Key& k) override;
+  bool insertByFile(std::string file) override;
+  bool remove(const Key& k) override;
+  bool clear() override;
+  bool isFull() const override;
+  void print() override;
 
  private:
   Key* data_;
   unsigned blockSize_;
 };
 
+/**
+ * @brief Construct a new Static Sequence< Key>:: Static Sequence object
+ * 
+ * @tparam Key 
+ * @param blockSize 
+ */
 template <class Key>
 StaticSequence<Key>::StaticSequence(unsigned blockSize) {
   data_ = new Key[blockSize];
@@ -55,11 +61,24 @@ StaticSequence<Key>::StaticSequence(unsigned blockSize) {
   blockSize_ = blockSize;
 }
 
+/**
+ * @brief Destroy the Static Sequence< Key>:: Static Sequence object
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 StaticSequence<Key>::~StaticSequence() {
   delete[] data_;
 }
 
+/**
+ * @brief Method that searches for a key in the table
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool StaticSequence<Key>::search(const Key& k) const {
   for (unsigned i = 0; i < blockSize_; i++) {
@@ -70,6 +89,15 @@ bool StaticSequence<Key>::search(const Key& k) const {
   return false;
 }
 
+
+/**
+ * @brief Method that inserts a key in the table
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool StaticSequence<Key>::insert(const Key& k) {
   for (unsigned i = 0; i < blockSize_; i++) {
@@ -81,21 +109,39 @@ bool StaticSequence<Key>::insert(const Key& k) {
   return false;
 }
 
+/**
+ * @brief Method that inserts a key in the table from a file
+ * 
+ * @tparam Key 
+ * @param file 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool StaticSequence<Key>::insertByFile(std::string file) {
   std::ifstream fileStream(file);
-  std::vector<Key> keys;
+  Key* keys = new Key[blockSize_];
   Key key;
-  while (fileStream >> key) {
-    keys.push_back(key);
+  unsigned count = 0;
+  while (fileStream >> key && count < blockSize_) {
+    keys[count] = key;
+    count++;
   }
   fileStream.close();
-  for (unsigned i = 0; i < keys.size(); i++) {
+  for (unsigned i = 0; i < count; i++) {
     insert(keys[i]);
   }
+  delete[] keys;
   return true;
 }
 
+/**
+ * @brief Method that checks if the index is full
+ * 
+ * @tparam Key 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool StaticSequence<Key>::isFull() const {
   for (unsigned i = 0; i < blockSize_; i++) {
@@ -106,7 +152,14 @@ bool StaticSequence<Key>::isFull() const {
   return true;
 }
 
-// TODO: Remove the element from the array and shift the elements to the left
+/**
+ * @brief Method that removes a key from the table
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool StaticSequence<Key>::remove(const Key& k) {
   for (unsigned i = 0; i < blockSize_; i++) {
@@ -124,15 +177,26 @@ bool StaticSequence<Key>::remove(const Key& k) {
   return false;
 }
 
+/**
+ * @brief Method that clears the table
+ * 
+ * @tparam Key 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool StaticSequence<Key>::clear() {
   for (unsigned i = 0; i < blockSize_; i++) {
     data_[i] = 0;
-    // delete &data_[i];
   }
   return true;
 }
 
+/**
+ * @brief Method that prints the table
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 void StaticSequence<Key>::print() {
   for (unsigned i = 0; i < blockSize_; ++i) {

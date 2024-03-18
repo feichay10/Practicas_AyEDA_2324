@@ -18,8 +18,8 @@
 #ifndef DFRANDOM_H
 #define DFRANDOM_H
 
-// #include <cstdlib>
-// #include <ctime>
+#include <cstdlib>
+#include <ctime>
 
 #include "dispersionFunction.h"
 
