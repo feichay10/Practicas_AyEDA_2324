@@ -50,8 +50,11 @@ const std::string kUsage =
 using keyType = Nif;
 
 struct sortParameters {
-  StaticSequence<keyType> sequence_;
   int size_;
+  std::string order_;
+  std::string init_;
+  std::string file_;
+  std::string trace_;
 };
 
 sortParameters checkProgramParameters(int argc, char* argv[], sortParameters parameters);
