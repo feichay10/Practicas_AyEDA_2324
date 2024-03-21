@@ -5,7 +5,7 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 5: Algoritmos de Ordenacion
- * @file staticSequence.h
+ * @file functions.cc
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
@@ -15,19 +15,6 @@
  *
  */
 
-#ifndef STATICSEQUENCE_H
-#define STATICSEQUENCE_H
+#include "../include/functions.h"
 
-#include "sequence.h"
-
-template <class Key>
-class StaticSequence : public Sequence<Key> {
- public:
-  StaticSequence(int size);
-  Key operator[](const Position&) const override;
-
- private:
-  int size_;
-};
-
-#endif  // STATICSEQUENCE_H
+sortParameters checkProgramParameters(int argc, char* argv[], sortParameters parameters) {}

@@ -20,6 +20,8 @@
 
 #include <iostream>
 
+typedef int Position;
+
 template <class Key>
 class Sequence {
  public:
