@@ -59,7 +59,7 @@ struct sortParameters {
   bool trace_;
 };
 
-// Lsta de los algoritmos de ordenacion disponibles
+// Lista de los algoritmos de ordenacion disponibles
 const std::set<std::string> kAvailableOrders = {"selection", "quick", "heap", "shell", "radix"};
 
 sortParameters checkProgramParameters(int argc, char* argv[], sortParameters parameters);
