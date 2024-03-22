@@ -21,6 +21,8 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <set>
+#include <filesystem>
 
 #include "../include/nif.h"
 #include "../include/sequence.h"
@@ -56,6 +58,9 @@ struct sortParameters {
   std::string file_;
   bool trace_;
 };
+
+// Crear una lista de los algoritmos de ordenacion disponibles
+const std::set<std::string> kAvailableOrders = {"selection", "quick", "heap", "shell", "radix"};
 
 sortParameters checkProgramParameters(int argc, char* argv[], sortParameters parameters);
 
