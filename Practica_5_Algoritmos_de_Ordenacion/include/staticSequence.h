@@ -28,6 +28,17 @@ class StaticSequence : public Sequence<Key> {
 
  private:
   int size_;
+  Key* array_;
 };
+
+template <class Key>
+StaticSequence<Key>::StaticSequence(int size) : size_(size) {
+  array_ = new Key[size_];
+}
+
+template <class Key>
+Key StaticSequence<Key>::operator[](const Position& position) const {
+  return array_[position];
+}
 
 #endif  // STATICSEQUENCE_H
