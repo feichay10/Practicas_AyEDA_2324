@@ -145,33 +145,61 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
   return parameters;
 }
 
-// void createSequence(sortParameters parameters) {
-//   Sequence sequence(parameters.size_);
-//   if (parameters.init_ == "manual") {
-//     sequence.manual();
-//   } else if (parameters.init_ == "random") {
-//     sequence.random();
-//   } else if (parameters.init_ == "file") {
-//     sequence.file(parameters.file_);
-//   }
+void createSequence(sortParameters parameters) {
+  SortMethod<keyType>* sortMethod;
+  StaticSequence<keyType> sequence(parameters.size_);
 
-//   if (parameters.trace_) {
-//     sequence.trace();
-//   }
+  if (parameters.order_ == "selection") {
+    sortMethod = new Selection<keyType>(sequence);
+  } else if (parameters.order_ == "quick") {
+    // sortMethod = new Quick<keyType>(sequence);
+  } else if (parameters.order_ == "heap") {
+    // sortMethod = new Heap<keyType>(sequence);
+  } else if (parameters.order_ == "shell") {
+    // sortMethod = new Shell<keyType>(sequence);
+  } else if (parameters.order_ == "radix") {
+    // sortMethod = new Radix<keyType>(sequence);
+  }
 
-//   if (parameters.order_ == "selection") {
-//     sequence.selectionSort();
-//   } else if (parameters.order_ == "quick") {
-//     sequence.quickSort();
-//   } else if (parameters.order_ == "heap") {
-//     sequence.heapSort();
-//   } else if (parameters.order_ == "shell") {
-//     sequence.shellSort();
-//   } else if (parameters.order_ == "radix") {
-//     sequence.radixSort();
-//   }
+  if (parameters.init_ == "manual") {
+    std::cout << "Enter the sequence data:" << std::endl;
+    for (int i = 0; i < parameters.size_; i++) {
+      keyType key;
+      std::cin >> key;
+      sequence[i] = key;
+    }
+    // Imprimir la secuencia
+    std::cout << "Sequence: ";
+    for (int i = 0; i < parameters.size_; i++) {
+      std::cout << sequence[i] << " ";
+    }
+  } 
+  
+  /*else if (parameters.init_ == "random") {
+    for (int i = 0; i < parameters.size_; i++) {
+      keyType key;
+      sequence[i] = key;
+    }
+  } else if (parameters.init_ == "file") {
+    std::ifstream file(parameters.file_);
+    if (!file.is_open()) {
+      throw std::invalid_argument("File could not be opened.");
+      exit(EXIT_FAILURE);
+    }
+    for (int i = 0; i < parameters.size_; i++) {
+      keyType key;
+      file >> key;
+      sequence[i] = key;
+    }
+    file.close();
+  }*/
 
-//   if (parameters.trace_) {
-//     sequence.trace();
-//   }
-// }
+  sortMethod->Sort(sequence);
+  delete sortMethod;
+
+  // Imprimir la secuencia ordenada
+  std::cout << "\nSorted sequence: ";
+  for (int i = 0; i < parameters.size_; i++) {
+    std::cout << sequence[i] << " ";
+  }
+}

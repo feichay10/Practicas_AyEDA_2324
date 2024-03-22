@@ -23,7 +23,7 @@ int main(int argc, char* argv[]) {
   sortParameters parameters;
   try {
     parameters = checkProgramParameters(argc, argv, parameters);
-    // makeHashTable(parameters);
+    createSequence(parameters);
   } catch (std::string message) {
     std::cerr << message << std::endl;
   }

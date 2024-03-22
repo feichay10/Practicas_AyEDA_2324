@@ -23,8 +23,26 @@
 template <typename Key>
 class Selection : public SortMethod<Key> {
  public:
-  Selection(StaticSequence<Key>& sequence) : SortMethod<Key>{sequence} {}
-  void Sort() const override;
+  void Sort(staticSequence<Key>& sequence) const;
 };
+
+template <typename Key>
+void Selection<Key>::Sort(staticSequence<Key>& sequence) const {
+  Key temp;
+  for (int i = 0; i < sequence.size() - 1; i++) {
+    int min = i;
+    for (int j = i + 1; j < sequence.size(); j++) {
+      if (sequence[j] < sequence[min]) {
+        min = j;
+      }
+    }
+    temp = sequence[min];
+    sequence[min] = sequence[i];
+    sequence[i] = temp;
+// #ifdef TRAZA
+//     sequence.print();
+// #endif
+  }
+}
 
 #endif  // SELECTION_H

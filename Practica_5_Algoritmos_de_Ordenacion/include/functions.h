@@ -28,6 +28,8 @@
 #include "../include/sequence.h"
 #include "../include/staticSequence.h"
 #include "../include/colors.h"
+#include "../include/sortMethod.h"
+#include "../include/selection.h"
 
 const std::string kUsage =
     BOLD + std::string("NAME\n") + RESET +

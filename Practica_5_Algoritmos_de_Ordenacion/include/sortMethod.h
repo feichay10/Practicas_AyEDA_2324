@@ -23,11 +23,7 @@
 template <typename Key>
 class SortMethod {
  public:
-  SortMethod(StaticSequence<Key>& sequence) : sequence_{sequence} {}
-  virtual void Sort() const = 0;
-
- protected:
-  StaticSequence<Key>& sequence_;
+  virtual void Sort(StaticSequence<Key>& sequence) const = 0;
 };
 
 #endif  // SORTMETHOD_H

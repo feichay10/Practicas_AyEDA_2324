@@ -25,6 +25,7 @@ class StaticSequence : public Sequence<Key> {
  public:
   StaticSequence(int size);
   Key operator[](const Position&) const override;
+  int size() const { return size_; }
 
  private:
   int size_;
