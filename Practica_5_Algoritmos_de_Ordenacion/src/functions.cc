@@ -65,11 +65,53 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
       }
     } else if (std::string(argv[i]) == "-trace") {
       if (i + 1 < argc) {
-        parameters.trace_ = argv[i + 1];
+        if (std::string(argv[i + 1]) == "y" || std::string(argv[i + 1]) == "Y") {
+          parameters.trace_ = true;
+        } else if (std::string(argv[i + 1]) == "n" || std::string(argv[i + 1]) == "N") {
+          parameters.trace_ = false;
+        } else {
+          throw std::invalid_argument("Trace not provided. Use " + std::string(argv[0]) + " -help for more information.");
+          exit(EXIT_FAILURE);
+        }
       } else {
         throw std::invalid_argument("Trace not provided. Use " + std::string(argv[0]) + " -help for more information.");
         exit(EXIT_FAILURE);
       }
     }
   }
+
+  std::cout << PURPLE_BOLD << "+------------------------------------+" << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "|" << RESET << ORANGE_BG << GRAY_BOLD << "          Sort Information          " << RESET << PURPLE_BOLD << "|" << std::endl;
+  std::cout << "+------------------------------------+" << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
+            << " Sequence size: " << BLUE_BOLD << parameters.size_ << RESET
+            << PURPLE_BOLD
+            << std::setw(21 - std::to_string(parameters.size_).length())
+            << "|" << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
+            << " Order method: " << BLUE_BOLD
+            << parameters.order_ << PURPLE_BOLD
+            << std::setw(22 - parameters.order_.length()) << "|"
+            << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
+            << " Initialization: " << BLUE_BOLD
+            << parameters.init_ << PURPLE_BOLD
+            << std::setw(20 - parameters.init_.length()) << "|"
+            << RESET << std::endl;
+  if (parameters.init_ == "file") {
+    std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
+              << " File: " << BLUE_BOLD << parameters.file_
+              << PURPLE_BOLD
+              << std::setw(30 - parameters.file_.length())
+              << "|" << RESET << std::endl;
+  }
+  std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
+            << " Trace: " << BLUE_BOLD
+            << (parameters.trace_ ? "Yes" : "No") << PURPLE_BOLD
+            << std::setw(29 - (parameters.trace_ ? 3 : 2)) << "|"
+            << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "+------------------------------------+" << RESET
+            << std::endl;
+
+  return parameters;
 }

@@ -54,7 +54,7 @@ struct sortParameters {
   std::string order_;
   std::string init_;
   std::string file_;
-  std::string trace_;
+  bool trace_;
 };
 
 sortParameters checkProgramParameters(int argc, char* argv[], sortParameters parameters);
