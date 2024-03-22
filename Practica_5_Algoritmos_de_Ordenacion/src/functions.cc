@@ -144,3 +144,34 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
 
   return parameters;
 }
+
+// void createSequence(sortParameters parameters) {
+//   Sequence sequence(parameters.size_);
+//   if (parameters.init_ == "manual") {
+//     sequence.manual();
+//   } else if (parameters.init_ == "random") {
+//     sequence.random();
+//   } else if (parameters.init_ == "file") {
+//     sequence.file(parameters.file_);
+//   }
+
+//   if (parameters.trace_) {
+//     sequence.trace();
+//   }
+
+//   if (parameters.order_ == "selection") {
+//     sequence.selectionSort();
+//   } else if (parameters.order_ == "quick") {
+//     sequence.quickSort();
+//   } else if (parameters.order_ == "heap") {
+//     sequence.heapSort();
+//   } else if (parameters.order_ == "shell") {
+//     sequence.shellSort();
+//   } else if (parameters.order_ == "radix") {
+//     sequence.radixSort();
+//   }
+
+//   if (parameters.trace_) {
+//     sequence.trace();
+//   }
+// }
