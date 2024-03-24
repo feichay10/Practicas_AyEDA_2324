@@ -23,7 +23,16 @@
 template <typename Key>
 class SortMethod {
  public:
-  virtual void Sort(StaticSequence<Key>& sequence) const = 0;
+  virtual void Sort(StaticSequence<Key>& sequence, int size) = 0;
+  void swap(Key& a, Key& b) {
+    Key temp = a;
+    a = b;
+    b = temp;
+  }
+
+ protected:
+  StaticSequence<Key>* sequence_;
+  int size_;
 };
 
 #endif  // SORTMETHOD_H

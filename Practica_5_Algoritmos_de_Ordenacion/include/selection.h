@@ -19,35 +19,26 @@
 #define SELECTION_H
 
 #include "sortMethod.h"
-// #include "staticSequence.h"
-// #include "sequence.h"
 
 template <typename Key>
 class Selection : public SortMethod<Key> {
  public:
-  void Sort(StaticSequence<Key>& sequence) const;
+  void Sort(StaticSequence<Key>& sequence, int size) override;
 };
 
 template <typename Key>
-void Selection<Key>::Sort(StaticSequence<Key>& sequence) const {
-  std::cout << "\nSelection sort" << std::endl;
-
-  Key temp;
-  for (int i = 0; i < sequence.getSize() - 1; i++) {
+void Selection<Key>::Sort(StaticSequence<Key>& sequence, int size) {
+  for (int i = 0; i < size - 1; i++) {
     int min = i;
-    for (int j = i + 1; j < sequence.getSize(); j++) {
+    for (int j = i + 1; j < size; j++) {
       if (sequence[j] < sequence[min]) {
         min = j;
       }
-    } 
-    
-    temp = sequence[min];
-    sequence[min] = sequence[i];
-    sequence[i] = temp;
-    std::cout << "sequence[i]: " << sequence[i] << std::endl;
+    }
+    if (min != i) {
+      // SortMethod<Key>::swap(sequence[i], sequence[min]);
+    }
   }
-
-  sequence.print();
 }
 
 #endif  // SELECTION_H

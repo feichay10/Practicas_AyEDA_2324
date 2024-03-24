@@ -1,13 +1,13 @@
 CXX		 := g++
-CXXFLAGS=-std=c++17 -g #-fsanitize=address #-Wall #-Wextra
+CXXFLAGS=-std=c++14 -g #-fsanitize=address #-Wall #-Wextra
 
 BIN     := bin
-SRC     := src
+SRC     := test
 BUILD	:= build
 INCLUDE := include
 LIB     := lib
 LIBRARIES   := 
-EXECUTABLE  := sortAlgorithms
+EXECUTABLE  := test
 PARAMS	:= 
 SOURCES := $(wildcard $(SRC)/*.cc)
 OBJS	:= $(patsubst $(SRC)/%.cc, $(BUILD)/%.o,$(SOURCES))

@@ -151,15 +151,7 @@ void createSequence(sortParameters parameters) {
 
   if (parameters.order_ == "selection") {
     sortMethod = new Selection<keyType>();
-  } else if (parameters.order_ == "quick") {
-    // sortMethod = new Quick<keyType>(sequence);
-  } else if (parameters.order_ == "heap") {
-    // sortMethod = new Heap<keyType>(sequence);
-  } else if (parameters.order_ == "shell") {
-    // sortMethod = new Shell<keyType>(sequence);
-  } else if (parameters.order_ == "radix") {
-    // sortMethod = new Radix<keyType>(sequence);
-  }
+  } 
 
   if (parameters.init_ == "manual") {
     std::cout << "Enter the sequence data:" << std::endl;
@@ -196,8 +188,7 @@ void createSequence(sortParameters parameters) {
     file.close();
   }
 
-  sortMethod->Sort(sequence);
-
+  sortMethod->Sort(sequence, parameters.size_);
 
   // Imprimir la secuencia ordenada
   std::cout << "\nSorted sequence: ";
