@@ -41,7 +41,6 @@ void SortMethod<Key>::setTrace(bool trace) {
 
 template <typename Key>
 bool SortMethod<Key>::getTrace() {
-  std::cout << "Trace: " << trace_ << std::endl;
   return trace_;
 }
 

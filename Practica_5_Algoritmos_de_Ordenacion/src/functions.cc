@@ -26,18 +26,6 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
     exit(EXIT_FAILURE);
   }
 
-  // a. -size <s>, s es el tamaño de la secuencia.
-  // b. -ord <m>, m es el código que identifica un método de ordenación.
-  //          m = selection
-  //          m = quick
-  //          m = heap
-  //          m = shell
-  //          m = radix
-  // c. -init <i> [f], indica la forma de introducir los datos de la secuencia
-  // i=manual
-  // i=random
-  // i=file f=nombre del fichero de entrada
-  // d. -trace <y|n>, indica si se muestra o no la traza durante la ejecución
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-size") {
       // Comprobar que se introduce un número entero
@@ -148,12 +136,6 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
 void createSequence(sortParameters parameters) {
   SortMethod<keyType>* sortMethod;
   StaticSequence<keyType> sequence(parameters.size_);
-  
-  // Trace
-  if (parameters.trace_) {
-    std::cout << "Trace: " << parameters.trace_ << std::endl;
-    sortMethod->setTrace(true);
-  }
 
   if (parameters.order_ == "selection") {
     sortMethod = new Selection<keyType>();
@@ -193,6 +175,10 @@ void createSequence(sortParameters parameters) {
   }
   std::cout << std::endl;
 
+  if (parameters.trace_) {
+    std::cout << "Trace is: " << std::endl;
+    sortMethod->setTrace(parameters.trace_);
+  }
   sortMethod->Sort(sequence, parameters.size_);
 
   // Imprimir la secuencia ordenada

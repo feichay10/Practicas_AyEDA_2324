@@ -37,7 +37,7 @@ void Selection<Key>::Sort(StaticSequence<Key>& sequence, int size) {
       }
     }
     this->swap(sequence[min], sequence[i]);
-    if (this->getTrace()) {
+    if (this->trace_) {
       this->print(sequence, size);
     }
   }
