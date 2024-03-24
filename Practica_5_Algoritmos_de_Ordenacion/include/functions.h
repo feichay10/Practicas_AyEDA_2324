@@ -30,6 +30,7 @@
 #include "../include/colors.h"
 #include "../include/sortMethod.h"
 #include "../include/selection.h"
+#include "../include/quickSort.h"
 
 const std::string kUsage =
     BOLD + std::string("NAME\n") + RESET +

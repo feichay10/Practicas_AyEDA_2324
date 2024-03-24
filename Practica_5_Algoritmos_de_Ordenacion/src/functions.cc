@@ -139,7 +139,9 @@ void createSequence(sortParameters parameters) {
 
   if (parameters.order_ == "selection") {
     sortMethod = new Selection<keyType>();
-  } 
+  } else if (parameters.order_ == "quick") {
+    sortMethod = new QuickSort<keyType>();
+  }
 
   if (parameters.init_ == "manual") {
     std::cout << "Enter the sequence data:" << std::endl;
@@ -176,12 +178,10 @@ void createSequence(sortParameters parameters) {
   std::cout << std::endl;
 
   if (parameters.trace_) {
-    std::cout << "Trace is: " << std::endl;
     sortMethod->setTrace(parameters.trace_);
   }
   sortMethod->Sort(sequence, parameters.size_);
 
-  // Imprimir la secuencia ordenada
   std::cout << "\nSorted sequence:    ";
   for (int i = 0; i < parameters.size_; i++) {
     std::cout << sequence[i] << " ";

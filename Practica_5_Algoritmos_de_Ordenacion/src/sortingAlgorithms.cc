@@ -19,7 +19,8 @@
 
 #include "../include/functions.h"
 
-// TODO: Trace -> Do with a bool variable in sortMethod variable.
+// TODO: Trace -> Set with color (green for ordered, red for unordered)
+// TODO: Trace -> Ser i and j iterators
 
 int main(int argc, char* argv[]) {
   sortParameters parameters;

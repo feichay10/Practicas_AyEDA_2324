@@ -26,6 +26,8 @@ class StaticSequence : public Sequence<Key> {
   StaticSequence(const int& size);
   ~StaticSequence();
 
+  int getSize() const;
+
   Key& operator[](const int& i) const override;
 
  private:
@@ -42,6 +44,11 @@ StaticSequence<Key>::StaticSequence(const int& size) {
 template <class Key>
 StaticSequence<Key>::~StaticSequence() {
   delete[] sequence_;
+}
+
+template <class Key>
+int StaticSequence<Key>::getSize() const {
+  return size_;
 }
 
 template <class Key>

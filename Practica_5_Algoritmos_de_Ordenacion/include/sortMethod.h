@@ -26,7 +26,8 @@ class SortMethod {
   virtual void Sort(StaticSequence<Key>& sequence, int size) = 0;
   void setTrace(bool trace);
   bool getTrace();
-
+  void setSize(int size);
+  int getSize();
   void print(StaticSequence<Key>& sequence, int size);
 
  protected:

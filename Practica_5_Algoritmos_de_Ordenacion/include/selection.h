@@ -38,6 +38,7 @@ void Selection<Key>::Sort(StaticSequence<Key>& sequence, int size) {
     }
     this->swap(sequence[min], sequence[i]);
     if (this->trace_) {
+      std::cout << "\t\t    ";
       this->print(sequence, size);
     }
   }
