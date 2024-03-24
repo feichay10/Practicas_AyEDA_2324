@@ -19,6 +19,8 @@
 
 #include "../include/functions.h"
 
+// TODO: Trace -> Do with a bool variable in sortMethod variable.
+
 int main(int argc, char* argv[]) {
   sortParameters parameters;
   try {

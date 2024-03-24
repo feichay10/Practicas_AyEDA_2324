@@ -24,15 +24,40 @@ template <typename Key>
 class SortMethod {
  public:
   virtual void Sort(StaticSequence<Key>& sequence, int size) = 0;
-  void swap(Key& a, Key& b) {
-    Key temp = a;
-    a = b;
-    b = temp;
-  }
+  void setTrace(bool trace);
+  bool getTrace();
+
+  void print(StaticSequence<Key>& sequence, int size);
 
  protected:
-  StaticSequence<Key>* sequence_;
-  int size_;
+  void swap(Key& a, Key& b);
+  bool trace_ = false;
 };
+
+template <typename Key>
+void SortMethod<Key>::setTrace(bool trace) {
+  trace_ = trace;
+}
+
+template <typename Key>
+bool SortMethod<Key>::getTrace() {
+  std::cout << "Trace: " << trace_ << std::endl;
+  return trace_;
+}
+
+template <typename Key>
+void SortMethod<Key>::print(StaticSequence<Key>& sequence, int size) {
+  for (int i = 0; i < size; i++) {
+    std::cout << sequence[i] << " ";
+  }
+  std::cout << std::endl;
+}
+
+template <typename Key>
+void SortMethod<Key>::swap(Key& a, Key& b) {
+  Key temp = a;
+  a = b;
+  b = temp;
+}
 
 #endif  // SORTMETHOD_H

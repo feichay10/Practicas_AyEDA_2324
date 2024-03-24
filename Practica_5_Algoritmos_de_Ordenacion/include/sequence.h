@@ -24,9 +24,7 @@
 template <class Key>
 class Sequence {
  public:
-  virtual void insert(const Key& k) = 0;
-  virtual void print() = 0;
-  virtual Key operator[](const int& i) const = 0;
+  virtual Key& operator[](const int& i) const = 0;
 };
 
 #endif  // SEQUENCE_H

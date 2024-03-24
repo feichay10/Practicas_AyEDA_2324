@@ -148,6 +148,12 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
 void createSequence(sortParameters parameters) {
   SortMethod<keyType>* sortMethod;
   StaticSequence<keyType> sequence(parameters.size_);
+  
+  // Trace
+  if (parameters.trace_) {
+    std::cout << "Trace: " << parameters.trace_ << std::endl;
+    sortMethod->setTrace(true);
+  }
 
   if (parameters.order_ == "selection") {
     sortMethod = new Selection<keyType>();
@@ -160,11 +166,6 @@ void createSequence(sortParameters parameters) {
       std::cin >> key;
       std::cout << "key: " << key << std::endl;
       sequence[i] = key;
-    }
-    // Imprimir la secuencia
-    std::cout << "\nSequence: ";
-    for (int i = 0; i < parameters.size_; i++) {
-      std::cout << sequence[i] << " ";
     }
   } else if (parameters.init_ == "random") {
     for (int i = 0; i < parameters.size_; i++) {
@@ -180,18 +181,22 @@ void createSequence(sortParameters parameters) {
     for (int i = 0; i < parameters.size_; i++) {
       keyType key;
       file >> key;
-      std::cout << "key: " << key << std::endl;
-      // sequence[i] = key;
-      sequence.insert(key);
-      std::cout << "sequence[i]: " << sequence[i] << std::endl;
+      std::cout << "Key " << i << ": " << key << std::endl;
+      sequence[i] = key;
     }
     file.close();
   }
 
+  std::cout << "\nUnordered sequence: ";
+  for (int i = 0; i < parameters.size_; i++) {
+    std::cout << sequence[i] << " ";
+  }
+  std::cout << std::endl;
+
   sortMethod->Sort(sequence, parameters.size_);
 
   // Imprimir la secuencia ordenada
-  std::cout << "\nSorted sequence: ";
+  std::cout << "\nSorted sequence:    ";
   for (int i = 0; i < parameters.size_; i++) {
     std::cout << sequence[i] << " ";
   }

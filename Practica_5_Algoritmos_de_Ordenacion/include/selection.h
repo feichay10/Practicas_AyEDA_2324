@@ -28,6 +28,7 @@ class Selection : public SortMethod<Key> {
 
 template <typename Key>
 void Selection<Key>::Sort(StaticSequence<Key>& sequence, int size) {
+  Key temp;
   for (int i = 0; i < size - 1; i++) {
     int min = i;
     for (int j = i + 1; j < size; j++) {
@@ -35,8 +36,9 @@ void Selection<Key>::Sort(StaticSequence<Key>& sequence, int size) {
         min = j;
       }
     }
-    if (min != i) {
-      // SortMethod<Key>::swap(sequence[i], sequence[min]);
+    this->swap(sequence[min], sequence[i]);
+    if (this->getTrace()) {
+      this->print(sequence, size);
     }
   }
 }

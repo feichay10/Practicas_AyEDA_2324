@@ -1,11 +1,14 @@
 #include "../include/selection.h"
 #include "../include/staticSequence.h"
 #include "../include/nif.h"
+#include "../include/key.h"
 
 #include <iostream>
 #include <string>
 
-using keyType = Nif;
+// using keyType = Key;
+typedef Key<long> keyType;
+
 
 int main() {
   int size = 8;
