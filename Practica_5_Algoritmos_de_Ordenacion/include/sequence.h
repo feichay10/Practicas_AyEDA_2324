@@ -19,13 +19,14 @@
 #define SEQUENCE_H
 
 #include <iostream>
-
-typedef int Position;
+#include <fstream>
 
 template <class Key>
 class Sequence {
  public:
-  virtual Key operator[](const Position&) const = 0;
+  virtual void insert(const Key& k) = 0;
+  virtual void print() = 0;
+  virtual Key operator[](const int& i) const = 0;
 };
 
 #endif  // SEQUENCE_H

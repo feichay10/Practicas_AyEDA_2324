@@ -150,7 +150,7 @@ void createSequence(sortParameters parameters) {
   StaticSequence<keyType> sequence(parameters.size_);
 
   if (parameters.order_ == "selection") {
-    sortMethod = new Selection<keyType>(sequence);
+    sortMethod = new Selection<keyType>();
   } else if (parameters.order_ == "quick") {
     // sortMethod = new Quick<keyType>(sequence);
   } else if (parameters.order_ == "heap") {
@@ -166,16 +166,15 @@ void createSequence(sortParameters parameters) {
     for (int i = 0; i < parameters.size_; i++) {
       keyType key;
       std::cin >> key;
+      std::cout << "key: " << key << std::endl;
       sequence[i] = key;
     }
     // Imprimir la secuencia
-    std::cout << "Sequence: ";
+    std::cout << "\nSequence: ";
     for (int i = 0; i < parameters.size_; i++) {
       std::cout << sequence[i] << " ";
     }
-  } 
-  
-  /*else if (parameters.init_ == "random") {
+  } else if (parameters.init_ == "random") {
     for (int i = 0; i < parameters.size_; i++) {
       keyType key;
       sequence[i] = key;
@@ -189,13 +188,16 @@ void createSequence(sortParameters parameters) {
     for (int i = 0; i < parameters.size_; i++) {
       keyType key;
       file >> key;
-      sequence[i] = key;
+      std::cout << "key: " << key << std::endl;
+      // sequence[i] = key;
+      sequence.insert(key);
+      std::cout << "sequence[i]: " << sequence[i] << std::endl;
     }
     file.close();
-  }*/
+  }
 
   sortMethod->Sort(sequence);
-  delete sortMethod;
+
 
   // Imprimir la secuencia ordenada
   std::cout << "\nSorted sequence: ";

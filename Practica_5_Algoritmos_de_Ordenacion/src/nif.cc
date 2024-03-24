@@ -47,6 +47,12 @@ unsigned Nif::operator[](unsigned i) const {
   return nif_string[i] - '0';
 }
 
+Nif& Nif::operator=(const Nif& other) {
+  // std::cout << "operator= Nif: " << other.nif_ << std::endl;
+  nif_ = other.nif_;
+  return *this;
+}
+
 std::ostream& operator<<(std::ostream& os, const Nif& nif) {
   os << nif.nif_;
   return os;

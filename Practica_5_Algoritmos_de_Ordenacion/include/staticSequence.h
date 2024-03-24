@@ -23,23 +23,55 @@
 template <class Key>
 class StaticSequence : public Sequence<Key> {
  public:
-  StaticSequence(int size);
-  Key operator[](const Position&) const override;
-  int size() const { return size_; }
+  StaticSequence(const int& size);
+  ~StaticSequence();
+
+  void insert(const Key& k);
+  void print();
+  Key operator[](const int& i) const;
+  int getSize() const;
 
  private:
+  Key* sequence_;
   int size_;
-  Key* array_;
 };
 
 template <class Key>
-StaticSequence<Key>::StaticSequence(int size) : size_(size) {
-  array_ = new Key[size_];
+StaticSequence<Key>::StaticSequence(const int& size) {
+  size_ = size;
+  sequence_ = new Key[size_];
 }
 
 template <class Key>
-Key StaticSequence<Key>::operator[](const Position& position) const {
-  return array_[position];
+StaticSequence<Key>::~StaticSequence() {
+  delete[] sequence_;
+}
+
+template <class Key>
+void StaticSequence<Key>::insert(const Key& k) {
+  for (int i = 0; i < size_; i++) {
+    if (sequence_[i] == 0) {
+      sequence_[i] = k;
+      break;
+    }
+  }
+}
+
+template <class Key>
+void StaticSequence<Key>::print() {
+  for (int i = 0; i < size_; i++) {
+    std::cout << sequence_[i] << " ";
+  }
+}
+
+template <class Key>
+Key StaticSequence<Key>::operator[](const int& i) const {
+  return sequence_[i];
+}
+
+template <class Key>
+int StaticSequence<Key>::getSize() const {
+  return size_;
 }
 
 #endif  // STATICSEQUENCE_H

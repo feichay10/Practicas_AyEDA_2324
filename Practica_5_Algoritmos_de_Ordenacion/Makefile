@@ -1,5 +1,5 @@
 CXX		 := g++
-CXXFLAGS=-g -std=c++17 #-fsanitize=address #-Wall #-Wextra
+CXXFLAGS=-std=c++17 -g #-fsanitize=address #-Wall #-Wextra
 
 BIN     := bin
 SRC     := src
@@ -8,8 +8,7 @@ INCLUDE := include
 LIB     := lib
 LIBRARIES   := 
 EXECUTABLE  := sortAlgorithms
-PARAMS	:= -ts 10 -fd module -hash open -bs 5 -fe lineal
-PARAMS1 := -ts 7 -fd module -hash close -bs 3 -fe quadratic
+PARAMS	:= 
 SOURCES := $(wildcard $(SRC)/*.cc)
 OBJS	:= $(patsubst $(SRC)/%.cc, $(BUILD)/%.o,$(SOURCES))
 

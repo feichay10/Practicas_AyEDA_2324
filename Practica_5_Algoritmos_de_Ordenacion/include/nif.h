@@ -36,10 +36,12 @@ class Nif {
   operator unsigned int() const;
   unsigned operator[](unsigned i) const;
 
+  Nif& operator=(const Nif& other);
+
+
   friend std::ostream& operator<<(std::ostream& os, const Nif& nif);
   friend std::istream& operator>>(std::istream& is, Nif& nif);
 
-  // For dfSum class
   auto begin() const { return std::to_string(nif_).begin(); }
   auto end() const { return std::to_string(nif_).end(); }
 
