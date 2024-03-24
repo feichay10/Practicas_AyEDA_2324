@@ -141,6 +141,12 @@ void createSequence(sortParameters parameters) {
     sortMethod = new Selection<keyType>();
   } else if (parameters.order_ == "quick") {
     sortMethod = new QuickSort<keyType>();
+  } else if (parameters.order_ == "heap") {
+    sortMethod = new HeapSort<keyType>();
+  } else if (parameters.order_ == "shell") {
+    // sortMethod = new ShellSort<keyType>();
+  } else if (parameters.order_ == "radix") {
+    // sortMethod = new RadixSort<keyType>();
   }
 
   if (parameters.init_ == "manual") {

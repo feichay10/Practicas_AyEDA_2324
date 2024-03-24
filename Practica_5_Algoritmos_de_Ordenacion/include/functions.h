@@ -31,6 +31,7 @@
 #include "../include/sortMethod.h"
 #include "../include/selection.h"
 #include "../include/quickSort.h"
+#include "../include/heapSort.h"
 
 const std::string kUsage =
     BOLD + std::string("NAME\n") + RESET +
