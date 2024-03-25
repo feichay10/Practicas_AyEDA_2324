@@ -35,6 +35,7 @@
 #include "../include/shellSort.h"
 #include "../include/radixSort.h"
 #include "../include/insertion.h"
+#include "../include/mergeSort.h"
 
 using keyType = Nif;
 
@@ -47,7 +48,7 @@ const std::string kUsage =
     std::string("       Program that allows to sort data a sequence in a specific order.\n\n") +
     BOLD + std::string("OPTIONS") + RESET + BOLD + std::string("\n\t  -size <s>") + RESET +
     std::string("\n\t\tSize of the sequence.\n") + BOLD +
-    std::string("\n\t  -ord <m>, m = selection|quick|heap|shell|radix") + RESET +
+    std::string("\n\t  -ord <m>, m = selection|quick|heap|shell|radix|insertion|merge") + RESET +
     std::string("\n\t\tm is de code who identifies the sort method.\n") +
     BOLD + std::string("\n\t  -init <i> [f]") + RESET +
     std::string("\n\t\ti = manual. Enter sequence data manually") +

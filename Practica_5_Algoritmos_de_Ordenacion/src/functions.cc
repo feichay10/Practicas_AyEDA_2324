@@ -150,7 +150,7 @@ void createSequence(sortParameters parameters) {
   } else if (parameters.order_ == "insertion") {
     sortMethod = new Insertion<keyType>();
   } else if (parameters.order_ == "merge") {
-    // sortMethod = new MergeSort<keyType>();
+    sortMethod = new MergeSort<keyType>();
   }
 
   if (parameters.init_ == "manual") {
