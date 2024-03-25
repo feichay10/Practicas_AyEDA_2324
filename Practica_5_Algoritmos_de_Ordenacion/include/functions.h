@@ -34,6 +34,7 @@
 #include "../include/heapSort.h"
 #include "../include/shellSort.h"
 #include "../include/radixSort.h"
+#include "../include/insertion.h"
 
 using keyType = Nif;
 

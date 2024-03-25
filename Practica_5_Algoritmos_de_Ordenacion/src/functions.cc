@@ -147,6 +147,10 @@ void createSequence(sortParameters parameters) {
     sortMethod = new ShellSort<keyType>();
   } else if (parameters.order_ == "radix") {
     sortMethod = new RadixSort<keyType>();
+  } else if (parameters.order_ == "insertion") {
+    sortMethod = new Insertion<keyType>();
+  } else if (parameters.order_ == "merge") {
+    // sortMethod = new MergeSort<keyType>();
   }
 
   if (parameters.init_ == "manual") {
