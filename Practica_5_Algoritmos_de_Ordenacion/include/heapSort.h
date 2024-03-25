@@ -26,38 +26,47 @@ class HeapSort : public SortMethod<Key> {
   void Sort(StaticSequence<Key>& sequence, int size) override;
 
  private:
-  void heapify(StaticSequence<Key>& sequence, int size, int i);
+  void downHeap(int i, StaticSequence<Key>& sequence, int size);
 };
 
 template <typename Key>
 void HeapSort<Key>::Sort(StaticSequence<Key>& sequence, int size) {
-  for (int i = size / 2 - 1; i >= 0; i--) {
-    heapify(sequence, size, i);
+  for (int i = size / 2; i >= 0; i--) {
+    downHeap(i, sequence, size - 1);
   }
-
   for (int i = size - 1; i > 0; i--) {
     this->swap(sequence[0], sequence[i]);
-    heapify(sequence, i, 0);
+    downHeap(0, sequence, i - 1);
   }
+
+  // for (int i = size / 2; i > 0; i--) {
+  //   downHeap(i, sequence, size);
+  // }
+  // for (int i = size; i > 1; i--) {
+  //   this->swap(sequence[1], sequence[i]);
+  //   downHeap(1, sequence, i - 1);
+  // }
 }
 
 template <typename Key>
-void HeapSort<Key>::heapify(StaticSequence<Key>& sequence, int size, int i) {
-  int largest = i;
-  int left = 2 * i + 1;
-  int right = 2 * i + 2;
-
-  if (left < size && sequence[left] > sequence[largest]) {
-    largest = left;
-  }
-
-  if (right < size && sequence[right] > sequence[largest]) {
-    largest = right;
-  }
-
-  if (largest != i) {
-    this->swap(sequence[i], sequence[largest]);
-    heapify(sequence, size, largest);
+void HeapSort<Key>::downHeap(int i, StaticSequence<Key>& sequence, int size) {
+  int h1, h2, h;
+  while (2 * i <= size) {
+    h1 = 2 * i;
+    h2 = h1 + 1;
+    if (h1 == size) {
+      h = h1;
+    } else if (sequence[h1] > sequence[h2]) {
+      h = h1;
+    } else {
+      h = h2;
+    }
+    if (sequence[h] <= sequence[i]) {
+      break;
+    } else {
+      this->swap(sequence[i], sequence[h]);
+      i = h;
+    }
   }
 }
 
