@@ -32,6 +32,10 @@
 #include "../include/selection.h"
 #include "../include/quickSort.h"
 #include "../include/heapSort.h"
+#include "../include/shellSort.h"
+#include "../include/radixSort.h"
+
+using keyType = Nif;
 
 const std::string kUsage =
     BOLD + std::string("NAME\n") + RESET +
@@ -53,7 +57,8 @@ const std::string kUsage =
     std::string("\n\t\tIndicates whether or not the trace is displayed during execution\n") + BOLD +
     BOLD + std::string("\n\t  -help") + RESET + std::string("\n\t\tShow this message.");
 
-using keyType = Nif;
+// Lista de los algoritmos de ordenacion disponibles
+const std::set<std::string> kAvailableOrders = {"selection", "quick", "heap", "shell", "radix", "insertion", "merge"};
 
 struct sortParameters {
   int size_;
@@ -62,9 +67,6 @@ struct sortParameters {
   std::string file_;
   bool trace_;
 };
-
-// Lista de los algoritmos de ordenacion disponibles
-const std::set<std::string> kAvailableOrders = {"selection", "quick", "heap", "shell", "radix"};
 
 sortParameters checkProgramParameters(int argc, char* argv[], sortParameters parameters);
 void createSequence(sortParameters parameters);

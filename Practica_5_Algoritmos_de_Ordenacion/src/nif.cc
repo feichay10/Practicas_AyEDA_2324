@@ -3,7 +3,7 @@
 const char letters[] = "TRWAGMYFPDXBNJZSQVHLCKE";
 
 Nif::Nif() {
-  // nif_ = 10000000 + rand() % 1000000;
+  nif_ = 10000000 + rand() % 1000000;
 }
 
 Nif::Nif(const long nif) {
