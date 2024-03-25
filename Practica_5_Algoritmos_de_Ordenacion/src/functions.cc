@@ -52,7 +52,7 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
           exit(EXIT_FAILURE);
         }
       } else {
-        throw std::invalid_argument("Order not provided. Use " + std::string(argv[0]) + " -help for more information.");
+        throw std::invalid_argument("Order algorithm not provided. Use " + std::string(argv[0]) + " -help for more information.");
         exit(EXIT_FAILURE);
       }
     } else if (std::string(argv[i]) == "-init") {
@@ -86,7 +86,7 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
         } else if (std::string(argv[i + 1]) == "n" || std::string(argv[i + 1]) == "N") {
           parameters.trace_ = false;
         } else {
-          throw std::invalid_argument("Option not available. Use " + std::string(argv[0]) + " -help for more information.");
+          throw std::invalid_argument("Option for -trace not available. Use " + std::string(argv[0]) + " -help for more information.");
           exit(EXIT_FAILURE);
         }
       } else {
