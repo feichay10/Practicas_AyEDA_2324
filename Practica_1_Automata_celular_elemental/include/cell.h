@@ -32,7 +32,6 @@ class Lattice;
 class Cell {
  public:
   // Constructor
-  Cell();
   Cell(const Position&, const State&);
 
   // Getters y Setters

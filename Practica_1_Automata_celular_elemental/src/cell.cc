@@ -18,8 +18,6 @@
 
 #include "../include/cell.h"
 
-Cell::Cell() {}
-
 Cell::Cell(const Position& position, const State& state) {
   position_ = position;
   state_ = state;

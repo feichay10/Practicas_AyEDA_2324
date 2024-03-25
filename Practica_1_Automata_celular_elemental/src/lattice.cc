@@ -41,7 +41,21 @@ Lattice::~Lattice() {
   delete[] cells_;
 }
 
+// Implementar el tratamiento de la condición de frontera
 Cell& Lattice::getCell(const Position& position) const {
+  if (position < 0 || position >= size_) {
+    if (borderType_ == kOpen) {
+      if (openBorderType_ == kCold) {
+        return *cells_[0];
+      } else {
+        return *cells_[size_ - 1];
+      }
+    } else if (borderType_ == kPeriodic) {
+      return *cells_[position < 0 ? size_ - 1 : 0];
+    } else { // kReflector
+      return *cells_[position < 0 ? 0 : size_ - 1];
+    }
+  }
   return *cells_[position];
 }
 
@@ -55,13 +69,13 @@ void Lattice::nextGeneration() {
     cells_[i]->updateState();
   }
 
-  if (borderType_ == kPeriodic) {
-    cells_[0]->setState(cells_[size_ - 2]->getState());
-    cells_[size_ - 1]->setState(cells_[1]->getState());
-  } else if (borderType_ == kReflector) {
-    cells_[0]->setState(cells_[1]->getState());
-    cells_[size_ - 1]->setState(cells_[size_ - 2]->getState());
-  }
+  // if (borderType_ == kPeriodic) {
+  //   cells_[0]->setState(cells_[size_ - 2]->getState());
+  //   cells_[size_ - 1]->setState(cells_[1]->getState());
+  // } else if (borderType_ == kReflector) {
+  //   cells_[0]->setState(cells_[1]->getState());
+  //   cells_[size_ - 1]->setState(cells_[size_ - 2]->getState());
+  // }
 }
 
 std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
