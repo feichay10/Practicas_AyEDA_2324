@@ -28,7 +28,6 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
 
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-size") {
-      // Comprobar que se introduce un número entero
       if (i + 1 < argc) {
         try {
           parameters.size_ = std::stoi(argv[i + 1]);
@@ -181,7 +180,7 @@ void createSequence(sortParameters parameters) {
     sortMethod = new MergeSort<keyType>(sequence, parameters.size_);
   }
 
-  std::cout << "\nUnordered sequence: ";
+  std::cout << BOLD << "\nUnordered sequence: " << RESET;
   for (int i = 0; i < parameters.size_; i++) {
     std::cout << sequence[i] << sequence[i].letterNif(sequence[i]) << " ";
   }
@@ -193,7 +192,7 @@ void createSequence(sortParameters parameters) {
   
   sortMethod->Sort();
 
-  std::cout << "\nSorted sequence:    ";
+  std::cout << BOLD << "\nSorted sequence:    " << RESET;
   for (int i = 0; i < parameters.size_; i++) {
     std::cout << sequence[i] << sequence[i].letterNif(sequence[i]) << " ";
   }
