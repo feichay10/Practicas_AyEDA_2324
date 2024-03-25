@@ -134,7 +134,7 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
 }
 
 void createSequence(sortParameters parameters) {
-  // SortMethod<keyType>* sortMethod;
+  SortMethod<keyType>* sortMethod;
   StaticSequence<keyType> sequence(parameters.size_);
 
   if (parameters.init_ == "manual") {
@@ -165,7 +165,6 @@ void createSequence(sortParameters parameters) {
     file.close();
   }
 
-  SortMethod<keyType>* sortMethod;
   if (parameters.order_ == "selection") {
     sortMethod = new Selection<keyType>(sequence, parameters.size_);
   } else if (parameters.order_ == "quick") {
@@ -184,7 +183,7 @@ void createSequence(sortParameters parameters) {
 
   std::cout << "\nUnordered sequence: ";
   for (int i = 0; i < parameters.size_; i++) {
-    std::cout << sequence[i] << " ";
+    std::cout << sequence[i] << sequence[i].letterNif(sequence[i]) << " ";
   }
   std::cout << std::endl;
 
@@ -196,6 +195,6 @@ void createSequence(sortParameters parameters) {
 
   std::cout << "\nSorted sequence:    ";
   for (int i = 0; i < parameters.size_; i++) {
-    std::cout << sequence[i] << " ";
+    std::cout << sequence[i] << sequence[i].letterNif(sequence[i]) << " ";
   }
 }

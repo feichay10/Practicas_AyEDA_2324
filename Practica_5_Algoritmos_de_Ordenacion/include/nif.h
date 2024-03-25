@@ -20,6 +20,7 @@
 
 #include <ctime>
 #include <iostream>
+#include <random>
 
 class Nif {
  public:

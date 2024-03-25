@@ -3,7 +3,15 @@
 const char letters[] = "TRWAGMYFPDXBNJZSQVHLCKE";
 
 Nif::Nif() {
-  nif_ = 10000000 + rand() % 1000000;
+  // nif_ = 10000000 + rand() % 1000000;
+
+  srand(time(0));
+  
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<long> dis(10000000, 99999999);
+
+  nif_ = dis(gen);
 }
 
 Nif::Nif(const long nif) {
