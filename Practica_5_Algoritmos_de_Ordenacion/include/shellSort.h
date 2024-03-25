@@ -23,18 +23,22 @@
 template <typename Key>
 class ShellSort : public SortMethod<Key> {
  public:
-  void Sort(StaticSequence<Key>& sequence, int size) override;
+  ShellSort(StaticSequence<Key>& sequence, int size);
+  void Sort() override;
 
  private:
   void deltaSort(int delta, StaticSequence<Key>& sequence, int size);
 };
 
 template <typename Key>
-void ShellSort<Key>::Sort(StaticSequence<Key>& sequence, int size) {
-  int delta = size;
+ShellSort<Key>::ShellSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
+
+template <typename Key>
+void ShellSort<Key>::Sort() {
+  int delta = this->size_;
   while (delta > 1) {
     delta = delta / 2;
-    deltaSort(delta, sequence, size);
+    deltaSort(delta, this->sequence_, this->size_);
   }
 }
 
@@ -51,8 +55,9 @@ void ShellSort<Key>::deltaSort(int delta, StaticSequence<Key>& sequence, int siz
   }
   if (this->trace_) {
     std::cout << "\t\t    ";
-    this->print(sequence, size);
+    this->print();
   }
 }
+
 
 #endif  // SHELLSORT_H

@@ -23,37 +23,42 @@
 template <typename Key>
 class QuickSort : public SortMethod<Key> {
  public:
-  void Sort(StaticSequence<Key>& sequence, int size) override;
+  QuickSort(StaticSequence<Key>& sequence, int size);
+  void Sort() override;
 
  private:
   void qSort(StaticSequence<Key>& sequence, int begin, int end);
 };
 
 template <typename Key>
-void QuickSort<Key>::Sort(StaticSequence<Key>& sequence, int size) {
-  qSort(sequence, 0, size - 1);
+QuickSort<Key>::QuickSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
+
+template <typename Key>
+void QuickSort<Key>::Sort() {
+  qSort(this->sequence_, 0, this->size_ - 1);
 }
 
 template <typename Key>
 void QuickSort<Key>::qSort(StaticSequence<Key>& sequence, int begin, int end) {
   int i = begin;
-  int f = end;
-  int size =  sequence.getSize();
+  int j = end;
   Key pivot = sequence[(begin + end) / 2];
-  std::cout << "Pivot: " << pivot << "\t    ";
-  while (i <= f) {
+  if (this->trace_) {
+    std::cout << "Pivot: " << pivot << "\t    ";
+  }
+  while (i <= j) {
     while (sequence[i] < pivot) i++;
-    while (sequence[f] > pivot) f--;
-    if (i <= f) {
-      this->swap(sequence[i], sequence[f]);
+    while (sequence[j] > pivot) j--;
+    if (i <= j) {
+      this->swap(sequence[i], sequence[j]);
       i++;
-      f--;
+      j--;
     }
   }
   if (this->trace_) {
-    this->print(sequence, size);
+    this->print();
   }
-  if (begin < f) qSort(sequence, begin, f);
+  if (begin < j) qSort(sequence, begin, j);
   if (i < end) qSort(sequence, i, end);
 }
 

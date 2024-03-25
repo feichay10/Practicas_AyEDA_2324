@@ -134,24 +134,8 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
 }
 
 void createSequence(sortParameters parameters) {
-  SortMethod<keyType>* sortMethod;
+  // SortMethod<keyType>* sortMethod;
   StaticSequence<keyType> sequence(parameters.size_);
-
-  if (parameters.order_ == "selection") {
-    sortMethod = new Selection<keyType>();
-  } else if (parameters.order_ == "quick") {
-    sortMethod = new QuickSort<keyType>();
-  } else if (parameters.order_ == "heap") {
-    sortMethod = new HeapSort<keyType>();
-  } else if (parameters.order_ == "shell") {
-    sortMethod = new ShellSort<keyType>();
-  } else if (parameters.order_ == "radix") {
-    sortMethod = new RadixSort<keyType>();
-  } else if (parameters.order_ == "insertion") {
-    sortMethod = new Insertion<keyType>();
-  } else if (parameters.order_ == "merge") {
-    sortMethod = new MergeSort<keyType>();
-  }
 
   if (parameters.init_ == "manual") {
     std::cout << "Enter the sequence data:" << std::endl;
@@ -181,6 +165,23 @@ void createSequence(sortParameters parameters) {
     file.close();
   }
 
+  SortMethod<keyType>* sortMethod;
+  if (parameters.order_ == "selection") {
+    sortMethod = new Selection<keyType>(sequence, parameters.size_);
+  } else if (parameters.order_ == "quick") {
+    sortMethod = new QuickSort<keyType>(sequence, parameters.size_);
+  } else if (parameters.order_ == "heap") {
+    sortMethod = new HeapSort<keyType>(sequence, parameters.size_);
+  } else if (parameters.order_ == "shell") {
+    sortMethod = new ShellSort<keyType>(sequence, parameters.size_);
+  } else if (parameters.order_ == "radix") {
+    sortMethod = new RadixSort<keyType>(sequence, parameters.size_);
+  } else if (parameters.order_ == "insertion") {
+    sortMethod = new Insertion<keyType>(sequence, parameters.size_);
+  } else if (parameters.order_ == "merge") {
+    sortMethod = new MergeSort<keyType>(sequence, parameters.size_);
+  }
+
   std::cout << "\nUnordered sequence: ";
   for (int i = 0; i < parameters.size_; i++) {
     std::cout << sequence[i] << " ";
@@ -190,7 +191,8 @@ void createSequence(sortParameters parameters) {
   if (parameters.trace_) {
     sortMethod->setTrace(parameters.trace_);
   }
-  sortMethod->Sort(sequence, parameters.size_);
+  
+  sortMethod->Sort();
 
   std::cout << "\nSorted sequence:    ";
   for (int i = 0; i < parameters.size_; i++) {

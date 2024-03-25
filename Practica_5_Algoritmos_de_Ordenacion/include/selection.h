@@ -23,25 +23,30 @@
 template <typename Key>
 class Selection : public SortMethod<Key> {
  public:
-  void Sort(StaticSequence<Key>& sequence, int size) override;
+  Selection(StaticSequence<Key>& sequence, int size);
+  void Sort() override;
 };
 
 template <typename Key>
-void Selection<Key>::Sort(StaticSequence<Key>& sequence, int size) {
+Selection<Key>::Selection(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
+
+template <typename Key>
+void Selection<Key>::Sort() {
   Key temp;
-  for (int i = 0; i < size - 1; i++) {
+  for (int i = 0; i < this->size_ - 1; i++) {
     int min = i;
-    for (int j = i + 1; j < size; j++) {
-      if (sequence[j] < sequence[min]) {
+    for (int j = i + 1; j < this->size_; j++) {
+      if (this->sequence_[j] < this->sequence_[min]) {
         min = j;
       }
     }
-    this->swap(sequence[min], sequence[i]);
+    this->swap(this->sequence_[min], this->sequence_[i]);
     if (this->trace_) {
-      std::cout << "\t\t    ";
-      this->print(sequence, size);
+      std::cout << "\t\t    "; 
+      this->print();
     }
   }
 }
+
 
 #endif  // SELECTION_H

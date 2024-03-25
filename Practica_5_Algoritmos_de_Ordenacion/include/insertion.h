@@ -23,22 +23,26 @@
 template <typename Key>
 class Insertion : public SortMethod<Key> {
  public:
-  void Sort(StaticSequence<Key>& sequence, int size) override;
+  Insertion(StaticSequence<Key>& sequence, int size);
+  void Sort() override;
 };
 
 template <typename Key>
-void Insertion<Key>::Sort(StaticSequence<Key>& sequence, int size) {
-  for (int i = 1; i < size; i++) {
-    Key temp = sequence[i];
+Insertion<Key>::Insertion(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
+
+template <typename Key>
+void Insertion<Key>::Sort() {
+  for (int i = 1; i < this->size_; i++) {
+    Key temp = this->sequence_[i];
     int j = i - 1;
-    while ((j >= 0) && (sequence[j] > temp)) {
-      sequence[j + 1] = sequence[j];
+    while ((j >= 0) && (this->sequence_[j] > temp)) {
+      this->sequence_[j + 1] = this->sequence_[j];
       j--;
     }
-    sequence[j + 1] = temp;
+    this->sequence_[j + 1] = temp;
     if (this->trace_) {
       std::cout << "\t\t    ";
-      this->print(sequence, size);
+      this->print();
     }
   }
 }

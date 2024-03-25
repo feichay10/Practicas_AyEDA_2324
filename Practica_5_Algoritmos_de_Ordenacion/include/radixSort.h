@@ -21,46 +21,50 @@
 #include "sortMethod.h"
 
 template <typename Key>
-
 class RadixSort : public SortMethod<Key> {
  public:
-  void Sort(StaticSequence<Key>& sequence, int size) override;
+  RadixSort(StaticSequence<Key>& sequence, int size);
+  void Sort() override;
 };
 
 template <typename Key>
-void RadixSort<Key>::Sort(StaticSequence<Key>& sequence, int size) {
-  int max = sequence[0];
-  for (int i = 1; i < size; i++) {
-    if (sequence[i] > max) {
-      max = sequence[i];
+RadixSort<Key>::RadixSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
+
+template <typename Key>
+void RadixSort<Key>::Sort() {
+  int max = this->sequence_[0];
+  for (int i = 1; i < this->size_; i++) {
+    if (this->sequence_[i] > max) {
+      max = this->sequence_[i];
     }
   }
 
   for (int exp = 1; max / exp > 0; exp *= 10) {
-    int output[size];
+    int output[this->size_];
     int count[10] = {0};
 
-    for (int i = 0; i < size; i++) {
-      count[(sequence[i] / exp) % 10]++;
+    for (int i = 0; i < this->size_; i++) {
+      count[(this->sequence_[i] / exp) % 10]++;
     }
 
     for (int i = 1; i < 10; i++) {
       count[i] += count[i - 1];
     }
 
-    for (int i = size - 1; i >= 0; i--) {
-      output[count[(sequence[i] / exp) % 10] - 1] = sequence[i];
-      count[(sequence[i] / exp) % 10]--;
+    for (int i = this->size_ - 1; i >= 0; i--) {
+      output[count[(this->sequence_[i] / exp) % 10] - 1] = this->sequence_[i];
+      count[(this->sequence_[i] / exp) % 10]--;
     }
 
-    for (int i = 0; i < size; i++) {
-      sequence[i] = output[i];
+    for (int i = 0; i < this->size_; i++) {
+      this->sequence_[i] = output[i];
     }
     if (this->trace_) {
       std::cout << "\t\t    ";
-      this->print(sequence, size);
+      this->print();
     }
   }
 }
+
 
 #endif // RADIXSORT_H

@@ -23,7 +23,8 @@
 template <typename Key>
 class MergeSort : public SortMethod<Key> {
  public:
-  void Sort(StaticSequence<Key>& sequence, int size) override;
+  MergeSort(StaticSequence<Key>& sequence, int size);
+  void Sort() override;
 
  private:
   void mSort(StaticSequence<Key>& sequence, int begin, int end);
@@ -31,8 +32,11 @@ class MergeSort : public SortMethod<Key> {
 };
 
 template <typename Key>
-void MergeSort<Key>::Sort(StaticSequence<Key>& sequence, int size) {
-  mSort(sequence, 0, size - 1);
+MergeSort<Key>::MergeSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
+
+template <typename Key>
+void MergeSort<Key>::Sort() {
+  mSort(this->sequence_, 0, this->size_ - 1);
 }
 
 template <typename Key>
@@ -49,28 +53,26 @@ template <typename Key>
 void MergeSort<Key>::mix(StaticSequence<Key>& sequence, int begin, int middle, int end) {
   int i = begin;
   int j = middle + 1;
-  Key* aux = new Key[end + 1];
-  int size = sequence.getSize();
+  StaticSequence<Key> temp(end + 1);
+
   for (int k = begin; k <= end; k++) {
-    if (i <= middle && (j > end || sequence[i] < sequence[j])) {
-      aux[k] = sequence[i];
+    if (i <= middle && (j > end || sequence[i] <= sequence[j])) {
+      temp[k] = sequence[i];
       i++;
     } else {
-      aux[k] = sequence[j];
+      temp[k] = sequence[j];
       j++;
     }
   }
 
   for (int k = begin; k <= end; k++) {
-    sequence[k] = aux[k];
+    sequence[k] = temp[k];
   }
 
   if (this->trace_) {
     std::cout << "\t\t    ";
-    this->print(sequence, size);
+    this->print();
   }
-
-  delete[] aux;
 }
 
 #endif  // MERGESORT_H
