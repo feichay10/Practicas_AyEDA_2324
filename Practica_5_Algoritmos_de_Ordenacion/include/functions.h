@@ -37,6 +37,7 @@
 #include "../include/insertion.h"
 #include "../include/mergeSort.h"
 #include "../include/binSort.h"
+#include "../include/bubbleSort.h"
 
 using keyType = Nif;
 
@@ -61,7 +62,7 @@ const std::string kUsage =
     BOLD + std::string("\n\t  -help") + RESET + std::string("\n\t\tShow this message.");
 
 // Lista de los algoritmos de ordenacion disponibles
-const std::set<std::string> kAvailableOrders = {"selection", "quick", "heap", "shell", "radix", "insertion", "merge", "bin"};
+const std::set<std::string> kAvailableOrders = {"selection", "quick", "heap", "shell", "radix", "insertion", "merge", "bin", "bubble"};
 
 struct sortParameters {
   int size_;
