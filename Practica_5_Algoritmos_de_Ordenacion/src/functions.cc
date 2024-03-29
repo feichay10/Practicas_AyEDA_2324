@@ -178,6 +178,8 @@ void createSequence(sortParameters parameters) {
     sortMethod = new Insertion<keyType>(sequence, parameters.size_);
   } else if (parameters.order_ == "merge") {
     sortMethod = new MergeSort<keyType>(sequence, parameters.size_);
+  } else if (parameters.order_ == "bin") {
+    sortMethod = new BinSort<keyType>(sequence, parameters.size_);
   }
 
   std::cout << BOLD << "\nUnordered sequence: " << RESET;

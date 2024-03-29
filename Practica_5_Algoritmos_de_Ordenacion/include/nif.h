@@ -36,9 +36,7 @@ class Nif {
   operator long();
   operator unsigned int() const;
   unsigned operator[](unsigned i) const;
-
-  Nif& operator=(const Nif& other);
-
+  Nif& operator=(const Nif& other);  
 
   friend std::ostream& operator<<(std::ostream& os, const Nif& nif);
   friend std::istream& operator>>(std::istream& is, Nif& nif);

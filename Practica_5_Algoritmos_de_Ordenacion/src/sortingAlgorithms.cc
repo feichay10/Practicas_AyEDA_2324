@@ -21,6 +21,7 @@
 
 // TODO: Trace -> Set with color (green for ordered, red for unordered)
 // TODO: Trace -> Ser i and j iterators
+// TODO: Implement all sorting algorithms -> binSort, bubbleSort, shakeSort
 
 int main(int argc, char* argv[]) {
   sortParameters parameters;

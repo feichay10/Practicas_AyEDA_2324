@@ -25,10 +25,9 @@ class StaticSequence : public Sequence<Key> {
  public:
   StaticSequence(const int& size);
   ~StaticSequence();
-
   int getSize() const;
-
   Key& operator[](const int& i) const override;
+  // bool operator<(const Key& other) const override;
 
  private:
   Key* sequence_;
