@@ -182,7 +182,9 @@ void createSequence(sortParameters parameters) {
     sortMethod = new BinSort<keyType>(sequence, parameters.size_);
   } else if (parameters.order_ == "bubble") {
     sortMethod = new BubbleSort<keyType>(sequence, parameters.size_);
-  } 
+  } else if (parameters.order_ == "shake") {
+    sortMethod = new ShakeSort<keyType>(sequence, parameters.size_);
+  }
 
   std::cout << BOLD << "\nUnordered sequence: " << RESET;
   for (int i = 0; i < parameters.size_; i++) {

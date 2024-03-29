@@ -20,7 +20,6 @@
 #include "../include/functions.h"
 
 // TODO: Trace -> Set with color (green for ordered, red for unordered)
-// TODO: Implement all sorting algorithms -> bubbleSort, shakeSort
 // TODO: Check if the sequence in the file is ordered or not
 // TODO: Check if the sequence in the file is the same size as the one in the parameters
 
