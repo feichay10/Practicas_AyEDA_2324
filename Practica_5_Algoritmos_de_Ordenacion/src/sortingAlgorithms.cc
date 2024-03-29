@@ -20,8 +20,8 @@
 #include "../include/functions.h"
 
 // TODO: Trace -> Set with color (green for ordered, red for unordered)
-// TODO: Check if the sequence in the file is ordered or not
-// TODO: Check if the sequence in the file is the same size as the one in the parameters
+// TODO: Check if the sequence in the file is ordered or not (make a function)
+// TODO: Make a function to check the size of the sequence and the given by parameters
 
 int main(int argc, char* argv[]) {
   sortParameters parameters;
