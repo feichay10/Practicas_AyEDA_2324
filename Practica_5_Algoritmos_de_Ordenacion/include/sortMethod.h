@@ -56,8 +56,9 @@ template <typename Key>
 void SortMethod<Key>::print() {
   for (int i = 0; i < size_; i++) {
     std::cout << sequence_[i] << sequence_[i].letterNif(sequence_[i]) << " ";
+    // std::cout << sequence_[i] << " ";
   }
-  std::cout << std::endl;
+  // std::cout << std::endl;
 }
 
 #endif  // SORTMETHOD_H

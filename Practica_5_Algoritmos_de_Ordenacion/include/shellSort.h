@@ -56,6 +56,7 @@ void ShellSort<Key>::deltaSort(int delta, StaticSequence<Key>& sequence, int siz
   if (this->trace_) {
     std::cout << "\t\t    ";
     this->print();
+    std::cout << std::endl;
   }
 }
 

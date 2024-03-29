@@ -42,8 +42,11 @@ void Selection<Key>::Sort() {
     }
     this->swap(this->sequence_[min], this->sequence_[i]);
     if (this->trace_) {
-      std::cout << "\t\t    "; 
+      std::cout << "\ti = " << i;
+      std::cout << "\t    "; 
       this->print();
+      std::cout << "\tj = " << min;
+      std::cout << std::endl;
     }
   }
 }

@@ -57,6 +57,7 @@ void QuickSort<Key>::qSort(StaticSequence<Key>& sequence, int begin, int end) {
   }
   if (this->trace_) {
     this->print();
+    std::cout << std::endl;
   }
   if (begin < j) qSort(sequence, begin, j);
   if (i < end) qSort(sequence, i, end);

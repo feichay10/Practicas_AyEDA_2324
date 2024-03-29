@@ -63,6 +63,11 @@ int h1, h2, h;
       this->swap(sequence[i], sequence[h]);
       i = h;
     }
+    if (this->trace_) {
+      std::cout << "\t\t    ";
+      this->print();
+      std::cout << std::endl;
+    }
   }
 }
 

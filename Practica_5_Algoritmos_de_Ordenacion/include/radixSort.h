@@ -62,6 +62,7 @@ void RadixSort<Key>::Sort() {
     if (this->trace_) {
       std::cout << "\t\t    ";
       this->print();
+      std::cout << std::endl;
     }
   }
 }

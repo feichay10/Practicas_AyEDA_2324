@@ -41,8 +41,11 @@ void Insertion<Key>::Sort() {
     }
     this->sequence_[j + 1] = temp;
     if (this->trace_) {
-      std::cout << "\t\t    ";
+      std::cout << "\ti = " << i;
+      std::cout << "\t    "; 
       this->print();
+      std::cout << "\tj = " << j + 1;
+      std::cout << std::endl;
     }
   }
 }
