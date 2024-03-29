@@ -155,12 +155,33 @@ void createSequence(sortParameters parameters) {
       throw std::invalid_argument("File could not be opened.");
       exit(EXIT_FAILURE);
     }
-    for (int i = 0; i < parameters.size_; i++) {
+
+    int sequenceSize, count = 0;
+    file >> sequenceSize;
+    if (sequenceSize != parameters.size_) {
+      throw std::invalid_argument("Size of the sequence in the file does not match the size provided.");
+      exit(EXIT_FAILURE);
+    }
+
+    while (!file.eof()) {
       keyType key;
       file >> key;
-      std::cout << "Key " << i << ": " << key << std::endl;
-      sequence[i] = key;
+      sequence[count] = key;
+      count++;
     }
+
+    if (count != sequenceSize) {
+      throw std::invalid_argument("Size of the sequence in the file does not match with the number of elements provided.");
+      exit(EXIT_FAILURE);
+    }
+
+    // for (int i = 0; i < sequenceSize; i++) {
+    //   keyType key;
+    //   file >> key;
+    //   std::cout << "Key " << i << ": " << key << std::endl;
+    //   sequence[i] = key;
+    // }
+
     file.close();
   }
 
