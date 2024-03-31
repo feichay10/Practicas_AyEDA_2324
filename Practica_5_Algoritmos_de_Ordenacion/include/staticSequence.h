@@ -20,13 +20,15 @@
 
 #include "sequence.h"
 
+typedef int Position;
+
 template <class Key>
 class StaticSequence : public Sequence<Key> {
  public:
   StaticSequence(const int& size);
   ~StaticSequence();
   int getSize() const;
-  Key& operator[](const int& i) const override;
+  Key& operator[](const Position& i) const override;
 
  private:
   Key* sequence_;
@@ -50,7 +52,7 @@ int StaticSequence<Key>::getSize() const {
 }
 
 template <class Key>
-Key& StaticSequence<Key>::operator[](const int& i) const {
+Key& StaticSequence<Key>::operator[](const Position& i) const {
   return sequence_[i];
 }
 

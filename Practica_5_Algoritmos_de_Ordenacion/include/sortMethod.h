@@ -25,7 +25,6 @@ class SortMethod {
  public:
   SortMethod(StaticSequence<Key>& sequence, int size);
   virtual void Sort() = 0;
-
   void setTrace(bool trace);
 
  protected:
