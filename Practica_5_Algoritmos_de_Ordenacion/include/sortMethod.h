@@ -26,10 +26,10 @@ class SortMethod {
   SortMethod(StaticSequence<Key>& sequence, int size);
   virtual void Sort() = 0;
   void setTrace(bool trace);
+  void print();
 
  protected:
   void swap(Key& a, Key& b);
-  void print();
 
   StaticSequence<Key>& sequence_;
   int size_;

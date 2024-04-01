@@ -218,17 +218,12 @@ void createSequence(sortParameters parameters) {
   }
 
   std::cout << BOLD << "\nUnordered sequence: " << RESET;
-  for (int i = 0; i < parameters.size_; i++) {
-    std::cout << sequence[i] << sequence[i].letterNif(sequence[i]) << " ";
-  }
+  sortMethod->print();
   std::cout << std::endl;
-  
   sortMethod->Sort();
 
   std::cout << BOLD << "\nSorted sequence:    " << RESET;
-  for (int i = 0; i < parameters.size_; i++) {
-    std::cout << sequence[i] << sequence[i].letterNif(sequence[i]) << " ";
-  }
+  sortMethod->print();
 }
 
 void checkFileContent(std::string file) {
