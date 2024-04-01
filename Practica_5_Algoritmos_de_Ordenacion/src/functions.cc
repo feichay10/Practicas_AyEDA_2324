@@ -218,12 +218,14 @@ void createSequence(sortParameters parameters) {
   }
 
   std::cout << BOLD << "\nUnordered sequence: " << RESET;
+  std::cout << RED_BOLD;
   sortMethod->print();
-  std::cout << std::endl;
+  std::cout << RESET << std::endl;
   sortMethod->Sort();
-
   std::cout << BOLD << "\nSorted sequence:    " << RESET;
+  std::cout << GREEN_BOLD;
   sortMethod->print();
+  std::cout << RESET;
 }
 
 void checkFileContent(std::string file) {
