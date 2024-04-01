@@ -26,6 +26,7 @@ class SortMethod {
   SortMethod(StaticSequence<Key>& sequence, int size);
   virtual void Sort() = 0;
   void setTrace(bool trace);
+  int getSwapsCounter();
   void print();
 
  protected:
@@ -34,6 +35,7 @@ class SortMethod {
   StaticSequence<Key>& sequence_;
   int size_;
   bool trace_ = false;
+  int swapsCounter = 0;
 };
 
 template <typename Key>
@@ -45,10 +47,16 @@ void SortMethod<Key>::setTrace(bool trace) {
 }
 
 template <typename Key>
+int SortMethod<Key>::getSwapsCounter() {
+  return swapsCounter;
+}
+
+template <typename Key>
 void SortMethod<Key>::swap(Key& a, Key& b) {
   Key temp = a;
   a = b;
   b = temp;
+  swapsCounter++;
 }
 
 template <typename Key>

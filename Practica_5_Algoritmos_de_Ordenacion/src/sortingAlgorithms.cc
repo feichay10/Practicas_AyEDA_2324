@@ -19,6 +19,8 @@
 
 #include "../include/functions.h"
 
+// TODO: Implementar un plantilla de funcion, como si fuera un STL
+
 int main(int argc, char* argv[]) {
   sortParameters parameters;
   try {

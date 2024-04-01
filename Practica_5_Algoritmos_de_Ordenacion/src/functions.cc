@@ -140,8 +140,8 @@ void createSequence(sortParameters parameters) {
     std::cout << "Enter the sequence data:" << std::endl;
     for (int i = 0; i < parameters.size_; i++) {
       keyType key;
+      std::cout << "key " << i + 1 << ": ";
       std::cin >> key;
-      std::cout << "key: " << key << std::endl;
       sequence[i] = key;
     }
   } else if (parameters.init_ == "random") {
@@ -226,6 +226,7 @@ void createSequence(sortParameters parameters) {
   std::cout << GREEN_BOLD;
   sortMethod->print();
   std::cout << RESET;
+  std::cout << BOLD << "\nSwaps: " << sortMethod->getSwapsCounter() << std::endl;
 }
 
 void checkFileContent(std::string file) {
