@@ -32,7 +32,7 @@ BinSort<Key>::BinSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>
 
 template <typename Key>
 void BinSort<Key>::Sort() {
-  binSort(this->sequence_, this->size_);
+  binSort(this->sequence_, this->size_, this->trace_);
 }
 
 #endif  // BINSORT_H

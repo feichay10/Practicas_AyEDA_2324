@@ -32,7 +32,7 @@ Insertion<Key>::Insertion(StaticSequence<Key>& sequence, int size) : SortMethod<
 
 template <typename Key>
 void Insertion<Key>::Sort() {
-  insertion(this->sequence_, this->size_);
+  insertion(this->sequence_, this->size_, this->trace_);
 }
 
 #endif  // INSERTION_H

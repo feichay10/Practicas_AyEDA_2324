@@ -32,7 +32,7 @@ HeapSort<Key>::HeapSort(StaticSequence<Key>& sequence, int size) : SortMethod<Ke
 
 template <typename Key>
 void HeapSort<Key>::Sort() {
-  heapSort(this->sequence_, this->size_);
+  heapSort(this->sequence_, this->size_, this->trace_);
 }
 
 #endif  // HEAPSORT_H

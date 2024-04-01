@@ -22,11 +22,7 @@
 #include "staticSequence.h"
 #include "functions.h"
 
-// El codigo de los metodos de ordenacion estaran aqui
-// Son plantilla de funciones
-
 // Funciones auxiliares
-
 template <typename Key>
 void swap(Key& a, Key& b) {
   Key temp = a;
@@ -42,10 +38,9 @@ void print(StaticSequence<Key>& sequence, int size) {
 }
 
 // Metodos de ordenacion
-
 // Algoritmo de ordenacion por seleccion
 template <typename Key>
-void selection(StaticSequence<Key>& sequence, int size) {
+void selection(StaticSequence<Key>& sequence, int size, bool trace) {
   Key temp;
   for (int i = 0; i < size - 1; i++) {
     int min = i;
@@ -56,6 +51,7 @@ void selection(StaticSequence<Key>& sequence, int size) {
     }
     swap(sequence[i], sequence[min]);
     if (trace) {
+      std::cout << "\t\t    ";
       print(sequence, size);
       std::cout << std::endl;
     }
@@ -64,7 +60,7 @@ void selection(StaticSequence<Key>& sequence, int size) {
 
 // Algoritmo de ordenacion por QuickSort
 template <typename Key>
-void quickSort(StaticSequence<Key>& sequence, int begin, int end) {
+void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
   int i = begin;
   int j = end;
   int size = end + 1;
@@ -85,24 +81,24 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end) {
     print(sequence, size);
     std::cout << std::endl;
   }
-  if (begin < j) quickSort(sequence, begin, j);
-  if (i < end) quickSort(sequence, i, end);
+  if (begin < j) quickSort(sequence, begin, j, trace);
+  if (i < end) quickSort(sequence, i, end, trace);
 }
 
 // Algoritmo de ordenacion por HeapSort
 template <typename Key>
-void heapSort(StaticSequence<Key>& sequence, int size) {
+void heapSort(StaticSequence<Key>& sequence, int size, bool trace) {
   for (int i = size / 2; i >= 0; i--) {
-    downHeap(i, sequence, size - 1);
+    downHeap(i, sequence, size - 1, trace);
   }
   for (int i = size - 1; i > 0; i--) {
     swap(sequence[0], sequence[i]);
-    downHeap(0, sequence, i - 1);
+    downHeap(0, sequence, i - 1, trace);
   }
 }
 
 template <typename Key>
-void downHeap(int i, StaticSequence<Key>& sequence, int size) {
+void downHeap(int i, StaticSequence<Key>& sequence, int size, bool trace) {
   int h1, h2, h;
   while (2 * i <= size) {
     h1 = 2 * i;
@@ -130,16 +126,16 @@ void downHeap(int i, StaticSequence<Key>& sequence, int size) {
 
 // Algoritmo de ordenacion por ShellSort
 template <typename Key>
-void shellSort(StaticSequence<Key>& sequence, int size) {
+void shellSort(StaticSequence<Key>& sequence, int size, bool trace) {
   int delta = size;
   while (delta > 1) {
     delta = delta / 2;
-    deltaSort(delta, sequence, size);
+    deltaSort(delta, sequence, size, trace);
   }
 }
 
 template <typename Key>
-void deltaSort(int delta, StaticSequence<Key>& sequence, int size) {
+void deltaSort(int delta, StaticSequence<Key>& sequence, int size, bool trace) {
   for (int i = delta; i < size; i++) {
     Key temp = sequence[i];
     int j = i;
@@ -158,7 +154,7 @@ void deltaSort(int delta, StaticSequence<Key>& sequence, int size) {
 
 // Algoritmo de ordenacion por RadixSort
 template <typename Key>
-void radixSort(StaticSequence<Key>& sequence, int size) {
+void radixSort(StaticSequence<Key>& sequence, int size, bool trace) {
   int max = sequence[0];
   for (int i = 1; i < size; i++) {
     if (sequence[i] > max) {
@@ -196,7 +192,7 @@ void radixSort(StaticSequence<Key>& sequence, int size) {
 
 // Algoritmo de ordenacion por Insertion
 template <typename Key>
-void insertion(StaticSequence<Key>& sequence, int size) {
+void insertion(StaticSequence<Key>& sequence, int size, bool trace) {
   for (int i = 1; i < size; i++) {
     Key temp = sequence[i];
     int j = i - 1;
@@ -217,17 +213,17 @@ void insertion(StaticSequence<Key>& sequence, int size) {
 
 // Algoritmo de ordenacion por MergeSort
 template <typename Key>
-void mergeSort(StaticSequence<Key>& sequence, int begin, int end) {
+void mergeSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
   if (begin < end) {
     int middle = (begin + end) / 2;
-    mergeSort(sequence, begin, middle);
-    mergeSort(sequence, middle + 1, end);
-    mix(sequence, begin, middle, end);
+    mergeSort(sequence, begin, middle, trace);
+    mergeSort(sequence, middle + 1, end, trace);
+    mix(sequence, begin, middle, end, trace);
   }
 }
 
 template <typename Key>
-void mix(StaticSequence<Key>& sequence, int begin, int middle, int end) {
+void mix(StaticSequence<Key>& sequence, int begin, int middle, int end, bool trace) {
   int i = begin;
   int j = middle + 1;
   int size = end + 1;
@@ -255,7 +251,7 @@ void mix(StaticSequence<Key>& sequence, int begin, int middle, int end) {
 
 // Algoritmo de ordenacion por binSort
 template <typename Key>
-void binSort(StaticSequence<Key>& sequence, int size) {
+void binSort(StaticSequence<Key>& sequence, int size, bool trace) {
   for (int i = 1; i < size; i++) {
     int j = i;
     Key temp = sequence[i];
@@ -283,7 +279,7 @@ void binSort(StaticSequence<Key>& sequence, int size) {
 
 // Algoritmo de ordenacion por bubbleSort
 template <typename Key>
-void bubbleSort(StaticSequence<Key>& sequence, int size) {
+void bubbleSort(StaticSequence<Key>& sequence, int size, bool trace) {
   for (int i = 0; i < size - 1; i++) {
     for (int j = 0; j < size - i - 1; j++) {
       if (sequence[j] > sequence[j + 1]) {
@@ -299,7 +295,7 @@ void bubbleSort(StaticSequence<Key>& sequence, int size) {
 }
 
 template <typename Key>
-void shakeSort(StaticSequence<Key>& sequence, int size) {
+void shakeSort(StaticSequence<Key>& sequence, int size, bool trace) {
   int start = 1;
   int end = size - 1;
   int cam = size;

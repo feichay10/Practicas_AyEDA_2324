@@ -32,7 +32,7 @@ BubbleSort<Key>::BubbleSort(StaticSequence<Key>& sequence, int size) : SortMetho
 
 template <typename Key>
 void BubbleSort<Key>::Sort() {
-  bubbleSort(this->sequence_, this->size_);
+  bubbleSort(this->sequence_, this->size_, this->trace_);
 }
 
 #endif // BUBBLESORT_H

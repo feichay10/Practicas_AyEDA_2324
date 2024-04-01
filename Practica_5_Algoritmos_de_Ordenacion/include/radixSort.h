@@ -32,7 +32,7 @@ RadixSort<Key>::RadixSort(StaticSequence<Key>& sequence, int size) : SortMethod<
 
 template <typename Key>
 void RadixSort<Key>::Sort() {
-  radixSort(this->sequence_, this->size_);
+  radixSort(this->sequence_, this->size_, this->trace_);
 }
 
 

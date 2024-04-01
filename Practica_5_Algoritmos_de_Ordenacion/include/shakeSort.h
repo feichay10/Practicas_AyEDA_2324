@@ -32,7 +32,7 @@ ShakeSort<Key>::ShakeSort(StaticSequence<Key>& sequence, int size) : SortMethod<
 
 template <typename Key>
 void ShakeSort<Key>::Sort() {
-  shakeSort(this->sequence_, this->size_);
+  shakeSort(this->sequence_, this->size_, this->trace_);
 }
 
 #endif  // SHAKESORT_H

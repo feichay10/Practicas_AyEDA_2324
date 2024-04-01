@@ -32,7 +32,7 @@ ShellSort<Key>::ShellSort(StaticSequence<Key>& sequence, int size) : SortMethod<
 
 template <typename Key>
 void ShellSort<Key>::Sort() {
-  shellSort(this->sequence_, this->size_);
+  shellSort(this->sequence_, this->size_, this->trace_);
 }
 
 #endif  // SHELLSORT_H

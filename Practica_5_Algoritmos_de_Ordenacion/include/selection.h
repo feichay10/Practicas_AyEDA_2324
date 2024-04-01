@@ -32,7 +32,7 @@ Selection<Key>::Selection(StaticSequence<Key>& sequence, int size) : SortMethod<
 
 template <typename Key>
 void Selection<Key>::Sort() {
-  selection(this->sequence_, this->size_);
+  selection(this->sequence_, this->size_, this->trace_);
 }
 
 

@@ -26,13 +26,20 @@ class SortMethod {
  public:
   SortMethod(StaticSequence<Key>& sequence, int size);
   virtual void Sort() = 0;
+  void setTrace(bool value);
 
  protected:
   StaticSequence<Key>& sequence_;
   int size_;
+  bool trace_ = false;
 };
 
 template <typename Key>
 SortMethod<Key>::SortMethod(StaticSequence<Key>& sequence, int size) : sequence_(sequence), size_(size) {}
+
+template <typename Key>
+void SortMethod<Key>::setTrace(bool value) {
+  trace_ = value;
+}
 
 #endif  // SORTMETHOD_H

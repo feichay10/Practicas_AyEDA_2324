@@ -214,33 +214,14 @@ void createSequence(sortParameters parameters) {
     sortMethod = new ShakeSort<keyType>(sequence, parameters.size_);
   }
 
-  bool trace = false;
   if (parameters.trace_) {
-    // setTrace(true);
+    sortMethod->setTrace(true);
   }
 
   std::cout << BOLD << "\nUnordered sequence: " << RESET;
   print(sequence, parameters.size_);
   std::cout << std::endl;
   sortMethod->Sort();
-
   std::cout << BOLD << "\nSorted sequence:    " << RESET;
   print(sequence, parameters.size_);
-}
-
-void checkFileContent(std::string file) {
-  std::ifstream fileStream(file);
-  if (!fileStream.is_open()) {
-    throw std::invalid_argument("File could not be opened.");
-    exit(EXIT_FAILURE);
-  }
-
-  int sequenceSize;
-  fileStream >> sequenceSize;
-  if (sequenceSize <= 0) {
-    throw std::invalid_argument("Size of the sequence must be greater than 0.");
-    exit(EXIT_FAILURE);
-  }
-
-  fileStream.close();
 }

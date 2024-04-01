@@ -32,7 +32,7 @@ QuickSort<Key>::QuickSort(StaticSequence<Key>& sequence, int size) : SortMethod<
 
 template <typename Key>
 void QuickSort<Key>::Sort() {
-  quickSort(this->sequence_, 0, this->size_ - 1);
+  quickSort(this->sequence_, 0, this->size_ - 1, this->trace_);
 }
 
 #endif  // QUICKSORT_H

@@ -32,7 +32,7 @@ MergeSort<Key>::MergeSort(StaticSequence<Key>& sequence, int size) : SortMethod<
 
 template <typename Key>
 void MergeSort<Key>::Sort() {
-  mergeSort(this->sequence_, 0, this->size_ - 1);
+  mergeSort(this->sequence_, 0, this->size_ - 1, this->trace_);
 }
 
 #endif  // MERGESORT_H
