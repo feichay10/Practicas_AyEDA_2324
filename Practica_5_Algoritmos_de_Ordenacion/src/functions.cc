@@ -16,6 +16,7 @@
  */
 
 #include "../include/functions.h"
+#include "../include/ordenation.h"
 
 sortParameters checkProgramParameters(int argc, char* argv[], sortParameters parameters) {
   if (argc == 2 && std::string(argv[1]) == "-help") {
@@ -213,8 +214,9 @@ void createSequence(sortParameters parameters) {
     sortMethod = new ShakeSort<keyType>(sequence, parameters.size_);
   }
 
+  bool trace = false;
   if (parameters.trace_) {
-    parameters.trace_ = true;
+    // setTrace(true);
   }
 
   std::cout << BOLD << "\nUnordered sequence: " << RESET;
