@@ -46,7 +46,6 @@ class MergeSort : public SortMethod<Key> {
  private:
   void mSort(StaticSequence<Key>& sequence, int begin, int end);
   void mix(StaticSequence<Key>& sequence, int begin, int middle, int end);
-  void printDivision(int begin, int middle, int end);
 };
 
 template <typename Key>
@@ -69,49 +68,28 @@ void MergeSort<Key>::mSort(StaticSequence<Key>& sequence, int begin, int end) {
 
 template <typename Key>
 void MergeSort<Key>::mix(StaticSequence<Key>& sequence, int begin, int middle, int end) {
-  StaticSequence<Key> temp(end - begin + 1);
   int i = begin;
   int j = middle + 1;
-  int k = 0;
-  while (i <= middle && j <= end) {
-    if (sequence[i] < sequence[j]) {
+  StaticSequence<Key> temp(end + 1);
+
+  for (int k = begin; k <= end; k++) {
+    if (i <= middle && (j > end || sequence[i] <= sequence[j])) {
       temp[k] = sequence[i];
       i++;
     } else {
       temp[k] = sequence[j];
       j++;
     }
-    k++;
   }
-  while (i <= middle) {
-    temp[k] = sequence[i];
-    i++;
-    k++;
-  }
-  while (j <= end) {
-    temp[k] = sequence[j];
-    j++;
-    k++;
-  }
-  for (int i = 0; i < k; i++) {
-    sequence[begin + i] = temp[i];
-  }
-  if (this->trace_) {
-    printDivision(begin, middle, end);
-  }
-}
 
-template <typename Key>
-void MergeSort<Key>::printDivision(int begin, int middle, int end) {
-  std::cout << "División:  ";
-  for (int i = begin; i <= middle; i++) {
-    std::cout << this->sequence_[i] << "    ";
+  for (int k = begin; k <= end; k++) {
+    sequence[k] = temp[k];
   }
-  std::cout << "]    [";
-  for (int i = middle + 1; i <= end; i++) {
-    std::cout << this->sequence_[i] << "    ";
+
+  if (this->trace_) {
+    std::cout << "\t\t    ";
+    this->print();
   }
-  std::cout << "]" << std::endl;
 }
 
 #endif  // MERGESORT_H
