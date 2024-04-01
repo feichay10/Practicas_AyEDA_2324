@@ -32,35 +32,7 @@ ShakeSort<Key>::ShakeSort(StaticSequence<Key>& sequence, int size) : SortMethod<
 
 template <typename Key>
 void ShakeSort<Key>::Sort() {
-  int start = 1;
-  int end = this->size_ - 1;
-  int cam = this->size_;
-  while (start <= end) {
-    for (int i = end; i >= start; i--) {
-      if (this->sequence_[i] < this->sequence_[i - 1]) {
-        this->swap(this->sequence_[i - 1], this->sequence_[i]);
-        cam = i;
-      }
-      if (this->trace_) {
-        std::cout << "\t\t    ";
-        this->print();
-        std::cout << std::endl;
-      }
-    }
-    start = cam + 1;
-    for (int i = start; i <= end; i++) {
-      if (this->sequence_[i] < this->sequence_[i - 1]) {
-        this->swap(this->sequence_[i - 1], this->sequence_[i]);
-        cam = i;
-      }
-      if (this->trace_) {
-        std::cout << "\t\t    ";
-        this->print();
-        std::cout << std::endl;
-      }
-    }
-    end = cam - 1;
-  }
+  shakeSort(this->sequence_, this->size_);
 }
 
 #endif  // SHAKESORT_H

@@ -32,29 +32,7 @@ BinSort<Key>::BinSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>
 
 template <typename Key>
 void BinSort<Key>::Sort() {
-  for (int i = 1; i < this->size_; i++) {
-    int j = i;
-    Key temp = this->sequence_[i];
-    int start = 0;
-    int end = i - 1;
-    while (start <= end) {
-      int middle = (start + end) / 2;
-      if (this->sequence_[middle] < temp) {
-        start = middle + 1;
-      } else {
-        end = middle - 1;
-      }
-    }
-    for (int k = i - 1; k >= start; k--) {
-      this->sequence_[k + 1] = this->sequence_[k];
-    }
-    this->sequence_[start] = temp;
-    if (this->trace_) {
-      std::cout << "\t\t    "; 
-      this->print();
-      std::cout << std::endl;
-    }
-  }
+  binSort(this->sequence_, this->size_);
 }
 
 #endif  // BINSORT_H

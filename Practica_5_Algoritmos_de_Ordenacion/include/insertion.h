@@ -32,22 +32,7 @@ Insertion<Key>::Insertion(StaticSequence<Key>& sequence, int size) : SortMethod<
 
 template <typename Key>
 void Insertion<Key>::Sort() {
-  for (int i = 1; i < this->size_; i++) {
-    Key temp = this->sequence_[i];
-    int j = i - 1;
-    while ((j >= 0) && (this->sequence_[j] > temp)) {
-      this->sequence_[j + 1] = this->sequence_[j];
-      j--;
-    }
-    this->sequence_[j + 1] = temp;
-    if (this->trace_) {
-      std::cout << "\ti = " << i;
-      std::cout << "\t    "; 
-      this->print();
-      std::cout << "\tj = " << j + 1;
-      std::cout << std::endl;
-    }
-  }
+  insertion(this->sequence_, this->size_);
 }
 
 #endif  // INSERTION_H

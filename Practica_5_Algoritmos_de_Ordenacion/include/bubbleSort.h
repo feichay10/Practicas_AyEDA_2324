@@ -32,18 +32,7 @@ BubbleSort<Key>::BubbleSort(StaticSequence<Key>& sequence, int size) : SortMetho
 
 template <typename Key>
 void BubbleSort<Key>::Sort() {
-  for (int i = 0; i < this->size_ - 1; i++) {
-    for (int j = 0; j < this->size_ - i - 1; j++) {
-      if (this->sequence_[j] > this->sequence_[j + 1]) {
-        std::swap(this->sequence_[j], this->sequence_[j + 1]);
-      }
-    }
-    if (this->trace_) {
-      std::cout << "\t\t    ";
-      this->print();
-      std::cout << std::endl;
-    }
-  }
+  bubbleSort(this->sequence_, this->size_);
 }
 
 #endif // BUBBLESORT_H
