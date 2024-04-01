@@ -18,17 +18,29 @@
 #ifndef ORDENATION_H
 #define ORDENATION_H
 
-#include "../include/sortMethod.h"
-#include "../include/selection.h"
-#include "../include/quickSort.h"
-#include "../include/heapSort.h"
-#include "../include/shellSort.h"
-#include "../include/radixSort.h"
-#include "../include/insertion.h"
-#include "../include/mergeSort.h"
-#include "../include/binSort.h"
-#include "../include/bubbleSort.h"
-#include "../include/shakeSort.h"
+#include "sortMethod.h"
+
+// El codigo de los metodos de ordenacion estaran aqui
+// Son plantilla de funciones
+
+template <typename Key>
+void selection(StaticSequence<Key>& sequence, int size) {
+  Key temp;
+  for (int i = 0; i < size - 1; i++) {
+    int min = i;
+    for (int j = i + 1; j < size; j++) {
+      if (sequence[j] < sequence[min]) {
+        min = j;
+      }
+    }
+    temp = sequence[min];
+    sequence[min] = sequence[i];
+    sequence[i] = temp;
+    if (sequence.getTrace()) {
+      sequence.print();
+    }
+  }
+}
 
 
 #endif // ORDENATION_H

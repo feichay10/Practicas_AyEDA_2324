@@ -19,6 +19,7 @@
 #define SORTMETHOD_H
 
 #include "staticSequence.h"
+#include "ordenation.h"
 
 template <typename Key>
 class SortMethod {
@@ -26,6 +27,7 @@ class SortMethod {
   SortMethod(StaticSequence<Key>& sequence, int size);
   virtual void Sort() = 0;
   void setTrace(bool trace);
+  bool getTrace();
   int getSwapsCounter();
   void print();
 
@@ -44,6 +46,11 @@ SortMethod<Key>::SortMethod(StaticSequence<Key>& sequence, int size) : sequence_
 template <typename Key>
 void SortMethod<Key>::setTrace(bool trace) {
   trace_ = trace;
+}
+
+template <typename Key>
+bool SortMethod<Key>::getTrace() {
+  return trace_;
 }
 
 template <typename Key>

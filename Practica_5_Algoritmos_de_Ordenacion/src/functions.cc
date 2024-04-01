@@ -227,6 +227,8 @@ void createSequence(sortParameters parameters) {
   sortMethod->print();
   std::cout << RESET;
   std::cout << BOLD << "\nSwaps: " << sortMethod->getSwapsCounter() << std::endl;
+
+  delete sortMethod;
 }
 
 void checkFileContent(std::string file) {

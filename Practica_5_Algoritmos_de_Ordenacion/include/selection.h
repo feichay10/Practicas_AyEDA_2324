@@ -32,23 +32,7 @@ Selection<Key>::Selection(StaticSequence<Key>& sequence, int size) : SortMethod<
 
 template <typename Key>
 void Selection<Key>::Sort() {
-  Key temp;
-  for (int i = 0; i < this->size_ - 1; i++) {
-    int min = i;
-    for (int j = i + 1; j < this->size_; j++) {
-      if (this->sequence_[j] < this->sequence_[min]) {
-        min = j;
-      }
-    }
-    this->swap(this->sequence_[min], this->sequence_[i]);
-    if (this->trace_) {
-      std::cout << "\ti = " << i;
-      std::cout << "\t    "; 
-      this->print();
-      std::cout << "\tj = " << min;
-      std::cout << std::endl;
-    }
-  }
+  selection(this->sequence_, this->size_);
 }
 
 
