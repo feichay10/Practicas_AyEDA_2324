@@ -170,17 +170,23 @@ void createSequence(sortParameters parameters) {
       count++;
     }
 
+    bool sorted = true;
+    for (int i = 0; i < parameters.size_ - 1; i++) {
+      if (sequence[i] > sequence[i + 1]) {
+        sorted = false;
+        break;
+      }
+    }
+
+    if (sorted) {
+      throw std::invalid_argument("Sequence is already sorted.");
+      exit(EXIT_FAILURE);
+    }
+
     if (count != sequenceSize) {
       throw std::invalid_argument("Size of the sequence in the file does not match with the number of elements provided.");
       exit(EXIT_FAILURE);
     }
-
-    // for (int i = 0; i < sequenceSize; i++) {
-    //   keyType key;
-    //   file >> key;
-    //   std::cout << "Key " << i << ": " << key << std::endl;
-    //   sequence[i] = key;
-    // }
 
     file.close();
   }
@@ -207,15 +213,15 @@ void createSequence(sortParameters parameters) {
     sortMethod = new ShakeSort<keyType>(sequence, parameters.size_);
   }
 
+  if (parameters.trace_) {
+    sortMethod->setTrace(parameters.trace_);
+  }
+
   std::cout << BOLD << "\nUnordered sequence: " << RESET;
   for (int i = 0; i < parameters.size_; i++) {
     std::cout << sequence[i] << sequence[i].letterNif(sequence[i]) << " ";
   }
   std::cout << std::endl;
-
-  if (parameters.trace_) {
-    sortMethod->setTrace(parameters.trace_);
-  }
   
   sortMethod->Sort();
 
@@ -223,4 +229,21 @@ void createSequence(sortParameters parameters) {
   for (int i = 0; i < parameters.size_; i++) {
     std::cout << sequence[i] << sequence[i].letterNif(sequence[i]) << " ";
   }
+}
+
+void checkFileContent(std::string file) {
+  std::ifstream fileStream(file);
+  if (!fileStream.is_open()) {
+    throw std::invalid_argument("File could not be opened.");
+    exit(EXIT_FAILURE);
+  }
+
+  int sequenceSize;
+  fileStream >> sequenceSize;
+  if (sequenceSize <= 0) {
+    throw std::invalid_argument("Size of the sequence must be greater than 0.");
+    exit(EXIT_FAILURE);
+  }
+
+  fileStream.close();
 }
