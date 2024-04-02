@@ -19,9 +19,6 @@
 
 #include "../include/functions.h"
 
-// TODO: Implementar un plantilla de funcion, como si fuera un STL
-// TODO: Implementar seleccionar la constante de reduccion alfa
-
 int main(int argc, char* argv[]) {
   sortParameters parameters;
   try {

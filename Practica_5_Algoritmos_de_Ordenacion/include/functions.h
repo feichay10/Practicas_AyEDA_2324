@@ -53,14 +53,14 @@ const std::string kUsage =
     BOLD + std::string("OPTIONS") + RESET + BOLD + std::string("\n\t  -size <s>") + RESET +
     std::string("\n\t\tSize of the sequence.\n") + BOLD +
     std::string("\n\t  -ord <m>, m = selection|quick|heap|shell|radix|insertion|merge|bin|bubble|shake") + RESET +
-    std::string("\n\t\tm is de code who identifies the sort method.\n") +
+    std::string("\n\t\tm is the code for the sorting algorithm to be used.\n") +
     BOLD + std::string("\n\t  -init <i> [f]") + RESET +
-    std::string("\n\t\ti = manual. Enter sequence data manually") +
-    std::string("\n\t\ti = random. Enter sequence data randomly") +
-    std::string("\n\t\ti = manual. Enter sequence data by file") +
-    std::string("\n\t\t    f = enter file name\n") +
+    std::string("\n\t\ti = manual. Enter sequence data manually.") +
+    std::string("\n\t\ti = random. Enter sequence data randomly.") +
+    std::string("\n\t\ti = file. Enter sequence data by file.") +
+    std::string("\n\t\t    f = enter file name.\n") +
     BOLD + std::string("\n\t  -trace <y|n>") + RESET +
-    std::string("\n\t\tIndicates whether or not the trace is displayed during execution\n") + BOLD +
+    std::string("\n\t\tIndicates whether or not the trace is displayed during execution.\n") + BOLD +
     BOLD + std::string("\n\t  -help") + RESET + std::string("\n\t\tShow this message.");
 
 // Lista de los algoritmos de ordenacion disponibles
