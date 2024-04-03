@@ -25,8 +25,8 @@ template <typename Key>
 class SortMethod {
  public:
   SortMethod(StaticSequence<Key>& sequence, int size);
+  void setTrace(bool trace);
   virtual void Sort() = 0;
-  void setTrace(bool value);
 
  protected:
   StaticSequence<Key>& sequence_;
@@ -38,8 +38,8 @@ template <typename Key>
 SortMethod<Key>::SortMethod(StaticSequence<Key>& sequence, int size) : sequence_(sequence), size_(size) {}
 
 template <typename Key>
-void SortMethod<Key>::setTrace(bool value) {
-  trace_ = value;
+void SortMethod<Key>::setTrace(bool trace) {
+  trace_ = trace;
 }
 
 #endif  // SORTMETHOD_H

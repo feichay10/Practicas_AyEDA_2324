@@ -20,8 +20,6 @@
 
 #include "sequence.h"
 
-typedef int Position;
-
 template <class Key>
 class StaticSequence : public Sequence<Key> {
  public:

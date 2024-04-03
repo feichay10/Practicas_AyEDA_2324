@@ -19,6 +19,8 @@
 
 #include "../include/functions.h"
 
+// TODO: probar quitar constructor de los algoritmos de ordenacion (hijas)
+
 int main(int argc, char* argv[]) {
   sortParameters parameters;
   try {

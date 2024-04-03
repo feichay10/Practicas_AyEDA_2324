@@ -21,10 +21,12 @@
 #include <iostream>
 #include <fstream>
 
+typedef int Position;
+
 template <class Key>
 class Sequence {
  public:
-  virtual Key& operator[](const int& i) const = 0;
+  virtual Key& operator[](const Position& i) const = 0;
 };
 
 #endif  // SEQUENCE_H
