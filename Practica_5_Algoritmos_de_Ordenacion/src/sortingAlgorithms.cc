@@ -25,6 +25,12 @@ int main(int argc, char* argv[]) {
     parameters = checkProgramParameters(argc, argv, parameters);
     createSequence(parameters);
   } catch (std::string message) {
-    std::cerr << message << std::endl;
+    std::cerr << RED_BOLD << "ERROR: " << message << RESET << std::endl;
+  } catch (std::invalid_argument& e) {
+    std::cerr << RED_BOLD << "ERROR: " << e.what() << RESET << std::endl;
+  } catch (std::length_error& e) {
+    std::cerr << RED_BOLD << "ERROR: " << e.what() << RESET << std::endl;
+  } catch (std::runtime_error& e) {
+    std::cerr << RED_BOLD << "ERROR: " << e.what() << RESET << std::endl;
   }
 }

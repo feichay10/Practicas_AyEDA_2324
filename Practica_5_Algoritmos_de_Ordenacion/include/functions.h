@@ -77,6 +77,7 @@ struct sortParameters {
 };
 
 sortParameters checkProgramParameters(int argc, char* argv[], sortParameters parameters);
+void printInformation(sortParameters parameters);
 void createSequence(sortParameters parameters);
 
 #endif  // FUNCTIONS_H_

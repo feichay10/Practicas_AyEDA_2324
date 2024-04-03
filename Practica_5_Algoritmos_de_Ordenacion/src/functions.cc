@@ -20,11 +20,10 @@
 
 sortParameters checkProgramParameters(int argc, char* argv[], sortParameters parameters) {
   if (argc == 2 && std::string(argv[1]) == "-help") {
-    throw kUsage;
-    exit(EXIT_FAILURE);
+    std::cout << kUsage << std::endl;
+    exit(EXIT_SUCCESS);
   } else if (argc == 1) {
-    throw std::invalid_argument("No arguments provided. Use " + std::string(argv[0]) + " -help for more information.");
-    exit(EXIT_FAILURE);
+    throw std::runtime_error("No arguments provided. Use " + std::string(argv[0]) + " -help for more information.");
   }
 
   for (int i = 1; i < argc; i++) {
@@ -34,15 +33,12 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
           parameters.size_ = std::stoi(argv[i + 1]);
         } catch (std::invalid_argument& e) {
           throw std::invalid_argument("Size must be an integer. Use " + std::string(argv[0]) + " -help for more information.");
-          exit(EXIT_FAILURE);
         }
         if (parameters.size_ <= 0) {
-          throw std::invalid_argument("Size must be greater than 0. Use " + std::string(argv[0]) + " -help for more information.");
-          exit(EXIT_FAILURE);
+          throw std::length_error("Size must be greater than 0. Use " + std::string(argv[0]) + " -help for more information.");
         }
       } else {
         throw std::invalid_argument("Size not provided. Use " + std::string(argv[0]) + " -help for more information.");
-        exit(EXIT_FAILURE);
       }
     } else if (std::string(argv[i]) == "-ord") {
       if (i + 1 < argc) {
@@ -50,11 +46,9 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
           parameters.order_ = argv[i + 1];
         } else {
           throw std::invalid_argument("Order algorithm not available. Use " + std::string(argv[0]) + " -help for more information.");
-          exit(EXIT_FAILURE);
         }
       } else {
         throw std::invalid_argument("Order algorithm not provided. Use " + std::string(argv[0]) + " -help for more information.");
-        exit(EXIT_FAILURE);
       }
     } else if (std::string(argv[i]) == "-init") {
       if (i + 1 < argc) {
@@ -66,19 +60,15 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
             parameters.file_ = argv[i + 2];
             if (!std::filesystem::exists(parameters.file_)) {
               throw std::invalid_argument("File does not exist. Use " + std::string(argv[0]) + " -help for more information.");
-              exit(EXIT_FAILURE);
             }
           } else {
             throw std::invalid_argument("File not provided. Use " + std::string(argv[0]) + " -help for more information.");
-            exit(EXIT_FAILURE);
           }
         } else {
           throw std::invalid_argument("Initialization not provided. Use " + std::string(argv[0]) + " -help for more information.");
-          exit(EXIT_FAILURE);
         }
       } else {
         throw std::invalid_argument("Initialization not provided. Use " + std::string(argv[0]) + " -help for more information.");
-        exit(EXIT_FAILURE);
       }
     } else if (std::string(argv[i]) == "-trace") {
       if (i + 1 < argc) {
@@ -88,15 +78,17 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
           parameters.trace_ = false;
         } else {
           throw std::invalid_argument("Option for -trace not available. Use " + std::string(argv[0]) + " -help for more information.");
-          exit(EXIT_FAILURE);
         }
       } else {
         throw std::invalid_argument("Trace not provided. Use " + std::string(argv[0]) + " -help for more information.");
-        exit(EXIT_FAILURE);
       }
     }
   }
 
+  return parameters;
+}
+
+void printInformation(sortParameters parameters) {
   std::cout << PURPLE_BOLD << "+------------------------------------+" << RESET << std::endl;
   std::cout << PURPLE_BOLD << "|" << RESET << ORANGE_BG << GRAY_BOLD << "          Sort Information          " << RESET << PURPLE_BOLD << "|" << std::endl;
   std::cout << "+------------------------------------+" << RESET << std::endl;
@@ -129,8 +121,6 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
             << RESET << std::endl;
   std::cout << PURPLE_BOLD << "+------------------------------------+" << RESET
             << std::endl;
-
-  return parameters;
 }
 
 void createSequence(sortParameters parameters) {
@@ -154,14 +144,14 @@ void createSequence(sortParameters parameters) {
     std::ifstream file(parameters.file_);
     if (!file.is_open()) {
       throw std::invalid_argument("File could not be opened.");
-      exit(EXIT_FAILURE);
+      
     }
 
     int sequenceSize, count = 0;
     file >> sequenceSize;
     if (sequenceSize != parameters.size_) {
-      throw std::invalid_argument("Size of the sequence in the file does not match the size provided.");
-      exit(EXIT_FAILURE);
+      throw std::length_error("Size of the sequence in the file does not match the size provided.");
+      
     }
 
     while (!file.eof()) {
@@ -180,13 +170,11 @@ void createSequence(sortParameters parameters) {
     }
 
     if (sorted) {
-      throw std::invalid_argument("Sequence is already sorted.");
-      exit(EXIT_FAILURE);
+      throw std::runtime_error("Sequence is already sorted.");
     }
 
     if (count != sequenceSize) {
-      throw std::invalid_argument("Size of the sequence in the file does not match with the number of elements provided.");
-      exit(EXIT_FAILURE);
+      throw std::length_error("Size of the sequence in the file does not match with the number of elements provided.");
     }
 
     file.close();
@@ -217,6 +205,8 @@ void createSequence(sortParameters parameters) {
   if (parameters.trace_) {
     sortMethod->setTrace(true);
   }
+
+  printInformation(parameters);
 
   std::cout << BOLD << "\nUnordered sequence: " << RESET;
   print(sequence, parameters.size_);

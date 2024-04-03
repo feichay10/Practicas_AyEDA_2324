@@ -132,6 +132,9 @@ void shellSort(StaticSequence<Key>& sequence, int size, bool trace) {
   float alpha;
   std::cout << "Introduzca un alfa entre 0 y 1: ";
   std::cin >> alpha;
+  if (alpha < 0 || alpha > 1) {
+    throw std::invalid_argument("El alfa introducido no es valido."); 
+  }
   for (int h = (size * alpha) / 2; h > 0; h /= 2) {
     for (int i = h; i < size; i++) {
       temp = sequence[i];
@@ -147,33 +150,6 @@ void shellSort(StaticSequence<Key>& sequence, int size, bool trace) {
     }
   }
 }
-
-// template <typename Key>
-// void shellSort(StaticSequence<Key>& sequence, int size, bool trace) {
-//   int delta = size;
-//   while (delta > 1) {
-//     delta = delta / 2;
-//     deltaSort(delta, sequence, size, trace);
-//   }
-// }
-
-// template <typename Key>
-// void deltaSort(int delta, StaticSequence<Key>& sequence, int size, bool trace) {
-//   for (int i = delta; i < size; i++) {
-//     Key temp = sequence[i];
-//     int j = i;
-//     while ((j >= delta) && (temp < sequence[j - delta])) {
-//       sequence[j] = sequence[j - delta];
-//       j = j - delta;
-//     }
-//     sequence[j] = temp;
-//   }
-//   if (trace) {
-//     std::cout << "\t\t    ";
-//     print(sequence, size);
-//     std::cout << std::endl;
-//   }
-// }
 
 // Algoritmo de ordenacion por RadixSort
 template <typename Key>
