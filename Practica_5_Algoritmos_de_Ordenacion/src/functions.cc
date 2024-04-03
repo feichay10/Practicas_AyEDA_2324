@@ -130,8 +130,8 @@ void createSequence(sortParameters parameters) {
     std::cout << "Enter the sequence data:" << std::endl;
     for (int i = 0; i < parameters.size_; i++) {
       keyType key;
+      std::cout << "key " << i << ": ";
       std::cin >> key;
-      std::cout << "key: " << key << std::endl;
       sequence[i] = key;
     }
   } else if (parameters.init_ == "random") {
@@ -142,15 +142,13 @@ void createSequence(sortParameters parameters) {
   } else if (parameters.init_ == "file") {
     std::ifstream file(parameters.file_);
     if (!file.is_open()) {
-      throw std::invalid_argument("File could not be opened.");
-      
+      throw std::runtime_error("File could not be opened.");
     }
 
     int sequenceSize, count = 0;
     file >> sequenceSize;
     if (sequenceSize != parameters.size_) {
       throw std::length_error("Size of the sequence in the file does not match the size provided.");
-      
     }
 
     while (!file.eof()) {
@@ -207,10 +205,11 @@ void createSequence(sortParameters parameters) {
 
   printInformation(parameters);
 
-  std::cout << BOLD << "\nUnordered sequence: " << RESET;
+  std::cout << BOLD << "\nUnordered sequence: " << RESET << RED_BOLD;
   print(sequence, parameters.size_);
-  std::cout << std::endl;
+  std::cout << RESET << std::endl;
   sortMethod->Sort();
-  std::cout << BOLD << "\nSorted sequence:    " << RESET;
+  std::cout << BOLD << "\nSorted sequence:    " << RESET << GREEN_BOLD;
   print(sequence, parameters.size_);
+  std::cout << RESET;
 }
