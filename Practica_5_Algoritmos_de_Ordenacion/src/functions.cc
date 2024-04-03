@@ -16,7 +16,6 @@
  */
 
 #include "../include/functions.h"
-#include "../include/ordenation.h"
 
 sortParameters checkProgramParameters(int argc, char* argv[], sortParameters parameters) {
   if (argc == 2 && std::string(argv[1]) == "-help") {

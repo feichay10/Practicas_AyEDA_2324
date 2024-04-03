@@ -24,13 +24,6 @@
 
 // Funciones auxiliares
 template <typename Key>
-void swap(Key& a, Key& b) {
-  Key temp = a;
-  a = b;
-  b = temp;
-}
-
-template <typename Key>
 void print(StaticSequence<Key>& sequence, int size) {
   for (int i = 0; i < size; i++) {
     std::cout << sequence[i] << sequence[i].letterNif(sequence[i]) << " ";
@@ -49,7 +42,7 @@ void selection(StaticSequence<Key>& sequence, int size, bool trace) {
         min = j;
       }
     }
-    swap(sequence[i], sequence[min]);
+    std::swap(sequence[i], sequence[min]);
     if (trace) {
       std::cout << "\t\t    ";
       print(sequence, size);
@@ -72,7 +65,7 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
     while (sequence[i] < pivot) i++;
     while (sequence[j] > pivot) j--;
     if (i <= j) {
-      swap(sequence[i], sequence[j]);
+      std::swap(sequence[i], sequence[j]);
       i++;
       j--;
     }
@@ -92,7 +85,7 @@ void heapSort(StaticSequence<Key>& sequence, int size, bool trace) {
     downHeap(i, sequence, size - 1, trace);
   }
   for (int i = size - 1; i > 0; i--) {
-    swap(sequence[0], sequence[i]);
+    std::swap(sequence[0], sequence[i]);
     downHeap(0, sequence, i - 1, trace);
   }
 }
@@ -113,7 +106,7 @@ void downHeap(int i, StaticSequence<Key>& sequence, int size, bool trace) {
     if (sequence[h] <= sequence[i]) {
       break;
     } else {
-      swap(sequence[i], sequence[h]);
+      std::swap(sequence[i], sequence[h]);
       i = h;
     }
     if (trace) {
@@ -301,7 +294,7 @@ void shakeSort(StaticSequence<Key>& sequence, int size, bool trace) {
   while (start <= end) {
     for (int i = end; i >= start; i--) {
       if (sequence[i] < sequence[i - 1]) {
-        swap(sequence[i - 1], sequence[i]);
+        std::swap(sequence[i - 1], sequence[i]);
         cam = i;
       }
       if (trace) {
@@ -313,7 +306,7 @@ void shakeSort(StaticSequence<Key>& sequence, int size, bool trace) {
     start = cam + 1;
     for (int i = start; i <= end; i++) {
       if (sequence[i] < sequence[i - 1]) {
-        swap(sequence[i - 1], sequence[i]);
+        std::swap(sequence[i - 1], sequence[i]);
         cam = i;
       }
       if (trace) {
