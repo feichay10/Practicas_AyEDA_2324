@@ -44,8 +44,10 @@ void selection(StaticSequence<Key>& sequence, int size, bool trace) {
     }
     std::swap(sequence[i], sequence[min]);
     if (trace) {
-      std::cout << "\t\t    ";
+      std::cout << "\ti = " << i;
+      std::cout << "\t    "; 
       print(sequence, size);
+      std::cout << "\tj = " << min;
       std::cout << std::endl;
     }
   }
