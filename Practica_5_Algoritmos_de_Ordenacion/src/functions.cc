@@ -17,6 +17,14 @@
 
 #include "../include/functions.h"
 
+/**
+ * @brief Check the program parameters and return the sort parameters.
+ * 
+ * @param argc 
+ * @param argv 
+ * @param parameters 
+ * @return sortParameters 
+ */
 sortParameters checkProgramParameters(int argc, char* argv[], sortParameters parameters) {
   if (argc == 2 && std::string(argv[1]) == "-help") {
     std::cout << kUsage << std::endl;
@@ -87,6 +95,11 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
   return parameters;
 }
 
+/**
+ * @brief Print the information of the sort parameters.
+ * 
+ * @param parameters 
+ */
 void printInformation(sortParameters parameters) {
   std::cout << PURPLE_BOLD << "+------------------------------------+" << RESET << std::endl;
   std::cout << PURPLE_BOLD << "|" << RESET << ORANGE_BG << GRAY_BOLD << "          Sort Information          " << RESET << PURPLE_BOLD << "|" << std::endl;
@@ -122,6 +135,11 @@ void printInformation(sortParameters parameters) {
             << std::endl;
 }
 
+/**
+ * @brief Create the sequence with the sort parameters.
+ * 
+ * @param parameters 
+ */
 void createSequence(sortParameters parameters) {
   SortMethod<keyType>* sortMethod;
   StaticSequence<keyType> sequence(parameters.size_);

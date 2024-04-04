@@ -20,6 +20,11 @@
 
 #include "sortMethod.h"
 
+/**
+ * @brief Class MergeSort that inherits from SortMethod.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 class MergeSort : public SortMethod<Key> {
  public:
@@ -27,9 +32,21 @@ class MergeSort : public SortMethod<Key> {
   void Sort() override;
 };
 
+/**
+ * @brief Construct a new Merge Sort< Key>:: Merge Sort object
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ */
 template <typename Key>
 MergeSort<Key>::MergeSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
+/**
+ * @brief Function that sorts the sequence using the merge sort algorithm.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 void MergeSort<Key>::Sort() {
   mergeSort(this->sequence_, 0, this->size_ - 1, this->trace_);

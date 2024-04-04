@@ -20,6 +20,11 @@
 
 #include "sortMethod.h"
 
+/**
+ * @brief Class BinSort that inherits from SortMethod.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 class BinSort : public SortMethod<Key> {
  public:
@@ -27,9 +32,21 @@ class BinSort : public SortMethod<Key> {
   void Sort() override;
 };
 
+/**
+ * @brief Construct a new Bin Sort< Key>:: Bin Sort object
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ */
 template <typename Key>
 BinSort<Key>::BinSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
+/**
+ * @brief Function that sorts the sequence using the bin sort algorithm.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 void BinSort<Key>::Sort() {
   binSort(this->sequence_, this->size_, this->trace_);

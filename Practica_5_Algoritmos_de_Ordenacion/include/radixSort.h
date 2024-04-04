@@ -20,6 +20,11 @@
 
 #include "sortMethod.h"
 
+/**
+ * @brief Class RadixSort that inherits from SortMethod.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 class RadixSort : public SortMethod<Key> {
  public:
@@ -27,9 +32,21 @@ class RadixSort : public SortMethod<Key> {
   void Sort() override;
 };
 
+/**
+ * @brief Construct a new Radix Sort< Key>:: Radix Sort object
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ */
 template <typename Key>
 RadixSort<Key>::RadixSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
+/**
+ * @brief Function that sorts the sequence using the radix sort algorithm.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 void RadixSort<Key>::Sort() {
   radixSort(this->sequence_, this->size_, this->trace_);

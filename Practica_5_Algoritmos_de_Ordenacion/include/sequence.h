@@ -21,8 +21,13 @@
 #include <iostream>
 #include <fstream>
 
-typedef int Position;
+typedef int Position; // Position in the sequence
 
+/**
+ * @brief Class Sequence that represents a sequence of elements.
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class Sequence {
  public:

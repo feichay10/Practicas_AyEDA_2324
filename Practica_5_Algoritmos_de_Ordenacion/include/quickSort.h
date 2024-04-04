@@ -20,6 +20,11 @@
 
 #include "sortMethod.h"
 
+/**
+ * @brief Class QuickSort that inherits from SortMethod.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 class QuickSort : public SortMethod<Key> {
  public:
@@ -27,9 +32,21 @@ class QuickSort : public SortMethod<Key> {
   void Sort() override;
 };
 
+/**
+ * @brief Construct a new Quick Sort< Key>:: Quick Sort object
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ */
 template <typename Key>
 QuickSort<Key>::QuickSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
+/**
+ * @brief Function that sorts the sequence using the quick sort algorithm.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 void QuickSort<Key>::Sort() {
   quickSort(this->sequence_, 0, this->size_ - 1, this->trace_);

@@ -20,6 +20,11 @@
 
 #include "sequence.h"
 
+/**
+ * @brief Class StaticSequence that represents a static sequence of elements.
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class StaticSequence : public Sequence<Key> {
  public:
@@ -32,17 +37,35 @@ class StaticSequence : public Sequence<Key> {
   int size_;
 };
 
+/**
+ * @brief Construct a new Static Sequence< Key>:: Static Sequence object
+ * 
+ * @tparam Key 
+ * @param size 
+ */
 template <class Key>
 StaticSequence<Key>::StaticSequence(const int& size) {
   size_ = size;
   sequence_ = new Key[size_];
 }
 
+/**
+ * @brief Destroy the Static Sequence< Key>:: Static Sequence object
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 StaticSequence<Key>::~StaticSequence() {
   delete[] sequence_;
 }
 
+/**
+ * @brief Function that returns the element at the position i.
+ * 
+ * @tparam Key 
+ * @param i 
+ * @return Key& 
+ */
 template <class Key>
 Key& StaticSequence<Key>::operator[](const Position& i) const {
   return sequence_[i];

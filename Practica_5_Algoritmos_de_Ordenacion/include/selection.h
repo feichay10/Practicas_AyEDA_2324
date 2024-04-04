@@ -20,6 +20,11 @@
 
 #include "sortMethod.h"
 
+/**
+ * @brief Class Selection that inherits from SortMethod.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 class Selection : public SortMethod<Key> {
  public:
@@ -27,9 +32,21 @@ class Selection : public SortMethod<Key> {
   void Sort() override;
 };
 
+/**
+ * @brief Construct a new Selection< Key>:: Selection object
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ */
 template <typename Key>
 Selection<Key>::Selection(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
+/**
+ * @brief Function that sorts the sequence using the selection sort algorithm.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 void Selection<Key>::Sort() {
   selection(this->sequence_, this->size_, this->trace_);

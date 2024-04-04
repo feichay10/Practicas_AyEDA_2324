@@ -20,6 +20,11 @@
 
 #include "sortMethod.h"
 
+/**
+ * @brief Class ShakeSort that inherits from SortMethod.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 class ShakeSort : public SortMethod<Key> {
  public:
@@ -27,9 +32,21 @@ class ShakeSort : public SortMethod<Key> {
   void Sort() override;
 };
 
+/**
+ * @brief Construct a new Shake Sort< Key>:: Shake Sort object
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ */
 template <typename Key>
 ShakeSort<Key>::ShakeSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
+/**
+ * @brief Function that sorts the sequence using the shake sort algorithm.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 void ShakeSort<Key>::Sort() {
   shakeSort(this->sequence_, this->size_, this->trace_);

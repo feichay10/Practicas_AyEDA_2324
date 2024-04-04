@@ -22,7 +22,13 @@
 #include "staticSequence.h"
 #include "functions.h"
 
-// Funciones auxiliares
+/**
+ * @brief Function that prints the sequence.
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ */
 template <typename Key>
 void print(StaticSequence<Key>& sequence, int size) {
   for (int i = 0; i < size; i++) {
@@ -30,8 +36,14 @@ void print(StaticSequence<Key>& sequence, int size) {
   }
 }
 
-// Metodos de ordenacion
-// Algoritmo de ordenacion por seleccion
+/**
+ * @brief Function that sorts the sequence using the selection sort algorithm.
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ * @param trace 
+ */
 template <typename Key>
 void selection(StaticSequence<Key>& sequence, int size, bool trace) {
   Key temp;
@@ -53,7 +65,15 @@ void selection(StaticSequence<Key>& sequence, int size, bool trace) {
   }
 }
 
-// Algoritmo de ordenacion por QuickSort
+/**
+ * @brief Function that sorts the sequence using the quick sort algorithm.
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param begin 
+ * @param end 
+ * @param trace 
+ */
 template <typename Key>
 void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
   int i = begin;
@@ -80,7 +100,14 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
   if (i < end) quickSort(sequence, i, end, trace);
 }
 
-// Algoritmo de ordenacion por HeapSort
+/**
+ * @brief Function that sorts the sequence using the heap sort algorithm.
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ * @param trace 
+ */
 template <typename Key>
 void heapSort(StaticSequence<Key>& sequence, int size, bool trace) {
   for (int i = size / 2; i >= 0; i--) {
@@ -92,6 +119,15 @@ void heapSort(StaticSequence<Key>& sequence, int size, bool trace) {
   }
 }
 
+/**
+ * @brief Function that sorts the sequence using the downHeap algorithm.
+ * 
+ * @tparam Key 
+ * @param i 
+ * @param sequence 
+ * @param size 
+ * @param trace 
+ */
 template <typename Key>
 void downHeap(int i, StaticSequence<Key>& sequence, int size, bool trace) {
   int h1, h2, h;
@@ -119,7 +155,14 @@ void downHeap(int i, StaticSequence<Key>& sequence, int size, bool trace) {
   }
 }
 
-// Algoritmo de ordenacion por ShellSort
+/**
+ * @brief Function that sorts the sequence using the shell sort algorithm.
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ * @param trace 
+ */
 template <typename Key>
 void shellSort(StaticSequence<Key>& sequence, int size, bool trace) {
   int j;
@@ -146,7 +189,14 @@ void shellSort(StaticSequence<Key>& sequence, int size, bool trace) {
   }
 }
 
-// Algoritmo de ordenacion por RadixSort
+/**
+ * @brief Function that sorts the sequence using the radix sort algorithm.
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ * @param trace 
+ */
 template <typename Key>
 void radixSort(StaticSequence<Key>& sequence, int size, bool trace) {
   int max = sequence[0];
@@ -184,7 +234,14 @@ void radixSort(StaticSequence<Key>& sequence, int size, bool trace) {
   }
 }
 
-// Algoritmo de ordenacion por Insertion
+/**
+ * @brief Function that sorts the sequence using the insertion sort algorithm.
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ * @param trace 
+ */
 template <typename Key>
 void insertion(StaticSequence<Key>& sequence, int size, bool trace) {
   for (int i = 1; i < size; i++) {
@@ -205,7 +262,15 @@ void insertion(StaticSequence<Key>& sequence, int size, bool trace) {
   }
 }
 
-// Algoritmo de ordenacion por MergeSort
+/**
+ * @brief Function that sorts the sequence using the merge sort algorithm.
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param begin 
+ * @param end 
+ * @param trace 
+ */
 template <typename Key>
 void mergeSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
   if (begin < end) {
@@ -216,6 +281,16 @@ void mergeSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
   }
 }
 
+/**
+ * @brief Function that mixes the sequence.
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param begin 
+ * @param middle 
+ * @param end 
+ * @param trace 
+ */
 template <typename Key>
 void mix(StaticSequence<Key>& sequence, int begin, int middle, int end, bool trace) {
   int i = begin;
@@ -243,7 +318,14 @@ void mix(StaticSequence<Key>& sequence, int begin, int middle, int end, bool tra
   }
 }
 
-// Algoritmo de ordenacion por binSort
+/**
+ * @brief Function that sorts the sequence using the bin sort algorithm.
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ * @param trace 
+ */
 template <typename Key>
 void binSort(StaticSequence<Key>& sequence, int size, bool trace) {
   for (int i = 1; i < size; i++) {
@@ -271,7 +353,14 @@ void binSort(StaticSequence<Key>& sequence, int size, bool trace) {
   }
 }
 
-// Algoritmo de ordenacion por bubbleSort
+/**
+ * @brief Function that sorts the sequence using the bubble sort algorithm.
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ * @param trace 
+ */
 template <typename Key>
 void bubbleSort(StaticSequence<Key>& sequence, int size, bool trace) {
   for (int i = 0; i < size - 1; i++) {
@@ -288,6 +377,14 @@ void bubbleSort(StaticSequence<Key>& sequence, int size, bool trace) {
   }
 }
 
+/**
+ * @brief Function that sorts the sequence using the shake sort algorithm.
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ * @param trace 
+ */
 template <typename Key>
 void shakeSort(StaticSequence<Key>& sequence, int size, bool trace) {
   int start = 1;

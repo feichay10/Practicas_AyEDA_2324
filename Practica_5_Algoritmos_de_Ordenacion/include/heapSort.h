@@ -20,6 +20,11 @@
 
 #include "sortMethod.h"
 
+/**
+ * @brief Class HeapSort that inherits from SortMethod.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 class HeapSort : public SortMethod<Key> {
  public:
@@ -27,9 +32,21 @@ class HeapSort : public SortMethod<Key> {
   void Sort() override;
 };
 
+/**
+ * @brief Construct a new Heap Sort< Key>:: Heap Sort object
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ */
 template <typename Key>
 HeapSort<Key>::HeapSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
+/**
+ * @brief Function that sorts the sequence using the heap sort algorithm.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 void HeapSort<Key>::Sort() {
   heapSort(this->sequence_, this->size_, this->trace_);

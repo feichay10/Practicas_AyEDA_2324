@@ -21,6 +21,11 @@
 #include "staticSequence.h"
 #include "ordenation.h"
 
+/**
+ * @brief Class SortMethod that represents a sorting method.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 class SortMethod {
  public:
@@ -34,9 +39,22 @@ class SortMethod {
   bool trace_ = false;
 };
 
+/**
+ * @brief Construct a new Sort Method< Key>:: Sort Method object
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ */
 template <typename Key>
 SortMethod<Key>::SortMethod(StaticSequence<Key>& sequence, int size) : sequence_(sequence), size_(size) {}
 
+/**
+ * @brief Function that sets the trace of the sorting method.
+ * 
+ * @tparam Key 
+ * @param trace 
+ */
 template <typename Key>
 void SortMethod<Key>::setTrace(bool trace) {
   trace_ = trace;

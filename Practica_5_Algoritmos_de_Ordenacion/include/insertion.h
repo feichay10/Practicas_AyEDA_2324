@@ -20,6 +20,11 @@
 
 #include "sortMethod.h"
 
+/**
+ * @brief Class Insertion that inherits from SortMethod.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 class Insertion : public SortMethod<Key> {
  public:
@@ -27,9 +32,21 @@ class Insertion : public SortMethod<Key> {
   void Sort() override;
 };
 
+/**
+ * @brief Construct a new Insertion< Key>:: Insertion object
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ */
 template <typename Key>
 Insertion<Key>::Insertion(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
+/**
+ * @brief Function that sorts the sequence using the insertion sort algorithm.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 void Insertion<Key>::Sort() {
   insertion(this->sequence_, this->size_, this->trace_);

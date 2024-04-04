@@ -20,6 +20,11 @@
 
 #include "sortMethod.h"
 
+/**
+ * @brief Class ShellSort that inherits from SortMethod.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 class ShellSort : public SortMethod<Key> {
  public:
@@ -27,9 +32,21 @@ class ShellSort : public SortMethod<Key> {
   void Sort() override;
 };
 
+/**
+ * @brief Construct a new Shell Sort< Key>:: Shell Sort object
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ */
 template <typename Key>
 ShellSort<Key>::ShellSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
+/**
+ * @brief Function that sorts the sequence using the shell sort algorithm.
+ * 
+ * @tparam Key 
+ */
 template <typename Key>
 void ShellSort<Key>::Sort() {
   shellSort(this->sequence_, this->size_, this->trace_);
