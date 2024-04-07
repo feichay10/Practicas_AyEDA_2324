@@ -52,7 +52,7 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
         if (kAvailableOrders.find(argv[i + 1]) != kAvailableOrders.end()) {
           parameters.order_ = argv[i + 1];
         } else {
-          throw std::invalid_argument("Order algorithm not available. Use " + std::string(argv[0]) + " -help for more information.");
+          throw std::invalid_argument(std::string(argv[i + 1]) + " order algorithm not available. Use " + std::string(argv[0]) + " -help for more information.");
         }
       } else {
         throw std::invalid_argument("Order algorithm not provided. Use " + std::string(argv[0]) + " -help for more information.");
@@ -72,7 +72,7 @@ sortParameters checkProgramParameters(int argc, char* argv[], sortParameters par
             throw std::invalid_argument("File not provided. Use " + std::string(argv[0]) + " -help for more information.");
           }
         } else {
-          throw std::invalid_argument("Initialization not provided. Use " + std::string(argv[0]) + " -help for more information.");
+          throw std::invalid_argument("Initialization " + std::string(argv[i + 1]) + " not avalaible. Use " + std::string(argv[0]) + " -help for more information.");
         }
       } else {
         throw std::invalid_argument("Initialization not provided. Use " + std::string(argv[0]) + " -help for more information.");
@@ -148,7 +148,7 @@ void createSequence(sortParameters parameters) {
     std::cout << "Enter the sequence data:" << std::endl;
     for (int i = 0; i < parameters.size_; i++) {
       keyType key;
-      std::cout << "key " << i << ": ";
+      std::cout << "Key " << i << ": ";
       std::cin >> key;
       sequence[i] = key;
     }

@@ -168,16 +168,17 @@ void downHeap(int i, StaticSequence<Key>& sequence, int size, bool trace) {
 template <typename Key>
 void shellSort(StaticSequence<Key>& sequence, int size, bool trace) {
   int j;
-  Key temp;
   float alpha;
   std::cout << "Enter an alpha between 0 and 1: ";
   std::cin >> alpha;
+  
   if (alpha < 0 || alpha > 1) {
     throw std::invalid_argument("Alpha must be between 0 and 1."); 
   }
+  
   for (int h = (size * alpha) / 2; h > 0; h /= 2) {
     for (int i = h; i < size; i++) {
-      temp = sequence[i];
+      Key temp = sequence[i];
       for (j = i; j >= h && sequence[j - h] > temp; j -= h) {
         sequence[j] = sequence[j - h];
       }
@@ -299,7 +300,6 @@ template <typename Key>
 void mix(StaticSequence<Key>& sequence, int begin, int middle, int end, bool trace) {
   int i = begin;
   int j = middle + 1;
-  // int size = end + 1;
   StaticSequence<Key> temp(end + 1);
 
   for (int k = begin; k <= end; k++) {
