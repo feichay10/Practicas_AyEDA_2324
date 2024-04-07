@@ -25,7 +25,7 @@
  * @param parameters 
  * @return sortParameters 
  */
-sortParameters checkProgramParameters(int argc, char* argv[], sortParameters parameters) {
+sortParameters checkProgramParameters(int argc, char* argv[], sortParameters parameters) { 
   if (argc == 2 && std::string(argv[1]) == "-help") {
     std::cout << kUsage << std::endl;
     exit(EXIT_SUCCESS);

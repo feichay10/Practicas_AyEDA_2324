@@ -25,7 +25,7 @@
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 class BubbleSort : public SortMethod<Key> {
  public:
   BubbleSort(StaticSequence<Key>& sequence, int size);
@@ -39,7 +39,7 @@ class BubbleSort : public SortMethod<Key> {
  * @param sequence 
  * @param size 
  */
-template <typename Key>
+template <class Key>
 BubbleSort<Key>::BubbleSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
 /**
@@ -47,7 +47,7 @@ BubbleSort<Key>::BubbleSort(StaticSequence<Key>& sequence, int size) : SortMetho
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 void BubbleSort<Key>::Sort() {
   bubbleSort(this->sequence_, this->size_, this->trace_);
 }

@@ -25,7 +25,7 @@
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 class Insertion : public SortMethod<Key> {
  public:
   Insertion(StaticSequence<Key>& sequence, int size);
@@ -39,7 +39,7 @@ class Insertion : public SortMethod<Key> {
  * @param sequence 
  * @param size 
  */
-template <typename Key>
+template <class Key>
 Insertion<Key>::Insertion(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
 /**
@@ -47,7 +47,7 @@ Insertion<Key>::Insertion(StaticSequence<Key>& sequence, int size) : SortMethod<
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 void Insertion<Key>::Sort() {
   insertion(this->sequence_, this->size_, this->trace_);
 }

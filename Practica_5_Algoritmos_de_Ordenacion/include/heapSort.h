@@ -25,7 +25,7 @@
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 class HeapSort : public SortMethod<Key> {
  public:
   HeapSort(StaticSequence<Key>& sequence, int size);
@@ -39,7 +39,7 @@ class HeapSort : public SortMethod<Key> {
  * @param sequence 
  * @param size 
  */
-template <typename Key>
+template <class Key>
 HeapSort<Key>::HeapSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
 /**
@@ -47,7 +47,7 @@ HeapSort<Key>::HeapSort(StaticSequence<Key>& sequence, int size) : SortMethod<Ke
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 void HeapSort<Key>::Sort() {
   heapSort(this->sequence_, this->size_, this->trace_);
 }

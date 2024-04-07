@@ -18,9 +18,11 @@
 #ifndef ORDENATION_H
 #define ORDENATION_H
 
+#include <string>
+
+#include "functions.h"
 #include "sortMethod.h"
 #include "staticSequence.h"
-#include "functions.h"
 
 /**
  * @brief Function that prints the sequence.
@@ -197,6 +199,33 @@ void shellSort(StaticSequence<Key>& sequence, int size, bool trace) {
  * @param size 
  * @param trace 
  */
+
+// Example:
+// 721 891 431 572 672 194 834 345 425
+// 365 836 236 746 216 467 247 529 389
+
+// First iteration:
+//                      216
+//      431             365 746
+//      891 672     834 425 236 247     389
+//  ___ 721 572 ___ 194 345 836 467 ___ 529
+//  0    1   2   3   4   5   6   7   8   9
+// ==> 721 891 431 572 672 194 834 345 425 365 836 236 746 216 467 247 529 389
+
+// Second iteration:
+//              236
+//          529 836 247
+//          425 834 746     467 672     194
+//  ___ 216 721 431 345 ___ 365 572 389 891
+//  0    1   2   3   4   5   6   7   8   9
+// ==> 216 721 425 529 431 834 836 236 345 746 247 365 467 572 672 389 891 194
+
+// Third iteration:
+//          247 389 467 891
+//          236 365 431 572 746 836
+// ___  194 216 345 425 529 672 721 834 ___
+//  0    1   2   3   4   5   6   7   8   9
+// ==> 194 216 236 247 345 365 389 425 431 467 529 572 672 721 746 834 836 891
 template <typename Key>
 void radixSort(StaticSequence<Key>& sequence, int size, bool trace) {
   int max = sequence[0];
@@ -226,8 +255,10 @@ void radixSort(StaticSequence<Key>& sequence, int size, bool trace) {
     for (int i = 0; i < size; i++) {
       sequence[i] = output[i];
     }
+
     if (trace) {
-      std::cout << "\t\t    ";
+      int traceCount = std::to_string(exp).length();
+      std::cout << "\nIteration " << traceCount << ":\t    ";
       print(sequence, size);
       std::cout << std::endl;
     }

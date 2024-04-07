@@ -25,7 +25,7 @@
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 class QuickSort : public SortMethod<Key> {
  public:
   QuickSort(StaticSequence<Key>& sequence, int size);
@@ -39,7 +39,7 @@ class QuickSort : public SortMethod<Key> {
  * @param sequence 
  * @param size 
  */
-template <typename Key>
+template <class Key>
 QuickSort<Key>::QuickSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
 /**
@@ -47,7 +47,7 @@ QuickSort<Key>::QuickSort(StaticSequence<Key>& sequence, int size) : SortMethod<
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 void QuickSort<Key>::Sort() {
   quickSort(this->sequence_, 0, this->size_ - 1, this->trace_);
 }

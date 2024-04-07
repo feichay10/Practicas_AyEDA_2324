@@ -25,7 +25,7 @@
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 class Selection : public SortMethod<Key> {
  public:
   Selection(StaticSequence<Key>& sequence, int size);
@@ -39,7 +39,7 @@ class Selection : public SortMethod<Key> {
  * @param sequence 
  * @param size 
  */
-template <typename Key>
+template <class Key>
 Selection<Key>::Selection(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
 /**
@@ -47,7 +47,7 @@ Selection<Key>::Selection(StaticSequence<Key>& sequence, int size) : SortMethod<
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 void Selection<Key>::Sort() {
   selection(this->sequence_, this->size_, this->trace_);
 }

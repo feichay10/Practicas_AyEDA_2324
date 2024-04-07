@@ -25,7 +25,7 @@
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 class MergeSort : public SortMethod<Key> {
  public:
   MergeSort(StaticSequence<Key>& sequence, int size);
@@ -39,7 +39,7 @@ class MergeSort : public SortMethod<Key> {
  * @param sequence 
  * @param size 
  */
-template <typename Key>
+template <class Key>
 MergeSort<Key>::MergeSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
 /**
@@ -47,7 +47,7 @@ MergeSort<Key>::MergeSort(StaticSequence<Key>& sequence, int size) : SortMethod<
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 void MergeSort<Key>::Sort() {
   mergeSort(this->sequence_, 0, this->size_ - 1, this->trace_);
 }

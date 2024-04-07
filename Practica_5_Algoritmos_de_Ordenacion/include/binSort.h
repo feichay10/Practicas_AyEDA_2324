@@ -25,7 +25,7 @@
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 class BinSort : public SortMethod<Key> {
  public:
   BinSort(StaticSequence<Key>& sequence, int size);
@@ -39,7 +39,7 @@ class BinSort : public SortMethod<Key> {
  * @param sequence 
  * @param size 
  */
-template <typename Key>
+template <class Key>
 BinSort<Key>::BinSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
 /**
@@ -47,7 +47,7 @@ BinSort<Key>::BinSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 void BinSort<Key>::Sort() {
   binSort(this->sequence_, this->size_, this->trace_);
 }

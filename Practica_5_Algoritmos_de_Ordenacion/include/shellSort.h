@@ -25,7 +25,7 @@
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 class ShellSort : public SortMethod<Key> {
  public:
   ShellSort(StaticSequence<Key>& sequence, int size);
@@ -39,7 +39,7 @@ class ShellSort : public SortMethod<Key> {
  * @param sequence 
  * @param size 
  */
-template <typename Key>
+template <class Key>
 ShellSort<Key>::ShellSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
 /**
@@ -47,7 +47,7 @@ ShellSort<Key>::ShellSort(StaticSequence<Key>& sequence, int size) : SortMethod<
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 void ShellSort<Key>::Sort() {
   shellSort(this->sequence_, this->size_, this->trace_);
 }

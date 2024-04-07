@@ -26,7 +26,7 @@
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 class SortMethod {
  public:
   SortMethod(StaticSequence<Key>& sequence, int size);
@@ -46,7 +46,7 @@ class SortMethod {
  * @param sequence 
  * @param size 
  */
-template <typename Key>
+template <class Key>
 SortMethod<Key>::SortMethod(StaticSequence<Key>& sequence, int size) : sequence_(sequence), size_(size) {}
 
 /**
@@ -55,7 +55,7 @@ SortMethod<Key>::SortMethod(StaticSequence<Key>& sequence, int size) : sequence_
  * @tparam Key 
  * @param trace 
  */
-template <typename Key>
+template <class Key>
 void SortMethod<Key>::setTrace(bool trace) {
   trace_ = trace;
 }

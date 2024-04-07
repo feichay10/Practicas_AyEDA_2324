@@ -25,7 +25,7 @@
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 class ShakeSort : public SortMethod<Key> {
  public:
   ShakeSort(StaticSequence<Key>& sequence, int size);
@@ -39,7 +39,7 @@ class ShakeSort : public SortMethod<Key> {
  * @param sequence 
  * @param size 
  */
-template <typename Key>
+template <class Key>
 ShakeSort<Key>::ShakeSort(StaticSequence<Key>& sequence, int size) : SortMethod<Key>(sequence, size) {}
 
 /**
@@ -47,7 +47,7 @@ ShakeSort<Key>::ShakeSort(StaticSequence<Key>& sequence, int size) : SortMethod<
  * 
  * @tparam Key 
  */
-template <typename Key>
+template <class Key>
 void ShakeSort<Key>::Sort() {
   shakeSort(this->sequence_, this->size_, this->trace_);
 }
