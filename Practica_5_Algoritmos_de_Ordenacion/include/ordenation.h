@@ -80,7 +80,6 @@ template <typename Key>
 void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
   int i = begin;
   int j = end;
-  int size = end + 1;
   Key pivot = sequence[(begin + end) / 2];
   if (trace) {
     std::cout << "Pivot: " << pivot << "\t    ";
@@ -95,7 +94,7 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
     }
   }
   if (trace) {
-    print(sequence, size);
+    print(sequence, sequence.getSize());
     std::cout << std::endl;
   }
   if (begin < j) quickSort(sequence, begin, j, trace);
@@ -149,9 +148,10 @@ void downHeap(int i, StaticSequence<Key>& sequence, int size, bool trace) {
       std::swap(sequence[i], sequence[h]);
       i = h;
     }
+
     if (trace) {
       std::cout << "\t\t    ";
-      print(sequence, size);
+      print(sequence, sequence.getSize());
       std::cout << std::endl;
     }
   }
@@ -299,7 +299,7 @@ template <typename Key>
 void mix(StaticSequence<Key>& sequence, int begin, int middle, int end, bool trace) {
   int i = begin;
   int j = middle + 1;
-  int size = end + 1;
+  // int size = end + 1;
   StaticSequence<Key> temp(end + 1);
 
   for (int k = begin; k <= end; k++) {
@@ -318,7 +318,8 @@ void mix(StaticSequence<Key>& sequence, int begin, int middle, int end, bool tra
 
   if (trace) {
     std::cout << "\t\t    ";
-    print(sequence, size);
+    print(sequence, sequence.getSize());
+    std::cout << std::endl;
   }
 }
 
