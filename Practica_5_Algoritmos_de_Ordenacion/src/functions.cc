@@ -111,8 +111,8 @@ void printInformation(sortParameters parameters) {
             << "|" << RESET << std::endl;
   std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
             << " Order method: " << BLUE_BOLD
-            << parameters.order_ << PURPLE_BOLD
-            << std::setw(22 - parameters.order_.length()) << "|"
+            << parameters.order_ << " sort"<< PURPLE_BOLD
+            << std::setw(17 - parameters.order_.length()) << "|"
             << RESET << std::endl;
   std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
             << " Initialization: " << BLUE_BOLD
@@ -195,6 +195,8 @@ void createSequence(sortParameters parameters) {
     file.close();
   }
 
+  printInformation(parameters);
+
   if (parameters.order_ == "selection") {
     sortMethod = new Selection<keyType>(sequence, parameters.size_);
   } else if (parameters.order_ == "quick") {
@@ -221,9 +223,7 @@ void createSequence(sortParameters parameters) {
     sortMethod->setTrace(true);
   }
 
-  printInformation(parameters);
-
-  std::cout << BOLD << "\nUnordered sequence: " << RESET << RED_BOLD;
+  std::cout << BOLD << "Unordered sequence: " << RESET << RED_BOLD;
   print(sequence, parameters.size_);
   std::cout << RESET << std::endl;
   sortMethod->Sort();

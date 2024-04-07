@@ -176,18 +176,36 @@ void shellSort(StaticSequence<Key>& sequence, int size, bool trace) {
     throw std::invalid_argument("Alpha must be between 0 and 1."); 
   }
   
-  for (int h = (size * alpha) / 2; h > 0; h /= 2) {
-    for (int i = h; i < size; i++) {
-      Key temp = sequence[i];
-      for (j = i; j >= h && sequence[j - h] > temp; j -= h) {
-        sequence[j] = sequence[j - h];
-      }
-      sequence[j] = temp;
-      if (trace) {
-        std::cout << "\t\t    ";
-        print(sequence, size);
-        std::cout << std::endl;
-      } 
+  int delta = size * alpha;
+  while (delta > 1) {
+    delta /= 2;
+    deltaSort(sequence, size, delta, trace);
+  }
+}
+
+/**
+ * @brief Function that sorts the sequence using the delta sort algorithm.
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ * @param delta 
+ * @param trace 
+ */
+template <typename Key>
+void deltaSort(StaticSequence<Key>& sequence, int size, int delta, bool trace) {
+  for (int i = delta; i < size; i++) {
+    Key temp = sequence[i];
+    int j = i;
+    while ((j >= delta) && (temp < sequence[j - delta])) {
+      sequence[j] = sequence[j - delta];
+      j -= delta;
+    }
+    sequence[j] = temp;
+    if (trace) {
+      std::cout << "\t\t    ";
+      print(sequence, size);
+      std::cout << std::endl;
     }
   }
 }
@@ -209,18 +227,22 @@ void radixSort(StaticSequence<Key>& sequence, int size, bool trace) {
     }
   }
 
+  // Counting sort for every digit
   for (int exp = 1; max / exp > 0; exp *= 10) {
     int output[size];
     int count[10] = {0};
 
+    // Count the number of occurrences
     for (int i = 0; i < size; i++) {
       count[(sequence[i] / exp) % 10]++;
     }
 
+    // Change count[i] so that count[i] contains the actual position of the digit in output
     for (int i = 1; i < 10; i++) {
       count[i] += count[i - 1];
     }
 
+    // Build the output array
     for (int i = size - 1; i >= 0; i--) {
       output[count[(sequence[i] / exp) % 10] - 1] = sequence[i];
       count[(sequence[i] / exp) % 10]--;
