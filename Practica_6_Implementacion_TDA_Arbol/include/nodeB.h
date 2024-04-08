@@ -23,9 +23,8 @@
 template<class Key>
 class NodeB {
  public:
-  NodeB() = default;
-  NodeB(Key key);
-  NodeB(Key key, NodeB<Key>* left, NodeB<Key>* right);
+  NodeB();
+  NodeB(const Key& data, NodeB<Key>* left, NodeB<Key>* right);
   ~NodeB();
 
  private:
@@ -33,5 +32,25 @@ class NodeB {
   NodeB<Key>* left_;
   NodeB<Key>* right_;
 };
+
+template<class Key>
+NodeB<Key>::NodeB() {
+  data_ = Key();
+  left_ = nullptr;
+  right_ = nullptr;
+}
+
+template<class Key>
+NodeB<Key>::NodeB(const Key& data, NodeB<Key>* left, NodeB<Key>* right) {
+  data_ = data;
+  left_ = left;
+  right_ = right;
+}
+
+template<class Key>
+NodeB<Key>::~NodeB() {
+  delete left_;
+  delete right_;
+}
 
 #endif // NODEB_H

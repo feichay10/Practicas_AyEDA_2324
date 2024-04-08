@@ -26,6 +26,7 @@
 
 #include "colors.h"
 #include "nif.h"
+#include "AB.h"
 
 using keyType = Nif;
 
@@ -57,5 +58,8 @@ struct treeParameters {
 };
 
 treeParameters checkProgramParameters(int argc, char* argv[], treeParameters& parameters);
+void printInformation(treeParameters& parameters);
+void createTree(treeParameters& parameters);
+void menu();
 
 #endif // FUNCTIONS_H

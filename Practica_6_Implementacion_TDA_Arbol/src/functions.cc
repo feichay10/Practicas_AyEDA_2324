@@ -63,3 +63,87 @@ treeParameters checkProgramParameters(int argc, char* argv[], treeParameters& pa
 
   return parameters;
 }
+
+void printInformation(treeParameters& parameters) {
+  std::cout << PURPLE_BOLD << "+------------------------------------+" << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "|" << RESET << ORANGE_BG << GRAY_BOLD << "           TDA Information          " << RESET << PURPLE_BOLD << "|" << std::endl;
+  std::cout << "+------------------------------------+" << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
+            << " Tree type: " << BLUE_BOLD << parameters.treeType_ << RESET
+            << PURPLE_BOLD
+            << std::setw(25 - parameters.treeType_.size()) << "|" << std::endl;
+  std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
+            << " Initialization: " << BLUE_BOLD
+            << parameters.init_ << PURPLE_BOLD
+            << std::setw(20 - parameters.init_.length()) << "|"
+            << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
+            << " Number of elements: " << BLUE_BOLD
+            << parameters.numberGenerated_ << PURPLE_BOLD
+            << std::setw(16 - std::to_string(parameters.numberGenerated_).length())
+            << "|" << RESET << std::endl;
+  if (parameters.init_ == "file") {
+    std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
+              << " File: " << BLUE_BOLD << parameters.file_
+              << PURPLE_BOLD
+              << std::setw(30 - parameters.file_.length())
+              << "|" << RESET << std::endl;
+  }
+  std::cout << PURPLE_BOLD << "+------------------------------------+" << RESET << std::endl;
+}
+
+void createTree(treeParameters& parameters) {
+  AB<keyType>* tree;
+  if (parameters.treeType_ == "abe") {
+    // tree = new ABE<keyType>();
+  } else {
+    // tree = new ABB<keyType>();
+  }
+
+  if (parameters.init_ == "manual") {
+    // tree->insert();
+  } else if (parameters.init_ == "random") {
+    // tree->insert();
+  } else {
+    // tree->insert();
+  }
+
+}
+
+void menu() {
+  int option;
+  keyType key;
+  while (true) {
+    std::cout << BOLD << "\n\nOperations" << RESET << std::endl;
+    std::cout << RED_BOLD << "  [0]" << RESET << BOLD << " Exit" << std::endl;
+    std::cout << RED_BOLD << "  [1]" << RESET << BOLD << " Insert key" << std::endl;
+    std::cout << RED_BOLD << "  [2]" << RESET << BOLD << " Search key" << std::endl;
+    std::cout << RED_BOLD << "  [3]" << RESET << BOLD << " Show inorden tree" << std::endl;
+    std::cout << " Select operation: " << RESET; 
+    std::cin >> option;
+
+    switch (option) {
+      case 0:
+        exit(EXIT_SUCCESS);
+        break;
+      case 1:
+        std::cout << BOLD << "\nInsert key: " << RESET;
+        std::cin >> key;
+        // tree->insert();
+        break;
+      case 2:
+        std::cout << BOLD << "\nSearch key: " << RESET;
+        // tree->search();
+        break;
+      case 3:
+        std::cout << BOLD << "\nInorden tree: " << RESET;
+        // tree->inorden();
+        break;
+      default:
+        std::cerr << RED_BOLD << "ERROR: " << RESET << "Invalid option." << std::endl;
+        break;
+    }
+
+    // tree->write();
+  }
+}
