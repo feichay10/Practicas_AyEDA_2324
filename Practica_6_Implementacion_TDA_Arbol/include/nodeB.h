@@ -27,6 +27,12 @@ class NodeB {
   NodeB(const Key& data, NodeB<Key>* left, NodeB<Key>* right);
   ~NodeB();
 
+  Key getData() const;
+  NodeB<Key>* getLeft() const;
+  NodeB<Key>* getRight() const;
+  void setLeft(NodeB<Key>* left);
+  void setRight(NodeB<Key>* right);
+
  private:
   Key data_;
   NodeB<Key>* left_;
@@ -51,6 +57,31 @@ template<class Key>
 NodeB<Key>::~NodeB() {
   delete left_;
   delete right_;
+}
+
+template<class Key>
+Key NodeB<Key>::getData() const {
+  return data_;
+}
+
+template<class Key>
+NodeB<Key>* NodeB<Key>::getLeft() const {
+  return left_;
+}
+
+template<class Key>
+NodeB<Key>* NodeB<Key>::getRight() const {
+  return right_;
+}
+
+template<class Key>
+void NodeB<Key>::setLeft(NodeB<Key>* left) {
+  left_ = left;
+}
+
+template<class Key>
+void NodeB<Key>::setRight(NodeB<Key>* right) {
+  right_ = right;
 }
 
 #endif // NODEB_H

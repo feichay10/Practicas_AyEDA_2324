@@ -24,6 +24,7 @@ int main(int argc, char* argv[]) {
   try {
     parameters = checkProgramParameters(argc, argv, parameters);
     printInformation(parameters);
+    createTree(parameters);
   } catch (std::string message) {
     std::cerr << RED_BOLD << "ERROR: " << message << RESET << std::endl;
   } catch (std::invalid_argument& e) {

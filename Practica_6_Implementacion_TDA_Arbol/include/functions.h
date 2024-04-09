@@ -27,27 +27,24 @@
 #include "colors.h"
 #include "nif.h"
 #include "AB.h"
+#include "ABB.h"
 
 using keyType = Nif;
 
 const std::string kUsage =
     BOLD + std::string("NAME\n") + RESET +
-    std::string("       sortingAlgorithm - Sorting algorithms\n\n") + BOLD + std::string("SYNOPSIS\n") +
+    std::string("       treeTDA - Type Data Abstract Tree\n\n") + BOLD + std::string("SYNOPSIS\n") +
     RESET +
-    std::string("       ./bin/sortingAlgorithm -size <s> -ord <m> -init <i> -trace <y|n>\n\n") +
+    std::string("       ./bin/treeTDA -ab <abe|abb> -init <i> [s] [f]\n\n") +
     BOLD + std::string("DESCRIPTION\n") + RESET +
     std::string("       Program that allows to sort data a sequence in a specific order.\n\n") +
-    BOLD + std::string("OPTIONS") + RESET + BOLD + std::string("\n\t  -size <s>") + RESET +
-    std::string("\n\t\tSize of the sequence.\n") + BOLD +
-    std::string("\n\t  -ord <m>, m = selection|quick|heap|shell|radix|insertion|merge|bin|bubble|shake") + RESET +
-    std::string("\n\t\tm is the code for the sorting algorithm to be used.\n") +
-    BOLD + std::string("\n\t  -init <i> [f]") + RESET +
-    std::string("\n\t\ti = manual. Enter sequence data manually.") +
-    std::string("\n\t\ti = random. Enter sequence data randomly.") +
-    std::string("\n\t\ti = file. Enter sequence data by file.") +
+    BOLD + std::string("OPTIONS") + RESET + BOLD + std::string("\n\t  -ab <abe|abb>") + RESET +
+    std::string("\n\t\tTo indicate the type of tree to work with.\n") + BOLD +
+    BOLD + std::string("\n\t  -init <i> [s] [f]") + RESET +
+    std::string("\n\t\ti = manual. Enter elements tree data manualy.") +
+    std::string("\n\t\ti = random. Enter elements tree data randomly.") +
+    std::string("\n\t\ti = file. Enter elements tree data by file.") +
     std::string("\n\t\t    f = enter file name.\n") +
-    BOLD + std::string("\n\t  -trace <y|n>") + RESET +
-    std::string("\n\t\tIndicates whether or not the trace is displayed during execution.\n") + BOLD +
     BOLD + std::string("\n\t  -help") + RESET + std::string("\n\t\tShow this message.");
 
 struct treeParameters {
@@ -60,6 +57,6 @@ struct treeParameters {
 treeParameters checkProgramParameters(int argc, char* argv[], treeParameters& parameters);
 void printInformation(treeParameters& parameters);
 void createTree(treeParameters& parameters);
-void menu();
+void menu(AB<keyType>* tree);
 
 #endif // FUNCTIONS_H

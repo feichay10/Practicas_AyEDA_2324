@@ -97,22 +97,38 @@ void createTree(treeParameters& parameters) {
   if (parameters.treeType_ == "abe") {
     // tree = new ABE<keyType>();
   } else {
-    // tree = new ABB<keyType>();
+    tree = new ABB<keyType>();
   }
 
+  tree->write(std::cout);
+
   if (parameters.init_ == "manual") {
-    // tree->insert();
+    for (int i = 0; i < parameters.numberGenerated_; i++) {
+      keyType key;
+      std::cout << BOLD << "Insert key " << i + 1 << ": " << RESET;
+      std::cin >> key;
+      tree->insert(key);
+    }
   } else if (parameters.init_ == "random") {
-    // tree->insert();
+    for (int i = 0; i < parameters.numberGenerated_; i++) {
+      keyType key;
+      tree->insert(key);
+    }
   } else {
     // tree->insert();
   }
 
+  menu(tree);
+
+  // tree->write(std::cout);
 }
 
-void menu() {
+void menu(AB<keyType>* tree) {
   int option;
   keyType key;
+
+  tree->write(std::cout);
+
   while (true) {
     std::cout << BOLD << "\n\nOperations" << RESET << std::endl;
     std::cout << RED_BOLD << "  [0]" << RESET << BOLD << " Exit" << std::endl;
