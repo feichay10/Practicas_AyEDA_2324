@@ -23,12 +23,32 @@
 template<class Key>
 class ABE : public AB<Key> {
  public:
-  ABE() = default;
-  ~ABE() = default;
-
   bool insert(const Key& k) override;
   bool search(const Key& k) const override;
-  void inorden() const override;
+  void inorder() const override;
+  bool empty() override;
 };
+
+template<class Key>
+bool ABE<Key>::insert(const Key& k) {
+  return true;
+}
+
+
+
+template<class Key>
+bool ABE<Key>::search(const Key& k) const {
+  return false;
+}
+
+template<class Key>
+void ABE<Key>::inorder() const {
+  return;
+}
+
+template<class Key>
+bool ABE<Key>::empty() {
+  return AB<Key>::getRoot() == nullptr;
+}
 
 #endif // ABE_H

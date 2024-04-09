@@ -102,28 +102,28 @@ void createTree(treeParameters& parameters) {
     tree = new ABB<keyType>();
   }
 
-  if (tree->empty()) {
-    std::cout << "Tree is empty." << std::endl;
-  } else {
-    std::cout << "Tree is not empty." << std::endl;
-  }
+  // if (tree->empty()) {
+  //   std::cout << BOLD << "\nTree is empty." << RESET << std::endl;
+  // } else {
+  //   std::cout << BOLD << "\nTree is not empty." << RESET << std::endl;
+  // }
 
   tree->write(std::cout);
 
   if (parameters.init_ == "manual") {
     for (int i = 0; i < parameters.numberGenerated_; i++) {
       keyType key;
-      std::cout << BOLD << "Insert key: " << RESET;
+      std::cout << BOLD << "\nInsert key: " << RESET;
       std::cin >> key;
       tree->insert(key);
       tree->write(std::cout);
-      std::cout << std::endl;
     }
   } else if (parameters.init_ == "random") {
     for (int i = 0; i < parameters.numberGenerated_; i++) {
       keyType key;
-      std::cout << BOLD << "Insert key: " << RESET;
+      std::cout << BOLD << "\nInsert key: " << RESET;
       tree->insert(key);
+      tree->write(std::cout);
     }
   } else { // file
     std::ifstream file(parameters.file_);
@@ -134,6 +134,7 @@ void createTree(treeParameters& parameters) {
     keyType key;
     while (file >> key) {
       tree->insert(key);
+      tree->write(std::cout);
     }
   }
 
@@ -160,21 +161,31 @@ void menu(AB<keyType>* tree) {
       case 1:
         std::cout << BOLD << "\nInsert key: " << RESET;
         std::cin >> key;
-        // tree->insert();
+        if (tree->insert(key)) {
+          std::cout << GREEN_BOLD << "Key inserted." << RESET << std::endl << std::endl;
+        } else {
+          std::cout << RED_BOLD << "Key already exists on the tree." << RESET << std::endl << std::endl;
+        }
         break;
       case 2:
         std::cout << BOLD << "\nSearch key: " << RESET;
-        // tree->search();
+        std::cin >> key;
+        if (tree->search(key)) {
+          std::cout << GREEN_BOLD << "Key found." << RESET << std::endl << std::endl;
+        } else {
+          std::cout << RED_BOLD << "Key not found." << RESET << std::endl << std::endl;
+        }
         break;
       case 3:
         std::cout << BOLD << "\nInorden tree: " << RESET;
-        // tree->inorden();
+        tree->inorder();
+        std::cout << std::endl;
         break;
       default:
         std::cerr << RED_BOLD << "ERROR: " << RESET << "Invalid option." << std::endl;
         break;
     }
 
-    // tree->write();
+    tree->write(std::cout);
   }
 }

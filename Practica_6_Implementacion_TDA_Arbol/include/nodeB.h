@@ -15,23 +15,24 @@
  *
  */
 
-#ifndef NODEB_H
-#define NODEB_H
+#ifndef NODEB_H_
+#define NODEB_H_
 
-#include <iostream>
-
-template<class Key>
+template <class Key>
 class NodeB {
  public:
+  NodeB(Key data_, NodeB<Key>* left_ = nullptr, NodeB<Key>* right_ = nullptr);
   NodeB();
-  NodeB(const Key& data, NodeB<Key>* left, NodeB<Key>* right);
-  ~NodeB();
-
-  Key getData() const;
+  ~NodeB() = default;
+  
   NodeB<Key>* getLeft() const;
+  NodeB<Key>*& getLeft();
   NodeB<Key>* getRight() const;
+  NodeB<Key>*& getRight();
   void setLeft(NodeB<Key>* left);
   void setRight(NodeB<Key>* right);
+  void setData(Key data);
+  Key getData() const;
 
  private:
   Key data_;
@@ -39,49 +40,58 @@ class NodeB {
   NodeB<Key>* right_;
 };
 
-template<class Key>
-NodeB<Key>::NodeB() {
-  data_ = Key();
-  left_ = nullptr;
-  right_ = nullptr;
-}
-
-template<class Key>
-NodeB<Key>::NodeB(const Key& data, NodeB<Key>* left, NodeB<Key>* right) {
+template <class Key>
+NodeB<Key>::NodeB(Key data, NodeB<Key>* left, NodeB<Key>* right) {
   data_ = data;
   left_ = left;
   right_ = right;
 }
 
-template<class Key>
-NodeB<Key>::~NodeB() {
-  delete left_;
-  delete right_;
+template <class Key>
+NodeB<Key>::NodeB() {
+  data_ = 0;
+  left_ = nullptr;
+  right_ = nullptr;
 }
 
-template<class Key>
-Key NodeB<Key>::getData() const {
-  return data_;
-}
-
-template<class Key>
+template <class Key>
 NodeB<Key>* NodeB<Key>::getLeft() const {
   return left_;
 }
 
-template<class Key>
+template <class Key>
+NodeB<Key>*& NodeB<Key>::getLeft() {
+  return left_;
+}
+
+template <class Key>
 NodeB<Key>* NodeB<Key>::getRight() const {
   return right_;
 }
 
-template<class Key>
+template <class Key>
+NodeB<Key>*& NodeB<Key>::getRight() {
+  return right_;
+}
+
+template <class Key>
 void NodeB<Key>::setLeft(NodeB<Key>* left) {
-  left_ = left;
+  NodeB::left_ = left;
 }
 
-template<class Key>
+template <class Key>
 void NodeB<Key>::setRight(NodeB<Key>* right) {
-  right_ = right;
+  NodeB::right_ = right;
 }
 
-#endif // NODEB_H
+template <class Key>
+void NodeB<Key>::setData(Key data) {
+  NodeB::data_ = data;
+}
+
+template <class Key>
+Key NodeB<Key>::getData() const {
+  return data_;
+}
+
+#endif  // NODEB_H_

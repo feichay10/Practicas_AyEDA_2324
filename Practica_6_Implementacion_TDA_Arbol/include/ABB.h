@@ -22,83 +22,57 @@
 
 #include "AB.h"
 
-template<class Key>
+template <class Key>
 class ABB : public AB<Key> {
- public:
-  ABB() = default;
-  ~ABB() = default;
+  bool insertBranch(NodeB<Key>*& node, Key k);
+  bool searchBranch(NodeB<Key>* node, Key k) const;
 
-  bool insert(const Key& k) override;
-  bool search(const Key& k) const override;
-  void inorder() const override;
-  bool empty() override;
+  bool insert(const Key& k);
+  bool search(const Key& k) const;
 };
 
-template<class Key>
+template <class Key>
 bool ABB<Key>::insert(const Key& k) {
-  NodeB<Key>* current = AB<Key>::getRoot();
-  NodeB<Key>* parent = nullptr;
-  NodeB<Key>* newNode = new NodeB<Key>(k, nullptr, nullptr);
-
-  while (current != nullptr) {
-    parent = current;
-    if (k < current->getData()) {
-      current = current->getLeft();
-    } else if (k > current->getData()) {
-      current = current->getRight();
-    } else {
-      delete newNode;
-      return false;
-    }
-  }
-
-  if (parent == nullptr) {
-    AB<Key>::setRoot(newNode);
-  } else if (k < parent->getData()) {
-    parent->setLeft(newNode);
+  if (this->getRoot() == nullptr) {
+    AB<Key>::root_ = new NodeB<Key>(k);
+    return true;
   } else {
-    parent->setRight(newNode);
+    return insertBranch(AB<Key>::root_, k);
   }
+}
 
+template <class Key>
+bool ABB<Key>::insertBranch(NodeB<Key>*& node, Key k) {
+  if (search(k)) {
+    return false;
+  }
+  if (node == nullptr) {
+    node = new NodeB<Key>(k);
+  } else if (k < node->getData()) {
+    insertBranch(node->getLeft(), k);
+  } else {
+    insertBranch(node->getRight(), k);
+  }
   return true;
 }
 
-template<class Key>
+template <class Key>
 bool ABB<Key>::search(const Key& k) const {
-  NodeB<Key>* current = AB<Key>::getRoot();
-  while (current != nullptr) {
-    if (k == current->getData()) {
-      return true;
-    } else if (k < current->getData()) {
-      current = current->getLeft();
-    } else {
-      current = current->getRight();
-    }
-  }
-
-  return false;
+  return searchBranch(AB<Key>::root_, k);
 }
 
-template<class Key>
-void ABB<Key>::inorder() const {
-  std::stack<NodeB<Key>*> stack;
-  NodeB<Key>* current = AB<Key>::getRoot();
-  while (current != nullptr || !stack.empty()) {
-    while (current != nullptr) {
-      stack.push(current);
-      current = current->getLeft();
-    }
-    current = stack.top();
-    stack.pop();
-    std::cout << current->getData() << " ";
-    current = current->getRight();
+template <class Key>
+bool ABB<Key>::searchBranch(NodeB<Key>* node, Key k) const {
+  if (node == nullptr) {
+    return false;
   }
-  std::cout << std::endl;
-}
-
-template<class Key>
-bool ABB<Key>::empty() {
-  return AB<Key>::getRoot() == nullptr;
+  if (k == node->getData()) {
+    return true;
+  }
+  if (k < node->getData()) {
+    return searchBranch(node->getLeft(), k);
+  }
+  return searchBranch(node->getRight(), k);
 }
 
 #endif // ABB_H

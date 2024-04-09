@@ -26,35 +26,44 @@
 template<class Key>
 class AB {
  public:
-  AB() = default;
-  virtual ~AB() = default;
-
-  NodeB<Key>* getRoot() const;
-  void setRoot(NodeB<Key>* root);
+  NodeB<Key>* getRoot();
   
   virtual bool insert(const Key& k) = 0;
   virtual bool search(const Key& k) const = 0;
-  virtual void inorder() const = 0;
-  virtual bool empty() = 0;
+  void inorder() const;
+  void inorder(NodeB<Key>* node) const;
+  // virtual bool empty() = 0;
 
   void write(std::ostream& os) const;
-  friend std::ostream& operator<<(std::ostream& os, const AB<Key>& ab);
+  friend std::ostream& operator<<(std::ostream& os, const AB<Key>& ab) {
+    ab.write(os);
+    return os;
+  }
 
  protected:
-  NodeB<Key>* root_ = nullptr;
+  NodeB<Key>* root_;
 };
 
 template<class Key>
-NodeB<Key>* AB<Key>::getRoot() const {
+NodeB<Key>* AB<Key>::getRoot() {
   return root_;
 }
 
-template<class Key>
-void AB<Key>::setRoot(NodeB<Key>* root) {
-  root_ = root;
+template <typename Key>
+void AB<Key>::inorder() const {
+  inorder(root_);
 }
 
-template <typename Key>
+template<class Key>
+void AB<Key>::inorder(NodeB<Key>* node) const {
+  if (node != nullptr) {
+    inorder(node->getLeft());
+    std::cout << "\033[36m\033[1m" << node->getData() << " " << "\033[0m";
+    inorder(node->getRight());
+  }
+}
+
+template <class Key>
 void AB<Key>::write(std::ostream& os) const {
   int k = 0;
   std::queue<NodeB<Key>*> queue, queueAux;
@@ -79,12 +88,5 @@ void AB<Key>::write(std::ostream& os) const {
     os << "\n";
   }
 }
-
-template<class Key>
-std::ostream& operator<<(std::ostream& os, const AB<Key>& ab) {
-  ab.write(os);
-  return os;
-}
-
 
 #endif // AB_H
