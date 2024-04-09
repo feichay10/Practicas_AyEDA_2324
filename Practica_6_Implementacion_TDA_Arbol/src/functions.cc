@@ -100,34 +100,47 @@ void createTree(treeParameters& parameters) {
     tree = new ABB<keyType>();
   }
 
+  if (tree->empty()) {
+    std::cout << "Tree is empty." << std::endl;
+  } else {
+    std::cout << "Tree is not empty." << std::endl;
+  }
+
   tree->write(std::cout);
 
   if (parameters.init_ == "manual") {
     for (int i = 0; i < parameters.numberGenerated_; i++) {
       keyType key;
-      std::cout << BOLD << "Insert key " << i + 1 << ": " << RESET;
+      std::cout << BOLD << "Insert key: " << RESET;
       std::cin >> key;
       tree->insert(key);
+      tree->write(std::cout);
+      std::cout << std::endl;
     }
   } else if (parameters.init_ == "random") {
     for (int i = 0; i < parameters.numberGenerated_; i++) {
       keyType key;
+      std::cout << BOLD << "Insert key: " << RESET;
       tree->insert(key);
     }
-  } else {
-    // tree->insert();
+  } else { // file
+    std::ifstream file(parameters.file_);
+    if (!file.is_open()) {
+      throw std::runtime_error("File could not be opened.");
+    }
+
+    keyType key;
+    while (file >> key) {
+      tree->insert(key);
+    }
   }
 
   menu(tree);
-
-  // tree->write(std::cout);
 }
 
 void menu(AB<keyType>* tree) {
   int option;
   keyType key;
-
-  tree->write(std::cout);
 
   while (true) {
     std::cout << BOLD << "\n\nOperations" << RESET << std::endl;

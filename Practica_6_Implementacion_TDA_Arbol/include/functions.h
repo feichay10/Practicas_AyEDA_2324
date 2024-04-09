@@ -23,6 +23,7 @@
 #include <iomanip>
 #include <set>
 #include <filesystem>
+#include <fstream>
 
 #include "colors.h"
 #include "nif.h"
