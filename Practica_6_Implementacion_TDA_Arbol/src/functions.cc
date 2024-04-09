@@ -68,10 +68,12 @@ void printInformation(treeParameters& parameters) {
   std::cout << PURPLE_BOLD << "+------------------------------------+" << RESET << std::endl;
   std::cout << PURPLE_BOLD << "|" << RESET << ORANGE_BG << GRAY_BOLD << "           TDA Information          " << RESET << PURPLE_BOLD << "|" << std::endl;
   std::cout << "+------------------------------------+" << RESET << std::endl;
+  
   std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
-            << " Tree type: " << BLUE_BOLD << parameters.treeType_ << RESET
+            << " Tree type: " << BLUE_BOLD
+            << (parameters.treeType_ == "abe" ? "Balanced binary tree" : "Binary search tree")
             << PURPLE_BOLD
-            << std::setw(25 - parameters.treeType_.size()) << "|" << std::endl;
+            << std::setw(25 - (parameters.treeType_ == "abe" ? 20 : 18)) << "|" << RESET << std::endl;
   std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
             << " Initialization: " << BLUE_BOLD
             << parameters.init_ << PURPLE_BOLD
