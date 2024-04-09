@@ -65,33 +65,33 @@ treeParameters checkProgramParameters(int argc, char* argv[], treeParameters& pa
 }
 
 void printInformation(treeParameters& parameters) {
-  std::cout << PURPLE_BOLD << "+------------------------------------+" << RESET << std::endl;
-  std::cout << PURPLE_BOLD << "|" << RESET << ORANGE_BG << GRAY_BOLD << "           TDA Information          " << RESET << PURPLE_BOLD << "|" << std::endl;
-  std::cout << "+------------------------------------+" << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "+-----------------------------------------+" << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "|" << RESET << ORANGE_BG << GRAY_BOLD << "             TDA Information             " << RESET << PURPLE_BOLD << "|" << std::endl;
+  std::cout << PURPLE_BOLD << "+-----------------------------------------+" << RESET << std::endl;
   
   std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
             << " Tree type: " << BLUE_BOLD
-            << (parameters.treeType_ == "abe" ? "Balanced binary tree" : "Binary search tree")
+            << (parameters.treeType_ == "abe" ? "Balanced binary tree (ABE)" : "Binary search tree (ABB)")
             << PURPLE_BOLD
-            << std::setw(25 - (parameters.treeType_ == "abe" ? 20 : 18)) << "|" << RESET << std::endl;
+            << std::setw(25 - (parameters.treeType_ == "abe" ? 21 : 19)) << "|" << RESET << std::endl;
   std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
             << " Initialization: " << BLUE_BOLD
             << parameters.init_ << PURPLE_BOLD
-            << std::setw(20 - parameters.init_.length()) << "|"
+            << std::setw(25 - parameters.init_.length()) << "|"
             << RESET << std::endl;
   std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
             << " Number of elements: " << BLUE_BOLD
             << parameters.numberGenerated_ << PURPLE_BOLD
-            << std::setw(16 - std::to_string(parameters.numberGenerated_).length())
+            << std::setw(21 - std::to_string(parameters.numberGenerated_).length())
             << "|" << RESET << std::endl;
   if (parameters.init_ == "file") {
     std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
               << " File: " << BLUE_BOLD << parameters.file_
               << PURPLE_BOLD
-              << std::setw(30 - parameters.file_.length())
+              << std::setw(36 - parameters.file_.length())
               << "|" << RESET << std::endl;
   }
-  std::cout << PURPLE_BOLD << "+------------------------------------+" << RESET << std::endl;
+  std::cout << PURPLE_BOLD << "+-----------------------------------------+" << RESET << std::endl;
 }
 
 void createTree(treeParameters& parameters) {
