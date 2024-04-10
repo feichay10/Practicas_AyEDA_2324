@@ -155,8 +155,12 @@ void menu(AB<keyType>* tree) {
     std::cout << RED_BOLD << "  [0]" << RESET << BOLD << " Exit" << std::endl;
     std::cout << RED_BOLD << "  [1]" << RESET << BOLD << " Insert key" << std::endl;
     std::cout << RED_BOLD << "  [2]" << RESET << BOLD << " Search key" << std::endl;
-    std::cout << RED_BOLD << "  [3]" << RESET << BOLD << " Show inorden tree" << std::endl;
-    std::cout << RED_BOLD << "  [4]" << RESET << BOLD << " Show height of tree" << std::endl << std::endl;
+    std::cout << RED_BOLD << "  [3]" << RESET << BOLD << " Show inorder tree" << std::endl;
+    std::cout << RED_BOLD << "  [4]" << RESET << BOLD << " Show preorder tree" << std::endl;
+    std::cout << RED_BOLD << "  [5]" << RESET << BOLD << " Show postorder tree" << std::endl;
+    std::cout << RED_BOLD << "  [6]" << RESET << BOLD << " Show by level order tree" << std::endl;
+    std::cout << RED_BOLD << "  [7]" << RESET << BOLD << " Show height of tree" << std::endl;
+    std::cout << RED_BOLD << "  [8]" << RESET << BOLD << " Show tree" << std::endl;
     std::cout << " Select operation: " << RESET; 
     std::cin >> option;
 
@@ -183,18 +187,34 @@ void menu(AB<keyType>* tree) {
         }
         break;
       case 3:
-        std::cout << BOLD << "\nInorden tree: " << RESET;
+        std::cout << BOLD << "\nInorder tree: " << RESET;
         tree->inorder();
         std::cout << std::endl;
         break;
       case 4:
+        std::cout << BOLD << "\nPreorder tree: " << RESET;
+        tree->preorder();
+        std::cout << std::endl;
+        break;
+      case 5:
+        std::cout << BOLD << "\nPostorder tree: " << RESET;
+        tree->postorder();
+        std::cout << std::endl;
+        break;
+      case 6:
+        std::cout << BOLD << "\nBy level tree: " << RESET;
+        tree->byLevel();
+        std::cout << std::endl;
+        break;
+      case 7:
         std::cout << BOLD << "\nHeight of tree: " << RESET << tree->height() << std::endl;
+        break;
+      case 8:
+        tree->write(std::cout); 
         break;
       default:
         std::cerr << RED_BOLD << "ERROR: " << RESET << "Invalid option." << std::endl;
         break;
     }
-
-    tree->write(std::cout);
   }
 }

@@ -32,6 +32,13 @@ class AB {
   virtual bool search(const Key& k) const = 0;
   void inorder() const;
   void inorder(NodeB<Key>* node) const;
+  void preorder() const;
+  void preorder(NodeB<Key>* node) const;
+  void postorder() const;
+  void postorder(NodeB<Key>* node) const;
+  void byLevel() const;
+  void byLevel(NodeB<Key>* node) const;
+
   int height() const;
   int heightN(NodeB<Key>* node) const;
   bool empty();
@@ -51,7 +58,7 @@ NodeB<Key>* AB<Key>::getRoot() {
   return root_;
 }
 
-template <typename Key>
+template <class Key>
 void AB<Key>::inorder() const {
   inorder(root_);
 }
@@ -62,6 +69,53 @@ void AB<Key>::inorder(NodeB<Key>* node) const {
     inorder(node->getLeft());
     std::cout << BLUE_BOLD << node->getData() << " " << RESET;
     inorder(node->getRight());
+  } 
+}
+
+template <class Key>
+void AB<Key>::preorder() const {
+  preorder(root_);
+}
+
+template<class Key>
+void AB<Key>::preorder(NodeB<Key>* node) const {
+  if (node != nullptr) {
+    std::cout << BLUE_BOLD << node->getData() << " " << RESET;
+    preorder(node->getLeft());
+    preorder(node->getRight());
+  }
+}
+
+template <class Key>
+void AB<Key>::postorder() const {
+  postorder(root_);
+}
+
+template<class Key>
+void AB<Key>::postorder(NodeB<Key>* node) const {
+  if (node != nullptr) {
+    postorder(node->getLeft());
+    postorder(node->getRight());
+    std::cout << BLUE_BOLD << node->getData() << " " << RESET;
+  }
+}
+
+template <class Key>
+void AB<Key>::byLevel() const {
+  byLevel(root_);
+}
+
+template<class Key>
+void AB<Key>::byLevel(NodeB<Key>* node) const {
+  std::queue<NodeB<Key>*> queue;
+  queue.push(node);
+  while (!queue.empty()) {
+    if (queue.front() != nullptr) {
+      std::cout << BLUE_BOLD << queue.front()->getData() << " " << RESET;
+      queue.push(queue.front()->getLeft());
+      queue.push(queue.front()->getRight());
+    }
+    queue.pop();
   }
 }
 
