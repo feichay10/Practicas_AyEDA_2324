@@ -25,11 +25,10 @@ class ABE : public AB<Key> {
  public:
   bool insert(const Key& k) override;
   bool search(const Key& k) const override;
-  const int size();
 
  private:
-  bool insertBalBranch(NodeB<Key>*& node, Key k);
-  const int branchSize(NodeB<Key>* node);
+  bool insertBalBranch(const Key k, NodeB<Key>*& node);
+  int branchSize(NodeB<Key>* node) const;
 };
 
 template<class Key>
@@ -38,47 +37,42 @@ bool ABE<Key>::insert(const Key& k) {
     AB<Key>::root_ = new NodeB<Key>(k);
     return true;
   } else {
-    return insertBalBranch(AB<Key>::root_, k);
+    // if (search(k)) {
+    //   return false;
+    // }
+    return insertBalBranch(k, AB<Key>::root_);
   }
 }
 
 template<class Key>
-bool ABE<Key>::insertBalBranch(NodeB<Key>*& node, Key k) {
-  if (search(k)) {
-    return false;
-  }
-
+bool ABE<Key>::insertBalBranch(const Key k, NodeB<Key>*& node) {
   if (branchSize(node->getLeft()) <= branchSize(node->getRight())) {
     if (node->getLeft() != nullptr) {
-      insertBalBranch(node->getLeft(), k);
+      insertBalBranch(k, node->getLeft());
     } else {
       node->setLeft(new NodeB<Key>(k));
     }
   } else {
     if (node->getRight() != nullptr) {
-      insertBalBranch(node->getRight(), k);
+      insertBalBranch(k, node->getRight());
     } else {
       node->setRight(new NodeB<Key>(k));
     }
   }
+  return true;
+}
+
+template<class Key>
+int ABE<Key>::branchSize(NodeB<Key>* node) const {
+  if (node == NULL) {
+    return 0;
+  }
+  return (1 + branchSize(node->getLeft()) + branchSize(node->getRight()));
 }
 
 template<class Key>
 bool ABE<Key>::search(const Key& k) const {
   return true;
-}
-
-template<class Key>
-const int ABE<Key>::size() {
-  return branchSize(AB<Key>::root_);
-}
-
-template<class Key>
-const int ABE<Key>::branchSize(NodeB<Key>* node) {
-  if (node == nullptr) {
-    return 0;
-  }
-  return (1 + branchSize(node->getLeft()) + branchSize(node->getRight()));
 }
 
 #endif // ABE_H

@@ -18,6 +18,9 @@
 #ifndef AB_H
 #define AB_H
 
+#define LEFT 1
+#define RIGHT 0
+
 #include <iostream>
 #include <queue>
 
