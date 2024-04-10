@@ -40,14 +40,11 @@ treeParameters checkProgramParameters(int argc, char* argv[], treeParameters& pa
       if (i + 1 < argc) {
         if (std::string(argv[i + 1]) == "manual" || std::string(argv[i + 1]) == "random") {
           parameters.init_ = argv[i + 1];
+          // -init file <number> <file>
         } else if (std::string(argv[i + 1]) == "file") {
           if (i + 2 < argc) {
-            parameters.init_ = argv[i + 1];
-            // parameters.file_ = argv[i + 2];
+            parameters.init_ = argv[i + 2];
             parameters.file_ = argv[i + 3];
-            if (!std::filesystem::exists(parameters.file_)) {
-              throw std::invalid_argument("File does not exist. Use " + std::string(argv[0]) + " -help for more information.");
-            }
           } else {
             throw std::invalid_argument("File not provided. Use " + std::string(argv[0]) + " -help for more information.");
           }
@@ -102,11 +99,11 @@ void createTree(treeParameters& parameters) {
     tree = new ABB<keyType>();
   }
 
-  // if (tree->empty()) {
-  //   std::cout << BOLD << "\nTree is empty." << RESET << std::endl;
-  // } else {
-  //   std::cout << BOLD << "\nTree is not empty." << RESET << std::endl;
-  // }
+  if (tree->empty()) {
+    std::cout << BOLD << "\nTree is empty." << RESET << std::endl;
+  } else {
+    std::cout << BOLD << "\nTree is not empty." << RESET << std::endl;
+  }
 
   tree->write(std::cout);
 
@@ -131,12 +128,27 @@ void createTree(treeParameters& parameters) {
       throw std::runtime_error("File could not be opened.");
     }
 
+    int numElements, count = 0;
+    file >> numElements;
+    if (numElements != parameters.numberGenerated_) {
+      throw std::length_error("Number of elements in file does not match with the number of elements provided.");
+    }
+
     keyType key;
     while (file >> key) {
       tree->insert(key);
-      tree->write(std::cout);
+      count++;
     }
+
+    if (count != numElements) {
+      throw std::length_error("Number of elements in file does not match with the number of elements provided.");
+    }
+
+    file.close();
   }
+
+  std::cout << std::endl;
+  tree->write(std::cout);
 
   menu(tree);
 }

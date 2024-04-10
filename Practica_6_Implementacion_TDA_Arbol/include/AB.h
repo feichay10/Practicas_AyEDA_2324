@@ -32,7 +32,7 @@ class AB {
   virtual bool search(const Key& k) const = 0;
   void inorder() const;
   void inorder(NodeB<Key>* node) const;
-  // virtual bool empty() = 0;
+  bool empty();
 
   void write(std::ostream& os) const;
   friend std::ostream& operator<<(std::ostream& os, const AB<Key>& ab) {
@@ -58,7 +58,7 @@ template<class Key>
 void AB<Key>::inorder(NodeB<Key>* node) const {
   if (node != nullptr) {
     inorder(node->getLeft());
-    std::cout << "\033[36m\033[1m" << node->getData() << " " << "\033[0m";
+    std::cout << BLUE_BOLD << node->getData() << " " << RESET;
     inorder(node->getRight());
   }
 }
@@ -87,6 +87,11 @@ void AB<Key>::write(std::ostream& os) const {
     k++;
     os << "\n";
   }
+}
+
+template<class Key>
+bool AB<Key>::empty() {
+  return root_ == nullptr;
 }
 
 #endif // AB_H

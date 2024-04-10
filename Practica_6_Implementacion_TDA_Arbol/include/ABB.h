@@ -18,17 +18,17 @@
 #ifndef ABB_H
 #define ABB_H
 
-#include <stack>
-
 #include "AB.h"
 
 template <class Key>
 class ABB : public AB<Key> {
-  bool insertBranch(NodeB<Key>*& node, Key k);
-  bool searchBranch(NodeB<Key>* node, Key k) const;
-
+ public:
   bool insert(const Key& k);
   bool search(const Key& k) const;
+
+ private:
+  bool insertBranch(NodeB<Key>*& node, Key k);
+  bool searchBranch(NodeB<Key>* node, Key k) const;
 };
 
 template <class Key>
