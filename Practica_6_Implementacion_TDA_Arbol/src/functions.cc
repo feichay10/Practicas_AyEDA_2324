@@ -40,10 +40,9 @@ treeParameters checkProgramParameters(int argc, char* argv[], treeParameters& pa
       if (i + 1 < argc) {
         if (std::string(argv[i + 1]) == "manual" || std::string(argv[i + 1]) == "random") {
           parameters.init_ = argv[i + 1];
-          // -init file <number> <file>
         } else if (std::string(argv[i + 1]) == "file") {
           if (i + 2 < argc) {
-            parameters.init_ = argv[i + 2];
+            parameters.init_ = argv[i + 1];
             parameters.file_ = argv[i + 3];
           } else {
             throw std::invalid_argument("File not provided. Use " + std::string(argv[0]) + " -help for more information.");
@@ -99,13 +98,7 @@ void createTree(treeParameters& parameters) {
     tree = new ABB<keyType>();
   }
 
-  if (tree->empty()) {
-    std::cout << BOLD << "\nTree is empty." << RESET << std::endl;
-  } else {
-    std::cout << BOLD << "\nTree is not empty." << RESET << std::endl;
-  }
-
-  tree->write(std::cout);
+  printInformation(parameters);
 
   if (parameters.init_ == "manual") {
     for (int i = 0; i < parameters.numberGenerated_; i++) {
@@ -163,6 +156,7 @@ void menu(AB<keyType>* tree) {
     std::cout << RED_BOLD << "  [1]" << RESET << BOLD << " Insert key" << std::endl;
     std::cout << RED_BOLD << "  [2]" << RESET << BOLD << " Search key" << std::endl;
     std::cout << RED_BOLD << "  [3]" << RESET << BOLD << " Show inorden tree" << std::endl;
+    std::cout << RED_BOLD << "  [4]" << RESET << BOLD << " Show height of tree" << std::endl << std::endl;
     std::cout << " Select operation: " << RESET; 
     std::cin >> option;
 
@@ -192,6 +186,9 @@ void menu(AB<keyType>* tree) {
         std::cout << BOLD << "\nInorden tree: " << RESET;
         tree->inorder();
         std::cout << std::endl;
+        break;
+      case 4:
+        std::cout << BOLD << "\nHeight of tree: " << RESET << tree->height() << std::endl;
         break;
       default:
         std::cerr << RED_BOLD << "ERROR: " << RESET << "Invalid option." << std::endl;

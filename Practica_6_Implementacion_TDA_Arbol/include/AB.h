@@ -18,9 +18,6 @@
 #ifndef AB_H
 #define AB_H
 
-#define LEFT 1
-#define RIGHT 0
-
 #include <iostream>
 #include <queue>
 
@@ -35,6 +32,8 @@ class AB {
   virtual bool search(const Key& k) const = 0;
   void inorder() const;
   void inorder(NodeB<Key>* node) const;
+  int height() const;
+  int heightN(NodeB<Key>* node) const;
   bool empty();
 
   void write(std::ostream& os) const;
@@ -89,6 +88,27 @@ void AB<Key>::write(std::ostream& os) const {
     }
     k++;
     os << "\n";
+  }
+}
+
+template <class Key>
+int AB<Key>::height() const {
+  return heightN(root_);
+}
+
+template <class Key>
+int AB<Key>::heightN(NodeB<Key>* node) const {
+  if (node == nullptr) {
+    return 0;
+  } else {
+    int leftHeight = heightN(node->getLeft());
+    int rightHeight = heightN(node->getRight());
+
+    if (leftHeight > rightHeight) {
+      return leftHeight + 1;
+    } else {
+      return rightHeight + 1;
+    }
   }
 }
 
