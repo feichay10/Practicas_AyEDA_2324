@@ -94,7 +94,7 @@ void printInformation(treeParameters& parameters) {
 void createTree(treeParameters& parameters) {
   AB<keyType>* tree;
   if (parameters.treeType_ == "abe") {
-    // tree = new ABE<keyType>();
+    tree = new ABE<keyType>();
   } else {
     tree = new ABB<keyType>();
   }

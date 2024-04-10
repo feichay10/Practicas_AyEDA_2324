@@ -29,7 +29,7 @@
 #include "nif.h"
 #include "AB.h"
 #include "ABB.h"
-// #include "ABE.h"
+#include "ABE.h"
 
 using keyType = Nif;
 
