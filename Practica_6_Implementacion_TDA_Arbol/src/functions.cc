@@ -84,7 +84,7 @@ void printInformation(treeParameters& parameters) {
     std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
               << " File: " << BLUE_BOLD << parameters.file_
               << PURPLE_BOLD
-              << std::setw(36 - parameters.file_.length())
+              << std::setw(35 - parameters.file_.length())
               << "|" << RESET << std::endl;
   }
   std::cout << PURPLE_BOLD << "+-----------------------------------------+" << RESET << std::endl;
