@@ -15,20 +15,20 @@
  *
  */
 
-#ifndef AVL_H
-#define AVL_H
+#ifndef NODEAVL_H
+#define NODEAVL_H
 
 #include "nodeB.h"
 
 template <class Key>
 class NodeAVL : public NodeB<Key> {
  public:
-  NodeAVL(Key data, NodeAVL<Key>* left = nullptr, NodeAVL<Key>* right = nullptr);
   NodeAVL();
+  NodeAVL(Key data, NodeAVL<Key>* left = nullptr, NodeAVL<Key>* right = nullptr);
   ~NodeAVL() = default;
 
-  int getBal() const;
-  void setBal(int& bal);
+  int getBalance();
+  void setBalance(const int& bal);
   
   NodeAVL<Key>* getLeft() const;
   NodeAVL<Key>*& getLeft();
@@ -40,7 +40,67 @@ class NodeAVL : public NodeB<Key> {
   Key getData() const;
 
  private:
-  int bal_;
+  int balance_;
 };
 
-#endif // AVL_H
+template <class Key>
+NodeAVL<Key>::NodeAVL() : NodeB<Key>(), balance_(0) {}
+
+template <class Key>
+NodeAVL<Key>::NodeAVL(Key data, NodeAVL<Key>* left, NodeAVL<Key>* right) : NodeB<Key>(data, left, right), balance_(0) {}
+
+template <class Key>
+int NodeAVL<Key>::getBalance() {
+  return balance_;
+}
+
+template <class Key>
+void NodeAVL<Key>::setBalance(const int& bal) {
+  balance_ = bal;
+}
+
+template <class Key>
+NodeAVL<Key>* NodeAVL<Key>::getLeft() const {
+  // return NodeB<Key>::getLeft();
+  return static_cast<NodeAVL<Key>*>(NodeB<Key>::getLeft());
+}
+
+template <class Key>
+NodeAVL<Key>*& NodeAVL<Key>::getLeft() {
+  // return NodeB<Key>::getLeft();
+  return reinterpret_cast<NodeAVL<Key>*&>(NodeB<Key>::getLeft());
+}
+
+template <class Key>
+NodeAVL<Key>* NodeAVL<Key>::getRight() const {
+  // return NodeB<Key>::getRight();
+  return static_cast<NodeAVL<Key>*>(NodeB<Key>::getRight());
+}
+
+template <class Key>
+NodeAVL<Key>*& NodeAVL<Key>::getRight() {
+  // return NodeB<Key>::getRight();
+  return reinterpret_cast<NodeAVL<Key>*&>(NodeB<Key>::getRight());
+}
+
+template <class Key>
+void NodeAVL<Key>::setLeft(NodeAVL<Key>* left) {
+  NodeB<Key>::setLeft(left);
+}
+
+template <class Key>
+void NodeAVL<Key>::setRight(NodeAVL<Key>* right) {
+  NodeB<Key>::setRight(right);
+}
+
+template <class Key>
+void NodeAVL<Key>::setData(Key data) {
+  NodeB<Key>::setData(data);
+}
+
+template <class Key>
+Key NodeAVL<Key>::getData() const {
+  return NodeB<Key>::getData();
+}
+
+#endif // NODEAVL_H

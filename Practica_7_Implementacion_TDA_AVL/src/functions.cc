@@ -127,7 +127,7 @@ void createTree(treeParameters& parameters) {
   } else if (parameters.treeType_ == "abb"){
     tree = new ABB<keyType>();
   } else {
-    // tree = new AVL<keyType>();
+    tree = new AVL<keyType>();
   }
 
   if (parameters.init_ == "random") {

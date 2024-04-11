@@ -30,6 +30,7 @@
 #include "AB.h"
 #include "ABB.h"
 #include "ABE.h"
+#include "AVL.h"
 
 using keyType = Nif;
 
