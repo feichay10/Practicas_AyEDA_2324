@@ -98,24 +98,14 @@ void createTree(treeParameters& parameters) {
     tree = new ABB<keyType>();
   }
 
-  printInformation(parameters);
-
-  if (parameters.init_ == "manual") {
-    for (int i = 0; i < parameters.numberGenerated_; i++) {
-      keyType key;
-      std::cout << BOLD << "\nInsert key: " << RESET;
-      std::cin >> key;
-      tree->insert(key);
-      tree->write(std::cout);
-    }
-  } else if (parameters.init_ == "random") {
+  if (parameters.init_ == "random") {
     for (int i = 0; i < parameters.numberGenerated_; i++) {
       keyType key;
       std::cout << BOLD << "\nInsert key: " << RESET;
       tree->insert(key);
       tree->write(std::cout);
     }
-  } else { // file
+  } else if (parameters.init_ == "file") { // file
     std::ifstream file(parameters.file_);
     if (!file.is_open()) {
       throw std::runtime_error("File could not be opened.");
@@ -176,6 +166,7 @@ void menu(AB<keyType>* tree) {
         } else {
           std::cout << RED_BOLD << "Key already exists on the tree." << RESET << std::endl << std::endl;
         }
+        tree->write(std::cout); 
         break;
       case 2:
         std::cout << BOLD << "\nSearch key: " << RESET;
@@ -207,9 +198,10 @@ void menu(AB<keyType>* tree) {
         std::cout << std::endl;
         break;
       case 7:
-        std::cout << BOLD << "\nHeight of tree: " << RESET << tree->height() << std::endl;
+        std::cout << BOLD << "\nHeight of tree: " << RESET << BLUE_BOLD << tree->height() << RESET << std::endl;
         break;
       case 8:
+        std::cout << BOLD << "\nTree: " << RESET << std::endl;
         tree->write(std::cout); 
         break;
       default:
