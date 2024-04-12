@@ -45,9 +45,14 @@ class dfRandom : public DispersionFunction<Key> {
  * @param k 
  * @return unsigned 
  */
+
+//En las funciones de dispersión se debería convertir el objeto Key a long y operar con el long
 template <class Key>
 unsigned dfRandom<Key>::operator()(const Key& k) const {
-  srand(k);
+  // srand(k);
+  // return rand() % tableSize_;
+
+  srand(static_cast<long>(k));
   return rand() % tableSize_;
 }
 

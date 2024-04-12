@@ -42,6 +42,7 @@ class dfSum : public DispersionFunction<Key> {
  * @param k 
  * @return unsigned 
  */
+//En las funciones de dispersión se debería convertir el objeto Key a long y operar con el long
 template <class Key>
 unsigned dfSum<Key>::operator()(const Key& k) const {
   unsigned sum = 0;
@@ -52,7 +53,7 @@ unsigned dfSum<Key>::operator()(const Key& k) const {
   }
   // Iterate over the digits of the NIF to sum them up
   for (unsigned i = 0; i < count; i++) { 
-    sum += k[i];
+    sum += k[i]; // Aqui ya opera con el long
   }
   return sum % tableSize_;
 }

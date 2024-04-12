@@ -42,9 +42,12 @@ class dfModule : public DispersionFunction<Key> {
  * @param k 
  * @return unsigned 
  */
+
+//En las funciones de dispersión se debería convertir el objeto Key a long y operar con el long
 template <class Key>
 unsigned dfModule<Key>::operator()(const Key &k) const {
-  return k % tableSize_;
+  // return k % tableSize_;
+  return static_cast<long>(k) % tableSize_;
 }
 
 #endif  // DFMODULE_H
