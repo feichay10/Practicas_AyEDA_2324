@@ -2,3 +2,4 @@
 .vscode
 *.tgz
 desktop.ini
+*.o
