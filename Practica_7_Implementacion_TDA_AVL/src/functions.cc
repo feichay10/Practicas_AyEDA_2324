@@ -91,7 +91,7 @@ void printInformation(treeParameters& parameters) {
             << " Tree type: " << BLUE_BOLD
             << (parameters.treeType_ == "abe" ? "Balanced binary tree (ABE)" : (parameters.treeType_ == "abb" ? "Binary search tree (ABB)" : "Balanced binary search tree (AVL)"))
             << PURPLE_BOLD
-            << std::setw(21 - (parameters.treeType_ == "abe" ? 30 : (parameters.treeType_ == "abb" ? 9 : 18)))
+            << std::setw(21 - (parameters.treeType_ == "abe" ? 11 : (parameters.treeType_ == "abb" ? 9 : 18)))
             << "|" << RESET << std::endl;
   std::cout << PURPLE_BOLD << "|" << RESET << GRAY_BOLD
             << " Initialization: " << BLUE_BOLD
@@ -183,7 +183,7 @@ void menu(AB<keyType>* tree) {
     std::cout << RED_BOLD << "  [6]" << RESET << BOLD << " Show by level order tree" << std::endl;
     std::cout << RED_BOLD << "  [7]" << RESET << BOLD << " Show height of tree" << std::endl;
     std::cout << RED_BOLD << "  [8]" << RESET << BOLD << " Show tree" << std::endl;
-    std::cout << " Select operation: " << RESET; 
+    std::cout << "Select operation: " << RESET; 
     std::cin >> option;
 
     switch (option) {
