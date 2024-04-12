@@ -38,16 +38,18 @@ const std::string kUsage =
     BOLD + std::string("NAME\n") + RESET +
     std::string("       treeTDA - Type Data Abstract Tree\n\n") + BOLD + std::string("SYNOPSIS\n") +
     RESET +
-    std::string("       ./bin/treeTDA -ab <abe|abb> -init <i> [s] [f]\n\n") +
+    std::string("       ./bin/treeTDA -ab <abe|abb|avl> -init <i> [s] [f]\n\n") +
     BOLD + std::string("DESCRIPTION\n") + RESET +
-    std::string("       Program that allows to sort data a sequence in a specific order.\n\n") +
-    BOLD + std::string("OPTIONS") + RESET + BOLD + std::string("\n\t  -ab <abe|abb>") + RESET +
+    std::string("       Program that performs an implementation of its algorithms and empirically tests the computational complexity of TDA.\n\n") +
+    BOLD + std::string("OPTIONS") + RESET + BOLD + std::string("\n\t  -ab <abe|abb|avl>") + RESET +
     std::string("\n\t\tTo indicate the type of tree to work with.\n") + BOLD +
     BOLD + std::string("\n\t  -init <i> [s] [f]") + RESET +
     std::string("\n\t\ti = manual. Enter elements tree data manualy.") +
-    std::string("\n\t\ti = random. Enter elements tree data randomly.") +
-    std::string("\n\t\ti = file. Enter elements tree data by file.") +
+    std::string("\n\t\ti = random [s]. Enter elements tree data randomly.") +
+    std::string("\n\t\ti = file [s] [f]. Enter elements tree data by file.") +
+    std::string("\n\t\t    s = enter number of elements to generate.") +
     std::string("\n\t\t    f = enter file name.\n") +
+    std::string("\n\t  -trace <y|n>") + std::string("\n\t\tTo show the trace of the AVL tree. Mandatory option if AVL type tree is executed\n") +
     BOLD + std::string("\n\t  -help") + RESET + std::string("\n\t\tShow this message.");
 
 struct treeParameters {
