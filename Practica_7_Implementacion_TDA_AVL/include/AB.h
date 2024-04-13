@@ -26,7 +26,9 @@
 template<class Key>
 class AB {
  public:
-  NodeB<Key>* getRoot();
+  NodeB<Key>* getRoot() const;
+  NodeB<Key>*& getRoot();
+  void setRoot(NodeB<Key>* root);
   
   virtual bool insert(const Key& k) = 0;
   virtual bool search(const Key& k) const = 0;
@@ -53,9 +55,19 @@ class AB {
   NodeB<Key>* root_;
 };
 
-template<class Key>
-NodeB<Key>* AB<Key>::getRoot() {
+template <class Key>
+NodeB<Key>* AB<Key>::getRoot() const {
   return root_;
+}
+
+template <class Key>
+NodeB<Key>*& AB<Key>::getRoot() {
+  return root_;
+}
+
+template <class Key>
+void AB<Key>::setRoot(NodeB<Key>* root) {
+  root_ = root;
 }
 
 template <class Key>
