@@ -23,14 +23,18 @@
 template <class Key>
 class ABB : public AB<Key> {
  public:
-  bool insert(const Key& k);
-  bool search(const Key& k) const;
+  bool insert(const Key& k) override;
+  bool search(const Key& k) const override;
+  bool remove(const Key& k) override;
 
   void write(std::ostream& os) const override ;
 
  private:
   bool insertBranch(NodeB<Key>*& node, Key k);
   bool searchBranch(NodeB<Key>* node, Key k) const;
+  bool removeBranch(NodeB<Key>*& node, Key k);
+
+  bool replace(NodeB<Key>*& deleteNode, NodeB<Key>*& substituteNode);
 };
 
 template <class Key>
@@ -75,6 +79,45 @@ bool ABB<Key>::searchBranch(NodeB<Key>* node, Key k) const {
     return searchBranch(node->getLeft(), k);
   }
   return searchBranch(node->getRight(), k);
+}
+
+template <class Key>
+bool ABB<Key>::remove(const Key& k) {
+  return removeBranch(AB<Key>::root_, k);
+}
+
+template <class Key>
+bool ABB<Key>::removeBranch(NodeB<Key>*& node, Key k) {
+  if (node == nullptr) {
+    return false;
+  }
+  if (k < node->getData()) {
+    return removeBranch(node->getLeft(), k);
+  } else if (k > node->getData()) {
+    return removeBranch(node->getRight(), k);
+  } else { // k == node->getData()
+    NodeB<Key>* deleteNode = node;
+    if (node->getRight() == nullptr) {
+      node = node->getLeft();
+    } else if (node->getLeft() == nullptr) {
+      node = node->getRight();
+    } else {
+      replace(deleteNode, node->getLeft());
+    }
+    delete deleteNode;
+  }
+}
+
+template <class Key>
+bool ABB<Key>::replace(NodeB<Key>*& deleteNode, NodeB<Key>*& substituteNode) {
+  if (substituteNode->getRight() != nullptr) {
+    replace(deleteNode, substituteNode->getRight());
+  } else {
+    deleteNode->setData(substituteNode->getData());
+    deleteNode = substituteNode;
+    substituteNode = substituteNode->getLeft();
+  }
+  return true;
 }
 
 template <class Key>

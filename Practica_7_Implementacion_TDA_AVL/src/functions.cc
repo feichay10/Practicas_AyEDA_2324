@@ -123,11 +123,11 @@ void printInformation(treeParameters& parameters) {
 void createTree(treeParameters& parameters) {
   AB<keyType>* tree;
   if (parameters.treeType_ == "abe") {
-    tree = new ABE<keyType>();
+    // tree = new ABE<keyType>();
   } else if (parameters.treeType_ == "abb"){
     tree = new ABB<keyType>();
   } else {
-    tree = new AVL<keyType>();
+    // tree = new AVL<keyType>();
     if (parameters.trace_) {
       static_cast<AVL<keyType>*>(tree)->setTrace(true);
     }
@@ -154,8 +154,11 @@ void createTree(treeParameters& parameters) {
 
     keyType key;
     while (file >> key) {
+      std::cout << BOLD << "\nInsert key: " << RESET;
+      std::cout << key << std::endl;
       tree->insert(key);
       count++;
+      tree->write(std::cout);
     }
 
     if (count != numElements) {
@@ -188,7 +191,8 @@ void menu(AB<keyType>* tree) {
     std::cout << RED_BOLD << "  [5]" << RESET << BOLD << " Show postorder tree" << std::endl;
     std::cout << RED_BOLD << "  [6]" << RESET << BOLD << " Show by level order tree" << std::endl;
     std::cout << RED_BOLD << "  [7]" << RESET << BOLD << " Show height of tree" << std::endl;
-    std::cout << RED_BOLD << "  [8]" << RESET << BOLD << " Show tree" << std::endl;
+    std::cout << RED_BOLD << "  [8]" << RESET << BOLD << " Delete key" << std::endl;
+    std::cout << RED_BOLD << "  [9]" << RESET << BOLD << " Show tree" << std::endl;
     std::cout << "Select operation: " << RESET; 
     std::cin >> option;
 
@@ -237,6 +241,12 @@ void menu(AB<keyType>* tree) {
         std::cout << BOLD << "\nHeight of tree: " << RESET << BLUE_BOLD << tree->height() << RESET << std::endl;
         break;
       case 8:
+        std::cout << BOLD << "\nDelete key: " << RESET;
+        std::cin >> key;
+        tree->remove(key);
+        tree->write(std::cout);
+        break;
+      case 9:
         std::cout << BOLD << "\nTree: " << RESET << std::endl;
         tree->write(std::cout); 
         break;

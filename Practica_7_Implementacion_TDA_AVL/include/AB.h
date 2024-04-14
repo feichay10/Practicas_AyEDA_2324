@@ -32,6 +32,9 @@ class AB {
   
   virtual bool insert(const Key& k) = 0;
   virtual bool search(const Key& k) const = 0;
+  virtual bool remove(const Key& k) = 0;
+  
+  //tour methods
   void inorder() const;
   void inorder(NodeB<Key>* node) const;
   void preorder() const;
@@ -130,32 +133,6 @@ void AB<Key>::byLevel(NodeB<Key>* node) const {
     queue.pop();
   }
 }
-
-// template <class Key>
-// void AB<Key>::write(std::ostream& os) const {
-//   int k = 0;
-//   std::queue<NodeB<Key>*> queue, queueAux;
-//   queue.push(root_);
-//   while (!queue.empty()) {
-//     os << "Level " << k << ": ";
-//     while (!queue.empty()) {
-//       if (queue.front() != nullptr) {
-//         os << "[" << queue.front()->getData() << "]";
-//         queueAux.push(queue.front()->getLeft());
-//         queueAux.push(queue.front()->getRight());
-//       } else {
-//         os << "[.]";
-//       }
-//       queue.pop();
-//     }
-//     queue = queueAux;
-//     while (!queueAux.empty()) {
-//       queueAux.pop();
-//     }
-//     k++;
-//     os << "\n";
-//   }
-// }
 
 template <class Key>
 int AB<Key>::height() const {
