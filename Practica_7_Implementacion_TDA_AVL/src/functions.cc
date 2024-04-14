@@ -123,11 +123,11 @@ void printInformation(treeParameters& parameters) {
 void createTree(treeParameters& parameters) {
   AB<keyType>* tree;
   if (parameters.treeType_ == "abe") {
-    // tree = new ABE<keyType>();
+    tree = new ABE<keyType>();
   } else if (parameters.treeType_ == "abb"){
     tree = new ABB<keyType>();
   } else {
-    // tree = new AVL<keyType>();
+    tree = new AVL<keyType>();
     if (parameters.trace_) {
       static_cast<AVL<keyType>*>(tree)->setTrace(true);
     }
@@ -186,12 +186,12 @@ void menu(AB<keyType>* tree) {
     std::cout << RED_BOLD << "  [0]" << RESET << BOLD << " Exit" << std::endl;
     std::cout << RED_BOLD << "  [1]" << RESET << BOLD << " Insert key" << std::endl;
     std::cout << RED_BOLD << "  [2]" << RESET << BOLD << " Search key" << std::endl;
-    std::cout << RED_BOLD << "  [3]" << RESET << BOLD << " Show inorder tree" << std::endl;
-    std::cout << RED_BOLD << "  [4]" << RESET << BOLD << " Show preorder tree" << std::endl;
-    std::cout << RED_BOLD << "  [5]" << RESET << BOLD << " Show postorder tree" << std::endl;
-    std::cout << RED_BOLD << "  [6]" << RESET << BOLD << " Show by level order tree" << std::endl;
-    std::cout << RED_BOLD << "  [7]" << RESET << BOLD << " Show height of tree" << std::endl;
-    std::cout << RED_BOLD << "  [8]" << RESET << BOLD << " Delete key" << std::endl;
+    std::cout << RED_BOLD << "  [3]" << RESET << BOLD << " Delete key" << std::endl;
+    std::cout << RED_BOLD << "  [4]" << RESET << BOLD << " Show inorder tree" << std::endl;
+    std::cout << RED_BOLD << "  [5]" << RESET << BOLD << " Show preorder tree" << std::endl;
+    std::cout << RED_BOLD << "  [6]" << RESET << BOLD << " Show postorder tree" << std::endl;
+    std::cout << RED_BOLD << "  [7]" << RESET << BOLD << " Show by level order tree" << std::endl;
+    std::cout << RED_BOLD << "  [8]" << RESET << BOLD << " Show height of tree" << std::endl;
     std::cout << RED_BOLD << "  [9]" << RESET << BOLD << " Show tree" << std::endl;
     std::cout << "Select operation: " << RESET; 
     std::cin >> option;
@@ -218,33 +218,32 @@ void menu(AB<keyType>* tree) {
         }
         break;
       case 3:
+        std::cout << BOLD << "\nDelete key: " << RESET;
+        std::cin >> key;
+        tree->write(std::cout);
+        break;
+      case 4:
         std::cout << BOLD << "\nInorder tree: " << RESET;
         tree->inorder();
         std::cout << std::endl;
         break;
-      case 4:
+      case 5:
         std::cout << BOLD << "\nPreorder tree: " << RESET;
         tree->preorder();
         std::cout << std::endl;
         break;
-      case 5:
+      case 6:
         std::cout << BOLD << "\nPostorder tree: " << RESET;
         tree->postorder();
         std::cout << std::endl;
         break;
-      case 6:
+      case 7:
         std::cout << BOLD << "\nBy level tree: " << RESET;
         tree->byLevel();
         std::cout << std::endl;
         break;
-      case 7:
-        std::cout << BOLD << "\nHeight of tree: " << RESET << BLUE_BOLD << tree->height() << RESET << std::endl;
-        break;
       case 8:
-        std::cout << BOLD << "\nDelete key: " << RESET;
-        std::cin >> key;
-        tree->remove(key);
-        tree->write(std::cout);
+        std::cout << BOLD << "\nHeight of tree: " << RESET << BLUE_BOLD << tree->height() << RESET << std::endl;
         break;
       case 9:
         std::cout << BOLD << "\nTree: " << RESET << std::endl;

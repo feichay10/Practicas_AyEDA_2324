@@ -25,13 +25,17 @@ class ABE : public AB<Key> {
  public:
   bool insert(const Key& k) override;
   bool search(const Key& k) const override;
+  bool remove(const Key& k) override;
 
   void write(std::ostream& os) const override;
 
  private:
   bool insertBalBranch(NodeB<Key>*& node, const Key k);
   bool searchBalBranch(NodeB<Key>* node, const Key k) const;
+  bool removeBranch(NodeB<Key>*& node, const Key k);
+
   int branchSize(NodeB<Key>* node) const;
+  bool replace(NodeB<Key>*& deleteNode, NodeB<Key>*& substituteNode);
 };
 
 template<class Key>
@@ -90,6 +94,52 @@ bool ABE<Key>::searchBalBranch(NodeB<Key>* node, const Key k) const {
     return true;
   }
   return searchBalBranch(node->getRight(), k);
+}
+
+template<class Key>
+bool ABE<Key>::remove(const Key& k) {
+  std::cout << "Remove on ABE\n";
+  return removeBranch(AB<Key>::root_, k);
+}
+
+template <class Key>
+bool ABE<Key>::removeBranch(NodeB<Key>*& node, Key k) {
+  if (node == nullptr) {
+    return false;
+  } 
+
+  if (search(k) == false) {
+    return false;
+  }
+
+  if (k < node->getData()) {
+    return removeBranch(node->getLeft(), k);
+  } else if (k > node->getData()) {
+    return removeBranch(node->getRight(), k);
+  } else { // k == node->getData()
+    NodeB<Key>* deleteNode = node;
+    if (node->getRight() == nullptr) {
+      node = node->getLeft();
+    } else if (node->getLeft() == nullptr) {
+      node = node->getRight();
+    } else {
+      replace(deleteNode, node->getLeft());
+    }
+    delete deleteNode;
+  }
+  return true;
+}
+
+template <class Key>
+bool ABE<Key>::replace(NodeB<Key>*& deleteNode, NodeB<Key>*& substituteNode) {
+  if (substituteNode->getRight() != nullptr) {
+    replace(deleteNode, substituteNode->getRight());
+  } else {
+    deleteNode->setData(substituteNode->getData());
+    deleteNode = substituteNode;
+    substituteNode = substituteNode->getLeft();
+  }
+  return true;
 }
 
 template <class Key>

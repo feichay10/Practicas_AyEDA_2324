@@ -25,13 +25,15 @@ template <class Key>
 class AVL : public ABB<Key> {
  public:
   AVL(bool trace = false, NodeAVL<Key>* node = nullptr);
-  bool insert(const Key& data) override;
 
   void setRoot(NodeAVL<Key>* root);
   NodeAVL<Key>*& getRoot();
   NodeAVL<Key>* getRoot() const;
-
   void setTrace(bool trace);
+
+  bool insert(const Key& k) override;
+  bool remove(const Key& k) override;
+
   void write(std::ostream& os) const;
 
  private:
@@ -40,6 +42,11 @@ class AVL : public ABB<Key> {
   void insertBalance(NodeAVL<Key>*& root, NodeAVL<Key>* newOne, bool& grow);
   void insertRebalanceLeft(NodeAVL<Key>*& root, bool& grow);
   void insertRebalanceRight(NodeAVL<Key>*& root, bool& grow);
+
+  bool removeBranch(NodeAVL<Key>*& node, const Key& k, bool& decrease);
+  bool replace(NodeAVL<Key>*& deleteNode, NodeAVL<Key>*& substituteNode, bool& decrease);
+  void removeRebalanceLeft(NodeAVL<Key>*& root, bool& decrease);
+  void removeRebalanceRight(NodeAVL<Key>*& root, bool& decrease);
 
   void rotation_II(NodeAVL<Key>*& node);
   void rotation_DD(NodeAVL<Key>*& node);
@@ -74,6 +81,31 @@ void AVL<Key>::setTrace(bool trace) {
 }
 
 template <class Key>
+bool AVL<Key>::insert(const Key& k) {
+  if (this->search(k)) {
+    return false;
+  }
+
+  NodeAVL<Key>* newOne = new NodeAVL<Key>(k);
+  bool grow = false;
+  this->insertBalance(this->getRoot(), newOne, grow);
+  return true;
+}
+
+template <class Key>
+bool AVL<Key>::remove(const Key& k) {
+  if (!this->search(k)) {
+    std::cout << RED_BOLD << "Key not found." << RESET << std::endl << std::endl;
+    return false;
+  }
+
+  bool decrease = false;
+  removeBranch(this->getRoot(), k, decrease);
+
+  return decrease;
+}
+
+template <class Key>
 void AVL<Key>::write(std::ostream& os) const {
   int k = 0;
   std::queue<NodeAVL<Key>*> queue, queueAux;
@@ -102,18 +134,6 @@ void AVL<Key>::write(std::ostream& os) const {
     k++;
     os << "\n";
   }
-}
-
-template <class Key>
-bool AVL<Key>::insert(const Key& data) {
-  if (this->search(data)) {
-    return false;
-  }
-
-  NodeAVL<Key>* newOne = new NodeAVL<Key>(data);
-  bool grow = false;
-  this->insertBalance(this->getRoot(), newOne, grow);
-  return true;
 }
 
 template <class Key>
@@ -181,6 +201,107 @@ void AVL<Key>::insertRebalanceRight(NodeAVL<Key>*& root, bool& grow) {
         rotation_DI(root);
       }
       grow = false;
+  }
+}
+
+template <class Key>
+bool AVL<Key>::removeBranch(NodeAVL<Key>*& node, const Key& k, bool& decrease) {
+  if (node == nullptr) {
+    return false;
+  }
+
+  if (k < node->getData()) {
+    removeBranch(reinterpret_cast<NodeAVL<Key>*&>(node->getLeft()), k, decrease);
+    if (decrease) {
+      removeRebalanceLeft(node, decrease);
+    }
+  } else if (k > node->getData()) {
+    removeBranch(reinterpret_cast<NodeAVL<Key>*&>(node->getRight()), k, decrease);
+    if (decrease) {
+      removeRebalanceRight(node, decrease);
+    }
+  } else {
+    NodeAVL<Key>* deleteNode = node;
+    if (node->getLeft() == nullptr) {
+      node = reinterpret_cast<NodeAVL<Key>*>(node->getRight());
+      decrease = true;
+    } else if (node->getRight() == nullptr) {
+      node = reinterpret_cast<NodeAVL<Key>*>(node->getLeft());
+      decrease = true;
+    } else {
+      replace(deleteNode, reinterpret_cast<NodeAVL<Key>*&>(node->getLeft()), decrease);
+      if (decrease) {
+        removeRebalanceLeft(node, decrease);
+      }
+    }
+    delete deleteNode;
+  }
+
+  return true;
+}
+
+template <class Key>
+bool AVL<Key>::replace(NodeAVL<Key>*& deleteNode, NodeAVL<Key>*& substituteNode, bool& decrease) {
+  if (substituteNode->getRight() != nullptr) {
+    replace(deleteNode, reinterpret_cast<NodeAVL<Key>*&>(substituteNode->getRight()), decrease);
+    if (decrease) {
+      removeRebalanceRight(substituteNode, decrease);
+    }
+  } else {
+    deleteNode->setData(substituteNode->getData());
+    deleteNode = substituteNode;
+    substituteNode = reinterpret_cast<NodeAVL<Key>*>(substituteNode->getLeft());
+    decrease = true;
+  }
+
+  return true;
+}
+
+template <class Key>
+void AVL<Key>::removeRebalanceLeft(NodeAVL<Key>*& node, bool& decrease) {
+  switch (node->getBalance()) {
+    case -1: {
+      NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(node->getRight());
+      if (node1->getBalance() > 0) {
+        rotation_DI(node);
+      } else {
+        if (node1->getBalance() == 0) {
+          decrease = false;
+        }
+        rotation_DD(node);
+        break;
+      }
+    }
+    case 0:
+      node->setBalance(-1);
+      decrease = false;
+      break;
+    case 1:
+      node->setBalance(0);
+  }
+}
+
+template <class Key>
+void AVL<Key>::removeRebalanceRight(NodeAVL<Key>*& node, bool& decrease) {
+  switch (node->getBalance()) {
+    case 1: {
+        NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(node->getLeft());
+        if (node1->getBalance() < 0) {
+          rotation_ID(node);
+        } else {
+          if (node1->getBalance() == 0) {
+            decrease = false;
+          }
+          rotation_II(node);
+        }
+        break;
+      }
+    case 0:
+      node->setBalance(1);
+      decrease = false;
+      break;
+    case -1:
+      node->setBalance(0);
   }
 }
 

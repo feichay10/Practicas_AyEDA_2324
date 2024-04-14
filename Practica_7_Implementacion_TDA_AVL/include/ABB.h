@@ -106,6 +106,7 @@ bool ABB<Key>::removeBranch(NodeB<Key>*& node, Key k) {
     }
     delete deleteNode;
   }
+  return true;
 }
 
 template <class Key>
