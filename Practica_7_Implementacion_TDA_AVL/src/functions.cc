@@ -128,6 +128,9 @@ void createTree(treeParameters& parameters) {
     tree = new ABB<keyType>();
   } else {
     tree = new AVL<keyType>();
+    if (parameters.trace_) {
+      static_cast<AVL<keyType>*>(tree)->setTrace(true);
+    }
   }
 
   if (parameters.init_ == "random") {
@@ -137,7 +140,7 @@ void createTree(treeParameters& parameters) {
       tree->insert(key);
       tree->write(std::cout);
     }
-  } else if (parameters.init_ == "file") { // file
+  } else if (parameters.init_ == "file") {
     std::ifstream file(parameters.file_);
     if (!file.is_open()) {
       throw std::runtime_error("File could not be opened.");
@@ -163,7 +166,10 @@ void createTree(treeParameters& parameters) {
   }
 
   std::cout << std::endl;
-  tree->write(std::cout);
+  if (tree->empty()) {
+    std::cout << "Tree is empty." << std::endl;
+    tree->write(std::cout);
+  }
 
   menu(tree);
 }
@@ -193,12 +199,10 @@ void menu(AB<keyType>* tree) {
       case 1:
         std::cout << BOLD << "\nInsert key: " << RESET;
         std::cin >> key;
-        if (tree->insert(key)) {
-          std::cout << GREEN_BOLD << "Key inserted." << RESET << std::endl << std::endl;
-        } else {
-          std::cout << RED_BOLD << "Key already exists on the tree." << RESET << std::endl << std::endl;
+        if (!tree->insert(key)) {
+          std::cout << RED_BOLD << "Key already exists." << RESET << std::endl << std::endl;
         }
-        tree->write(std::cout); 
+        tree->write(std::cout);
         break;
       case 2:
         std::cout << BOLD << "\nSearch key: " << RESET;

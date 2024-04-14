@@ -27,36 +27,95 @@ class AVL : public ABB<Key> {
   AVL(bool trace = false, NodeAVL<Key>* node = nullptr);
   bool insert(const Key& data) override;
 
+  void setRoot(NodeAVL<Key>* root);
+  NodeAVL<Key>*& getRoot();
+  NodeAVL<Key>* getRoot() const;
+
+  void setTrace(bool trace);
+  void write(std::ostream& os) const;
+
  private:
+  bool trace_ = false;
+
   void insertBalance(NodeAVL<Key>*& root, NodeAVL<Key>*& newOne, bool& grow);
   void insertRebalanceLeft(NodeAVL<Key>*& root, bool& grow);
   void insertRebalanceRight(NodeAVL<Key>*& root, bool& grow);
 
-  void setRoot(NodeAVL<Key>* root);
-  NodeAVL<Key>*& getRoot();
-  NodeAVL<Key>* getRoot() const;
-  bool trace_ = false;
   void rotation_II(NodeAVL<Key>*& node);
   void rotation_DD(NodeAVL<Key>*& node);
   void rotation_ID(NodeAVL<Key>*& node);
   void rotation_DI(NodeAVL<Key>*& node);
 };
 
-template <typename Key>
+template <class Key>
 AVL<Key>::AVL(bool trace, NodeAVL<Key>* node) {
   this->trace_ = trace;
   this->AB<Key>::setRoot(node);
 }
 
-template <typename Key>
+template <class Key>
+void AVL<Key>::setRoot(NodeAVL<Key>* root) {
+  this->AB<Key>::setRoot(root);
+}
+
+template <class Key>
+NodeAVL<Key>*& AVL<Key>::getRoot() {
+  return reinterpret_cast<NodeAVL<Key>*&>(this->AB<Key>::getRoot());
+}
+
+template <class Key>
+NodeAVL<Key>* AVL<Key>::getRoot() const {
+  return reinterpret_cast<NodeAVL<Key>*>(this->AB<Key>::getRoot());
+}
+
+template <class Key>
+void AVL<Key>::setTrace(bool trace) {
+  this->trace_ = trace;
+}
+
+template <class Key>
+void AVL<Key>::write(std::ostream& os) const {
+  int k = 0;
+  std::queue<NodeB<Key>*> queue, queueAux;
+  queue.push(this->getRoot());
+  while (!queue.empty()) {
+    os << "Level " << k << ": ";
+    while (!queue.empty()) {
+      if (queue.front() != nullptr) {
+        os << "[" << queue.front()->getData();
+        if (this->trace_) {
+          os << " (" << static_cast<NodeAVL<Key>*>(queue.front())->getBalance() << ")";
+        }
+        os << "] ";
+        queueAux.push(queue.front()->getLeft());
+        queueAux.push(queue.front()->getRight());
+      } else {
+        os << "[.] ";
+      }
+      queue.pop();
+    }
+    queue = queueAux;
+    while (!queueAux.empty()) {
+      queueAux.pop();
+    }
+    k++;
+    os << "\n";
+  }
+}
+
+template <class Key>
 bool AVL<Key>::insert(const Key& data) {
+  if (this->search(data)) {
+    return false;
+  }
+
   NodeAVL<Key>* newOne = new NodeAVL<Key>(data);
   bool grow = false;
   this->insertBalance(this->getRoot(), newOne, grow);
-  return grow;
+  return true;
 }
 
-template <typename Key>
+template <class Key>
 void AVL<Key>::insertBalance(NodeAVL<Key>*& root, NodeAVL<Key>*& newOne, bool& grow) {
   if (root == nullptr) {
     root = newOne;
@@ -71,12 +130,10 @@ void AVL<Key>::insertBalance(NodeAVL<Key>*& root, NodeAVL<Key>*& newOne, bool& g
     if (grow) {
       insertRebalanceRight(root, grow);
     }
-  } else {
-    std::cout << "\033[31m\033[1m" << "Clave duplicada" << "\033[0m" << std::endl;
   }
 }
 
-template <typename Key>
+template <class Key>
 void AVL<Key>::insertRebalanceLeft(NodeAVL<Key>*& root, bool& grow) {
   switch (root->getBalance()) {
     case -1:
@@ -87,10 +144,10 @@ void AVL<Key>::insertRebalanceLeft(NodeAVL<Key>*& root, bool& grow) {
       root->setBalance(1);
       break;
     case 1:
-#ifdef TRAZA
-      std::cout << "Desbalanceo: " << std::endl;
-      this->write();
-#endif
+      if (this->trace_) {
+        std::cout << "Desbalanceo: " << std::endl;
+        this->write(std::cout);
+      }
       NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(root->getLeft());
       if (node1->getBalance() == 1) {
         rotation_II(root);
@@ -101,7 +158,7 @@ void AVL<Key>::insertRebalanceLeft(NodeAVL<Key>*& root, bool& grow) {
   }
 }
 
-template <typename Key>
+template <class Key>
 void AVL<Key>::insertRebalanceRight(NodeAVL<Key>*& root, bool& grow) {
   switch (root->getBalance()) {
     case 1:
@@ -112,10 +169,10 @@ void AVL<Key>::insertRebalanceRight(NodeAVL<Key>*& root, bool& grow) {
       root->setBalance(-1);
       break;
     case -1:
-#ifdef TRAZA
-      std::cout << "Desbalanceo: " << std::endl;
-      this->write();
-#endif
+      if (this->trace_) {
+        std::cout << "Desbalanceo: " << std::endl;
+        this->write(std::cout);
+      }
       NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(root->getRight());
       if (node1->getBalance() == -1) {
         rotation_DD(root);
@@ -126,26 +183,11 @@ void AVL<Key>::insertRebalanceRight(NodeAVL<Key>*& root, bool& grow) {
   }
 }
 
-template <typename Key>
-void AVL<Key>::setRoot(NodeAVL<Key>* root) {
-  this->AB<Key>::setRoot(root);
-}
-
-template <typename Key>
-NodeAVL<Key>*& AVL<Key>::getRoot() {
-  return reinterpret_cast<NodeAVL<Key>*&>(this->AB<Key>::getRoot());
-}
-
-template <typename Key>
-NodeAVL<Key>* AVL<Key>::getRoot() const {
-  return reinterpret_cast<NodeAVL<Key>*>(this->AB<Key>::getRoot());
-}
-
-template <typename Key>
+template <class Key>
 void AVL<Key>::rotation_II(NodeAVL<Key>*& node) {
-  #ifdef TRAZA
-    std::cout << "Rotación II en [" << node->getData() << "]";
-  #endif
+  if (this->trace_) {
+    std::cout << "Rotation II on [" << node->getData() << " (" <<  node->getBalance() << ")]" << std::endl;
+  }
   NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(node->getLeft());
   node->setLeft(reinterpret_cast<NodeAVL<Key>*&>(node1->getRight()));
   node1->setRight(node);
@@ -159,11 +201,11 @@ void AVL<Key>::rotation_II(NodeAVL<Key>*& node) {
   node = node1;
 }
 
-template <typename Key>
+template <class Key>
 void AVL<Key>::rotation_DD(NodeAVL<Key>*& node) {
-  #ifdef TRAZA
-    std::cout << "Rotación DD en [" << node->getData() << "]";
-  #endif
+  if (this->trace_) {
+    std::cout << "Rotation DD on [" << node->getData() << "]" << std::endl;
+  }
   NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(node->getRight());
   node->setRight(reinterpret_cast<NodeAVL<Key>*&>(node1->getLeft()));
   node1->setLeft(node);
@@ -177,11 +219,11 @@ void AVL<Key>::rotation_DD(NodeAVL<Key>*& node) {
   node = node1;
 }
 
-template <typename Key>
+template <class Key>
 void AVL<Key>::rotation_ID(NodeAVL<Key>*& node) {
-  #ifdef TRAZA
-    std::cout << "Rotación ID en [" << node->getData() << "]";
-  #endif
+  if (this->trace_) {
+    std::cout << "Rotation ID on [" << node->getData() << "]" << std::endl;
+  }
   NodeAVL<Key>* node1 = node->getLeft();
   NodeAVL<Key>* node2 = node1->getRight();
   node->getLeft() = node2->getRight();
@@ -202,11 +244,11 @@ void AVL<Key>::rotation_ID(NodeAVL<Key>*& node) {
   node = node2;
 }
 
-template <typename Key>
+template <class Key>
 void AVL<Key>::rotation_DI(NodeAVL<Key>*& node) {
-  #ifdef TRAZA
-    std::cout << "Rotación DI en [" << node->getData() << "]";
-  #endif
+  if (this->trace_) {
+    std::cout << "Rotation DI on [" << node->getData() << "]" << std::endl;
+  }
   NodeAVL<Key>* node1 = node->getRight();
   NodeAVL<Key>* node2 = node1->getLeft();
   node->getRight() = node2->getLeft();
