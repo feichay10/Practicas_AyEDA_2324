@@ -18,6 +18,7 @@
 #include "../include/functions.h"
 
 // TODO: Check when not file name is provided
+// TODO: Check Remove function on ABB (is not removind), ABE (is not removing) and AVL (search is not working)
 
 int main(int argc, char* argv[]) {
   treeParameters parameters;
