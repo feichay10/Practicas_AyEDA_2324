@@ -136,7 +136,7 @@ void createTree(treeParameters& parameters) {
   if (parameters.init_ == "random") {
     for (int i = 0; i < parameters.numberGenerated_; i++) {
       keyType key;
-      std::cout << BOLD << "\nInsert key: " << RESET;
+      std::cout << BOLD << "\nInsert key: " << RESET << key << std::endl;
       tree->insert(key);
       tree->write(std::cout);
     }
@@ -154,8 +154,7 @@ void createTree(treeParameters& parameters) {
 
     keyType key;
     while (file >> key) {
-      std::cout << BOLD << "\nInsert key: " << RESET;
-      std::cout << key << std::endl;
+      std::cout << BOLD << "\nInsert key: " << RESET << key << std::endl;
       tree->insert(key);
       count++;
       tree->write(std::cout);

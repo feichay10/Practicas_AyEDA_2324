@@ -35,7 +35,7 @@ class AB {
   virtual bool search(const Key& k) const = 0;
   virtual bool remove(const Key& k) = 0;
   
-  //tour methods
+  // Tour methods
   void inorder() const;
   void inorder(NodeB<Key>* node) const;
   void preorder() const;
@@ -49,7 +49,7 @@ class AB {
   int heightN(NodeB<Key>* node) const;
   bool empty();
 
-  virtual void write(std::ostream& os) const = 0;
+  virtual void write(std::ostream& os) const;
   friend std::ostream& operator<<(std::ostream& os, const AB<Key>& ab) {
     ab.write(os);
     return os;
@@ -159,6 +159,32 @@ int AB<Key>::heightN(NodeB<Key>* node) const {
 template<class Key>
 bool AB<Key>::empty() {
   return root_ == nullptr;
+}
+
+template <class Key>
+void AB<Key>::write(std::ostream& os) const {
+  int k = 0;
+  std::queue<NodeB<Key>*> queue, queueAux;
+  queue.push(root_);
+  while (!queue.empty()) {
+    os << "Level " << k << ": ";
+    while (!queue.empty()) {
+      if (queue.front() != nullptr) {
+        os << "[" << queue.front()->getData() << "]";
+        queueAux.push(queue.front()->getLeft());
+        queueAux.push(queue.front()->getRight());
+      } else {
+        os << "[.]";
+      }
+      queue.pop();
+    }
+    queue = queueAux;
+    while (!queueAux.empty()) {
+      queueAux.pop();
+    }
+    os << std::endl;
+    k++;
+  }
 }
 
 #endif // AB_H

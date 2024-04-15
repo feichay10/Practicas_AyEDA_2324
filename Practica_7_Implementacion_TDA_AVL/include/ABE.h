@@ -27,8 +27,6 @@ class ABE : public AB<Key> {
   bool search(const Key& k) const override;
   bool remove(const Key& k) override;
 
-  void write(std::ostream& os) const override;
-
  private:
   bool insertBalBranch(NodeB<Key>*& node, const Key k);
   bool searchBalBranch(NodeB<Key>* node, const Key k) const;
@@ -40,13 +38,14 @@ class ABE : public AB<Key> {
 
 template<class Key>
 bool ABE<Key>::insert(const Key& k) {
+  if (search(k)) {
+    return false;
+  }
+
   if (AB<Key>::root_ == nullptr) {
     AB<Key>::root_ = new NodeB<Key>(k);
     return true;
   } else {
-    if (search(k)) {
-      return false;
-    }
     return insertBalBranch(AB<Key>::root_, k);
   }
 }
@@ -143,32 +142,6 @@ bool ABE<Key>::replace(NodeB<Key>*& deleteNode, NodeB<Key>*& substituteNode) {
     substituteNode = substituteNode->getLeft();
   }
   return true;
-}
-
-template <class Key>
-void ABE<Key>::write(std::ostream& os) const {
-  int k = 0;
-  std::queue<NodeB<Key>*> queue, queueAux;
-  queue.push(AB<Key>::root_);
-  while (!queue.empty()) {
-    os << "Level " << k << ": ";
-    while (!queue.empty()) {
-      if (queue.front() != nullptr) {
-        os << "[" << queue.front()->getData() << "]";
-        queueAux.push(queue.front()->getLeft());
-        queueAux.push(queue.front()->getRight());
-      } else {
-        os << "[.]";
-      }
-      queue.pop();
-    }
-    queue = queueAux;
-    while (!queueAux.empty()) {
-      queueAux.pop();
-    }
-    k++;
-    os << "\n";
-  }
 }
 
 #endif // ABE_H

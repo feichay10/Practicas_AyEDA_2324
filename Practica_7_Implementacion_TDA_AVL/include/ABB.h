@@ -27,8 +27,6 @@ class ABB : public AB<Key> {
   bool search(const Key& k) const override;
   bool remove(const Key& k) override;
 
-  void write(std::ostream& os) const override ;
-
  private:
   bool insertBranch(NodeB<Key>*& node, Key k);
   bool searchBranch(NodeB<Key>* node, Key k) const;
@@ -124,32 +122,6 @@ bool ABB<Key>::replace(NodeB<Key>*& deleteNode, NodeB<Key>*& substituteNode) {
     substituteNode = substituteNode->getLeft();
   }
   return true;
-}
-
-template <class Key>
-void ABB<Key>::write(std::ostream& os) const {
-  int k = 0;
-  std::queue<NodeB<Key>*> queue, queueAux;
-  queue.push(AB<Key>::root_);
-  while (!queue.empty()) {
-    os << "Level " << k << ": ";
-    while (!queue.empty()) {
-      if (queue.front() != nullptr) {
-        os << "[" << queue.front()->getData() << "]";
-        queueAux.push(queue.front()->getLeft());
-        queueAux.push(queue.front()->getRight());
-      } else {
-        os << "[.]";
-      }
-      queue.pop();
-    }
-    queue = queueAux;
-    while (!queueAux.empty()) {
-      queueAux.pop();
-    }
-    k++;
-    os << "\n";
-  }
 }
 
 #endif // ABB_H
