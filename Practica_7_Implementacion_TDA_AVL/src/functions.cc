@@ -61,7 +61,11 @@ treeParameters checkProgramParameters(int argc, char* argv[], treeParameters& pa
         } else {
           throw std::invalid_argument("Initialization " + std::string(argv[i + 1]) + " not avalaible. Use " + std::string(argv[0]) + " -help for more information.");
         }
-        parameters.numberGenerated_ = std::stoi(argv[i + 2]);
+        if (parameters.init_ == "manual") {
+          parameters.numberGenerated_ = 0;
+        } else {
+          parameters.numberGenerated_ = std::stoi(argv[i + 2]);
+        }
       } else {
         throw std::invalid_argument("Initialization not provided. Use " + std::string(argv[0]) + " -help for more information.");
       }

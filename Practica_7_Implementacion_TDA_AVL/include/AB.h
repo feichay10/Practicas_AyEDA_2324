@@ -45,6 +45,7 @@ class AB {
   void byLevel() const;
   void byLevel(NodeB<Key>* node) const;
 
+  // Auxiliar methods
   int height() const;
   int heightN(NodeB<Key>* node) const;
   bool empty();
