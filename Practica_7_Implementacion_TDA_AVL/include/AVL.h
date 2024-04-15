@@ -24,8 +24,6 @@
 template <class Key>
 class AVL : public ABB<Key> {
  public:
-  AVL(bool trace = false, NodeAVL<Key>* node = nullptr);
-
   void setRoot(NodeAVL<Key>* root);
   NodeAVL<Key>*& getRoot();
   NodeAVL<Key>* getRoot() const;
@@ -53,12 +51,6 @@ class AVL : public ABB<Key> {
   void rotation_ID(NodeAVL<Key>*& node);
   void rotation_DI(NodeAVL<Key>*& node);
 };
-
-template <class Key>
-AVL<Key>::AVL(bool trace, NodeAVL<Key>* node) {
-  this->trace_ = trace;
-  this->AB<Key>::setRoot(node);
-}
 
 template <class Key>
 void AVL<Key>::setRoot(NodeAVL<Key>* root) {
@@ -113,7 +105,7 @@ void AVL<Key>::write(std::ostream& os) const {
     while (!queue.empty()) {
       if (queue.front() != nullptr) {
         os << "[" << queue.front()->getData();
-        if (this->trace_) {
+        if (trace_) {
           os << " (" <<  AB<Key>::heightN(queue.front()->getLeft()) - AB<Key>::heightN(queue.front()->getRight()) << ")";
         }
         os << "] ";

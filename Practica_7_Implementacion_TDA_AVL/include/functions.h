@@ -63,6 +63,6 @@ struct treeParameters {
 treeParameters checkProgramParameters(int argc, char* argv[], treeParameters& parameters);
 void printInformation(treeParameters& parameters);
 void createTree(treeParameters& parameters);
-void menu(AB<keyType>* tree);
+void menu(AB<keyType>* tree, treeParameters& parameters);
 
 #endif // FUNCTIONS_H

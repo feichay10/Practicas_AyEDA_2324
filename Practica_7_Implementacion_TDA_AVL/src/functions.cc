@@ -177,10 +177,10 @@ void createTree(treeParameters& parameters) {
     tree->write(std::cout);
   }
 
-  menu(tree);
+  menu(tree, parameters);
 }
 
-void menu(AB<keyType>* tree) {
+void menu(AB<keyType>* tree, treeParameters& parameters) {
   int option;
   keyType key;
 
@@ -221,12 +221,16 @@ void menu(AB<keyType>* tree) {
         }
         break;
       case 3:
-        std::cout << BOLD << "\nDelete key: " << RESET;
-        std::cin >> key;
-        if (!tree->remove(key)) {
-          std::cout << RED_BOLD << "Key not found." << RESET << std::endl << std::endl;
+        if (parameters.treeType_ == "abe") {
+          std::cout << RED_BOLD << "\nDelete key operation not available for ABE tree." << RESET << std::endl;
+        } else {
+          std::cout << BOLD << "\nDelete key: " << RESET;
+          std::cin >> key;
+          if (!tree->remove(key)) {
+            std::cout << RED_BOLD << "Key not found." << RESET << std::endl << std::endl;
+          }
+          tree->write(std::cout);
         }
-        tree->write(std::cout);
         break;
       case 4:
         std::cout << BOLD << "\nInorder tree: " << RESET;

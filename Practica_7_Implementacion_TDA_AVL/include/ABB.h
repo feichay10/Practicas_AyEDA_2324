@@ -31,7 +31,6 @@ class ABB : public AB<Key> {
   bool insertBranch(NodeB<Key>*& node, Key k);
   bool searchBranch(NodeB<Key>* node, Key k) const;
   bool removeBranch(NodeB<Key>*& node, Key k);
-
   bool replace(NodeB<Key>*& deleteNode, NodeB<Key>*& substituteNode);
 };
 

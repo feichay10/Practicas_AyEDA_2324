@@ -29,11 +29,8 @@ class ABE : public AB<Key> {
 
  private:
   bool insertBalBranch(NodeB<Key>*& node, const Key k);
-  bool searchBalBranch(NodeB<Key>* node, const Key k) const;
-  bool removeBranch(NodeB<Key>*& node, const Key k);
-
   int branchSize(NodeB<Key>* node) const;
-  bool replace(NodeB<Key>*& deleteNode, NodeB<Key>*& substituteNode);
+  bool searchBalBranch(NodeB<Key>* node, const Key k) const;
 };
 
 template<class Key>
@@ -97,51 +94,7 @@ bool ABE<Key>::searchBalBranch(NodeB<Key>* node, const Key k) const {
 
 template<class Key>
 bool ABE<Key>::remove(const Key& k) {
-  if (!search(k)) {
-    return false;
-  }
-
-  return removeBranch(AB<Key>::root_, k);
-}
-
-template <class Key>
-bool ABE<Key>::removeBranch(NodeB<Key>*& node, Key k) {
-  if (search(k) == false) {
-    return false;
-  }
-
-  if (node == nullptr) {
-    return false;
-  }
-
-  if (k < node->getData()) {
-    return removeBranch(node->getLeft(), k);
-  } else if (k > node->getData()) {
-    return removeBranch(node->getRight(), k);
-  } else { // k == node->getData()
-    NodeB<Key>* deleteNode = node;
-    if (node->getRight() == nullptr) {
-      node = node->getLeft();
-    } else if (node->getLeft() == nullptr) {
-      node = node->getRight();
-    } else {
-      replace(deleteNode, node->getLeft());
-    }
-    delete deleteNode;
-  }
-  return true;
-}
-
-template <class Key>
-bool ABE<Key>::replace(NodeB<Key>*& deleteNode, NodeB<Key>*& substituteNode) {
-  if (substituteNode->getRight() != nullptr) {
-    replace(deleteNode, substituteNode->getRight());
-  } else {
-    deleteNode->setData(substituteNode->getData());
-    deleteNode = substituteNode;
-    substituteNode = substituteNode->getLeft();
-  }
-  return true;
+  return false;
 }
 
 #endif // ABE_H
