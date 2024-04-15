@@ -59,7 +59,7 @@ const std::string kUsage =
     std::string("\n\t\tIf redispersion functions is provided, in the next parameters it must \n\t\tprovided a avalaible dispersion function") +
     BOLD + std::string("\n\t  -help") + RESET + std::string("\n\t\tShow this message.");
 
-using keyType = Nif;
+using keyType = int;
 
 struct HashTableParameters {
   unsigned tableSize;

@@ -39,10 +39,6 @@ class Nif {
   friend std::ostream& operator<<(std::ostream& os, const Nif& nif);
   friend std::istream& operator>>(std::istream& is, Nif& nif);
 
-  // For dfSum class
-  auto begin() const { return std::to_string(nif_).begin(); }
-  auto end() const { return std::to_string(nif_).end(); }
-
  private:
   long nif_;
 };

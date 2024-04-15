@@ -242,10 +242,6 @@ void menu(HashTableType& hashTable) {
         std::cout << GRAY_BOLD << "Enter the key to insert: " << RESET << GOLD;
         std::cin >> key;
         std::cout << RESET;
-        if (!key.checkNif(key)) {
-          std::cout << RED_BOLD << "Invalid NIF. The NIF must have 8 digits." << RESET << std::endl;
-          break;
-        }
         hashTable.insert(key);
         hashTable.print();
         break;
@@ -266,10 +262,6 @@ void menu(HashTableType& hashTable) {
         std::cout << GRAY_BOLD << "Enter the key to search: " << RESET << GOLD;
         std::cin >> key;
         std::cout << RESET;
-        if (!key.checkNif(key)) {
-          std::cout << RED_BOLD << "Invalid NIF. The NIF must have 8 digits." << RESET << std::endl;
-          break;
-        }
         if (!hashTable.search(key)) {
           std::cout << "The key " << CYAN_BOLD << key << RESET << RED_BOLD
                     << " is not" << RESET << " on the table." << RESET
@@ -289,10 +281,6 @@ void menu(HashTableType& hashTable) {
         std::cout << GRAY_BOLD << "Enter the key to remove: " << RESET << GOLD;
         std::cin >> key;
         std::cout << RESET;
-        if (!key.checkNif(key)) {
-          std::cout << RED_BOLD << "Invalid NIF. The NIF must have 8 digits." << RESET << std::endl;
-          break;
-        }
         hashTable.remove(key);
         hashTable.print();
         break;

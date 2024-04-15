@@ -20,18 +20,19 @@
 
 #include <iostream>
 
-#include "../include/dfModule.h"
-#include "../include/dfRandom.h"
-#include "../include/dfSum.h"
-#include "../include/dispersionFunction.h"
-#include "../include/dynamicSequence.h"
-#include "../include/efDoubleDispersion.h"
-#include "../include/efLineal.h"
-#include "../include/efQuadratic.h"
-#include "../include/efRedispersion.h"
-#include "../include/explorationFunction.h"
-#include "../include/sequence.h"
-#include "../include/staticSequence.h"
+#include "colors.h"
+#include "dfModule.h"
+#include "dfRandom.h"
+#include "dfSum.h"
+#include "dispersionFunction.h"
+#include "dynamicSequence.h"
+#include "efDoubleDispersion.h"
+#include "efLineal.h"
+#include "efQuadratic.h"
+#include "efRedispersion.h"
+#include "explorationFunction.h"
+#include "sequence.h"
+#include "staticSequence.h"
 
 /**
  * @brief Class for implementing a hash table
@@ -42,109 +43,46 @@
 template <class Key, class Container = StaticSequence<Key>>
 class HashTable {
  public:
-  HashTable(unsigned tableSize, DispersionFunction<Key>& fd, ExplorationFunction<Key>& fe, unsigned blockSize); // Dispersion cerrada
-  HashTable(unsigned tableSize, DispersionFunction<Key>& fd); // Dispersion abierta
-  ~HashTable();
-
-  bool search(const Key& k) const;
-  bool insert(const Key& k);
-  bool insertByFile(std::string file);
-  bool remove(const Key& k);
-  bool clear();
-  void print();
-
- private:
-  void createTable();
-
-  unsigned tableSize_;
-  Sequence<Key>** table_;
-  DispersionFunction<Key>* fd_;
-  ExplorationFunction<Key>* fe_;
-  unsigned blockSize_;
-};
-
-/**
- * @brief Construct a new Hash Table< Key,  Container>:: Hash Table object
- * 
- * @tparam Key 
- * @tparam Container 
- * @param tableSize 
- * @param fd 
- * @param fe 
- * @param blockSize 
- */
-template <class Key, class Container>
-HashTable<Key, Container>::HashTable(unsigned tableSize,
-                                     DispersionFunction<Key>& fd,
-                                     ExplorationFunction<Key>& fe,
-                                     unsigned blockSize) {
-  tableSize_ = tableSize;
-  fd_ = &fd;
-  fe_ = &fe;
-  blockSize_ = blockSize;
-  createTable();
-}
-
-/**
- * @brief Construct a new Hash Table< Key,  Container>:: Hash Table object
- * 
- * @tparam Key 
- * @tparam Container 
- * @param tableSize 
- * @param fd 
- */
-template <class Key, class Container>
-HashTable<Key, Container>::HashTable(unsigned tableSize,
-                                     DispersionFunction<Key>& fd) {
-  tableSize_ = tableSize;
-  fd_ = &fd;
-  createTable();
-}
-
-/**
- * @brief Destroy the Hash Table< Key,  Container>:: Hash Table object
- * 
- * @tparam Key 
- * @tparam Container 
- */
-template <class Key, class Container>
-HashTable<Key, Container>::~HashTable() {
-  for (unsigned i = 0; i < tableSize_; i++) {
-    delete table_[i];
+  HashTable(unsigned tableSize, DispersionFunction<Key>& fd, ExplorationFunction<Key>& fe, unsigned blockSize) {
+    tableSize_ = tableSize;
+    fd_ = &fd;
+    fe_ = &fe;
+    blockSize_ = blockSize;
+    createTable();
   }
-  delete[] table_;
-}
 
-/**
- * @brief Method that searches for a key in the table
- * 
- * @tparam Key 
- * @tparam Container 
- * @param k 
- * @return true 
- * @return false 
- */
-template <class Key, class Container>
-bool HashTable<Key, Container>::search(const Key& k) const {
-  unsigned index = (*fd_)(k);
-  return table_[index]->search(k);
-}
+  ~HashTable() {
+    for (unsigned i = 0; i < tableSize_; i++) {
+      delete table_[i];
+    }
+    delete[] table_;
+  }
 
-/**
- * @brief Method that inserts a key in the table
- * 
- * @tparam Key 
- * @tparam Container 
- * @param k 
- * @return true 
- * @return false 
- */
-template <class Key, class Container>
-bool HashTable<Key, Container>::insert(const Key& k) {
-  unsigned index = (*fd_)(k); // Calculates the initial position using the dispersion function
-  if (typeid(Container) == typeid(StaticSequence<Key>)) {
+  // TODO: Fix this method, same as insert but searching for the element
+  bool search(const Key& k) const {
+    unsigned index = (*fd_)(k);
+    unsigned i = 1;
+    unsigned functionValue = (*fd_)(k);
+    while (table_[index]->search(k)) {
+      unsigned explorationFunctionValue = (*fe_)(k, i);
+      index = (functionValue + explorationFunctionValue) % tableSize_;
+      i++;
+      if (i == tableSize_) {
+        return false;
+      }
+    }
+
+    if (table_[(*fd_)(k)]->search(k)) {
+      return true;
+    }
+    
+    return true;
+  }
+
+  bool insert(const Key& k) {
+    unsigned index = (*fd_)(k); // Calculates the initial position using the dispersion function
     if (table_[index]->search(k)) {
-      std::cout << "Element " << k << " already exists on the table" << std::endl;
+      std::cout << RED_BOLD << "Element " << k << " already exists on the table" << RESET << std::endl;
       return false;
     }
     unsigned i = 1;
@@ -162,116 +100,153 @@ bool HashTable<Key, Container>::insert(const Key& k) {
     }
     std::cout << "Inserting " << k << " in " << index << std::endl;
     return table_[index]->insert(k);
-  } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
+  }
+
+  bool insertByFile(std::string file) {
+    std::ifstream fileStream(file);
+    if (!fileStream.is_open()) {
+      std::cout << "File " << file << " not found." << std::endl;
+      return false;
+    }
+    Key k;
+    while (fileStream >> k) {
+      insert(k);
+    }
+    fileStream.close();
+    return true;
+  }
+
+  bool remove(const Key& k) {
+    unsigned index = (*fd_)(k);
+    if (!table_[index]->search(k)) {
+      std::cout << "Element " << k << " does not exist" << std::endl;
+      return false;
+    } else {
+      std::cout << "Removing " << k << " from " << index << std::endl;
+      return table_[index]->remove(k);
+    }
+    return false;
+  }
+
+  bool clear() {
+    for (unsigned i = 0; i < tableSize_; i++) {
+      table_[i]->clear();
+    }
+    return true;
+  }
+
+  void print() {
+    for (int i = 0; i < tableSize_; ++i) {
+      std::cout << i << ") [ ";
+      table_[i]->print();
+      std::cout << "]" << std::endl;
+    }
+  }
+
+ private:
+  void createTable() {
+    table_ = new Sequence<Key>*[tableSize_];
+    for (unsigned i = 0; i < tableSize_; i++) {
+      table_[i] = new StaticSequence<Key>(blockSize_);
+    }
+  }
+
+  unsigned tableSize_;
+  Sequence<Key>** table_;
+  DispersionFunction<Key>* fd_;
+  ExplorationFunction<Key>* fe_;
+  unsigned blockSize_;
+};
+
+/** 
+ * @brief Class for implementing a hash table with dynamic sequence specialization
+ * 
+ * @tparam Key 
+ */
+template <class Key>
+class HashTable <Key, DynamicSequence<Key>> {
+ public:
+  HashTable(unsigned tableSize, DispersionFunction<Key>& fd) {
+    tableSize_ = tableSize;
+    fd_ = &fd;
+    createTable();
+  }
+
+  ~HashTable() {
+    for (unsigned i = 0; i < tableSize_; i++) {
+      delete table_[i];
+    }
+    delete[] table_;
+  }
+
+  bool search(const Key& k) const {
+    unsigned index = (*fd_)(k);
+    return table_[index]->search(k);
+  }
+
+  bool insert(const Key& k) {
+    unsigned index = (*fd_)(k);
     if (table_[index]->search(k)) {
-      std::cout << "Element " << k << " already exists on the table" << std::endl;
+      std::cout << RED_BOLD << "Element " << k << " already exists on the table" << RESET << std::endl;
       return false;
     }
     std::cout << "Inserting " << k << " in " << index << std::endl;
     return table_[index]->insert(k);
   }
-  return false;
-}
-
-/**
- * @brief Method that inserts a key in the table from a file
- * 
- * @tparam Key 
- * @tparam Container 
- * @param file 
- * @return true 
- * @return false 
- */
-template <class Key, class Container>
-bool HashTable<Key, Container>::insertByFile(std::string file) {
-  std::ifstream fileStream(file);
-  if (!fileStream.is_open()) {
-    std::cout << "File " << file << " not found." << std::endl;
-    return false;
-  }
-  Key k;
-  while (fileStream >> k) {
-    if (k.checkNif(k) == false) {
-      std::cout << "NIF " << k << " is not valid" << std::endl;
-      continue;
-    } 
-    insert(k);
-  }
-  fileStream.close();
-  return true;
-}
-
-/**
- * @brief Method that removes a key from the table
- * 
- * @tparam Key 
- * @tparam Container 
- * @param k 
- * @return true 
- * @return false 
- */
-template <class Key, class Container>
-bool HashTable<Key, Container>::remove(const Key& k) {
-  unsigned index = (*fd_)(k);
-  if (!table_[index]->search(k)) {
-    std::cout << "Element " << k << " does not exist" << std::endl;
-    return false;
-  } else {
-    std::cout << "Removing " << k << " from " << index << std::endl;
-    return table_[index]->remove(k);
-  }
-  return false;
-}
-
-/**
- * @brief Method that clears the table
- * 
- * @tparam Key 
- * @tparam Container 
- * @return true 
- * @return false 
- */
-template <class Key, class Container>
-bool HashTable<Key, Container>::clear() {
-  for (unsigned i = 0; i < tableSize_; i++) {
-    table_[i]->clear();
-  }
-  return true;
-}
-
-/**
- * @brief Method that prints the table
- * 
- * @tparam Key 
- * @tparam Container 
- */
-template <class Key, class Container>
-void HashTable<Key, Container>::print() {
-  for (int i = 0; i < tableSize_; ++i) {
-    std::cout << i << ") [ ";
-    table_[i]->print();
-    std::cout << "]" << std::endl;
-  }
-}
-
-/**
- * @brief Method that initializes the table
- * 
- * @tparam Key 
- * @tparam Container 
- */
-template <class Key, class Container>
-void HashTable<Key, Container>::createTable() {
-  table_ = new Sequence<Key>*[tableSize_];
-  if (typeid(Container) == typeid(StaticSequence<Key>)) {
-    for (unsigned i = 0; i < tableSize_; i++) {
-      table_[i] = new StaticSequence<Key>(blockSize_);
+  bool insertByFile(std::string file) {
+    std::ifstream fileStream(file);
+    if (!fileStream.is_open()) {
+      std::cout << "File " << file << " not found." << std::endl;
+      return false;
     }
-  } else if (typeid(Container) == typeid(DynamicSequence<Key>)) {
+    Key k;
+    while (fileStream >> k) {
+      insert(k);
+    }
+    fileStream.close();
+    return true;
+  }
+
+  bool remove(const Key& k) {
+    unsigned index = (*fd_)(k);
+    if (!table_[index]->search(k)) {
+      std::cout << "Element " << k << " does not exist" << std::endl;
+      return false;
+    } else {
+      std::cout << "Removing " << k << " from " << index << std::endl;
+      return table_[index]->remove(k);
+    }
+    return false;
+  
+  }
+
+  bool clear() {
+    for (unsigned i = 0; i < tableSize_; i++) {
+      table_[i]->clear();
+    }
+    return true;
+  
+  }
+
+  void print() {
+    for (int i = 0; i < tableSize_; ++i) {
+      std::cout << i << ") [ ";
+      table_[i]->print();
+      std::cout << "]" << std::endl;
+    }
+  }
+
+ private:
+  void createTable() {
+    table_ = new Sequence<Key>*[tableSize_];
     for (unsigned i = 0; i < tableSize_; i++) {
       table_[i] = new DynamicSequence<Key>();
     }
   }
-}
+
+  unsigned tableSize_;
+  Sequence<Key>** table_;
+  DispersionFunction<Key>* fd_;
+};
 
 #endif  // HASHTABLE_H
