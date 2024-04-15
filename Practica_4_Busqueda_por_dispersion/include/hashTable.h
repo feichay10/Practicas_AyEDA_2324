@@ -61,22 +61,21 @@ class HashTable {
   // TODO: Fix this method, same as insert but searching for the element
   bool search(const Key& k) const {
     unsigned index = (*fd_)(k);
-    unsigned i = 1;
+    unsigned i = 0;
     unsigned functionValue = (*fd_)(k);
-    while (table_[index]->search(k)) {
-      unsigned explorationFunctionValue = (*fe_)(k, i);
-      index = (functionValue + explorationFunctionValue) % tableSize_;
-      i++;
-      if (i == tableSize_) {
-        return false;
+    bool flag = true;
+    while (flag) {
+      if (i >= tableSize_) return false;
+      if (table_[index]->search(k)) {
+        return true;
       }
+      if (!table_[index]->isFull()) {
+        flag = false;
+      }
+      index = (functionValue + (*fe_)(k, i)) % tableSize_;
+      i++;
     }
-
-    if (table_[(*fd_)(k)]->search(k)) {
-      return true;
-    }
-    
-    return true;
+    return false;
   }
 
   bool insert(const Key& k) {
