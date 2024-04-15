@@ -30,6 +30,7 @@ class AB {
   NodeB<Key>*& getRoot();
   void setRoot(NodeB<Key>* root);
   
+  // Methods
   virtual bool insert(const Key& k) = 0;
   virtual bool search(const Key& k) const = 0;
   virtual bool remove(const Key& k) = 0;

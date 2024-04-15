@@ -39,6 +39,10 @@ class ABB : public AB<Key> {
 
 template <class Key>
 bool ABB<Key>::insert(const Key& k) {
+  if (search(k)) {
+    return false;
+  }
+
   if (this->getRoot() == nullptr) {
     AB<Key>::root_ = new NodeB<Key>(k);
     return true;
@@ -49,9 +53,6 @@ bool ABB<Key>::insert(const Key& k) {
 
 template <class Key>
 bool ABB<Key>::insertBranch(NodeB<Key>*& node, Key k) {
-  if (search(k)) {
-    return false;
-  }
   if (node == nullptr) {
     node = new NodeB<Key>(k);
   } else if (k < node->getData()) {
@@ -83,6 +84,10 @@ bool ABB<Key>::searchBranch(NodeB<Key>* node, Key k) const {
 
 template <class Key>
 bool ABB<Key>::remove(const Key& k) {
+  if (!search(k)) {
+    return false;
+  }
+
   return removeBranch(AB<Key>::root_, k);
 }
 
@@ -95,7 +100,7 @@ bool ABB<Key>::removeBranch(NodeB<Key>*& node, Key k) {
     return removeBranch(node->getLeft(), k);
   } else if (k > node->getData()) {
     return removeBranch(node->getRight(), k);
-  } else { // k == node->getData()
+  } else {  // k == node->getData()
     NodeB<Key>* deleteNode = node;
     if (node->getRight() == nullptr) {
       node = node->getLeft();

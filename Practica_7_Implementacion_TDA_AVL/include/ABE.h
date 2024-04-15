@@ -98,7 +98,10 @@ bool ABE<Key>::searchBalBranch(NodeB<Key>* node, const Key k) const {
 
 template<class Key>
 bool ABE<Key>::remove(const Key& k) {
-  std::cout << "Remove on ABE\n";
+  if (!search(k)) {
+    return false;
+  }
+
   return removeBranch(AB<Key>::root_, k);
 }
 

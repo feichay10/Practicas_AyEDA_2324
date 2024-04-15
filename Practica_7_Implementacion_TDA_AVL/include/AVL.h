@@ -43,7 +43,7 @@ class AVL : public ABB<Key> {
   void insertRebalanceLeft(NodeAVL<Key>*& root, bool& grow);
   void insertRebalanceRight(NodeAVL<Key>*& root, bool& grow);
 
-  bool removeBranch(NodeAVL<Key>*& node, const Key& k, bool& decrease);
+  void removeBranch(NodeAVL<Key>*& node, const Key& k, bool& decrease);
   bool replace(NodeAVL<Key>*& deleteNode, NodeAVL<Key>*& substituteNode, bool& decrease);
   void removeRebalanceLeft(NodeAVL<Key>*& root, bool& decrease);
   void removeRebalanceRight(NodeAVL<Key>*& root, bool& decrease);
@@ -95,14 +95,12 @@ bool AVL<Key>::insert(const Key& k) {
 template <class Key>
 bool AVL<Key>::remove(const Key& k) {
   if (!this->search(k)) {
-    std::cout << RED_BOLD << "Key not found." << RESET << std::endl << std::endl;
     return false;
   }
 
   bool decrease = false;
   removeBranch(this->getRoot(), k, decrease);
-
-  return decrease;
+  return true;
 }
 
 template <class Key>
@@ -115,8 +113,7 @@ void AVL<Key>::write(std::ostream& os) const {
     while (!queue.empty()) {
       if (queue.front() != nullptr) {
         os << "[" << queue.front()->getData();
-        if (this->trace_) { // Mostrar el balance
-        // AB<Key>::heightN(node->getLeft()) - AB<Key>::heightN(node->getRight())
+        if (this->trace_) {
           os << " (" <<  AB<Key>::heightN(queue.front()->getLeft()) - AB<Key>::heightN(queue.front()->getRight()) << ")";
         }
         os << "] ";
@@ -205,9 +202,9 @@ void AVL<Key>::insertRebalanceRight(NodeAVL<Key>*& root, bool& grow) {
 }
 
 template <class Key>
-bool AVL<Key>::removeBranch(NodeAVL<Key>*& node, const Key& k, bool& decrease) {
+void AVL<Key>::removeBranch(NodeAVL<Key>*& node, const Key& k, bool& decrease) {
   if (node == nullptr) {
-    return false;
+    return;
   }
 
   if (k < node->getData()) {
@@ -236,8 +233,6 @@ bool AVL<Key>::removeBranch(NodeAVL<Key>*& node, const Key& k, bool& decrease) {
     }
     delete deleteNode;
   }
-
-  return true;
 }
 
 template <class Key>

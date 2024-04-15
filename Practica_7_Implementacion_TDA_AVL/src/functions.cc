@@ -220,6 +220,9 @@ void menu(AB<keyType>* tree) {
       case 3:
         std::cout << BOLD << "\nDelete key: " << RESET;
         std::cin >> key;
+        if (!tree->remove(key)) {
+          std::cout << RED_BOLD << "Key not found." << RESET << std::endl << std::endl;
+        }
         tree->write(std::cout);
         break;
       case 4:
