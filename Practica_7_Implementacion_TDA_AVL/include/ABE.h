@@ -106,11 +106,11 @@ bool ABE<Key>::remove(const Key& k) {
 
 template <class Key>
 bool ABE<Key>::removeBranch(NodeB<Key>*& node, Key k) {
-  if (node == nullptr) {
-    return false;
-  } 
-
   if (search(k) == false) {
+    return false;
+  }
+
+  if (node == nullptr) {
     return false;
   }
 
