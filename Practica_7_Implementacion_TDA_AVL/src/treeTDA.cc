@@ -18,12 +18,6 @@
 #include "../include/functions.h"
 
 // TODO: Check when not file name is provided
-// TODO: Un AB está equilibrado si la diferencia de los tamaños de sus dos subarboles es como max 1.
-// TODO: Check Remove function on ABE (is not removing) and AVL (search is not working)
-
-// TODO: Remove on ABE -> Al eliminar un nodo, siempre hay que comprobar que esta balanceado
-
-// ! En el abb si pedimos inorder tendria que salir ordenada
 
 int main(int argc, char* argv[]) {
   treeParameters parameters;
