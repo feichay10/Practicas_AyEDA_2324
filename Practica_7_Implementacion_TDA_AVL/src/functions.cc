@@ -36,7 +36,7 @@ treeParameters checkProgramParameters(int argc, char* argv[], treeParameters& pa
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-ab") {
       if (i + 1 < argc) {
-        if (std::string(argv[i + 1]) == "abe" || std::string(argv[i + 1]) == "abb" || std::string(argv[i + 1]) == "avl") {
+        if (std::string(argv[i + 1]) == "abe" || std::string(argv[i + 1]) == "abb" || std::string(argv[i + 1]) == "avl" ||std::string(argv[i + 1]) == "ab") {
           if (std::string(argv[i + 1]) == "avl" && !flag) {
             throw std::invalid_argument("Trace option not provided. Use " + std::string(argv[0]) + " -help for more information.");
           }
@@ -128,13 +128,15 @@ void createTree(treeParameters& parameters) {
   AB<keyType>* tree;
   if (parameters.treeType_ == "abe") {
     tree = new ABE<keyType>();
-  } else if (parameters.treeType_ == "abb"){
+  } else if (parameters.treeType_ == "abb") {
     tree = new ABB<keyType>();
-  } else {
+  } else if (parameters.treeType_ == "avl") {
     tree = new AVL<keyType>();
     if (parameters.trace_) {
       static_cast<AVL<keyType>*>(tree)->setTrace(true);
     }
+  } else {
+    tree = new ABLevel<keyType>();
   }
 
   if (parameters.init_ == "random") {

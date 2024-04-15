@@ -61,25 +61,21 @@ void NodeAVL<Key>::setBalance(const int& bal) {
 
 template <class Key>
 NodeAVL<Key>* NodeAVL<Key>::getLeft() const {
-  // return NodeB<Key>::getLeft();
   return static_cast<NodeAVL<Key>*>(NodeB<Key>::getLeft());
 }
 
 template <class Key>
 NodeAVL<Key>*& NodeAVL<Key>::getLeft() {
-  // return NodeB<Key>::getLeft();
   return reinterpret_cast<NodeAVL<Key>*&>(NodeB<Key>::getLeft());
 }
 
 template <class Key>
 NodeAVL<Key>* NodeAVL<Key>::getRight() const {
-  // return NodeB<Key>::getRight();
   return static_cast<NodeAVL<Key>*>(NodeB<Key>::getRight());
 }
 
 template <class Key>
 NodeAVL<Key>*& NodeAVL<Key>::getRight() {
-  // return NodeB<Key>::getRight();
   return reinterpret_cast<NodeAVL<Key>*&>(NodeB<Key>::getRight());
 }
 
