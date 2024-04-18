@@ -23,18 +23,18 @@
 
 #include "nodeB.h"
 
-template<class Key>
+template <class Key>
 class AB {
  public:
   NodeB<Key>* getRoot() const;
   NodeB<Key>*& getRoot();
   void setRoot(NodeB<Key>* root);
-  
+
   // Methods
   virtual bool insert(const Key& k) = 0;
   virtual bool search(const Key& k) const = 0;
   virtual bool remove(const Key& k) = 0;
-  
+
   // Tour methods
   void inorder() const;
   void inorder(NodeB<Key>* node) const;
@@ -80,13 +80,13 @@ void AB<Key>::inorder() const {
   inorder(root_);
 }
 
-template<class Key>
+template <class Key>
 void AB<Key>::inorder(NodeB<Key>* node) const {
   if (node != nullptr) {
     inorder(node->getLeft());
     std::cout << BLUE_BOLD << node->getData() << " " << RESET;
     inorder(node->getRight());
-  } 
+  }
 }
 
 template <class Key>
@@ -94,7 +94,7 @@ void AB<Key>::preorder() const {
   preorder(root_);
 }
 
-template<class Key>
+template <class Key>
 void AB<Key>::preorder(NodeB<Key>* node) const {
   if (node != nullptr) {
     std::cout << BLUE_BOLD << node->getData() << " " << RESET;
@@ -108,7 +108,7 @@ void AB<Key>::postorder() const {
   postorder(root_);
 }
 
-template<class Key>
+template <class Key>
 void AB<Key>::postorder(NodeB<Key>* node) const {
   if (node != nullptr) {
     postorder(node->getLeft());
@@ -122,7 +122,7 @@ void AB<Key>::byLevel() const {
   byLevel(root_);
 }
 
-template<class Key>
+template <class Key>
 void AB<Key>::byLevel(NodeB<Key>* node) const {
   std::queue<NodeB<Key>*> queue;
   queue.push(node);
@@ -157,7 +157,7 @@ int AB<Key>::heightN(NodeB<Key>* node) const {
   }
 }
 
-template<class Key>
+template <class Key>
 bool AB<Key>::empty() {
   return root_ == nullptr;
 }
@@ -171,11 +171,11 @@ void AB<Key>::write(std::ostream& os) const {
     os << "Level " << k << ": ";
     while (!queue.empty()) {
       if (queue.front() != nullptr) {
-        os << "[" << queue.front()->getData() << "]";
+        os << "[" << queue.front()->getData() << "] ";
         queueAux.push(queue.front()->getLeft());
         queueAux.push(queue.front()->getRight());
       } else {
-        os << "[.]";
+        os << "[.] ";
       }
       queue.pop();
     }
@@ -188,4 +188,4 @@ void AB<Key>::write(std::ostream& os) const {
   }
 }
 
-#endif // AB_H
+#endif  // AB_H

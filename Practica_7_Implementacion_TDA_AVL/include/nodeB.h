@@ -21,37 +21,31 @@
 template <class Key>
 class NodeB {
  public:
-  NodeB(Key data_, NodeB<Key>* left_ = nullptr, NodeB<Key>* right_ = nullptr);
-  NodeB();
-  ~NodeB() = default;
+  NodeB(Key data_, NodeB<Key>* left_ = nullptr, NodeB<Key>* right_ = nullptr) : data_(data_), left_(left_), right_(right_) {}
   
+  Key getData() const;
+  void setData(Key data);
   NodeB<Key>* getLeft() const;
   NodeB<Key>*& getLeft();
   NodeB<Key>* getRight() const;
   NodeB<Key>*& getRight();
   void setLeft(NodeB<Key>* left);
   void setRight(NodeB<Key>* right);
-  void setData(Key data);
-  Key getData() const;
 
- private:
+ protected:
   Key data_;
   NodeB<Key>* left_;
   NodeB<Key>* right_;
 };
 
 template <class Key>
-NodeB<Key>::NodeB(Key data, NodeB<Key>* left, NodeB<Key>* right) {
-  data_ = data;
-  left_ = left;
-  right_ = right;
+Key NodeB<Key>::getData() const {
+  return data_;
 }
 
 template <class Key>
-NodeB<Key>::NodeB() {
-  data_ = 0;
-  left_ = nullptr;
-  right_ = nullptr;
+void NodeB<Key>::setData(Key data) {
+  NodeB::data_ = data;
 }
 
 template <class Key>
@@ -76,22 +70,12 @@ NodeB<Key>*& NodeB<Key>::getRight() {
 
 template <class Key>
 void NodeB<Key>::setLeft(NodeB<Key>* left) {
-  NodeB::left_ = left;
+  left_ = left;
 }
 
 template <class Key>
 void NodeB<Key>::setRight(NodeB<Key>* right) {
-  NodeB::right_ = right;
-}
-
-template <class Key>
-void NodeB<Key>::setData(Key data) {
-  NodeB::data_ = data;
-}
-
-template <class Key>
-Key NodeB<Key>::getData() const {
-  return data_;
+  right_ = right;
 }
 
 #endif  // NODEB_H_
