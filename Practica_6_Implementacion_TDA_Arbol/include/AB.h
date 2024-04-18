@@ -4,12 +4,12 @@
  * Grado en Ingeniería Informática
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
- * Práctica 6: Implementacion del TDA Árbol
+ * Práctica 7: Implementacion del TDA AVL
  * @file AB.h
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
- * @date 2024-04-22
+ * @date 2024-04-29
  *
  * @copyright Copyright (c) 2023
  *
@@ -23,15 +23,19 @@
 
 #include "nodeB.h"
 
-template<class Key>
+template <class Key>
 class AB {
  public:
   NodeB<Key>* getRoot() const;
   NodeB<Key>*& getRoot();
   void setRoot(NodeB<Key>* root);
-  
+
+  // Methods
   virtual bool insert(const Key& k) = 0;
   virtual bool search(const Key& k) const = 0;
+  virtual bool remove(const Key& k) = 0;
+
+  // Tour methods
   void inorder() const;
   void inorder(NodeB<Key>* node) const;
   void preorder() const;
@@ -41,11 +45,12 @@ class AB {
   void byLevel() const;
   void byLevel(NodeB<Key>* node) const;
 
+  // Other methods
   int height() const;
   int heightN(NodeB<Key>* node) const;
   bool empty();
 
-  void write(std::ostream& os) const;
+  virtual void write(std::ostream& os) const;
   friend std::ostream& operator<<(std::ostream& os, const AB<Key>& ab) {
     ab.write(os);
     return os;
@@ -75,13 +80,13 @@ void AB<Key>::inorder() const {
   inorder(root_);
 }
 
-template<class Key>
+template <class Key>
 void AB<Key>::inorder(NodeB<Key>* node) const {
   if (node != nullptr) {
     inorder(node->getLeft());
     std::cout << BLUE_BOLD << node->getData() << " " << RESET;
     inorder(node->getRight());
-  } 
+  }
 }
 
 template <class Key>
@@ -89,7 +94,7 @@ void AB<Key>::preorder() const {
   preorder(root_);
 }
 
-template<class Key>
+template <class Key>
 void AB<Key>::preorder(NodeB<Key>* node) const {
   if (node != nullptr) {
     std::cout << BLUE_BOLD << node->getData() << " " << RESET;
@@ -103,7 +108,7 @@ void AB<Key>::postorder() const {
   postorder(root_);
 }
 
-template<class Key>
+template <class Key>
 void AB<Key>::postorder(NodeB<Key>* node) const {
   if (node != nullptr) {
     postorder(node->getLeft());
@@ -117,7 +122,7 @@ void AB<Key>::byLevel() const {
   byLevel(root_);
 }
 
-template<class Key>
+template <class Key>
 void AB<Key>::byLevel(NodeB<Key>* node) const {
   std::queue<NodeB<Key>*> queue;
   queue.push(node);
@@ -128,32 +133,6 @@ void AB<Key>::byLevel(NodeB<Key>* node) const {
       queue.push(queue.front()->getRight());
     }
     queue.pop();
-  }
-}
-
-template <class Key>
-void AB<Key>::write(std::ostream& os) const {
-  int k = 0;
-  std::queue<NodeB<Key>*> queue, queueAux;
-  queue.push(root_);
-  while (!queue.empty()) {
-    os << "Level " << k << ": ";
-    while (!queue.empty()) {
-      if (queue.front() != nullptr) {
-        os << "[" << queue.front()->getData() << "]";
-        queueAux.push(queue.front()->getLeft());
-        queueAux.push(queue.front()->getRight());
-      } else {
-        os << "[.]";
-      }
-      queue.pop();
-    }
-    queue = queueAux;
-    while (!queueAux.empty()) {
-      queueAux.pop();
-    }
-    k++;
-    os << "\n";
   }
 }
 
@@ -178,9 +157,35 @@ int AB<Key>::heightN(NodeB<Key>* node) const {
   }
 }
 
-template<class Key>
+template <class Key>
 bool AB<Key>::empty() {
   return root_ == nullptr;
 }
 
-#endif // AB_H
+template <class Key>
+void AB<Key>::write(std::ostream& os) const {
+  int k = 0;
+  std::queue<NodeB<Key>*> queue, queueAux;
+  queue.push(root_);
+  while (!queue.empty()) {
+    os << "Level " << k << ": ";
+    while (!queue.empty()) {
+      if (queue.front() != nullptr) {
+        os << "[" << queue.front()->getData() << "] ";
+        queueAux.push(queue.front()->getLeft());
+        queueAux.push(queue.front()->getRight());
+      } else {
+        os << "[.] ";
+      }
+      queue.pop();
+    }
+    queue = queueAux;
+    while (!queueAux.empty()) {
+      queueAux.pop();
+    }
+    os << std::endl;
+    k++;
+  }
+}
+
+#endif  // AB_H
