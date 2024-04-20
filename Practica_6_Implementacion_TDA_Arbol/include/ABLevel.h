@@ -26,6 +26,7 @@ class ABLevel : public AB<Key> {
 
 template <class Key>
 bool ABLevel<Key>::insert(const Key& k) {
+  this->nodes_++;
   NodeB<Key>* newNode = new NodeB<Key>(k);
   if (!newNode) return false;
 

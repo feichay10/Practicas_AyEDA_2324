@@ -39,6 +39,7 @@ bool ABE<Key>::insert(const Key& k) {
     return false;
   }
 
+  this->nodes_++;
   if (AB<Key>::root_ == nullptr) {
     AB<Key>::root_ = new NodeB<Key>(k);
     return true;

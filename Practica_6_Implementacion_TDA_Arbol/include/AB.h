@@ -29,6 +29,7 @@ class AB {
   NodeB<Key>* getRoot() const;
   NodeB<Key>*& getRoot();
   void setRoot(NodeB<Key>* root);
+  int getNodes() const;
 
   // Methods
   virtual bool insert(const Key& k) = 0;
@@ -49,6 +50,8 @@ class AB {
   int height() const;
   int heightN(NodeB<Key>* node) const;
   bool empty();
+  int getLeafCount() const;
+  int countLeafNodes(NodeB<Key>* node) const;
 
   virtual void write(std::ostream& os) const;
   friend std::ostream& operator<<(std::ostream& os, const AB<Key>& ab) {
@@ -58,6 +61,7 @@ class AB {
 
  protected:
   NodeB<Key>* root_;
+  int nodes_ = 0; // Number of nodes
 };
 
 template <class Key>
@@ -73,6 +77,11 @@ NodeB<Key>*& AB<Key>::getRoot() {
 template <class Key>
 void AB<Key>::setRoot(NodeB<Key>* root) {
   root_ = root;
+}
+
+template <class Key>
+int AB<Key>::getNodes() const {
+  return nodes_;
 }
 
 template <class Key>
@@ -160,6 +169,22 @@ int AB<Key>::heightN(NodeB<Key>* node) const {
 template <class Key>
 bool AB<Key>::empty() {
   return root_ == nullptr;
+}
+
+template <class Key>
+int AB<Key>::getLeafCount() const {
+  return countLeafNodes(root_);
+}
+
+template <class Key>
+int AB<Key>::countLeafNodes(NodeB<Key>* node) const {
+  if (node == nullptr) {
+    return 0;
+  }
+  if (node->getLeft() == nullptr && node->getRight() == nullptr) {
+    return 1;
+  }
+  return countLeafNodes(node->getLeft()) + countLeafNodes(node->getRight());
 }
 
 template <class Key>

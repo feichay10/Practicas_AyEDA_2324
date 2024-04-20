@@ -17,8 +17,6 @@
 
 #include "../include/functions.h"
 
-// TODO: Check when not file name is provided
-
 int main(int argc, char* argv[]) {
   treeParameters parameters;
   try {

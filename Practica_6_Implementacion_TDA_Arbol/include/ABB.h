@@ -39,7 +39,8 @@ bool ABB<Key>::insert(const Key& k) {
   if (search(k)) {
     return false;
   }
-  
+
+  this->nodes_++;
   return insertBranch(AB<Key>::root_, k);
 }
 
@@ -52,6 +53,7 @@ bool ABB<Key>::insertBranch(NodeB<Key>*& node, Key k) {
   } else {
     insertBranch(node->getRight(), k);
   }
+  
   return true;
 }
 
@@ -80,6 +82,7 @@ bool ABB<Key>::remove(const Key& k) {
     return false;
   }
 
+  this->nodes_--;
   return removeBranch(AB<Key>::root_, k);
 }
 
@@ -103,6 +106,7 @@ bool ABB<Key>::removeBranch(NodeB<Key>*& node, Key k) {
     }
     delete deleteNode;
   }
+
   return true;
 }
 
