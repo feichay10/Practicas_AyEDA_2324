@@ -58,7 +58,7 @@ int main() {
   std::cout << "Numero de valores insertados en el arbol ABB: " << countABB << std::endl;
   std::cout << "Numero de valores insertados en el arbol ABE: " << countABE << std::endl;
 
-  std::cout << "ABB: " << std::endl;
+  std::cout << "\nABB: " << std::endl;
   std::cout << "Altura del subarbol izquierdo: " << abb->heightN(abb->getRoot()->getLeft()) << std::endl;
   std::cout << "Altura del subarbol derecho: " << abb->heightN(abb->getRoot()->getRight()) << std::endl;
   std::cout << "Diferencia de altura: " << abb->heightN(abb->getRoot()->getLeft()) - abb->heightN(abb->getRoot()->getRight()) << std::endl;
@@ -67,6 +67,9 @@ int main() {
   std::cout << "Altura del subarbol izquierdo: " << abe->heightN(abe->getRoot()->getLeft()) << std::endl;
   std::cout << "Altura del subarbol derecho: " << abe->heightN(abe->getRoot()->getRight()) << std::endl;
   std::cout << "Diferencia de altura: " << abe->heightN(abe->getRoot()->getLeft()) - abe->heightN(abe->getRoot()->getRight()) << std::endl;
+
+  delete abb;
+  delete abe;
 
   return 0;
 }
