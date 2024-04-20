@@ -44,7 +44,7 @@ treeParameters checkProgramParameters(int argc, char* argv[], treeParameters& pa
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-ab") {
       if (i + 1 < argc) {
-        if (std::string(argv[i + 1]) == "abe" || std::string(argv[i + 1]) == "abb" || std::string(argv[i + 1]) == "ab") {
+        if (std::string(argv[i + 1]) == "abe" || std::string(argv[i + 1]) == "abb") {
           parameters.treeType_ = argv[i + 1];
         } else {
           throw std::invalid_argument("Tree type " + std::string(argv[i + 1]) + " not avalaible. Use " + std::string(argv[0]) + " -help for more information.");
