@@ -22,6 +22,7 @@
 #include <queue>
 
 #include "nodeB.h"
+#include "colors.h"
 
 template <class Key>
 class AB {
