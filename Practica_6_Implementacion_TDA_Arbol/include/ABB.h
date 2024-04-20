@@ -20,6 +20,11 @@
 
 #include "AB.h"
 
+/**
+ * @brief Class ABB (binary search tree) that inherits from AB.
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class ABB : public AB<Key> {
  public:
@@ -34,6 +39,14 @@ class ABB : public AB<Key> {
   bool replace(NodeB<Key>*& deleteNode, NodeB<Key>*& substituteNode);
 };
 
+/**
+ * @brief Inserts a new node in the binary search tree.
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool ABB<Key>::insert(const Key& k) {
   if (search(k)) {
@@ -44,6 +57,15 @@ bool ABB<Key>::insert(const Key& k) {
   return insertBranch(AB<Key>::root_, k);
 }
 
+/**
+ * @brief Inserts a new node in the binary search tree.
+ * 
+ * @tparam Key 
+ * @param node 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool ABB<Key>::insertBranch(NodeB<Key>*& node, Key k) {
   if (node == nullptr) {
@@ -57,11 +79,28 @@ bool ABB<Key>::insertBranch(NodeB<Key>*& node, Key k) {
   return true;
 }
 
+/**
+ * @brief Searches for a node in the binary search tree.
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool ABB<Key>::search(const Key& k) const {
   return searchBranch(AB<Key>::root_, k);
 }
 
+/**
+ * @brief Searches for a node in the binary search tree.
+ * 
+ * @tparam Key 
+ * @param node 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool ABB<Key>::searchBranch(NodeB<Key>* node, Key k) const {
   if (node == nullptr) {
@@ -76,6 +115,14 @@ bool ABB<Key>::searchBranch(NodeB<Key>* node, Key k) const {
   return searchBranch(node->getRight(), k);
 }
 
+/**
+ * @brief Removes a node from the binary search tree.
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool ABB<Key>::remove(const Key& k) {
   if (!search(k)) {
@@ -86,6 +133,15 @@ bool ABB<Key>::remove(const Key& k) {
   return removeBranch(AB<Key>::root_, k);
 }
 
+/**
+ * @brief Removes a node from the binary search tree.
+ * 
+ * @tparam Key 
+ * @param node 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool ABB<Key>::removeBranch(NodeB<Key>*& node, Key k) {
   if (node == nullptr) {
@@ -110,6 +166,14 @@ bool ABB<Key>::removeBranch(NodeB<Key>*& node, Key k) {
   return true;
 }
 
+/**
+ * @brief Replaces a node with another node.
+ * 
+ * @tparam Key 
+ * @param deleteNode 
+ * @param substituteNode 
+ * @return true 
+ */
 template <class Key>
 bool ABB<Key>::replace(NodeB<Key>*& deleteNode, NodeB<Key>*& substituteNode) {
   if (substituteNode->getRight() != nullptr) {

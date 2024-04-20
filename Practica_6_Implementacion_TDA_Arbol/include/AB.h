@@ -24,13 +24,18 @@
 #include "nodeB.h"
 #include "colors.h"
 
+/**
+ * @brief Class AB that represents a binary tree
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 class AB {
  public:
   NodeB<Key>* getRoot() const;
   NodeB<Key>*& getRoot();
   void setRoot(NodeB<Key>* root);
-  int getNodes() const;
+  int getNumNodes() const;
 
   // Methods
   virtual bool insert(const Key& k) = 0;
@@ -62,34 +67,69 @@ class AB {
 
  protected:
   NodeB<Key>* root_;
-  int nodes_ = 0; // Number of nodes
+  int numNodes_ = 0; // Number of nodes
 };
 
+/**
+ * @brief Get a pointer to the root node of the binary tree.
+ * 
+ * @tparam Key 
+ * @return NodeB<Key>* 
+ */
 template <class Key>
 NodeB<Key>* AB<Key>::getRoot() const {
   return root_;
 }
 
+/**
+ * @brief Get a reference to a pointer to the root node of the binary tree
+ * 
+ * @tparam Key 
+ * @return NodeB<Key>*& 
+ */
 template <class Key>
 NodeB<Key>*& AB<Key>::getRoot() {
   return root_;
 }
 
+/**
+ * @brief Set the root node of the binary tree
+ * 
+ * @tparam Key 
+ * @param root 
+ */
 template <class Key>
 void AB<Key>::setRoot(NodeB<Key>* root) {
   root_ = root;
 }
 
+/**
+ * @brief Get the number of nodes in the binary tree
+ * 
+ * @tparam Key 
+ * @return int 
+ */
 template <class Key>
-int AB<Key>::getNodes() const {
+int AB<Key>::getNumNodes() const {
   return nodes_;
 }
 
+/**
+ * @brief Inorder traversal of the binary tree
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 void AB<Key>::inorder() const {
   inorder(root_);
 }
 
+/**
+ * @brief Inorder traversal of the binary tree
+ * 
+ * @tparam Key 
+ * @param node 
+ */
 template <class Key>
 void AB<Key>::inorder(NodeB<Key>* node) const {
   if (node != nullptr) {
@@ -99,11 +139,22 @@ void AB<Key>::inorder(NodeB<Key>* node) const {
   }
 }
 
+/**
+ * @brief Preorder traversal of the binary tree
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 void AB<Key>::preorder() const {
   preorder(root_);
 }
 
+/**
+ * @brief Preorder traversal of the binary tree
+ * 
+ * @tparam Key 
+ * @param node 
+ */
 template <class Key>
 void AB<Key>::preorder(NodeB<Key>* node) const {
   if (node != nullptr) {
@@ -113,11 +164,22 @@ void AB<Key>::preorder(NodeB<Key>* node) const {
   }
 }
 
+/**
+ * @brief Postorder traversal of the binary tree
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 void AB<Key>::postorder() const {
   postorder(root_);
 }
 
+/**
+ * @brief Postorder traversal of the binary tree
+ * 
+ * @tparam Key 
+ * @param node 
+ */
 template <class Key>
 void AB<Key>::postorder(NodeB<Key>* node) const {
   if (node != nullptr) {
@@ -127,11 +189,22 @@ void AB<Key>::postorder(NodeB<Key>* node) const {
   }
 }
 
+/**
+ * @brief Level order traversal of the binary tree
+ * 
+ * @tparam Key 
+ */
 template <class Key>
 void AB<Key>::byLevel() const {
   byLevel(root_);
 }
 
+/**
+ * @brief Level order traversal of the binary tree
+ * 
+ * @tparam Key 
+ * @param node 
+ */
 template <class Key>
 void AB<Key>::byLevel(NodeB<Key>* node) const {
   std::queue<NodeB<Key>*> queue;
@@ -146,11 +219,24 @@ void AB<Key>::byLevel(NodeB<Key>* node) const {
   }
 }
 
+/**
+ * @brief Get the height of the binary tree
+ * 
+ * @tparam Key 
+ * @return int 
+ */
 template <class Key>
 int AB<Key>::height() const {
   return heightN(root_);
 }
 
+/**
+ * @brief Get the height of the binary tree
+ * 
+ * @tparam Key 
+ * @param node 
+ * @return int 
+ */
 template <class Key>
 int AB<Key>::heightN(NodeB<Key>* node) const {
   if (node == nullptr) {
@@ -167,16 +253,36 @@ int AB<Key>::heightN(NodeB<Key>* node) const {
   }
 }
 
+/**
+ * @brief Check if the binary tree is empty
+ * 
+ * @tparam Key 
+ * @return true 
+ * @return false 
+ */
 template <class Key>
 bool AB<Key>::empty() {
   return root_ == nullptr;
 }
 
+/**
+ * @brief Get the number of leaf nodes in the binary tree
+ * 
+ * @tparam Key 
+ * @return int 
+ */
 template <class Key>
 int AB<Key>::getLeafCount() const {
   return countLeafNodes(root_);
 }
 
+/**
+ * @brief Count the number of leaf nodes in the binary tree
+ * 
+ * @tparam Key 
+ * @param node 
+ * @return int 
+ */
 template <class Key>
 int AB<Key>::countLeafNodes(NodeB<Key>* node) const {
   if (node == nullptr) {
@@ -188,6 +294,12 @@ int AB<Key>::countLeafNodes(NodeB<Key>* node) const {
   return countLeafNodes(node->getLeft()) + countLeafNodes(node->getRight());
 }
 
+/**
+ * @brief Write the binary tree to an output stream
+ * 
+ * @tparam Key 
+ * @param os 
+ */
 template <class Key>
 void AB<Key>::write(std::ostream& os) const {
   int k = 0;
