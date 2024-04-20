@@ -2,12 +2,12 @@ CXX		 := g++
 CXXFLAGS=-std=c++17 -g #-fsanitize=address #-Wall #-Wextra
 
 BIN     := bin
-SRC     := modification
+SRC     := src
 BUILD	:= build
 INCLUDE := include
 LIB     := lib
 LIBRARIES   := 
-EXECUTABLE  := treeTDA_modification
+EXECUTABLE  := treeTDA
 PARAMS	:= 
 SOURCES := $(wildcard $(SRC)/*.cc)
 OBJS	:= $(patsubst $(SRC)/%.cc, $(BUILD)/%.o,$(SOURCES))
