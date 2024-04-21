@@ -34,7 +34,7 @@ class ABE : public AB<Key> {
 
  private:
   bool insertBalBranch(NodeB<Key>*& node, const Key k);
-  int branchSize(NodeB<Key>* node) const;
+  const int branchSize(NodeB<Key>* node) const;
   bool searchBalBranch(NodeB<Key>* node, const Key k) const;
 };
 
@@ -52,7 +52,7 @@ bool ABE<Key>::insert(const Key& k) {
     return false;
   }
 
-  this->nodes_++;
+  this->numNodes_++;
   if (AB<Key>::root_ == nullptr) {
     AB<Key>::root_ = new NodeB<Key>(k);
     return true;
@@ -96,7 +96,7 @@ bool ABE<Key>::insertBalBranch(NodeB<Key>*& node, const Key k) {
  * @return int 
  */
 template<class Key>
-int ABE<Key>::branchSize(NodeB<Key>* node) const {
+const int ABE<Key>::branchSize(NodeB<Key>* node) const {
   if (node == NULL) {
     return 0;
   }

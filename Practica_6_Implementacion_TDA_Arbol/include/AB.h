@@ -111,7 +111,7 @@ void AB<Key>::setRoot(NodeB<Key>* root) {
  */
 template <class Key>
 int AB<Key>::getNumNodes() const {
-  return nodes_;
+  return numNodes_;
 }
 
 /**

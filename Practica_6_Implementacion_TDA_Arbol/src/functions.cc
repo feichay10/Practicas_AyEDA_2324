@@ -116,8 +116,6 @@ void createTree(treeParameters& parameters) {
     tree = new ABE<keyType>();
   } else if (parameters.treeType_ == "abb") {
     tree = new ABB<keyType>();
-  } else {
-    tree = new ABLevel<keyType>();
   }
 
   if (parameters.init_ == "random") {
@@ -174,11 +172,8 @@ void menu(AB<keyType>* tree, treeParameters& parameters) {
     std::cout << RED_BOLD << "  [2]" << RESET << BOLD << " Search key" << std::endl;
     std::cout << RED_BOLD << "  [3]" << RESET << BOLD << " Delete key" << std::endl;
     std::cout << RED_BOLD << "  [4]" << RESET << BOLD << " Show inorder tree" << std::endl;
-    std::cout << RED_BOLD << "  [5]" << RESET << BOLD << " Show preorder tree" << std::endl;
-    std::cout << RED_BOLD << "  [6]" << RESET << BOLD << " Show postorder tree" << std::endl;
-    std::cout << RED_BOLD << "  [7]" << RESET << BOLD << " Show by level order tree" << std::endl;
-    std::cout << RED_BOLD << "  [8]" << RESET << BOLD << " Show all properties" << std::endl;
-    std::cout << RED_BOLD << "  [9]" << RESET << BOLD << " Show tree" << std::endl;
+    std::cout << RED_BOLD << "  [5]" << RESET << BOLD << " Show all properties" << std::endl;
+    std::cout << RED_BOLD << "  [6]" << RESET << BOLD << " Show tree" << std::endl;
     std::cout << "Select operation: " << RESET; 
     std::cin >> option;
 
@@ -222,27 +217,12 @@ void menu(AB<keyType>* tree, treeParameters& parameters) {
         std::cout << std::endl;
         break;
       case 5:
-        std::cout << BOLD << "\nPreorder tree: " << RESET;
-        tree->preorder();
-        std::cout << std::endl;
-        break;
-      case 6:
-        std::cout << BOLD << "\nPostorder tree: " << RESET;
-        tree->postorder();
-        std::cout << std::endl;
-        break;
-      case 7:
-        std::cout << BOLD << "\nBy level tree: " << RESET;
-        tree->byLevel();
-        std::cout << std::endl;
-        break;
-      case 8:
         std::cout << BOLD << "\nTree properties: " << RESET << std::endl;
-        std::cout << " -Tree: " << std::endl;
-        tree->write(std::cout);
-        std::cout << "\n -Height: " << BLUE_BOLD << tree->height() << RESET << std::endl;
-        std::cout << " -Number of nodes: " << BLUE_BOLD << tree->getNodes() << RESET << std::endl;
-        std::cout << " -Number of leaves: " << BLUE_BOLD << tree->getLeafCount() << RESET << std::endl;
+        std::cout << " -Height: " << BLUE_BOLD << tree->height() << RESET << std::endl;
+        std::cout << " -Number of nodes: " << BLUE_BOLD << tree->getNumNodes() << RESET << std::endl;
+        std::cout << " -Number of leaf nodes: " << BLUE_BOLD << tree->getLeafCount() << RESET << std::endl;
+        std::cout << " -Height of left subtree: " << BLUE_BOLD << tree->heightN(tree->getRoot()->getLeft()) << RESET << std::endl;
+        std::cout << " -Height of right subtree: " << BLUE_BOLD << tree->heightN(tree->getRoot()->getRight()) << RESET << std::endl;
         std::cout << " -Preorder tree: " << BLUE_BOLD;
         tree->preorder();
         std::cout << RESET << std::endl;
@@ -256,7 +236,7 @@ void menu(AB<keyType>* tree, treeParameters& parameters) {
         tree->byLevel();
         std::cout << RESET << std::endl;
         break;
-      case 9:
+      case 6:
         std::cout << BOLD << "\nTree: " << RESET << std::endl;
         tree->write(std::cout); 
         break;

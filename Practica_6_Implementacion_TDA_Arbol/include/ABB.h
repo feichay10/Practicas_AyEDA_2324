@@ -53,7 +53,7 @@ bool ABB<Key>::insert(const Key& k) {
     return false;
   }
 
-  this->nodes_++;
+  this->numNodes_++;
   return insertBranch(AB<Key>::root_, k);
 }
 
@@ -129,7 +129,7 @@ bool ABB<Key>::remove(const Key& k) {
     return false;
   }
 
-  this->nodes_--;
+  this->numNodes_--;
   return removeBranch(AB<Key>::root_, k);
 }
 
