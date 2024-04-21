@@ -33,7 +33,7 @@ El autómata celular definido por la regla 110, indicada en la siguiente tabla, 
 
 | 111 | 110 | 101 | 100 | 011 | 010 | 001 | 000 | $L^{(G)}C^{(G)}R^{(G)}$ |
 |-----|-----|-----|-----|-----|-----|-----|-----|-------------------------|
-| 0   | 1   | 1   | 0   | 1   | 1   | 1   | 0   | $C^{G+1}=(C^{(G)}+R^{(G)}+C^{(G)}*R^{(G)}+L^{(G)}*C^{(G)}*C^{(G)}) \% 2$ |
+| 0   | 1   | 1   | 0   | 1   | 1   | 1   | 0   | $C^{G+1}=(C^{(G)}+R^{(G)}+C^{(G)}*R^{(G)}+L^{(G)}*C^{(G)}*C^{(G)})$ % 2 |
 
 # 4. Notas de implementación
 El objetivo de esta práctica es implementar las clases, tipos de datos definidos por el usuario, que representan los componentes de un autómata celular elemental. Para cada clase se definen sus responsabilidades, entendidas como la información que debe almacenar y las operaciones que debe realizar. Se propone las siguientes clases:
