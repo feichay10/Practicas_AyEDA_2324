@@ -32,8 +32,8 @@ La siguiente tabla contiene la expresión algebraica de la función de transici�
 
 | Regla | 111 | 110 | 101 | 100 | 011 | 010 | 001 | 000 | $L^{(G)}C^{(G)}R^{(G)}$ |
 |-------|-----|-----|-----|-----|-----|-----|-----|-----|-------------------------|
-| 110   | 0   | 1   | 1   | 0   | 1   | 1   | 1   | 0   | $C^{G+1}=(C^{(G)}+R^{(G)}+C^{(G)}*R^{(G)}+L^{(G)}*C^{(G)}*C^{(G)}) \% 2$ |
-| 30    | 0   | 0   | 0   | 1   | 1   | 1   | 1   | 0   | $C^{G+1}=(L^{(G)}+C^{(G)}+R^{(G)}+C^{(G)}*R^{(G)}) \% 2$ |
+| 110   | 0   | 1   | 1   | 0   | 1   | 1   | 1   | 0   | $C^{G+1}=(C^{(G)}+R^{(G)}+C^{(G)}*R^{(G)}+L^{(G)}*C^{(G)}*C^{(G)})$ % 2  |
+| 30    | 0   | 0   | 0   | 1   | 1   | 1   | 1   | 0   | $C^{G+1}=(L^{(G)}+C^{(G)}+R^{(G)}+C^{(G)}*R^{(G)})$ % 2  |
 
 También debemos revisar la especificación del retículo para convertirlo en una jerarquía de clases, donde la clase base `Lattice` es abstracta y define las responsabilidades asignadas a este tipo de datos, permitiendo que sean sus clases derivadas las que especifican las diferentes implementaciones. A partir de la clase base se derivan dos tipos de retículo:
 - `Lattice1D`, que contiene la definición e implementación común para las distintas variaciones de un retículo unidimensional.
