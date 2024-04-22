@@ -59,7 +59,7 @@ class AB {
   int getLeafCount() const;
   int countLeafNodes(NodeB<Key>* node) const;
 
-  virtual void write(std::ostream& os) const;
+  void write(std::ostream& os) const;
   friend std::ostream& operator<<(std::ostream& os, const AB<Key>& ab) {
     ab.write(os);
     return os;
@@ -67,7 +67,7 @@ class AB {
 
  protected:
   NodeB<Key>* root_;
-  int numNodes_ = 0; // Number of nodes
+  int numNodes_ = 0;
 };
 
 /**
