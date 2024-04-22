@@ -20,6 +20,11 @@
 
 #include "AB.h"
 
+/**
+ * @brief Class ABE (balanced binary tree) that inherits from AB.
+ * 
+ * @tparam Key 
+ */
 template<class Key>
 class ABE : public AB<Key> {
  public:
@@ -29,16 +34,25 @@ class ABE : public AB<Key> {
 
  private:
   bool insertBalBranch(NodeB<Key>*& node, const Key k);
-  int branchSize(NodeB<Key>* node) const;
+  const int branchSize(NodeB<Key>* node) const;
   bool searchBalBranch(NodeB<Key>* node, const Key k) const;
 };
 
+/**
+ * @brief Inserts a new node in the balanced binary tree.
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template<class Key>
 bool ABE<Key>::insert(const Key& k) {
   if (search(k)) {
     return false;
   }
 
+  this->numNodes_++;
   if (AB<Key>::root_ == nullptr) {
     AB<Key>::root_ = new NodeB<Key>(k);
     return true;
@@ -47,6 +61,15 @@ bool ABE<Key>::insert(const Key& k) {
   }
 }
 
+/**
+ * @brief Inserts a new node in the balanced binary tree.
+ * 
+ * @tparam Key 
+ * @param node 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template<class Key>
 bool ABE<Key>::insertBalBranch(NodeB<Key>*& node, const Key k) {
   if (branchSize(node->getLeft()) <= branchSize(node->getRight())) {
@@ -65,19 +88,43 @@ bool ABE<Key>::insertBalBranch(NodeB<Key>*& node, const Key k) {
   return true;
 }
 
+/**
+ * @brief Get the size of the branch
+ * 
+ * @tparam Key 
+ * @param node 
+ * @return int 
+ */
 template<class Key>
-int ABE<Key>::branchSize(NodeB<Key>* node) const {
+const int ABE<Key>::branchSize(NodeB<Key>* node) const {
   if (node == NULL) {
     return 0;
   }
   return (1 + branchSize(node->getLeft()) + branchSize(node->getRight()));
 }
 
+/**
+ * @brief Searches for a node in the balanced binary tree.
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template<class Key>
 bool ABE<Key>::search(const Key& k) const {
   return searchBalBranch(AB<Key>::root_, k);
 }
 
+/**
+ * @brief Searches for a node in the balanced binary tree.
+ * 
+ * @tparam Key 
+ * @param node 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template<class Key>
 bool ABE<Key>::searchBalBranch(NodeB<Key>* node, const Key k) const {
   if (node == nullptr) {
@@ -92,6 +139,14 @@ bool ABE<Key>::searchBalBranch(NodeB<Key>* node, const Key k) const {
   return searchBalBranch(node->getRight(), k);
 }
 
+/**
+ * @brief Removes a node from the balanced binary tree.
+ * 
+ * @tparam Key 
+ * @param k 
+ * @return true 
+ * @return false 
+ */
 template<class Key>
 bool ABE<Key>::remove(const Key& k) {
   return false;
