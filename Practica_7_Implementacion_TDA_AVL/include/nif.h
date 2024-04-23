@@ -21,11 +21,15 @@
 #include <ctime>
 #include <iostream>
 #include <random>
+#include <string>
 
 class Nif {
  public:
   Nif();
   Nif(const long nif);
+  Nif(std::string nif) {
+    nif_ = std::stol(nif);
+  }
 
   char letterNif(Nif nif);
   bool checkNif(Nif nif);
@@ -40,9 +44,6 @@ class Nif {
 
   friend std::ostream& operator<<(std::ostream& os, const Nif& nif);
   friend std::istream& operator>>(std::istream& is, Nif& nif);
-
-  auto begin() const { return std::to_string(nif_).begin(); }
-  auto end() const { return std::to_string(nif_).end(); }
 
  private:
   long nif_;

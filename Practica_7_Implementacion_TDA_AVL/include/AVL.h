@@ -236,14 +236,16 @@ bool AVL<Key>::replace(NodeAVL<Key>*& deleteNode, NodeAVL<Key>*& substituteNode,
     }
   } else {
     deleteNode->setData(substituteNode->getData());
+    deleteNode->setBalance(substituteNode->getBalance());
     deleteNode = substituteNode;
     substituteNode = reinterpret_cast<NodeAVL<Key>*>(substituteNode->getLeft());
     decrease = true;
   }
 
-  return true;
+  return decrease;
 }
 
+// ! FIX DD rotation
 template <class Key>
 void AVL<Key>::removeRebalanceLeft(NodeAVL<Key>*& node, bool& decrease) {
   switch (node->getBalance()) {
@@ -256,8 +258,8 @@ void AVL<Key>::removeRebalanceLeft(NodeAVL<Key>*& node, bool& decrease) {
           decrease = false;
         }
         rotation_DD(node);
-        break;
       }
+      break;
     }
     case 0:
       node->setBalance(-1);
@@ -274,11 +276,13 @@ void AVL<Key>::removeRebalanceRight(NodeAVL<Key>*& node, bool& decrease) {
     case 1: {
         NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(node->getLeft());
         if (node1->getBalance() < 0) {
+          std::cout << "ID\n";
           rotation_ID(node);
         } else {
           if (node1->getBalance() == 0) {
             decrease = false;
           }
+          std::cout << "II\n";
           rotation_II(node);
         }
         break;
