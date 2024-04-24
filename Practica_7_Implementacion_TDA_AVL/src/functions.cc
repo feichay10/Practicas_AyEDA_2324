@@ -26,7 +26,7 @@ treeParameters checkProgramParameters(int argc, char* argv[], treeParameters& pa
   }
 
   // Check if tree type is AVL, trace must be provided (-trace option)
-    // Check for tree type and initialization parameters, must be provided
+  // Check for tree type and initialization parameters, must be provided
   bool treeType = false, init = false, traceFlag = false;
   for (int i = 1; i < argc; i++) {
     if (std::string(argv[i]) == "-ab") {

@@ -78,9 +78,10 @@ bool AVL<Key>::insert(const Key& k) {
     return false;
   }
 
+  this->numNodes_++;
   NodeAVL<Key>* newOne = new NodeAVL<Key>(k);
   bool grow = false;
-  this->insertBalance(this->getRoot(), newOne, grow);
+  insertBalance(this->getRoot(), newOne, grow);
   return true;
 }
 
@@ -90,6 +91,7 @@ bool AVL<Key>::remove(const Key& k) {
     return false;
   }
 
+  this->numNodes_--;
   bool decrease = false;
   removeBranch(this->getRoot(), k, decrease);
   return true;
@@ -156,7 +158,7 @@ void AVL<Key>::insertRebalanceLeft(NodeAVL<Key>*& root, bool& grow) {
     case 1:
       if (this->trace_) {
         std::cout << "Desbalanceo: " << std::endl;
-        this->write(std::cout);
+        write(std::cout);
       }
       NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(root->getLeft());
       if (node1->getBalance() == 1) {
@@ -181,7 +183,7 @@ void AVL<Key>::insertRebalanceRight(NodeAVL<Key>*& root, bool& grow) {
     case -1:
       if (this->trace_) {
         std::cout << "Desbalanceo: " << std::endl;
-        this->write(std::cout);
+        write(std::cout);
       }
       NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(root->getRight());
       if (node1->getBalance() == -1) {

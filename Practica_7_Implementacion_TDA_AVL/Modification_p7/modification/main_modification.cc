@@ -46,7 +46,6 @@ int main(int argc, char* argv[]) {
     treeAVL->insert(key);
   }
 
-
   std::cout << std::endl;
   treeABB->write(std::cout);
 

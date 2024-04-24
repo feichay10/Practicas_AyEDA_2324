@@ -81,7 +81,7 @@ bool AVL<Key>::insert(const Key& k) {
 
   NodeAVL<Key>* newOne = new NodeAVL<Key>(k);
   bool grow = false;
-  this->insertBalance(this->getRoot(), newOne, grow);
+  insertBalance(this->getRoot(), newOne, grow);
   return true;
 }
 
