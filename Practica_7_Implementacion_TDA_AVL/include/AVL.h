@@ -133,12 +133,12 @@ void AVL<Key>::insertBalance(NodeAVL<Key>*& root, NodeAVL<Key>* newOne, bool& gr
     root = newOne;
     grow = true;
   } else if (newOne->getData() < root->getData()) { // Insertar balanceado por la izquierda
-    insertBalance(reinterpret_cast<NodeAVL<Key>*&>(root->getLeft()), newOne, grow);
+    insertBalance(root->getLeft(), newOne, grow);
     if (grow) {
       insertRebalanceLeft(root, grow);
     }
   } else if (newOne->getData() > root->getData()) { // Insertar balanceado por la derecha
-    insertBalance(reinterpret_cast<NodeAVL<Key>*&>(root->getRight()), newOne, grow);
+    insertBalance(root->getRight(), newOne, grow);
     if (grow) {
       insertRebalanceRight(root, grow);
     }
@@ -160,13 +160,14 @@ void AVL<Key>::insertRebalanceLeft(NodeAVL<Key>*& root, bool& grow) {
         std::cout << "Desbalanceo: " << std::endl;
         write(std::cout);
       }
-      NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(root->getLeft());
+      NodeAVL<Key>* node1 = root->getLeft();
       if (node1->getBalance() == 1) {
         rotation_II(root);
       } else {
         rotation_ID(root);
       }
       grow = false;
+      break;
   }
 }
 
@@ -185,13 +186,14 @@ void AVL<Key>::insertRebalanceRight(NodeAVL<Key>*& root, bool& grow) {
         std::cout << "Desbalanceo: " << std::endl;
         write(std::cout);
       }
-      NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(root->getRight());
+      NodeAVL<Key>* node1 = root->getRight();
       if (node1->getBalance() == -1) {
         rotation_DD(root);
       } else {
         rotation_DI(root);
       }
       grow = false;
+      break;
   }
 }
 
@@ -202,25 +204,25 @@ void AVL<Key>::removeBranch(NodeAVL<Key>*& node, const Key& k, bool& decrease) {
   }
 
   if (k < node->getData()) {
-    removeBranch(reinterpret_cast<NodeAVL<Key>*&>(node->getLeft()), k, decrease);
+    removeBranch(node->getLeft(), k, decrease);
     if (decrease) {
       removeRebalanceLeft(node, decrease);
     }
   } else if (k > node->getData()) {
-    removeBranch(reinterpret_cast<NodeAVL<Key>*&>(node->getRight()), k, decrease);
+    removeBranch(node->getRight(), k, decrease);
     if (decrease) {
       removeRebalanceRight(node, decrease);
     }
   } else {
     NodeAVL<Key>* deleteNode = node;
     if (node->getLeft() == nullptr) {
-      node = reinterpret_cast<NodeAVL<Key>*>(node->getRight());
+      node = node->getRight();
       decrease = true;
     } else if (node->getRight() == nullptr) {
-      node = reinterpret_cast<NodeAVL<Key>*>(node->getLeft());
+      node = node->getLeft();
       decrease = true;
     } else {
-      replace(deleteNode, reinterpret_cast<NodeAVL<Key>*&>(node->getLeft()), decrease);
+      replace(deleteNode, node->getLeft(), decrease);
       if (decrease) {
         removeRebalanceLeft(node, decrease);
       }
@@ -232,7 +234,7 @@ void AVL<Key>::removeBranch(NodeAVL<Key>*& node, const Key& k, bool& decrease) {
 template <class Key>
 bool AVL<Key>::replace(NodeAVL<Key>*& deleteNode, NodeAVL<Key>*& substituteNode, bool& decrease) {
   if (substituteNode->getRight() != nullptr) {
-    replace(deleteNode, reinterpret_cast<NodeAVL<Key>*&>(substituteNode->getRight()), decrease);
+    replace(deleteNode, substituteNode->getRight(), decrease);
     if (decrease) {
       removeRebalanceRight(substituteNode, decrease);
     }
@@ -240,7 +242,7 @@ bool AVL<Key>::replace(NodeAVL<Key>*& deleteNode, NodeAVL<Key>*& substituteNode,
     deleteNode->setData(substituteNode->getData());
     deleteNode->setBalance(substituteNode->getBalance());
     deleteNode = substituteNode;
-    substituteNode = reinterpret_cast<NodeAVL<Key>*>(substituteNode->getLeft());
+    substituteNode = substituteNode->getLeft();
     decrease = true;
   }
 
@@ -252,7 +254,7 @@ template <class Key>
 void AVL<Key>::removeRebalanceLeft(NodeAVL<Key>*& node, bool& decrease) {
   switch (node->getBalance()) {
     case -1: {
-      NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(node->getRight());
+      NodeAVL<Key>* node1 = node->getRight();
       if (node1->getBalance() > 0) {
         rotation_DI(node);
       } else {
@@ -276,7 +278,7 @@ template <class Key>
 void AVL<Key>::removeRebalanceRight(NodeAVL<Key>*& node, bool& decrease) {
   switch (node->getBalance()) {
     case 1: {
-        NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(node->getLeft());
+        NodeAVL<Key>* node1 = node->getLeft();
         if (node1->getBalance() < 0) {
           std::cout << "ID\n";
           rotation_ID(node);
@@ -303,8 +305,8 @@ void AVL<Key>::rotation_II(NodeAVL<Key>*& node) {
   if (this->trace_) {
     std::cout << "Rotation II on [" << node->getData() << " (" << AB<Key>::heightN(node->getLeft()) - AB<Key>::heightN(node->getRight()) << ")]" << std::endl;
   }
-  NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(node->getLeft());
-  node->setLeft(reinterpret_cast<NodeAVL<Key>*&>(node1->getRight()));
+  NodeAVL<Key>* node1 = node->getLeft();
+  node->setLeft(node1->getRight());
   node1->setRight(node);
   if (node1->getBalance() == 1) {
     node->setBalance(0);
@@ -321,8 +323,8 @@ void AVL<Key>::rotation_DD(NodeAVL<Key>*& node) {
   if (this->trace_) {
     std::cout << "Rotation DD on [" << node->getData() << " (" << AB<Key>::heightN(node->getLeft()) - AB<Key>::heightN(node->getRight()) << ")]" << std::endl;
   }
-  NodeAVL<Key>* node1 = reinterpret_cast<NodeAVL<Key>*&>(node->getRight());
-  node->setRight(reinterpret_cast<NodeAVL<Key>*&>(node1->getLeft()));
+  NodeAVL<Key>* node1 = node->getRight();
+  node->setRight(node1->getLeft());
   node1->setLeft(node);
   if (node1->getBalance() == -1) {
     node->setBalance(0);

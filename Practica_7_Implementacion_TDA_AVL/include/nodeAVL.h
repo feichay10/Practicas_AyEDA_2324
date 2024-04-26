@@ -23,9 +23,7 @@
 template <class Key>
 class NodeAVL : public NodeB<Key> {
  public:
-  NodeAVL();
   NodeAVL(Key data, NodeAVL<Key>* left = nullptr, NodeAVL<Key>* right = nullptr);
-  ~NodeAVL() = default;
 
   int getBalance();
   void setBalance(const int& bal);
@@ -36,15 +34,10 @@ class NodeAVL : public NodeB<Key> {
   NodeAVL<Key>*& getRight();
   void setLeft(NodeAVL<Key>* left);
   void setRight(NodeAVL<Key>* right);
-  void setData(Key data);
-  Key getData() const;
 
  private:
   int balance_;
 };
-
-template <class Key>
-NodeAVL<Key>::NodeAVL() : NodeB<Key>(), balance_(0) {}
 
 template <class Key>
 NodeAVL<Key>::NodeAVL(Key data, NodeAVL<Key>* left, NodeAVL<Key>* right) : NodeB<Key>(data, left, right), balance_(0) {}
@@ -55,8 +48,8 @@ int NodeAVL<Key>::getBalance() {
 }
 
 template <class Key>
-void NodeAVL<Key>::setBalance(const int& bal) {
-  balance_ = bal;
+void NodeAVL<Key>::setBalance(const int& balance) {
+  balance_ = balance;
 }
 
 template <class Key>
@@ -87,16 +80,6 @@ void NodeAVL<Key>::setLeft(NodeAVL<Key>* left) {
 template <class Key>
 void NodeAVL<Key>::setRight(NodeAVL<Key>* right) {
   NodeB<Key>::setRight(right);
-}
-
-template <class Key>
-void NodeAVL<Key>::setData(Key data) {
-  NodeB<Key>::setData(data);
-}
-
-template <class Key>
-Key NodeAVL<Key>::getData() const {
-  return NodeB<Key>::getData();
 }
 
 #endif // NODEAVL_H
