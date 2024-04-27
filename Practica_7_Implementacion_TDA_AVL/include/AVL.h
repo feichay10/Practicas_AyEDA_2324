@@ -193,6 +193,8 @@ bool AVL<Key>::remove(const Key& k) {
 
   this->numNodes_--;
   bool decrease = false;
+  std::cout << getRoot()->getData() << std::endl;
+  std::cout << k << std::endl;
   return removeBranch(getRoot(), k, decrease);
 }
 
@@ -203,18 +205,22 @@ bool  AVL<Key>::removeBranch(NodeAVL<Key>*& node, const Key& k, bool& decrease) 
   }
 
   if (k < node->getData()) {
+    // std::cout << "removeBranch: " << k << " < " << node->getData() << std::endl;
     removeBranch(node->getLeft(), k, decrease);
     if (decrease) {
+      std::cout << "1 On RemoveBrancha calling Remove Rebalance Left: " << node->getData() << " - " << node->getBalance() << std::endl;
       removeRebalanceLeft(node, decrease);
     }
     return true;
   } else if (k > node->getData()) {
+    // std::cout << "removeBranch: " << k << " > " << node->getData() << std::endl;
     removeBranch(node->getRight(), k, decrease);
     if (decrease) {
       removeRebalanceRight(node, decrease);
     }
     return true;
   } else {
+    // std::cout << "removeBranch: " << k << " == " << node->getData() << std::endl;
     NodeAVL<Key>* deleteNode = node;
     if (node->getLeft() == nullptr) {
       node = node->getRight();
@@ -222,9 +228,10 @@ bool  AVL<Key>::removeBranch(NodeAVL<Key>*& node, const Key& k, bool& decrease) 
     } else if (node->getRight() == nullptr) {
       node = node->getLeft();
       decrease = true;
-    } else {
+    } else { 
       replace(deleteNode, node->getLeft(), decrease);
       if (decrease) {
+        std::cout << "2 On RemoveBrancha calling Remove Rebalance Left: " << node->getData() << " - " << node->getBalance() << std::endl;
         removeRebalanceLeft(node, decrease);
       }
     }
@@ -252,6 +259,7 @@ void AVL<Key>::replace(NodeAVL<Key>*& deleteNode, NodeAVL<Key>*& substituteNode,
 
 template <class Key>
 void AVL<Key>::removeRebalanceLeft(NodeAVL<Key>*& node, bool& decrease) {
+  std::cout << "Remove Rebalance Left: " << node->getData() << " - " << node->getBalance() << std::endl;
   switch (node->getBalance()) {
     case -1: {
       NodeAVL<Key>* node1 = node->getRight();
@@ -268,6 +276,7 @@ void AVL<Key>::removeRebalanceLeft(NodeAVL<Key>*& node, bool& decrease) {
     case 0:
       node->setBalance(-1);
       decrease = false;
+      // rotation_DD(node);
       break;
     case 1:
       node->setBalance(0);
