@@ -6,9 +6,9 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 3: Autómata celular general
- * @file lattice.cc
+ * @file cellACE.cc
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
- * @brief 
+ * @brief
  * @version 0.1
  * @date
  *
@@ -16,9 +16,15 @@
  *
  */
 
-#include "../include/lattice.h"
+#include "../include/Cell/cellACE.h"
 
-std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
-  lattice.display(os);
-  return os;
-}
+CellACE::CellACE(Position& position, const State& state) : Cell(position, state) {}
+
+void CellACE::updateState() {
+    state_ = nextState_;
+  }
+
+std::ostream& CellACE::display(std::ostream& os) {
+    os << (state_ == kDead ? " " : "X");
+    return os;
+  }

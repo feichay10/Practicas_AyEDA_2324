@@ -8,7 +8,8 @@ INCLUDE := include
 LIB     := lib
 LIBRARIES   := 
 EXECUTABLE  := cellular_automata
-PARAMS	:= -dim 1 -size 10 -cell Ace110 -border open 0
+PARAMS	:= -dim 1 -size 10 -cell Ace110 -border open 1
+PARAMS1 := -dim 1 -init data/init_1_ACE.txt -cell ACE110 -border open 1
 SOURCES := $(wildcard $(SRC)/*.cc)
 OBJS	:= $(patsubst $(SRC)/%.cc, $(BUILD)/%.o,$(SOURCES))
 
@@ -31,7 +32,7 @@ project:
 
 run:
 	@echo "🚀 Executing..."
-	./$(BIN)/$(EXECUTABLE) $(PARAMS)
+	./$(BIN)/$(EXECUTABLE) $(PARAMS1)
 
 clean:
 	@echo "🧹 Clearing..."

@@ -6,7 +6,7 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 3: Autómata celular general
- * @file factoryCellACE30.h
+ * @file factoryCellLife23_3.h
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
@@ -16,21 +16,21 @@
  *
  */
 
-#ifndef FACTORYCELLACE30_H
-#define FACTORYCELLACE30_H
+#ifndef FACTORYCELLLIFE23_3_H
+#define FACTORYCELLLIFE23_3_H
 
 #include <iostream>
 
-#include "cell.h"
-#include "cellACE.h"
-#include "cellACE30.h"
+#include "../Cell/cell.h"
+#include "../Cell/cellLife.h"
+#include "../Cell/cellLife23_3.h"
 #include "factoryCell.h"
 
-class FactoryCellACE30 : public FactoryCell {
+class FactoryCellLife23_3 : public FactoryCell {
  public:
   Cell* createCell(Position& p, const State& s) const override {
-    return new CellACE30(p, s);
+    return new CellLife23_3(p, s);
   }
 };
 
-#endif  // FACTORYCELLACE30_H
+#endif  // FACTORYCELLLIFE23_3_H

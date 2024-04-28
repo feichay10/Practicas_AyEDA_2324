@@ -24,13 +24,13 @@
 #include <vector>
 #include <limits>
 
-#include "factoryCell.h"
+#include "../Factory/factoryCell.h"
 #include "lattice.h"
 
 class Lattice2D : public Lattice {
  public:
-  Lattice2D(int& M, int& N, const FactoryCell& factory, borderType border);
-  Lattice2D(const std::string& fileName, const FactoryCell& factory, borderType border);
+  Lattice2D(int& M, int& N, const FactoryCell& factory);
+  Lattice2D(const std::string& fileName, const FactoryCell& factory);
   virtual ~Lattice2D();
 
   void nextGeneration();

@@ -8,7 +8,7 @@
  * Práctica 3: Autómata celular general
  * @file lattice1D_open.cc
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
- * @brief 
+ * @brief
  * @version 0.1
  * @date
  *
@@ -16,30 +16,29 @@
  *
  */
 
-#include "../include/lattice1D_open.h"
-#include "../include/positionDim.h"
+#include "../include/Lattice/lattice1D_open.h"
 
-Lattice1D_Open::Lattice1D_Open(int& size, const FactoryCell& factory, borderType border, openBorderType openBorderType) : Lattice1D(size, factory, border), openBorderType_(openBorderType) {
+Lattice1D_Open::Lattice1D_Open(int& size, FactoryCell*& factory, const openBorderType& borderType) : Lattice1D(size, factory), borderType_(borderType) {
   Position* position;
-  if (openBorderType_ == kCold) {
+  if (borderType_ == kCold) {
     position = new PositionDim<1>(1, -1);
-    borderLattice_ = factory.createCell(*position, kDead);
+    borderLattice_ = factory->createCell(*position, kDead);
   } else {
     position = new PositionDim<1>(1, -1);
-    borderLattice_ = factory.createCell(*position, kAlive);
+    borderLattice_ = factory->createCell(*position, kAlive);
   }
   lattice_[0] = borderLattice_;
   lattice_[size_ - 1] = borderLattice_;
 }
 
-Lattice1D_Open::Lattice1D_Open(const std::string& fileName, const FactoryCell& factory, borderType border, openBorderType openBorderType) : Lattice1D(fileName, factory, border), openBorderType_(openBorderType) {
+Lattice1D_Open::Lattice1D_Open(std::string& fileName, FactoryCell*& factory, const openBorderType& borderType) : Lattice1D(fileName, factory), borderType_(borderType) {
   Position* position;
-  if (openBorderType_ == kCold) {
+  if (borderType_ == kCold) {
     position = new PositionDim<1>(1, -1);
-    borderLattice_ = factory.createCell(*position, kDead);
+    borderLattice_ = factory->createCell(*position, kDead);
   } else {
     position = new PositionDim<1>(1, -1);
-    borderLattice_ = factory.createCell(*position, kAlive);
+    borderLattice_ = factory->createCell(*position, kAlive);
   }
   lattice_[0] = borderLattice_;
   lattice_[size_ - 1] = borderLattice_;

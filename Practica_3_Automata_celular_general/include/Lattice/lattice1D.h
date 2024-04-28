@@ -22,27 +22,27 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include <limits>
 
-#include "factoryCell.h"
+#include "../Factory/factoryCell.h"
 #include "lattice.h"
 
 class Lattice1D : public Lattice {
  public:
-  Lattice1D(int& size, const FactoryCell& factory, borderType border);
-  Lattice1D(const std::string& fileName, const FactoryCell& factory, borderType border);
+  Lattice1D(int& size, FactoryCell*& factory);
+  Lattice1D(std::string& fileName, FactoryCell*& factory);
   virtual ~Lattice1D();
 
-  void nextGeneration();
-  std::size_t Population() const;
-  void saveToFile(const std::string& fileName) const;
+  void nextGeneration() override;
+  std::size_t Population() const override;
 
  protected:
-  std::ostream& display(std::ostream& os) const;
   void loadInitialLattice();
- 
-  int size_;
+  std::ostream& display(std::ostream& os) const override;
+  std::ofstream& displayFile(std::ofstream& os) const override;
+
   Cell** lattice_;
+  Cell* borderLattice_;
+  int size_;
 };
 
 #endif  // LATTICE1D_H

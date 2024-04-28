@@ -16,9 +16,9 @@
  *
  */
 
-#include "../include/cellLife23_3.h"
-#include "../include/lattice2D.h"
-#include "../include/positionDim.h"
+#include "../include/Cell/cellLife23_3.h"
+#include "../include/Lattice/lattice2D.h"
+#include "../include/Position/positionDim.h"
 
 CellLife23_3::CellLife23_3(Position& position, const State& state) : CellLife(position, state) {}
 

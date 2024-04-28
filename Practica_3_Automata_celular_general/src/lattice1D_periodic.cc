@@ -6,7 +6,7 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 3: Autómata celular general
- * @file lattice1D_periodic.h
+ * @file lattice1D_periodic.cc
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
@@ -16,31 +16,13 @@
  *
  */
 
-#include "../include/lattice1D_periodic.h"
-#include "../include/positionDim.h"
-
-Lattice1D_Periodic::Lattice1D_Periodic(int& size, const FactoryCell& factory, borderType border) : Lattice1D(size, factory, border) {
-  Position* position;
-  position = new PositionDim<1>(1, -1);
-  borderLattice_ = factory.createCell(*position, kDead);
-  lattice_[0] = borderLattice_;
-  position = new PositionDim<1>(1, size_);
-  borderLattice_ = factory.createCell(*position, kDead);
-  lattice_[size_] = borderLattice_;
-}
-
-Lattice1D_Periodic::Lattice1D_Periodic(const std::string& fileName, const FactoryCell& factory, borderType border) : Lattice1D(fileName, factory, border) {
-  Position* position;
-  position = new PositionDim<1>(1, -1);
-  borderLattice_ = factory.createCell(*position, kDead);
-  lattice_[0] = borderLattice_;
-  position = new PositionDim<1>(1, size_);
-  borderLattice_ = factory.createCell(*position, kDead);
-  lattice_[size_] = borderLattice_;
-}
+#include "../include/Lattice/lattice1D_periodic.h"
 
 Lattice1D_Periodic::~Lattice1D_Periodic() {
-  delete borderLattice_;
+  for (int i = 0; i < size_; i++) {
+    delete lattice_[i];
+  }
+  delete[] lattice_;
 }
 
 Cell& Lattice1D_Periodic::operator[](const Position& position) const {
@@ -51,4 +33,3 @@ Cell& Lattice1D_Periodic::operator[](const Position& position) const {
   }
   return *lattice_[position[0]];
 }
-

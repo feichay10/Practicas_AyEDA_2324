@@ -16,7 +16,7 @@
  *
  */
 
-#include "../include/cell.h"
+#include "../include/Cell/cell.h"
 
 std::ostream& operator<<(std::ostream& os, Cell& cell) {
   return cell.display(os);

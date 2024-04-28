@@ -6,7 +6,7 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 3: Autómata celular general
- * @file lattice1D_periodic.h
+ * @file lattice2D_reflective.h
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
@@ -16,22 +16,22 @@
  *
  */
 
-#ifndef LATTICE1D_PERIODIC_H
-#define LATTICE1D_PERIODIC_H
+#ifndef LATTICE2D_REFLECTIVE_H
+#define LATTICE2D_REFLECTIVE_H
 
 #include <iostream>
 
-#include "lattice1D.h"
+#include "lattice2D.h"
 
-class Lattice1D_Periodic : public Lattice1D {
+class Lattice2D_Reflective : public Lattice2D   {
  public:
-  Lattice1D_Periodic(int& size, const FactoryCell& factory, borderType border);
-  Lattice1D_Periodic(const std::string& fileName, const FactoryCell& factory, borderType border);
-  ~Lattice1D_Periodic();
+  Lattice2D_Reflective(int& rows, int& columns, const FactoryCell& factory);
+  // Lattice2D_Reflective(const std::string& fileName, const FactoryCell& factory, borderType border);
+  ~Lattice2D_Reflective();
   Cell& operator[](const Position& position) const override;
 
  private:
   Cell* borderLattice_;
 };
 
-#endif  // LATTICE1D_PERIODIC_H
+#endif  // LATTICE2D_REFLECTIVE_H

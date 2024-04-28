@@ -25,9 +25,8 @@
 
 #include <iostream>
 
-#include "position.h"
-
-enum borderType { kOpen = 0, kPeriodic = 1, kReflective = 2, kNoBorder = 3 };
+#include "../Position/position.h"
+#include "../Position/positionDim.h"
 
 class Cell;
 
@@ -35,15 +34,23 @@ class Lattice {
  public:
   virtual void nextGeneration() = 0;
   virtual std::size_t Population() const = 0;
-  virtual void saveToFile(const std::string& fileName) const = 0;
 
   virtual Cell& operator[](const Position& position) const = 0;
-  friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
+
+  friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
+    lattice.display(os);
+    return os;
+  }
+  
+  friend std::ofstream& operator<<(std::ofstream& os, const Lattice& lattice) {
+    lattice.displayFile(os);
+    return os;
+  
+  }
 
  protected:
   virtual std::ostream& display(std::ostream& os) const = 0;
-  borderType borderType_;
-  int dim_;
+  virtual std::ofstream& displayFile(std::ofstream& os) const = 0;
 };
 
 #endif  // LATTICE_H

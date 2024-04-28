@@ -17,9 +17,9 @@
  *
  */
 
-#include "../include/cellACE110.h"
-#include "../include/lattice1D.h"
-#include "../include/positionDim.h"
+#include "../include/Cell/cellACE110.h"
+#include "../include/Lattice/lattice1D.h"
+#include "../include/Position/positionDim.h"
 
 CellACE110::CellACE110(Position& position, const State& state) : CellACE(position, state) {}
 
@@ -30,13 +30,4 @@ void CellACE110::nextState(const Lattice& lattice) {
   int centerState = lattice[PositionDim<1>(1, position_[0])].getState();
 
   nextState_ = static_cast<State>((centerState + rightState + centerState * rightState + leftState * centerState * rightState) % 2);
-}
-
-void CellACE110::updateState() {
-  state_ = nextState_;
-}
-
-std::ostream& CellACE110::display(std::ostream& os) {
-  os << (state_ == kDead ? " " : "X");
-  return os;
 }

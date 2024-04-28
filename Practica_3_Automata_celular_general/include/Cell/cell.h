@@ -21,7 +21,7 @@
 
 #include <iostream>
 
-#include "position.h"
+#include "../Position/position.h"
 
 enum State { kDead = 0, kAlive = 1 };
 

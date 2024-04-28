@@ -6,7 +6,7 @@
  * Asignatura: Algoritmos y Estructura de Datos Avanzada
  * Curso: 2º
  * Práctica 3: Autómata celular general
- * @file cellACE.h
+ * @file cellACE110.h
  * @author Cheuk Kelly Ng Pante (alu0101364544@ull.edu.es)
  * @brief
  * @version 0.1
@@ -16,14 +16,15 @@
  *
  */
 
-#ifndef CELLACE_H
-#define CELLACE_H
+#ifndef CELLACE110_H
+#define CELLACE110_H
 
-#include "cell.h"
+#include "cellACE.h"
 
-class CellACE : public Cell {
+class CellACE110 : public CellACE {
  public:
-  CellACE(Position& position, const State& state) : Cell(position, state) {}
+  CellACE110(Position& position, const State& state);
+  void nextState(const Lattice& lattice);
 };
 
-#endif  // CELLACE_H
+#endif  // CELLACE110_H
