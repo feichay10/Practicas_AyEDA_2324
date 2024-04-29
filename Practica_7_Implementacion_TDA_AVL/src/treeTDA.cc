@@ -17,8 +17,6 @@
 
 #include "../include/functions.h"
 
-// TODO: Fix DD rotation when a key is removed
-
 int main(int argc, char* argv[]) {
   treeParameters parameters;
   try {

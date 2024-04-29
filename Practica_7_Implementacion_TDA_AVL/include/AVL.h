@@ -19,7 +19,7 @@
 #define AVL_H
 
 #include "ABB.h"
-#include "NodeAVL.h"
+#include "nodeAVL.h"
 
 template <class Key>
 class AVL : public ABB<Key> {
