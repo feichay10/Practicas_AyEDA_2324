@@ -22,13 +22,12 @@
 // insertar: 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, ...
 
 // Tabla de comparaciones
-// | Numero de claves | Comparaciones ABB | Comparaciones AVL |
+// | Numero de claves  | Comparaciones ABB  | Comparaciones AVL |
 // |-------------------|--------------------|-------------------|
 // | 16                |        51          |       46          |
 // | 32                |       130          |      114          |
 // | 64                |       323          |      310          |
-// | 128               |                    |                   |
-// | 256               |                    |                   |
+// | 128               |       870          |      756          |
 
 #include "../include/functions.h"
 
