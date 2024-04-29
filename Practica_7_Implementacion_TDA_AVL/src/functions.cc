@@ -152,7 +152,9 @@ void createTree(treeParameters& parameters) {
     for (int i = 0; i < parameters.numberGenerated_; i++) {
       keyType key;
       std::cout << BOLD << "\nInsert key: " << RESET << key << std::endl;
-      tree->insert(key);
+      if (!tree->insert(key)) {
+        std::cout << RED_BOLD << "Key already exists." << RESET << std::endl << std::endl;
+      }
       tree->write(std::cout);
     }
   } else if (parameters.init_ == "file") {
