@@ -120,15 +120,18 @@ void AVL<Key>::insertBalance(NodeAVL<Key>*& root, NodeAVL<Key>* newOne, bool& gr
   if (root == nullptr) {
     root = newOne;
     grow = true;
-  } else if (newOne->getData() < root->getData()) { // Insertar balanceado por la izquierda
-    insertBalance(root->getLeft(), newOne, grow);
-    if (grow) {
-      insertRebalanceLeft(root, grow);
-    }
-  } else if (newOne->getData() > root->getData()) { // Insertar balanceado por la derecha
-    insertBalance(root->getRight(), newOne, grow);
-    if (grow) {
-      insertRebalanceRight(root, grow);
+  } else {
+    this->comparisons_++;
+    if (newOne->getData() < root->getData()) {  // Insertar balanceado por la izquierda
+      insertBalance(root->getLeft(), newOne, grow);
+      if (grow) {
+        insertRebalanceLeft(root, grow);
+      }
+    } else if (newOne->getData() > root->getData()) {  // Insertar balanceado por la derecha
+      insertBalance(root->getRight(), newOne, grow);
+      if (grow) {
+        insertRebalanceRight(root, grow);
+      }
     }
   }
 }
