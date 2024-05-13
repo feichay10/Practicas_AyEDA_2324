@@ -25,6 +25,6 @@ void CellACE::updateState() {
   }
 
 std::ostream& CellACE::display(std::ostream& os) {
-    os << (state_ == kDead ? " " : "X");
+    os << (state_ == kDead ? "-" : "X");
     return os;
   }

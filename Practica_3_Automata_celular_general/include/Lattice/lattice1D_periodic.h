@@ -25,8 +25,8 @@
 
 class Lattice1D_Periodic : public Lattice1D {
  public:
-  Lattice1D_Periodic(int& size, FactoryCell*& factory) : Lattice1D(size, factory) {}
-  Lattice1D_Periodic(std::string& fileName, FactoryCell*& factory) : Lattice1D(fileName, factory) {}
+  Lattice1D_Periodic(int& size, FactoryCell*& factory);
+  Lattice1D_Periodic(std::string& fileName, FactoryCell*& factory);
   ~Lattice1D_Periodic();
 
   Cell& operator[](const Position& position) const override;

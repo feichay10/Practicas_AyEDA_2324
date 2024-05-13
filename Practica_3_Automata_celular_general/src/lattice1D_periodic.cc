@@ -18,11 +18,19 @@
 
 #include "../include/Lattice/lattice1D_periodic.h"
 
+Lattice1D_Periodic::Lattice1D_Periodic(int& size, FactoryCell*& factory) : Lattice1D(size, factory) {
+  lattice_[0]->setState(lattice_[size_ - 2]->getState());
+  lattice_[size_ - 1]->setState(lattice_[1]->getState());
+}
+
+Lattice1D_Periodic::Lattice1D_Periodic(std::string& fileName, FactoryCell*& factory) : Lattice1D(fileName, factory) {
+  lattice_[0]->setState(lattice_[size_ - 2]->getState());
+  lattice_[size_ - 1]->setState(lattice_[1]->getState());
+}
+
 Lattice1D_Periodic::~Lattice1D_Periodic() {
-  for (int i = 0; i < size_; i++) {
-    delete lattice_[i];
-  }
-  delete[] lattice_;
+  delete lattice_[0];
+  delete lattice_[size_ - 1];
 }
 
 Cell& Lattice1D_Periodic::operator[](const Position& position) const {

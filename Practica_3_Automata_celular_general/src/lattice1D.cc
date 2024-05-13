@@ -35,26 +35,39 @@ Lattice1D::Lattice1D(std::string& fileName, FactoryCell*& factory) {
   std::string line;
   State state;
   Position* position;
-  char dim;
+  char dim_;
 
   if (!file.is_open()) {
     std::cerr << "Error: File not found" << std::endl;
     exit(1);
   }
 
-  file >> dim;
+  file >> dim_;
+  std::cout << "Dim: " << dim_ << std::endl;
+  // if (dim_ != 1) {
+  //   std::cerr << "Error: Dimension mismatch" << std::endl;
+  //   exit(1);
+  // }
+
   file >> size_;
+  std::cout << "Size: " << size_ << std::endl;
   size_ += 2;
   lattice_ = new Cell*[size_];
-  
-  for (int i = 0; i < size_; i++) {
-    position = new PositionDim<1>(1, i);
-    std::string line;
-    std::getline(file, line); // Read the line from the file
-    state = (line[i] == '0') ? kDead : kAlive; // Initialize the state of each cell based on the characters in the line
-    lattice_[i] = factory->createCell(*position, state);
+
+  while (file >> line) {
+    for (int i = 0; i < size_ - 2; i++) {
+      position = new PositionDim<1>(1, i + 1);
+      state = (line[i] == '0') ? kDead : kAlive;
+      lattice_[i + 1] = factory->createCell(*position, state);
+    }
   }
-  
+
+  // if (borderType_ == kPeriodic) {
+  //   lattice_[0]->setState(lattice_[size_ - 2]->getState());
+  //   lattice_[size_ - 1]->setState(lattice_[1]->getState());
+  // }
+
+  std::cout << "Lattice loaded successfully." << std::endl;
 }
 
 Lattice1D::~Lattice1D() {

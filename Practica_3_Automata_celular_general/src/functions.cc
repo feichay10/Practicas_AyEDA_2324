@@ -84,6 +84,7 @@ void checkParameters(int argc, char* argv[], parameters& params) {
 
 void createLattice(parameters& params) {
   Lattice* lattice;
+
   if (params.dimension == 1) {
     if (params.border_Type == 0) {
       if (params.flagFile) {
@@ -101,6 +102,8 @@ void createLattice(parameters& params) {
       }
     }
   } 
+
+  std::cout << lattice->Population() << std::endl;
   
   menu(*lattice);
 }
@@ -119,7 +122,7 @@ void menu(Lattice &lattice) {
   char command;
   bool commandFlag = false;
   
-  std::cout << lattice << std::endl;
+  // std::cout << lattice << std::endl;
 
   textMenu();
   
