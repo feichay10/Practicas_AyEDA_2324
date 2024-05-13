@@ -34,7 +34,7 @@
 template <typename Key>
 void print(StaticSequence<Key>& sequence, int size) {
   for (int i = 0; i < size; i++) {
-    std::cout << sequence[i] << sequence[i].letterNif(sequence[i]) << " ";
+    std::cout << sequence[i] << " ";
   }
 }
 
@@ -82,21 +82,32 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
   int j = end;
   Key pivot = sequence[(begin + end) / 2];
   if (trace) {
-    std::cout << "Pivot: " << pivot << "\t    ";
+    std::cout << "Pivot: " << pivot << std::endl;
+    std::cout << "Begin: " << sequence[begin] << " End: " << sequence[end] << std::endl;
   }
   while (i <= j) {
     while (sequence[i] < pivot) i++;
     while (sequence[j] > pivot) j--;
     if (i <= j) {
+      if (trace) {
+        std::cout << "\t  i = " << i << " j = " << j << std::endl;
+      }
       std::swap(sequence[i], sequence[j]);
       i++;
       j--;
+      if (trace) {
+        std::cout << "\t\t";
+        print(sequence, sequence.getSize());
+        std::cout << std::endl;
+      }
     }
   }
-  if (trace) {
-    print(sequence, sequence.getSize());
-    std::cout << std::endl;
-  }
+  // if (trace) {
+  //   std::cout << "\t  i: " << i << " j: " << j << std::endl;
+  //   std::cout << "\t\t";
+  //   print(sequence, sequence.getSize());
+  //   std::cout << std::endl;
+  // }
   if (begin < j) quickSort(sequence, begin, j, trace);
   if (i < end) quickSort(sequence, i, end, trace);
 }
@@ -111,9 +122,16 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
  */
 template <typename Key>
 void heapSort(StaticSequence<Key>& sequence, int size, bool trace) {
+  std::cout << "Creating the heap..." << std::endl; 
   for (int i = size / 2; i >= 0; i--) {
     downHeap(i, sequence, size - 1, trace);
+    if (trace) {
+      std::cout << "\t\t    ";
+      print(sequence, size);
+      std::cout << std::endl;
+    }
   }
+  std::cout << "\nSorting the heap..." << std::endl;
   for (int i = size - 1; i > 0; i--) {
     std::swap(sequence[0], sequence[i]);
     downHeap(0, sequence, i - 1, trace);
@@ -133,8 +151,8 @@ template <typename Key>
 void downHeap(int i, StaticSequence<Key>& sequence, int size, bool trace) {
   int h1, h2, h;
   while (2 * i <= size) {
-    h1 = 2 * i;
-    h2 = h1 + 1;
+    h1 = 2 * i;  // Hijo izquierdo
+    h2 = h1 + 1; // h2 = 2 * i + 1 -> Hijo derecho
     if (h1 == size) {
       h = h1;
     } else if (sequence[h1] > sequence[h2]) {
@@ -417,11 +435,18 @@ void shakeSort(StaticSequence<Key>& sequence, int size, bool trace) {
   int start = 1;
   int end = size - 1;
   int cam = size;
-  while (start <= end) {
-    for (int i = end; i >= start; i--) {
+
+  while (start < end) {
+    std::cout << " ==== Derecha a izquierda ==== " << std::endl;
+    for (int i = end; i >= start; i--) { // Derecha a izquierda
+      std::cout << "i: " << i << std::endl;
+      std::cout << "Sequence[i]: " << sequence[i] << std::endl;
+      std::cout << "Sequence[i - 1]: " << sequence[i - 1] << std::endl;
       if (sequence[i] < sequence[i - 1]) {
         std::swap(sequence[i - 1], sequence[i]);
+        std::cout << "Swapping " << sequence[i - 1] << " and " << sequence[i] << std::endl;
         cam = i;
+        std::cout << "Cam: " << cam << std::endl;
       }
       if (trace) {
         std::cout << "\t\t    ";
@@ -429,11 +454,20 @@ void shakeSort(StaticSequence<Key>& sequence, int size, bool trace) {
         std::cout << std::endl;
       }
     }
+
+    //  ======================================================================
+
+    std::cout << " ==== Izquierda a derecha ==== " << std::endl;
     start = cam + 1;
-    for (int i = start; i <= end; i++) {
+    for (int i = start; i <= end; i++) { // Izquierda a derecha
+      std::cout << "i: " << i << std::endl;
+      std::cout << "Sequence[i]: " << sequence[i] << std::endl;
+      std::cout << "Sequence[i - 1]: " << sequence[i - 1] << std::endl;
       if (sequence[i] < sequence[i - 1]) {
         std::swap(sequence[i - 1], sequence[i]);
+        std::cout << "Swapping " << sequence[i - 1] << " and " << sequence[i] << std::endl;
         cam = i;
+        std::cout << "Cam: " << cam << std::endl;
       }
       if (trace) {
         std::cout << "\t\t    ";
@@ -444,5 +478,32 @@ void shakeSort(StaticSequence<Key>& sequence, int size, bool trace) {
     end = cam - 1;
   }
 }
+
+// template <typename Key>
+// void shakeSort(StaticSequence<Key>& sequence, int size, bool trace) {
+//   int start = 1;
+//   int end = size - 1;
+//   int cam = size;
+
+//   while (start < end) {
+//     for (int i = end; i >= start; i--) { // Derecha a izquierda
+//       if (sequence[i] < sequence[i - 1]) {
+//         std::swap(sequence[i - 1], sequence[i]);
+//         cam = i;
+//       }
+//     }
+
+//     //  ======================================================================
+
+//     start = cam + 1;
+//     for (int i = start; i <= end; i++) { // Izquierda a derecha
+//       if (sequence[i] < sequence[i - 1]) {
+//         std::swap(sequence[i - 1], sequence[i]);
+//         cam = i;
+//       }
+//     }
+//     end = cam - 1;
+//   }
+// }
 
 #endif // ORDENATION_H
