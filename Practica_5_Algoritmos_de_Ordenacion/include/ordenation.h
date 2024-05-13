@@ -83,7 +83,7 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
   Key pivot = sequence[(begin + end) / 2];
   if (trace) {
     std::cout << "Pivot: " << pivot << std::endl;
-    std::cout << "Begin: " << sequence[begin] << " End: " << sequence[end] << std::endl;
+    std::cout << "Begin: " << begin << " End: " << end << std::endl;
   }
   while (i <= j) {
     while (sequence[i] < pivot) i++;
