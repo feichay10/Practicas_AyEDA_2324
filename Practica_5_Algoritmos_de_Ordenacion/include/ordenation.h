@@ -95,6 +95,7 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
       std::swap(sequence[i], sequence[j]);
       i++;
       j--;
+      std::cout << "Iterators: i = " << i << " j = " << j << std::endl;
       if (trace) {
         std::cout << "\t\t";
         print(sequence, sequence.getSize());
@@ -102,14 +103,12 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
       }
     }
   }
-  // if (trace) {
-  //   std::cout << "\t  i: " << i << " j: " << j << std::endl;
-  //   std::cout << "\t\t";
-  //   print(sequence, sequence.getSize());
-  //   std::cout << std::endl;
-  // }
+  std::cout << "Empieza el primer quickSort" << std::endl;
   if (begin < j) quickSort(sequence, begin, j, trace);
+  std::cout << "Termina el primer quickSort" << std::endl;
+  std::cout << "Empieza el segundo quickSort" << std::endl;
   if (i < end) quickSort(sequence, i, end, trace);
+  std::cout << "Termina el segundo quickSort" << std::endl;
 }
 
 /**
@@ -185,18 +184,24 @@ void downHeap(int i, StaticSequence<Key>& sequence, int size, bool trace) {
  */
 template <typename Key>
 void shellSort(StaticSequence<Key>& sequence, int size, bool trace) {
-  int j;
-  float alpha;
-  std::cout << "Enter an alpha between 0 and 1: ";
-  std::cin >> alpha;
+  // int j;
+  // float alpha;
+  // std::cout << "Enter an alpha between 0 and 1: ";
+  // std::cin >> alpha;
   
-  if (alpha < 0 || alpha > 1) {
-    throw std::invalid_argument("Alpha must be between 0 and 1."); 
-  }
+  // if (alpha < 0 || alpha > 1) {
+  //   throw std::invalid_argument("Alpha must be between 0 and 1."); 
+  // }
   
-  int delta = size * alpha;
+  // int delta = size * alpha;
+  // while (delta > 1) {
+  //   delta /= 2;
+  //   deltaSort(sequence, size, delta, trace);
+  // }
+
+  unsigned int delta = size;
   while (delta > 1) {
-    delta /= 2;
+    delta = delta / 2;
     deltaSort(sequence, size, delta, trace);
   }
 }
@@ -212,6 +217,9 @@ void shellSort(StaticSequence<Key>& sequence, int size, bool trace) {
  */
 template <typename Key>
 void deltaSort(StaticSequence<Key>& sequence, int size, int delta, bool trace) {
+  if (trace) {
+    std::cout << "Delta = " << delta << std::endl;
+  }
   for (int i = delta; i < size; i++) {
     Key temp = sequence[i];
     int j = i;
@@ -321,7 +329,17 @@ void mergeSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
   if (begin < end) {
     int middle = (begin + end) / 2;
     mergeSort(sequence, begin, middle, trace);
+    if (trace) {
+      std::cout << "\t\t    ";
+      print(sequence, sequence.getSize());
+      std::cout << std::endl;
+    }
     mergeSort(sequence, middle + 1, end, trace);
+    if (trace) {
+      std::cout << "\t\t    ";
+      print(sequence, sequence.getSize());
+      std::cout << std::endl;
+    }
     mix(sequence, begin, middle, end, trace);
   }
 }
@@ -354,12 +372,6 @@ void mix(StaticSequence<Key>& sequence, int begin, int middle, int end, bool tra
 
   for (int k = begin; k <= end; k++) {
     sequence[k] = temp[k];
-  }
-
-  if (trace) {
-    std::cout << "\t\t    ";
-    print(sequence, sequence.getSize());
-    std::cout << std::endl;
   }
 }
 
@@ -439,12 +451,12 @@ void shakeSort(StaticSequence<Key>& sequence, int size, bool trace) {
   while (start < end) {
     std::cout << " ==== Derecha a izquierda ==== " << std::endl;
     for (int i = end; i >= start; i--) { // Derecha a izquierda
-      std::cout << "i: " << i << std::endl;
-      std::cout << "Sequence[i]: " << sequence[i] << std::endl;
-      std::cout << "Sequence[i - 1]: " << sequence[i - 1] << std::endl;
+      // std::cout << "i: " << i << std::endl;
+      // std::cout << "Sequence[i]: " << sequence[i] << std::endl;
+      // std::cout << "Sequence[i - 1]: " << sequence[i - 1] << std::endl;
       if (sequence[i] < sequence[i - 1]) {
         std::swap(sequence[i - 1], sequence[i]);
-        std::cout << "Swapping " << sequence[i - 1] << " and " << sequence[i] << std::endl;
+        // std::cout << "Swapping " << sequence[i - 1] << " and " << sequence[i] << std::endl;
         cam = i;
         std::cout << "Cam: " << cam << std::endl;
       }
@@ -460,12 +472,12 @@ void shakeSort(StaticSequence<Key>& sequence, int size, bool trace) {
     std::cout << " ==== Izquierda a derecha ==== " << std::endl;
     start = cam + 1;
     for (int i = start; i <= end; i++) { // Izquierda a derecha
-      std::cout << "i: " << i << std::endl;
-      std::cout << "Sequence[i]: " << sequence[i] << std::endl;
-      std::cout << "Sequence[i - 1]: " << sequence[i - 1] << std::endl;
+      // std::cout << "i: " << i << std::endl;
+      // std::cout << "Sequence[i]: " << sequence[i] << std::endl;
+      // std::cout << "Sequence[i - 1]: " << sequence[i - 1] << std::endl;
       if (sequence[i] < sequence[i - 1]) {
         std::swap(sequence[i - 1], sequence[i]);
-        std::cout << "Swapping " << sequence[i - 1] << " and " << sequence[i] << std::endl;
+        // std::cout << "Swapping " << sequence[i - 1] << " and " << sequence[i] << std::endl;
         cam = i;
         std::cout << "Cam: " << cam << std::endl;
       }
