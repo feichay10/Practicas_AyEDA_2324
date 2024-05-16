@@ -121,8 +121,8 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
  */
 template <typename Key>
 void heapSort(StaticSequence<Key>& sequence, int size, bool trace) {
-  std::cout << "Creating the heap..." << std::endl; 
-  for (int i = size / 2; i >= 0; i--) {
+  std::cout << "Creating the heap..." << std::endl;
+  for (int i = size/2 - 1; i >= 0; --i) {
     downHeap(i, sequence, size - 1, trace);
     if (trace) {
       std::cout << "\t\t    ";
@@ -131,9 +131,14 @@ void heapSort(StaticSequence<Key>& sequence, int size, bool trace) {
     }
   }
   std::cout << "\nSorting the heap..." << std::endl;
-  for (int i = size - 1; i > 0; i--) {
+  for (int i = size - 1; i > 0; --i) {
     std::swap(sequence[0], sequence[i]);
-    downHeap(0, sequence, i - 1, trace);
+    downHeap(0, sequence, i-1, trace);
+    if (trace) {
+      std::cout << "\t\t    ";
+      print(sequence, size);
+      std::cout << std::endl;
+    }
   }
 }
 
@@ -149,12 +154,11 @@ void heapSort(StaticSequence<Key>& sequence, int size, bool trace) {
 template <typename Key>
 void downHeap(int i, StaticSequence<Key>& sequence, int size, bool trace) {
   int h1, h2, h;
-  while (2 * i <= size) {
-    h1 = 2 * i;  // Hijo izquierdo
-    h2 = h1 + 1; // h2 = 2 * i + 1 -> Hijo derecho
-    if (h1 == size) {
-      h = h1;
-    } else if (sequence[h1] > sequence[h2]) {
+  // int n = size;
+  while (2*i + 1 <= size) {
+    h1 = 2*i + 1;
+    h2 = h1 + 1;
+    if (h1 == size || sequence[h1] > sequence[h2]) {
       h = h1;
     } else {
       h = h2;
@@ -164,12 +168,6 @@ void downHeap(int i, StaticSequence<Key>& sequence, int size, bool trace) {
     } else {
       std::swap(sequence[i], sequence[h]);
       i = h;
-    }
-
-    if (trace) {
-      std::cout << "\t\t    ";
-      print(sequence, sequence.getSize());
-      std::cout << std::endl;
     }
   }
 }
