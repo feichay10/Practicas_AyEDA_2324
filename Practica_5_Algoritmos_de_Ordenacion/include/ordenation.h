@@ -95,7 +95,8 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
       std::swap(sequence[i], sequence[j]);
       i++;
       j--;
-      std::cout << "Iterators: i = " << i << " j = " << j << std::endl;
+      // std::cout << "Iterators: i = " << i << " j = " << j << std::endl;
+      std::cout << "Swap: " << sequence[i] << " and " << sequence[j] << std::endl;
       if (trace) {
         std::cout << "\t\t";
         print(sequence, sequence.getSize());
@@ -121,7 +122,7 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
  */
 template <typename Key>
 void heapSort(StaticSequence<Key>& sequence, int size, bool trace) {
-  std::cout << "Creating the heap..." << std::endl;
+  std::cout << BOLD << "Creating the heap..." << RESET << std::endl;
   for (int i = size/2 - 1; i >= 0; --i) {
     downHeap(i, sequence, size - 1, trace);
     if (trace) {
@@ -130,8 +131,9 @@ void heapSort(StaticSequence<Key>& sequence, int size, bool trace) {
       std::cout << std::endl;
     }
   }
-  std::cout << "\nSorting the heap..." << std::endl;
+  std::cout << BOLD << "\nSorting the heap..." << RESET << std::endl;
   for (int i = size - 1; i > 0; --i) {
+    std::cout << "Swap " << sequence[0] << " and " << sequence[i] << std::endl;
     std::swap(sequence[0], sequence[i]);
     downHeap(0, sequence, i-1, trace);
     if (trace) {
@@ -166,6 +168,7 @@ void downHeap(int i, StaticSequence<Key>& sequence, int size, bool trace) {
     if (sequence[h] <= sequence[i]) {
       break;
     } else {
+      std::cout << "Swapping " << sequence[i] << " and " << sequence[h] << std::endl;
       std::swap(sequence[i], sequence[h]);
       i = h;
     }
