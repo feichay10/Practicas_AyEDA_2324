@@ -354,7 +354,7 @@ void mergeSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
     mergeSort(sequence, middle + 1, end, trace);
     mix(sequence, begin, middle, end, trace);
     if (trace) {
-      std::cout << "Mezcla\t\t    ";
+      std::cout << "Mix\t\t    ";
       for (int i = 0; i < begin; i++) {
         std::cout << sequence[i] << " ";
       }
@@ -471,7 +471,7 @@ void shakeSort(StaticSequence<Key>& sequence, int size, bool trace) {
   int cam = size;
 
   while (start < end) {
-    std::cout << BLUE_BOLD << " === <-- Derecha a izquierda <-- === " << RESET << std::endl;
+    std::cout << BLUE_BOLD << " === <-- Right to Left <-- === " << RESET << std::endl;
     for (int i = end; i >= start; i--) { // Derecha a izquierda
       if (sequence[i] < sequence[i - 1]) {
         std::swap(sequence[i - 1], sequence[i]);
@@ -487,7 +487,7 @@ void shakeSort(StaticSequence<Key>& sequence, int size, bool trace) {
     std::cout << std::endl;
     //  ======================================================================
 
-    std::cout << BLUE_BOLD << " === --> Izquierda a derecha --> === " << RESET << std::endl;
+    std::cout << BLUE_BOLD << " === --> Left to Right --> === " << RESET << std::endl;
     start = cam + 1;
     for (int i = start; i <= end; i++) { // Izquierda a derecha
       if (sequence[i] < sequence[i - 1]) {
