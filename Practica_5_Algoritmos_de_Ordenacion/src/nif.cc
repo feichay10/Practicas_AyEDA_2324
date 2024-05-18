@@ -28,7 +28,8 @@ Nif::Nif() {
   
   std::random_device rd;
   std::mt19937 gen(rd());
-  std::uniform_int_distribution<long> dis(10000000, 99999999);
+  // std::uniform_int_distribution<long> dis(10000000, 99999999);
+  std::uniform_int_distribution<long> dis(100, 999);
 
   nif_ = dis(gen);
 }

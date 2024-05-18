@@ -39,6 +39,34 @@ void print(StaticSequence<Key>& sequence, int size) {
 }
 
 /**
+ * @brief Function that sorts the sequence using the insertion sort algorithm.
+ * 
+ * @tparam Key 
+ * @param sequence 
+ * @param size 
+ * @param trace 
+ */
+template <typename Key>
+void insertion(StaticSequence<Key>& sequence, int size, bool trace) {
+  for (int i = 1; i < size; i++) {
+    Key temp = sequence[i];
+    int j = i - 1;
+    while ((j >= 0) && (sequence[j] > temp)) {
+      sequence[j + 1] = sequence[j];
+      j--;
+    }
+    sequence[j + 1] = temp;
+    if (trace) {
+      std::cout << "\ti = " << i;
+      std::cout << "\t    "; 
+      print(sequence, size);
+      std::cout << "\tj = " << j + 1 << " - " << sequence[j + 1];
+      std::cout << std::endl;
+    }
+  }
+}
+
+/**
  * @brief Function that sorts the sequence using the selection sort algorithm.
  * 
  * @tparam Key 
@@ -82,8 +110,8 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
   int j = end;
   Key pivot = sequence[(begin + end) / 2];
   if (trace) {
-    std::cout << "Pivot: " << pivot << std::endl;
-    std::cout << "Begin: " << begin << " End: " << end << std::endl;
+    std::cout << BLUE_BOLD << "\nPivot: " << RESET << pivot;
+    std::cout << " - Begin: " << begin << " End: " << end << std::endl;
   }
   while (i <= j) {
     while (sequence[i] < pivot) i++;
@@ -93,10 +121,10 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
         std::cout << "\t  i = " << i << " j = " << j << std::endl;
       }
       std::swap(sequence[i], sequence[j]);
+      std::cout << "\t  Swap: " << sequence[i] << " and " << sequence[j] << std::endl;
       i++;
       j--;
       // std::cout << "Iterators: i = " << i << " j = " << j << std::endl;
-      std::cout << "Swap: " << sequence[i] << " and " << sequence[j] << std::endl;
       if (trace) {
         std::cout << "\t\t";
         print(sequence, sequence.getSize());
@@ -104,12 +132,12 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
       }
     }
   }
-  std::cout << "Empieza el primer quickSort" << std::endl;
+  // std::cout << "Empieza el primer quickSort" << std::endl;
   if (begin < j) quickSort(sequence, begin, j, trace);
-  std::cout << "Termina el primer quickSort" << std::endl;
-  std::cout << "Empieza el segundo quickSort" << std::endl;
+  // std::cout << "Termina el primer quickSort" << std::endl;
+  // std::cout << "Empieza el segundo quickSort" << std::endl;
   if (i < end) quickSort(sequence, i, end, trace);
-  std::cout << "Termina el segundo quickSort" << std::endl;
+  // std::cout << "Termina el segundo quickSort" << std::endl;
 }
 
 /**
@@ -122,7 +150,7 @@ void quickSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
  */
 template <typename Key>
 void heapSort(StaticSequence<Key>& sequence, int size, bool trace) {
-  std::cout << BOLD << "Creating the heap..." << RESET << std::endl;
+  std::cout << RED_BOLD << "Creating the heap..." << RESET << std::endl;
   for (int i = size/2 - 1; i >= 0; --i) {
     downHeap(i, sequence, size - 1, trace);
     if (trace) {
@@ -131,9 +159,9 @@ void heapSort(StaticSequence<Key>& sequence, int size, bool trace) {
       std::cout << std::endl;
     }
   }
-  std::cout << BOLD << "\nSorting the heap..." << RESET << std::endl;
+  std::cout << RED_BOLD << "\nSorting the heap..." << RESET << std::endl;
   for (int i = size - 1; i > 0; --i) {
-    std::cout << "Swap " << sequence[0] << " and " << sequence[i] << std::endl;
+    std::cout << BLUE_BOLD << "Swap " << sequence[0] << " and " << sequence[i] << RESET << std::endl;
     std::swap(sequence[0], sequence[i]);
     downHeap(0, sequence, i-1, trace);
     if (trace) {
@@ -218,8 +246,9 @@ void shellSort(StaticSequence<Key>& sequence, int size, bool trace) {
  */
 template <typename Key>
 void deltaSort(StaticSequence<Key>& sequence, int size, int delta, bool trace) {
+  Key aux;
   if (trace) {
-    std::cout << "Delta = " << delta << std::endl;
+    std::cout << BLUE_BOLD << "Delta = " << delta << RESET << std::endl;
   }
   for (int i = delta; i < size; i++) {
     Key temp = sequence[i];
@@ -228,9 +257,16 @@ void deltaSort(StaticSequence<Key>& sequence, int size, int delta, bool trace) {
       sequence[j] = sequence[j - delta];
       j -= delta;
     }
+    if (sequence[j] != temp) {
+      if (trace) {
+        std::cout << " Insert: " << PURPLE_BOLD << temp << RESET << "\t    ";
+      }
+    } else {
+      std::cout << "\t\t    ";
+    }
+
     sequence[j] = temp;
     if (trace) {
-      std::cout << "\t\t    ";
       print(sequence, size);
       std::cout << std::endl;
     }
@@ -289,34 +325,6 @@ void radixSort(StaticSequence<Key>& sequence, int size, bool trace) {
 }
 
 /**
- * @brief Function that sorts the sequence using the insertion sort algorithm.
- * 
- * @tparam Key 
- * @param sequence 
- * @param size 
- * @param trace 
- */
-template <typename Key>
-void insertion(StaticSequence<Key>& sequence, int size, bool trace) {
-  for (int i = 1; i < size; i++) {
-    Key temp = sequence[i];
-    int j = i - 1;
-    while ((j >= 0) && (sequence[j] > temp)) {
-      sequence[j + 1] = sequence[j];
-      j--;
-    }
-    sequence[j + 1] = temp;
-    if (trace) {
-      std::cout << "\ti = " << i;
-      std::cout << "\t    "; 
-      print(sequence, size);
-      std::cout << "\tj = " << j + 1;
-      std::cout << std::endl;
-    }
-  }
-}
-
-/**
  * @brief Function that sorts the sequence using the merge sort algorithm.
  * 
  * @tparam Key 
@@ -329,19 +337,32 @@ template <typename Key>
 void mergeSort(StaticSequence<Key>& sequence, int begin, int end, bool trace) {
   if (begin < end) {
     int middle = (begin + end) / 2;
+    if (trace) {
+      std::cout << "\t\t    " << BLUE_BOLD;
+      for (int i = begin; i <= middle; i++) {
+        std::cout << sequence[i] << " ";
+      }
+      std::cout << RESET;
+
+      std::cout << RED_BOLD;
+      for (int i = middle + 1; i <= end; i++) {
+        std::cout << sequence[i] << " ";
+      }
+      std::cout << RESET << std::endl;
+    }
     mergeSort(sequence, begin, middle, trace);
-    if (trace) {
-      std::cout << "\t\t    ";
-      print(sequence, sequence.getSize());
-      std::cout << std::endl;
-    }
     mergeSort(sequence, middle + 1, end, trace);
-    if (trace) {
-      std::cout << "\t\t    ";
-      print(sequence, sequence.getSize());
-      std::cout << std::endl;
-    }
     mix(sequence, begin, middle, end, trace);
+    if (trace) {
+      std::cout << "Mezcla\t\t    ";
+      for (int i = 0; i < begin; i++) {
+        std::cout << sequence[i] << " ";
+      }
+      for (int i = begin; i <= end; i++) {
+        std::cout << GREEN_BOLD << sequence[i] << " ";
+      }
+      std::cout << RESET << std::endl;
+    }
   }
 }
 
