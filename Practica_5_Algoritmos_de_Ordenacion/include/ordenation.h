@@ -471,37 +471,37 @@ void shakeSort(StaticSequence<Key>& sequence, int size, bool trace) {
   int cam = size;
 
   while (start < end) {
-    std::cout << " ==== Derecha a izquierda ==== " << std::endl;
+    std::cout << BLUE_BOLD << " === <-- Derecha a izquierda <-- === " << RESET << std::endl;
     for (int i = end; i >= start; i--) { // Derecha a izquierda
       if (sequence[i] < sequence[i - 1]) {
         std::swap(sequence[i - 1], sequence[i]);
-        std::cout << "Swapping " << sequence[i - 1] << " and " << sequence[i] << std::endl;
         cam = i;
       }
       if (trace) {
         std::cout << "\t\t    ";
         print(sequence, size);
-        std::cout << std::endl;
+        std::cout << "- " << PURPLE_BOLD << sequence[i - 1] << " <-> " << sequence[i] << RESET << std::endl;
       }
     }
 
+    std::cout << std::endl;
     //  ======================================================================
 
-    std::cout << " ==== Izquierda a derecha ==== " << std::endl;
+    std::cout << BLUE_BOLD << " === --> Izquierda a derecha --> === " << RESET << std::endl;
     start = cam + 1;
     for (int i = start; i <= end; i++) { // Izquierda a derecha
       if (sequence[i] < sequence[i - 1]) {
         std::swap(sequence[i - 1], sequence[i]);
-        std::cout << "Swapping " << sequence[i - 1] << " and " << sequence[i] << std::endl;
         cam = i;
       }
       if (trace) {
         std::cout << "\t\t    ";
         print(sequence, size);
-        std::cout << std::endl;
+        std::cout << "- " << PURPLE_BOLD << sequence[i - 1] << " <-> " << sequence[i] << RESET << std::endl;
       }
     }
     end = cam - 1;
+    std::cout << std::endl;
   }
 }
 
