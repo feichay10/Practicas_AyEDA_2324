@@ -2,4 +2,4 @@
 
 * Autor: Cheuk Kelly Ng Pante
 
-Practicas realizadas en la asignatura de Algoritmos y Estructura de Datos Avanzadas en la Universidad de La Laguna
+Practicas realizadas en la asignatura de `Algoritmos y Estructura de Datos Avanzadas` en la Universidad de La Laguna
